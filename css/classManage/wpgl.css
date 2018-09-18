@@ -1,0 +1,257 @@
+* { margin: 0; padding: 0; }
+html {
+}
+body {
+  width: 100%;
+  overflow: hidden;
+  background: #F7F6F6;
+}
+/*==========================*/
+/* checkbox */
+input[type="radio"],
+input[type="checkbox"] {
+  display: none;
+}
+label {
+  width: 12px;
+  height: 12px;
+  /*vertical-align: middle;*/
+  position: relative;
+  top: 2px;
+  background: #FFF;
+  margin-right: 3px;
+  display: inline-block;
+  border:1px solid #333;
+}
+input:checked + label>img {
+  display: block;
+}
+label>img {
+  display: none;
+  position: absolute;
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently*/
+}
+/*==========================================*/
+
+#wpgl_option {
+  background: #F7F6F6;
+}
+#wpgl_option #option {
+  background: #FFF;
+}
+#wpgl_option #big_btns {
+  padding-top: 21px;
+  padding-left: 15px;
+}
+#wpgl_option .big_btn {
+  width: 89px;
+  height: 31px;
+  color: #007A51;
+  font-size: 16px;
+  line-height: 31px;
+  background: #FFF;
+  cursor: pointer;
+  border: 1px solid #007A51;
+  /*margin-left: 97px;*/
+  margin-right: 20px;
+}
+#wpgl_option .big_btn:hover {
+  color: #FFF;
+  background: #007A51;
+}
+
+
+
+#wpgl_option #filter_bar {
+  width: 100%;
+  height: 42px;
+  font-size: 14px;
+  margin-top: 3px;
+  line-height: 42px;
+}
+#wpgl_option #wppc {
+  margin-left: 15px;
+}
+
+#wpgl_option #filter_bar select {
+  color: gray;
+  width: 90px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  outline: none;
+  border: 1px solid #55B796;
+}
+
+#wpgl_option #serch {
+  width: 51px;
+  height: 20px;
+  color: #FFF;
+  border: none;
+  cursor: pointer;
+  line-height: 20px;
+  margin-left: 64px;
+  border: 1px solid #007A51;
+  background: #007A51;
+}
+
+/*============================================*/
+
+#wpgl_table {
+  width: 100%;
+  background: #FFF;
+  box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+}
+#wpgl_table table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+#wpgl_table thead {
+  color: #FFF;
+}
+#wpgl_table thead td {
+  height: 40px;
+  background: #009361;
+}
+#wpgl_table td.td_head,
+#wpgl_table td.td_end {
+  background: none;
+}
+#wpgl_table thead td.td_head>div,
+#wpgl_table thead td.td_end>div {
+  background: #009361;
+}
+#wpgl_table td.td_head>div {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px 0 0 2px;
+}
+#wpgl_table td.td_end>div {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 2px 2px 0;
+}
+
+/*-----------------------------*/
+
+#wpgl_table tbody td {
+  height: 66px;
+}
+#wpgl_table tbody td {
+  border-bottom: 1px solid #EEE;
+}
+#wpgl_table tbody td.td_head,
+#wpgl_table tbody td.td_end {
+  border-bottom: none;
+}
+#wpgl_table tbody td div span {
+  margin: 0 7px;
+  cursor: pointer;
+}
+.green_btn {
+  color: #009361;
+}
+.yellow_btn {
+  color: #ff9b29;
+}
+/*===================================================*/
+
+/* 翻页条 */
+.fanye {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 30px 0;
+}
+.fanye ul {
+  margin: 0 5px;
+  display: inline-block;
+}
+.fanye li {
+  color: #666;
+  margin: 0 10px;
+  cursor: pointer;
+  list-style: none;
+  display: inline-block;
+}
+.fanye .total {
+  color: #999;
+  margin-right: 23px;
+  font-size: 14px;
+}
+.fanye .fanye_options {
+  color: #666;
+  width: 61px;
+  height: 21px;
+  border: none;
+  margin: 0 5px;
+  outline: none;
+  cursor: pointer;
+  line-height: 21px;
+  background: #E1E1E1;
+}
+.fanye .tp {
+  width: 53px;
+  height: 19px;
+  outline: none;
+  margin-right: 8px;
+  border: 1px solid #D3D2D2;
+}
+.fanye .tp::-webkit-input-placeholder {
+  text-align: center;
+}
+
+/*===================*/
+
+#popup {
+  width: 100%;
+  min-height: 100%;
+  background: rgba(151,151,151,0.5);
+  z-index: 2;
+  display: none;
+  /*overflow: hidden;*/
+  position: absolute;
+  top: 0; left: 0;
+}
+#popbody {
+  width: 457px;
+  height: 250px;
+  background: #FFF;
+  text-align: center;
+  margin: 200px auto;
+}
+#popbody #msg {
+  width: 80%;
+  height: 160px;
+  padding: 80px 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  line-height: 25px;
+  font-size: 18px;
+}
+#popbody button {
+  width: 91px;
+  height: 31px;
+  outline: none;
+  cursor: pointer;
+  margin: 0 16px;
+  border: 1px solid #007A51;
+  line-height: 31px;
+  font-size: 14px;
+}
+#popbody #popup_OK {
+  color: #FFF;
+  background: #007A51;
+}
+#popbody #popup_back {
+  color: #007A51;
+  background: #FFF;
+}
+
+
+

@@ -1,0 +1,138 @@
+* { margin: 0; padding: 0; }
+html { font-size: 13px; }
+body {
+  min-height: 200px;
+  padding: 20px 15px;
+  background-color: #fff;
+  min-width: 770px;
+}
+#fabu_btn {
+  display: inline-block;
+}
+#fabu {
+  color: #007A53;
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 18px;
+  border: 1px solid #007A53;
+  user-select:none;
+  margin-bottom: 20px;
+}
+#fabu:hover {
+  color: #FFF;
+  background-color: #007A53;
+}
+
+/* table */
+#list_table {
+  text-align: center;
+  width: 100%;
+  background: #FFF;
+  border-collapse: collapse;
+}
+#list_table>thead {
+  height: 34px;
+  color: #FFF;
+  line-height: 34px;
+  background-color: #007A53;
+}
+#list_table>thead td {
+  padding: 0 20px;
+}
+#list_table>tbody>tr {
+  height: 40px;
+  border-bottom: 1px solid #EEE;
+}
+#caozuo>span {
+  margin: 0 5px;
+  /*line-height: 22px;*/
+  /*display: block;*/
+}
+span>a {
+  
+  text-decoration: none;
+}
+span>a:visited {
+  color: #00E;
+}
+
+/* 筛选条件 */
+#Filters {
+  margin-top: 11px;
+}
+#filter {
+  float: right;
+  font-size: 10px;
+  color: #007A53;
+}
+#filter input[type='text'] {
+  width: 100px;
+  height: 17px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 0 5px;
+  margin-right: 8px;
+  /*border: none;*/
+}
+#filter input[type='checkbox'] {
+  position: relative;
+  top: 2px;
+}
+#serch {
+  cursor: pointer;
+  display: inline-block;
+  height: 17px;
+  line-height: 17px;
+  color: #FFF;
+  background: #007A53;
+  padding: 0 4px;
+}
+
+
+
+/*翻页条*/
+
+#fanye {
+  width: 100%;
+  height: 40px;
+  font-size: 13px;
+  line-height: 40px;
+  text-align: center;
+  margin: 23px auto;
+}
+#fanye>div {
+  width: 40px;
+  height: 40px;
+  background: #FFF;
+  display: inline-block;
+  cursor: pointer;
+  /*border: 1px solid #DDD;*/
+}
+#fanye>ul {
+  display: inline-block;
+  background: #FFF;
+  list-style: none;
+}
+#fanye>ul>li {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  word-spacing: 0;
+  /*border: 1px solid #DDD;*/
+  cursor: pointer;
+  /*border-right: none;*/
+}
+#fanye #fanye_pre {
+  border-radius: 5px 0 0 5px;
+}
+#fanye #fanye_next {
+  border-radius: 0 5px 5px 0;
+}
+
+
+
+
+
+
+
+

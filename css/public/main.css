@@ -1,0 +1,25 @@
+/* group general styles
+------------------------------------------------------- */
+* {
+	font-family: "Microsoft Yahei UI" ! important;
+	padding:0;
+	margin:0;
+}
+
+ul{
+	list-style:none;
+}
+
+img{
+	border: none;
+}
+a{
+	text-decoration:none;
+}
+.wrap_center{
+	width:1180px;
+	margin:auto;
+	position:relative;
+	height:inherit;
+}
+

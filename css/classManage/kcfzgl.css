@@ -1,0 +1,240 @@
+* { padding: 0; margin: 0; }
+body {
+  background: #F7F6F6;
+}
+#option {
+  background: #FFF;
+  padding-left: 25px;
+  padding-top: 15px;
+}
+#down {
+  height: 0;
+  padding-bottom: 40px;
+}
+#down  span {
+  color: #333;
+  font-size: 14px;
+}
+
+#down select {
+  color: #333;
+  width: 140px;
+  height: 23px;
+  line-height: 23px;
+  outline: none;
+  margin-right: 30px;
+  border: 1px solid #AAA;
+}
+#down input[type="text"] {
+  width: 90px;
+  height: 21px;
+  position: relative;
+  top: -1px;
+  border: 1px solid #AAAAAA;
+}
+#down button {
+  width: 63px;
+  height: 25px;
+  color: #FFF;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  margin-left: 150px;
+  background: #009261;
+  border: 1px solid #009261;
+}
+/*=====================================*/
+
+#List {
+  min-height: 560px;
+  background: #FFF;
+  box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+}
+table {
+  width: 100%;
+  font-size: 14px;
+  background: #FFF;
+  text-align: center;
+  border-collapse: collapse;
+}
+td a {
+  margin: 0 5px;
+  color: #007A51;
+  text-decoration: none;
+}
+thead {
+  color: #FFF;
+}
+thead tr td {
+  height: 40px;
+  background: #009361;
+}
+.lefttd, .righttd {
+  width: 25px;
+  background: transparent;
+}
+.lefttd>div, .righttd>div {
+  height: 100%;
+}
+thead tr td.lefttd>div, thead tr td.righttd>div {
+  background: #009361;
+}
+.lefttd>div {
+  border-radius: 3px 0 0 3px;
+}
+.righttd>div {
+  border-radius: 0 3px 3px 0;
+}
+tbody tr td {
+  height: 52px;
+  border-bottom: 1px solid #EEE;
+}
+tbody tr td.lefttd,
+tbody tr td.righttd {
+  border-bottom: none;
+  /*background: red;*/
+}
+tbody tr.noborder td {
+  border-bottom: none;
+}
+tbody td .kcmc_num {
+  color: red;
+  margin-right: 5px;
+}
+tbody td .kcmc_name {
+  margin: 0 5px;
+}
+tbody td .kcmc_list {
+  cursor: pointer;
+  text-align: left;
+  /*display: inline-block;*/
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+tbody td .kcmc_list>span {
+  text-align: center;
+  display: inline-block;
+}
+/*=====================================*/
+
+/* Fanye */
+
+.fanye {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 30px 0;
+  /*background: #F7F6F6;*/
+}
+.fanye ul {
+  margin: 0 5px;
+  display: inline-block;
+}
+.fanye li {
+  color: #666;
+  margin: 0 10px;
+  cursor: pointer;
+  list-style: none;
+  display: inline-block;
+}
+.fanye .total {
+  color: #999;
+  margin-right: 23px;
+  font-size: 14px;
+}
+.fanye .fanye_options {
+  color: #666;
+  width: 61px;
+  height: 21px;
+  border: none;
+  margin: 0 5px;
+  outline: none;
+  cursor: pointer;
+  line-height: 21px;
+  background: #E1E1E1;
+}
+.fanye .tp {
+  width: 53px;
+  height: 19px;
+  outline: none;
+  margin-right: 8px;
+  border: 1px solid #D3D2D2;
+}
+.fanye .tp::-webkit-input-placeholder {
+  text-align: center;
+}
+
+/*======================================*/
+
+
+#popup {
+  width: 100%;
+  height: 100%;
+  background: rgba(151,151,151,0.5);
+  z-index: 2;
+  display: none;
+  position: fixed;
+  top: 0;
+
+}
+#popbody {
+  width: 457px;
+  height: 250px;
+  background: #FFF;
+  text-align: center;
+  margin: 200px auto;
+  overflow: hidden;
+}
+#popbody #msg {
+  width: 80%;
+  height: 160px;
+  padding: 80px 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  line-height: 25px;
+  font-size: 18px;
+}
+#popbody button {
+  width: 91px;
+  height: 31px;
+  outline: none;
+  cursor: pointer;
+  margin: 0 16px;
+  border: 1px solid #007A51;
+  line-height: 31px;
+  font-size: 14px;
+}
+#popbody #popup_OK {
+  color: #FFF;
+  background: #007A51;
+}
+#popbody #popup_back {
+  color: #007A51;
+  background: #FFF;
+}
+
+#popbody #kcmcs {
+  width: 95%;
+  text-align: left;
+  margin: 30px auto 0 auto;
+}
+#popbody #kcmcs .kcmc {
+  display: inline-block;
+  /*width: 61px;*/
+  margin: 8px 15px;
+  text-align: center;
+  /*text-align: left;*/
+  /*line-height: 30px;*/
+}
+
+
+
+
+
+
+
+

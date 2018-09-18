@@ -1,0 +1,449 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+	display: block;
+}
+button{
+	display: block;
+	border:1px solid black;
+	padding:0 6px;
+}
+.warp{
+	min-width: 1550px;
+}
+
+.warp_center{
+	position: relative;
+	width:1550px ;
+	margin: auto;
+	height:100%;
+}
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+#body{
+	background-color:#f7f6f6;
+	min-height: 872px;
+	overflow: hidden;
+}
+
+/*  -------- 内容部分 -----------------------------------------------------
+--------------------------------------------------------*/
+
+.BluMUI_Drop{
+	border: 1px solid #999;
+	border-top-right-radius:2px;
+	border-top-left-radius:2px;
+	width: 295px;
+	height: 28px;
+	line-height: 28px;
+	position: relative;
+	display: inline-block;
+	margin-left: 19px;
+
+}
+.BluMUI_Drop span{
+	width:276px;
+	display: block;
+	font-size:12px;
+	height:28px;
+	color: #999;
+	background:url("../../imgs/courseMaster/dropDown.png") no-repeat;
+	background-color: #fff;
+	background-position: 275px 11px;
+	padding-left: 18px;
+}
+.BluMUI_Drop ul{
+	list-style: none;
+	border-top:none;
+	width:100%;
+	float: left;
+}
+.BluMUI_Drop li{
+	width:100%;
+	height: 28px;
+	font-size:12px;
+	padding-left: 18px;
+	color: #969696;
+	background-color: #F7F7F7;
+}
+.BluMUI_Drop li:hover{
+	background-color: #F0F0F0;
+}
+.BluMUI_Drop .selectArea{
+	border:1px solid #BABABA;
+	width: 100%;
+	overflow: hidden;
+	margin-left: -1px;
+	position: absolute;
+	z-index: 1;
+}
+.BluMUI_Drop .selectArea #scroll{
+	width:10%; /*不要动这个*/
+	height: 100%;/*不要动这个*/
+	float: left;
+}
+.BluMUI_Drop .selectArea #bar{
+	width: 100%;/*不要动这个*/
+	height: 20px;
+	border: none;
+	outline: none;
+	background-color:black;
+	opacity: 0.7;
+	display: block;/*不要动这个*/
+}
+
+
+.BluMUI_PT{
+	display: inline-block;
+	margin-top: 17px;
+	margin-left: 165px;
+}
+.BluMUI_PT  button{
+	float: left;
+	height: 20px;
+	width:60px;
+	color:#666;
+	font-size: 12px;
+	background:#e1e1e1;
+	border: none;
+	margin-left: 10px;
+	outline: none;
+}
+.BluMUI_PT .last{
+	margin-right: 10px;
+}
+.BluMUI_PT .next{
+}
+.BluMUI_PT .toTop{
+	margin-left: 0px;
+}
+.BluMUI_PT .toBottom{
+}
+.BluMUI_PT #warp {
+	float: left;
+	list-style: none;
+}
+.BluMUI_PT #warp li{
+	float: left;
+	font-size: 16px;
+	color: #666;
+	line-height: 20px;
+	height: 20px;
+	width: 30px;
+	text-align: center;
+}
+.BluMUI_PT #warp .cur{
+	color: #00af62;
+}
+#body .BluMUI_PT #warp li:hover{
+	opacity: 0.5;
+	cursor: pointer;
+}
+#body .BluMUI_PT .inputWarp{
+	float: left;
+	border: 1px solid #d1d1d1;
+	background: #fff;
+	height: auto;
+	margin: 0;
+	width:auto;
+}
+#body .BluMUI_PT .inputWarp input{
+	border: none;
+	height:18px;
+	width:30px;
+	line-height: 18px;
+	outline: none;
+	font-size: 14px;
+	color: #999;
+	text-align: right;
+}
+#body .BluMUI_PT .inputWarp .sum{
+	font-size: 14px;
+	color: #999;
+	width: 30px;
+	display: inline-block;
+	text-align: left;
+}
+#body .BluMUI_PT  .allNum{
+	float: left;
+	font-size: 14px;
+	color: #999;
+	margin-right: 26px;
+	line-height: 18px;
+}
+
+#body .Radio{
+	height: 12px;
+	width:12px;
+	border: 1px solid #333333;
+	background: #fff;
+	display: inline-block;
+	margin-right: 28px;
+	margin-left: 47px;
+}
+#body .Radio-selected{
+	height: 12px;
+	width:12px;
+	border: 1px solid #333333;
+	display: inline-block;
+	margin-right: 28px;
+	margin-left: 47px;
+	background: url('../../imgs/systemManage/selected.png') no-repeat;
+	background-color: #fff;
+}
+
+#body .AddEditor .addTitle{
+	color: #333;
+	font-size: 18px;
+	margin-left: 58px;
+	margin-top: 32px;
+}
+#body .AddEditor .radioWarp{
+	overflow: hidden;
+	margin-left: 41px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+#body .AddEditor .radio{
+	float: left;
+	margin-left: 17px;
+}
+#body .AddEditor .radio .text{
+	color: #333;
+	font-size: 15px;
+	margin-left: 7px;
+}
+#body .AddEditor .radio .icon{
+	height:12px;
+	width:12px;
+	border: 1px solid #333;
+	background-color: #fff;
+	display: inline-block;
+}
+#body .AddEditor .radio .selected{
+	background-image: url('../../imgs/systemManage/selected.png');
+}
+
+
+#body .formWarp{
+	width: 1100px;
+	margin-left: 60px;
+	overflow: hidden;
+}
+#body .inputWarp{
+	height: 28px;
+	margin-top: 24px;
+	width: 550px;
+	float: left;
+}
+#body .inputWarp .must{
+	background-image:url('../../imgs/public/red_star1.png');
+	background-repeat: no-repeat;
+}
+#body .inputWarp .title .left{
+	width: 50%;
+	display: inline-block;
+	text-align: left;
+}
+#body .inputWarp .title .right{
+	width: 50%;
+	display: inline-block;
+	text-align: right;
+}
+#body .inputWarp .title{
+	color: #333;
+	font-size: 18px;
+	width:80px;
+	height:18px;
+	display: inline-block;
+	line-height: 18px;
+	outline: none;
+	padding-left: 15px;
+}
+#body .inputWarp  .text{
+	width:267px;
+	height: 26px;
+	padding-left: 18px;
+	padding-right: 10px;
+	border: 1px solid #999;
+	margin-left: 19px;
+}
+#body .inputWarp .textarea{
+	resize: none;
+	width: 850px;
+	height:120px;
+	border:1px solid #999;
+	float: left;
+	margin-left: 19px;
+}
+#body .inputWarp  .floatTitle{
+	color: #333;
+	font-size: 18px;
+	width:120px;
+	height:18px;
+	display: inline-block;
+	text-align: right;
+	line-height: 18px;
+	margin-left: 315px;
+	outline: none;
+	float: left;
+}
+
+#body .btn{
+	width:90px;
+	height:30px;
+	float: left;
+	border: 1px solid #007a51;
+}
+#body .btnWarp{
+	height:30px;
+	width: 240px;
+	overflow: hidden;
+	margin-left: 450px;
+	margin-top: 50px;
+}
+#body .btnWarp .left{
+	background: #007A51;
+	color: white;
+	font-size: 14px;
+	float: left;
+}
+#body .btnWarp .right{
+	background: #fff;
+	color: #007A51;
+	font-size: 14px;
+	float: right;
+}
+#body  .warn{
+	color:red;
+	font-size: 14px;
+	margin-left:12px;
+}
+
+/* inside */
+
+#body .inside .BluMUI_Drop{
+	border: 1px solid #999;
+	border-top-right-radius:2px;
+	border-top-left-radius:2px;
+	width: 163px;
+	height: 28px;
+	line-height: 28px;
+	position: relative;
+	display: inline-block;
+	margin-left: 19px;
+
+}
+#body .inside .BluMUI_Drop span{
+	width:145px;
+	display: block;
+	font-size:12px;
+	height:28px;
+	color: #999;
+	background:url("../../imgs/courseMaster/dropDown.png") no-repeat;
+	background-color: #fff;
+	background-position: 145px 11px;
+	padding-left: 18px;
+}
+#body .inside .header{
+	height:30px;
+}
+#body .inside .selectWarp{
+	margin-left: 55px;
+	float: left;
+}
+#body .inside .header .title{
+	color: #333;
+	font-size: 16px;
+}
+
+#body .inside .searchWarp{
+	float: left;
+	margin-left: 30px;
+	line-height: 30px;
+}
+#body .inside .searchWarp .inputWarp{
+	float: left;
+	width:auto;
+	margin: 0;
+	border: 1px solid #999;
+	height: 30px;
+	margin-left: 10px;
+}
+#body .inside .searchWarp input{
+	float: left;
+	border: none;
+	outline: none;
+	height: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
+	width:140px;
+}
+#body .inside .searchWarp button{
+	float: left;
+	border: none;
+	height: 31px;
+	background: #009361;
+	color: white;
+}
+#body .inside .btnWarp{
+	margin-left: 370px;
+}
+
+#body .ListWarp{
+	margin-top: 20px;
+	margin-left: 55px;
+	width:887px;
+	background: #fff;
+	height:448px;
+	overflow: hidden;
+
+}
+#body .ListWarp ul{
+	width:887px;
+}
+#body .ListWarp li{
+	float: left;
+	text-align: center;
+}
+#body .ListWarp .ra{
+	width:100px;
+}
+#body .ListWarp .xm{
+	width:150px;
+	overflow: hidden;
+}
+#body .ListWarp .xy{
+	width:600px;
+	overflow: hidden;
+}
+#body .ListWarp .headUL{
+	background: #009361;
+	overflow: hidden;
+	color: white;
+	height: 40px;
+	line-height: 40px;
+}
+
+#body .ListWarp .UL{
+	height: 50px;
+	line-height: 50px;
+	border-top: 1px solid #EEE;
+	background: #fff;
+	margin-right: 24px;
+}
+#body .ListWarp .index-0{
+	border: none;
+}

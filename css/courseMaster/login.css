@@ -1,0 +1,197 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+	display: block;
+}
+button{
+	display: block;
+	border:1px solid black;
+	padding:0 6px;
+}
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+
+html,body{
+	height:100%;
+	width: 100%;
+	background: url("../../imgs/home/login.jpg") no-repeat;
+	background-size: cover;
+}
+body{
+	min-height: 820px;
+	position: relative;
+	text-align: center;
+}
+#logo{
+	width:536px;
+	height:74px;
+	left:50%;
+	margin-left:-268px;
+	position: absolute;
+	top: 130px;
+}
+#logo img {
+	float: left;
+}
+#logo span{
+	float: left;
+	color:#007a51;
+	font-size: 26px;
+	font-weight: bold;
+	line-height: 74px;
+	margin-left: 10px;
+	display: inline-block;
+}
+
+#Login{
+	position: absolute;
+	top: 245px;
+	background-color: #fff;
+	width:386px;
+	height:485px;
+	left: 50%;
+	margin-left: -193px;
+}
+#Login .loginTitle{
+	text-align: center;
+	font-size: 24px;
+	color: #007a51;
+	margin-top: 37px;
+}
+
+#Login .inputWarp{
+	overflow: hidden;
+	border: 1px solid #d3d3d3;
+	width:307px;
+	margin: auto;
+	margin-top:38px;
+	font-size: 16px;
+	color: #333333;
+}
+#Login .inputWarp .title{
+	height:53px;
+	width:53px;
+	float: left;
+}
+#Login .inputWarp .title1{
+	height: 30px;
+	width:53px;
+	display: inline-block;
+	float: left;
+	background:url("../../imgs/courseMaster/ca.png") no-repeat ;
+	background-position:20px 2px ;
+}
+#Login .ca{
+	height:32px;
+	width:93px;
+	float: left;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#Login .inputWarp .account{
+	background:url("../../imgs/courseMaster/account.png") no-repeat ;
+	background-position:20px 15px ;
+}
+#Login .inputWarp .key{
+	background:url("../../imgs/courseMaster/key.png") no-repeat ;
+	background-position:20px 15px ;
+}
+#Login .inputWarp input{
+	border: none;
+	width:242px;
+	height:53px;
+	outline:none;
+	float: left;
+	padding-right:10px;
+}
+
+#Login #radio{
+	border: 1px solid #cccccc;
+	height:13px;
+	width:13px;
+	display: inline-block;
+	float: left;
+	margin-top: 1px;
+}
+#Login .selected{
+	background: url('../../imgs/courseMaster/remberme.png') no-repeat;
+}
+#Login #text{
+	float: left;
+	display: inline-block;
+	font-size: 14px;
+	color:#999;
+	margin-left: 7px;
+}
+#Login #rember{
+	width:309px;
+	margin: auto;
+	margin-top: 24px;
+	margin-bottom: 20px;
+	height: 20px;
+}
+#Login button{
+	width:309px;
+	height:55px;
+	display: block;
+	margin: auto;
+	margin-top:14px;
+	border: 1px solid #007a51;
+	font-size: 18px;
+	outline: none;
+}
+#Login .Login .disable{
+	background: #999;
+	border-color: #999;
+	color: white;
+}
+#Login .login{
+	background: #007a51;
+	color: white;
+}
+#Login .reset{
+	color: #007a51;
+	background-color: #fff;
+}
+#Login #ext{
+	width:309px;
+	margin: auto;
+	font-size: 14px;
+	margin-top: 20px;
+}
+#Login #ext a{
+	color: #999;
+}
+#Login .left{
+	float: left;
+}
+#Login .right{
+	float: right;
+}
+	/*footer*/
+#footer .copyRight{
+	font-size: 16px;
+	color: #ffffff;
+	display: block;
+}
+#footer{
+	background-color: #007a51;
+	background-color: rgba(0,122,81,0.6);
+	text-align: center;
+	bottom: 0;
+	position: absolute;
+	width: 100%;
+	padding:1.5% 0;
+}

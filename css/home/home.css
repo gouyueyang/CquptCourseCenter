@@ -1,0 +1,297 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button{
+	margin: 0;
+	padding: 0;
+	font: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+	display: block;
+}
+button{
+	display: block;
+	border:1px solid black;
+	padding:0 6px;
+}
+.warp{
+	min-width: 1180px;
+}
+
+.warp_center{
+	position: relative;
+	width:1180px ;
+	margin: auto;
+	height:100%;
+}
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+#header{
+	height: 136px;
+	background-color: #ffffff;
+}
+
+#body{
+	background-color: #f7f7f7;
+	height: 872px;
+}
+
+#footer{
+	height:71px;
+	background-color: #007a51;
+	text-align: center;
+}
+
+
+/*------结构内容部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+
+/*header*/
+
+#header .logo_warp{
+	height:86px;
+	margin-top: 33px;
+	width: 443px;
+	overflow: hidden;
+	display: inline-block;
+}
+#header .logo{
+	height: 100%;
+	float: left;
+	width: 304px;
+	background:url("../../imgs/public/logo.png") no-repeat 0px 7px;
+}
+
+#header .logo_text{
+	height: 100%;
+	float: left;
+	font-size:30px;
+	line-height:86px;
+	margin-left: 19px;
+	color: #007a51;
+}
+#header .help{
+	display: inline-block;
+	font-size: 16px;
+	color:#666666;
+	float:right;
+	margin-top: 69px;
+}
+#header .help a{
+	color:#666666;
+}
+/*body*/
+
+/*body - carousel_warp*/
+
+#body .carousel_warp{
+	height: 339px;
+	width: 1180px;
+}
+
+
+/* body - logIn_warp*/
+#body .logIn_warp{
+	height: 152px;
+	width: 440px;
+	margin: auto;
+}
+#body .logIn_warp #left {
+	margin-top: 47px;
+	display: inline-block;
+	padding:1px;
+	border:1px solid #f75d00;
+	background-color: #ffffff;
+	float:left;
+}
+
+#body .logIn_warp #left span{
+	background-color: #f75d00;
+	color: #ffffff;
+	border:1px solid #ffffff;
+}
+#body .logIn_warp .right {
+	margin-top: 47px;
+	float: left;
+	margin-left: 115px;
+	display: inline-block;
+	padding:1px;
+	border: 1px solid #007a51;
+	background-color: #ffffff;
+}
+
+#body .logIn_warp .right span{
+	background-color: #ffffff;
+	color: #007a51;
+	border:1px solid #007a51;
+}
+
+#body .logIn_warp .button{
+	display: inline-block;
+	font-size: 20px;
+	width: 156px;
+	height:56px;
+	text-align: center;
+	line-height: 56px;
+}
+
+
+/*body - title_warp */
+#body .intrClass{
+	font-size: 20px;
+	color:#007a51;
+	display: inline-block;
+	width:238px;
+	float: left;
+	height: 100%;
+	line-height: 29px;
+	text-align: center;
+}
+#body hr{
+	float: left;
+	display: inline-block;
+}
+#body .horizontalLine{
+	width: 425px;
+	border: none;
+	height:1px;
+	margin-top:14px;
+	background-color:#1f8663 ;
+}
+#body .vertical{
+	margin-top: 2px;
+	height: 26px;
+	width:4px;
+	border: none;
+	background-color:#1f8663 ;
+}
+#body .title_warp{
+	overflow: hidden;
+	height: 29px;
+
+}
+#body .title_warp .left{
+	margin-left: 42px;
+}
+
+/*body - content_warp */
+#body .content_warp{
+	height: 190px;
+}
+#body .content_warp p{
+	margin-top: 52px;
+	line-height:32px;
+	font-size: 16px;
+	color:#007a51;
+	text-align:justify;
+	display: inline-block;
+	padding-left: 88px;
+	padding-right: 88px;
+	width: 638px;
+	height: 160px;
+}
+#body .content_warp span{
+	width: 29px;
+	height:28px;
+	margin-bottom: 58px;
+	display: inline-block;
+	background:url("../../imgs/home/content_img.png") no-repeat;
+}
+#body .content_warp .left{
+	margin-left: 143px;
+}
+
+
+/* body -carousel_warp*/
+#body .carousel_warp{
+	height: 386px;
+}
+#body .margin{
+	height: 14px;
+}
+.BluMUI_Carousel{
+	position: relative;
+	height: 100%;
+	width:100%;
+	overflow: hidden;
+}
+.BluMUI_Carousel .body{
+	list-style: none;
+	height: 100%;
+	width:100%;
+	position: absolute;
+}
+.BluMUI_Carousel .body li{
+	float: left;
+	width: 1180px;
+	height:100%;
+}
+.BluMUI_Carousel img{
+	width: 100%;
+	height: 100%;
+}
+.BluMUI_Carousel .nav{
+	position: absolute;
+	z-index: 2;
+	width: 1180px;
+	height: 42px;
+	bottom: 0;
+	background:url('../../imgs/home/carousel_bg.png') repeat-x ;
+}
+.BluMUI_Carousel .nav li{
+	cursor: pointer;
+	float: left;
+	width: 28px;
+	height: 32px;
+	margin-left: 37px;
+	margin-top: 5px;
+
+}
+.BluMUI_Carousel .on{
+	background:url('../../imgs/home/carousel_selected.png');
+}
+.BluMUI_Carousel .off{
+	width: 28px;
+	height: 32px;
+	background:url('../../imgs/home/carousel_noselected.png');
+}
+.BluMUI_Carousel .nav button{
+	float: left;
+	border: none;
+	width: 16px;
+	height: 32px;
+	margin-top: 5px;
+	outline: none;
+}
+.BluMUI_Carousel .nav .last{
+	background: url('../../imgs/home/carousel_left.png');
+	margin-right: 5px;
+}
+.BluMUI_Carousel .nav .next{
+	background: url('../../imgs/home/carousel_right.png');
+	float: left;
+	margin-left:99px;
+}
+.BluMUI_Carousel .control{
+	width: 402px;
+	height: 100%;
+	margin: auto;
+}
+.BluMUI_Carousel .showNav{
+	float: left;
+	margin-left: 62px;
+}
+
+/*footer*/
+#footer .copyRight{
+	font-size: 16px;
+	color: #ffffff;
+	height:71px;
+	line-height: 71px;
+}

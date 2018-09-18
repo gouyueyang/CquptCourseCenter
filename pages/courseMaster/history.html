@@ -1,0 +1,64 @@
+<!Doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit|ie-stand">
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<title>课程中心-评审-历史查询</title>
+	<link rel="stylesheet" type="text/css" href="../../css/courseMaster/history.css">
+</head>
+<body>
+<div id="header" class="warp">
+	<div class="warp_center">
+		<img src="../../imgs/public/title.png">
+	</div>
+</div>
+<div id="body" class="warp">
+	<div class="warp_center" >
+		<div id="Nav">
+			<ul class="BluMUI_NavList ">
+				<li >
+					<a href="review.html">评审</a>
+				</li>
+				<li class="selected">
+					<a href="history.html">历史查询</a>
+				</li>
+			</ul>
+		</div>
+		<div id="selectFunc">
+			<div class="inputWarp">
+				<input type="text" id="search">
+				<button id="searchBtn"/>
+			</div>
+			<div class="selectWarp">
+				<span class="title">网评批次：</span>
+				<div id="wpSelect"></div>
+			</div>
+
+		</div>
+		<div id="listWarp">
+			<ul id="title">
+				<li class="pc">网评批次</li>
+				<li class="mc">课程名称</li>
+				<li class="js">结束时间</li>
+				<li class="tj">提交时间</li>
+				<li class="pf">评分</li>
+				<li class="pj">评价</li>
+			</ul>
+			<div id="list"></div>
+		</div>
+		<div id="Pt"></div>
+	</div>
+</div>
+<div id="footer" class="warp">
+	<div class="warp_center">
+				<span class="copyRight">
+					版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+				</span>
+	</div>
+</div>
+
+<script src="../../js/libs/courseCenter.config.js"></script>
+<script src="../../js/pages/masterHistory.js"></script>
+</body>
+</html>

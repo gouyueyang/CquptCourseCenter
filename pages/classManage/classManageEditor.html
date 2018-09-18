@@ -1,0 +1,58 @@
+<!Doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="renderer" content="webkit|ie-stand">
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<title>课程管理中心-课程维护</title>
+	<script src="../../js/libs/ueditor.config.js"></script>
+	<script src="../../js/libs/ueditor.all.min.js"> </script>
+	<script src="../../js/libs/zh-cn.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/classManage/classManageEditor.css">
+</head>
+<body>
+	<div id="logo" class="warp">
+		<div class="warp_center">
+			<div class="logo_warp">
+				<a href="../classList.jsp"><span class="logo"></span></a>
+				<span class="logo_text">课程中心</span>
+			</div>
+		</div>
+	</div>
+	<div id="body" class="warp">
+		<div class="warp_center">
+			<div class="classNameShow">
+				<div class="top">
+					<span class="title">课程维护</span>
+				</div>
+				<hr>
+				<div class="middle">
+					<span id="courseName" class="name">课程名称</span>
+					<!--<button class="submit" id="submitReview">提交审核</button>-->
+					<button class="view" id="back">返回</button>
+					<button class="view" id="view">预览</button>
+				</div>
+				<hr>
+				<div id="courseStatus">
+				</div>
+			</div>
+			<div class="content">
+				<div id="nav"></div>
+				<div id="viewArea"></div>
+			</div>
+		</div>
+	</div>
+
+	<div id='footer' class="warp">
+		<div class="warp_center">
+					<span class="copyRight">
+						版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+					</span>
+		</div>
+	</div>
+	<iframe id="downloadIframe" name = "downLoad">
+	</iframe>
+	<script src="../../js/libs/courseCenter.config.js"></script>
+	<script src="../../js/pages/classManageEditor.js"></script>
+</body>
+</html>

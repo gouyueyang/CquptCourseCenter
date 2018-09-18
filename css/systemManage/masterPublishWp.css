@@ -1,0 +1,423 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+	display: block;
+}
+button{
+	display: block;
+	border:1px solid black;
+	padding:0 6px;
+}
+.warp{
+	min-width: 1550px;
+}
+
+.warp_center{
+	position: relative;
+	width:1550px ;
+	margin: auto;
+	height:100%;
+}
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+#body{
+	background-color:#fff;
+	min-height: 872px;
+	overflow: hidden;
+}
+
+/*  -------- 内容部分 -----------------------------------------------------
+--------------------------------------------------------*/
+
+.BlueMUI_Date{
+	width: 300px;
+	z-index: 1;
+	position: absolute;
+	border: 1px solid #666;
+	top: 28px;
+}
+.BlueMUI_Date .header{
+	overflow: hidden;
+	background: #007A51;
+	height: 30px;
+	line-height: 30px;
+}
+
+
+.BlueMUI_Date .selectWarp{
+	width:140px;
+	float: left;
+	color: #fff;
+	text-align: center;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.BlueMUI_Date .selectWarp .next,
+.BlueMUI_Date .selectWarp .last{
+	height: 16px;
+	width: 16px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #007A51;
+	border: none;
+	outline: none;
+	margin-top: 7px;
+}
+.BlueMUI_Date .selectWarp span{
+	cursor: default;
+	width:80px;
+	display: inline-block;
+}
+
+.BlueMUI_Date .selectWarp .last{
+	float: left;
+	margin-left: 10px;
+	background-image: url("../../imgs/systemManage/last.png") ;
+}
+
+.BlueMUI_Date .selectWarp .next{
+	float: right;
+	margin-right: 10px;
+	background-image: url("../../imgs/systemManage/next.png") ;
+
+}
+.BlueMUI_Date  .timer{
+	background: #fff;
+	width: 130px;
+	height: 20px;
+	line-height: 20px;
+	margin-top: 5px;
+	margin-left: 10px;
+	cursor: pointer;
+	float: left;
+}
+
+.BlueMUI_Date  .timer .time{
+	display: inline-block;
+	width:40px;
+	text-align: center;
+	border: none;
+	outline: none;
+}
+.BlueMUI_Date .body{
+	background: #FFF;
+	height:200px;
+}
+.BlueMUI_Date .body .titleList{
+	background: #f5f5f5;
+	height: 20px;
+	overflow: hidden;
+	line-height: 20px;
+}
+.BlueMUI_Date .body .titleList li{
+	float: left;
+	width:42.5px;
+	text-align: center;
+}
+.BlueMUI_Date .body .dateList li{
+						float: left;
+	width:42.5px;
+	text-align: center;
+	height: 30px;
+	line-height: 30px;
+	cursor: default;
+}
+.BlueMUI_Date .body .dateList .has:hover{
+	background: #007A51;
+	color: white;
+}
+.BlueMUI_Date .body .dateList .selected{
+	background: #007A51;
+	color: white;
+}
+.BlueMUI_Date .footer{
+	background:#f5f5f5;
+	height: 30px;
+	overflow: hidden;
+}
+.BlueMUI_Date .reset,
+.BlueMUI_Date .sure{
+	float: right;
+	height: 18px;
+	margin-top: 5px;
+	border: 1px solid #007A51;
+	line-height: 18px;
+	font-size: 12px;
+	outline: none;
+}
+.BlueMUI_Date .reset{
+	background: #fff;
+	color: #007A51;
+	margin-right: 10px;
+}
+.BlueMUI_Date .sure{
+	background: #007A51;
+	color: white;
+}
+.BluMUI_Drop{
+	border: 1px solid #999;
+	border-top-right-radius:2px;
+	border-top-left-radius:2px;
+	width: 295px;
+	height: 28px;
+	line-height: 28px;
+	position: relative;
+	display: inline-block;
+	margin-left: 19px;
+
+}
+.BluMUI_Drop span{
+	width:267px;
+	display: block;
+	font-size:12px;
+	height:28px;
+	color: #999;
+	background:url("../../imgs/courseMaster/dropDown.png") no-repeat;
+	background-position: 275px 11px;
+	padding-left: 18px;
+}
+.BluMUI_Drop ul{
+	list-style: none;
+	border-top:none;
+	width:100%;
+	float: left;
+}
+.BluMUI_Drop li{
+	width:100%;
+	height: 28px;
+	font-size:12px;
+	background-color: #F7F7F7;
+}
+.BluMUI_Drop .body{
+	max-height: 140px;
+	overflow-y: auto;
+	border:1px solid #BABABA;
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+	margin-left: -1px;
+}
+.BluMUI_Drop a{
+	padding-left: 18px;
+	color: #969696;
+}
+.BluMUI_Drop li:hover{
+	background-color: #F0F0F0;
+}
+
+
+.BluMUI_FileUp{
+	float: left;
+	margin-left: 19px;
+	height:28px;
+}
+.BluMUI_FileUp .fileInput span{
+	position: absolute;
+	width: 100%;
+	display: block;
+	text-align: center;
+	line-height: 26px;
+	height: 20px;
+	font-size: 14px;
+	color: #009361;
+}
+.BluMUI_FileUp  .fileInput{
+	position: relative;
+	width:90px;
+	height:26px;
+	background: #fff;
+	border: 1px solid #999;
+	overflow: hidden;
+	display: inline-block;
+	float: left;
+}
+.BluMUI_FileUp .fileArea{
+	float: left;
+	margin-top: 1px;
+}
+.BluMUI_FileUp input{
+	border: none;
+	position: absolute;
+	font-size:124px;
+	opacity:0;
+	filter:alpha(opacity=0);
+}
+.BluMUI_FileUp #warn{
+	color: #666;
+	font-size: 14px;
+	margin-top: 8px;
+	display: inline-block;
+	margin-left: 17px;
+}
+#body .selected-radio{
+	width: 12px;
+	height:12px;
+	border: 1px solid #333;
+	display: inline-block;
+	background: #fff;
+	float: left;
+	margin-top: 4px;
+	margin-left: 19px;
+	background-image: url("../../imgs/systemManage/selected.png");
+	background-repeat: no-repeat;
+}
+#body .radio{
+	width: 12px;
+	height:12px;
+	border: 1px solid #333;
+	display: inline-block;
+	background: #fff;
+	float: left;
+	margin-top: 4px;
+	margin-left: 19px;
+}
+#body .radioTitle{
+	float: left;
+	margin-left: 5px;
+}
+#body .formWarp-title{
+	font-size: 20px;
+	margin-left: 315px;
+	color: #007A51;
+	margin-top: 10px;
+}
+#body #form{
+	margin: auto;
+}
+#body .inputWarp{
+	position: relative;
+	height: 28px;
+	margin-top: 24px;
+}
+#body .inputWarp .title{
+	color: #333;
+	font-size: 18px;
+	width:120px;
+	height:18px;
+	display: inline-block;
+	text-align: right;
+	line-height: 18px;
+	margin-left: 315px;
+	outline: none;
+	float: left;
+	margin-top: 3px;
+}
+#body .inputWarp .titleM{
+	background: url('../../imgs/public/red_star.png') no-repeat;
+}
+#body .inputWarp .small-title-m{
+	background-position: 30px 0;
+}
+#body .inputWarp  .text{
+	width:277px;
+	height: 26px;
+	border: 1px solid #999;
+	margin-left: 19px;
+	display: inline-block;
+	padding-left: 18px;
+	font-size: 14px;
+	color: #333;
+}
+
+#body  .disabled{
+	background-color: rgb(235,235,228);
+}
+#body .inputWarp .text .timeText{
+	line-height: 28px;
+}
+#body .inputWarp .text .dateIcon{
+	background-image: url("../../imgs/systemManage/date.png");
+	background-repeat: no-repeat;
+	height:20px;
+	width:20px;
+	display: inline-block;
+	cursor: pointer;
+	float: right;
+	margin-top: 4px;
+	margin-right:4px;
+}
+#body .inputWarp .textarea{
+	resize: none;
+	width: 850px;
+	height:120px;
+	border:1px solid #999;
+	float: left;
+	margin-left: 19px;
+}
+#body .inputWarp  .floatTitle{
+	color: #333;
+	font-size: 18px;
+	width:120px;
+	height:18px;
+	display: inline-block;
+	text-align: right;
+	line-height: 18px;
+	margin-left: 315px;
+	outline: none;
+	float: left;
+}
+#body .btn{
+	width:90px;
+	height:30px;
+	float: left;
+	border: 1px solid #007a51;
+}
+#body .btnWarp{
+	height:30px;
+	margin-top: 24px;
+	margin-bottom: 30px;
+}
+#body .btnWarp .left{
+	margin-left: 455px;
+	background: #007A51;
+	color: white;
+	font-size: 14px;
+}
+#body .btnWarp .right{
+	background: #fff;
+	color: #007A51;
+	font-size: 14px;
+	margin-left: 19px;
+}
+#body  .warn{
+	color: red;
+	font-size: 14px;
+	margin-left:19px;
+}
+#body .file-warn{
+	color: #666;
+	font-size: 14px;
+	margin-left:19px;
+}
+#body .fileList{
+	margin-left: 455px;
+	margin-top: 10px;
+}
+#body .fileList li{
+	overflow: hidden;
+	margin-top: 10px;
+}
+#body .fileList .fileName{
+	float: left;
+	width:300px;
+	display: inline-block;
+	overflow: hidden;
+}
+#body .fileList .delete{
+	float: left;
+	color: #007A51;
+	cursor: pointer;
+}

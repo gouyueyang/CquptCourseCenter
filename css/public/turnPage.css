@@ -1,0 +1,45 @@
+/* 翻页条 */
+.fanye {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    line-height: 16px;
+    padding: 30px 0;
+  }
+  .fanye ul {
+    margin: 0 5px;
+    display: inline-block;
+  }
+  .fanye li {
+    color: #666;
+    margin: 0 10px;
+    cursor: pointer;
+    list-style: none;
+    display: inline-block;
+  }
+  .fanye #rows {
+    color: #999;
+    margin-right: 23px;
+    font-size: 14px;
+  }
+  .fanye .fanye_options {
+    color: #666;
+    width: 61px;
+    height: 21px;
+    border: none;
+    margin: 0 5px;
+    outline: none;
+    cursor: pointer;
+    line-height: 21px;
+    background: #E1E1E1;
+  }
+  .fanye #tp {
+    width: 53px;
+    height: 19px;
+    outline: none;
+    margin-right: 8px;
+    border: 1px solid #D3D2D2;
+  }
+  .fanye #tp::-webkit-input-placeholder {
+    text-align: center;
+  }

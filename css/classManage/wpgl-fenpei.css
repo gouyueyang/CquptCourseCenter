@@ -1,0 +1,347 @@
+* { margin: 0; padding: 0; }
+html {
+}
+body {
+  width: 100%;
+  overflow: hidden;
+  font-family: MicrosoftYaHei;
+}
+/*==========================*/
+/* checkbox */
+input[type="radio"],
+input[type="checkbox"] {
+  display: none;
+}
+label {
+  width: 12px;
+  height: 12px;
+  z-index: 1;
+  /*vertical-align: middle;*/
+  position: relative;
+  top: 2px;
+  background: #FFF;
+  margin-right: 5px;
+  display: inline-block;
+  border:1px solid #333;
+}
+input:checked + label>img {
+  display: block;
+}
+label>img {
+  display: none;
+  position: absolute;
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently*/
+}
+/*==========================================*/
+
+#wpgl_option {
+  background: #F7F6F6;
+}
+#wpgl_option #option {
+  background: #FFF;
+  padding-left: 16px;
+}
+#wpgl_option #up {
+  margin-top: 21px;
+}
+#wpgl_option #up p {
+  font-size: 15px;
+  margin-top: 12px;
+  padding-left: 5px;
+}
+#wpgl_option .big_btn {
+  width: 89px;
+  height: 29px;
+  color: #007A51;
+  font-size: 16px;
+  /*line-height: 27px;*/
+  background: #FFF;
+  cursor: pointer;
+  border: 1px solid #007A51;
+  margin-right: 30px;
+}
+#wpgl_option .big_btn:hover {
+  color: #FFF;
+  background: #007A51;
+}
+
+#wpgl_option #mid {
+  height: 0;
+  padding-bottom: 30px;
+  margin-top: 14px;
+  line-height: 30px;
+  font-size: 14px;
+}
+#wpgl_option #mid>div {
+  display: inline-block;
+}
+#wpgl_option #mid span {
+  margin-right: 20px;
+}
+#wpgl_option #mid #fzx {
+  margin: 0 0 0 10px;
+}
+#wpgl_option #mid select {
+  width: 90px;
+}
+#wpgl_option #mid #zj_state {
+  margin-right: 0;
+}
+#wpgl_option #mid #fenpei-fzx {
+  width: 100px;
+  height: 29px;
+  outline: none;
+  font-family: MicrosoftYaHei;
+  position: relative;
+  top: -1px;
+  line-height: 29px;
+  border: 1px solid #AAAAAA;
+}
+
+#wpgl_option #down {
+  width: 100%;
+  color: red;
+  font-size: 14px;
+  margin-top: 13px;
+  line-height: 18px;
+}
+#wpgl_option #down>div {
+  vertical-align: top;
+  display: inline-block;
+}
+
+#wpgl_option #serch {
+  width: 51px;
+  height: 22px;
+  color: #FFF;
+  border: none;
+  cursor: pointer;
+  vertical-align: middle;
+  line-height: 22px;
+  margin-left: 64px;
+  border: 1px solid #007A51;
+  background: #007A51;
+}
+
+/*============================================*/
+
+#wpgl_table {
+  width: 100%;
+  min-height: 400px;
+  background: #FFF;
+  box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+}
+ table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+ thead {
+  color: #FFF;
+}
+ thead td {
+  height: 40px;
+  background: #009361;
+}
+ td.td_head,
+ td.td_end {
+  background: none;
+}
+ thead td.td_head>div,
+ thead td.td_end>div {
+  background: #009361;
+}
+ td.td_head>div {
+  width: 100%;
+  height: 100%;
+  border-radius: 2px 0 0 2px;
+}
+ td.td_end>div {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 2px 2px 0;
+}
+ td span.num {
+  color: red;
+}
+ td a {
+  color: inherit;
+  text-decoration: none;
+}
+ td a span,
+ td span span {
+  margin: 0 10px;
+}
+/*-----------------------------*/
+
+ tbody td {
+  height: 66px;
+}
+ tbody td {
+  border-bottom: 1px solid #EEE;
+}
+ tbody td.td_head,
+ tbody td.td_end {
+  border-bottom: none;
+}
+ tbody td div span {
+  font-size: 14px;
+  margin: 0 7px;
+  cursor: pointer;
+}
+ tbody td input[type="text"]{
+  height: 25px;
+  width: 39px;
+  text-align: center;
+}
+.able {
+  color: #009261;
+}
+.disable {
+  color: #000;
+  cursor: default;
+}
+.green_btn {
+  color: #009361;
+}
+.yellow_btn {
+  color: #ff9b29;
+}
+.show_fzx {
+  color: #007A53;
+  font-size: 14px;
+}
+.show_fzx>span {
+  /*display: block;*/
+}
+/*===================================================*/
+
+/* 翻页条 */
+.fanye {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 30px 0;
+}
+.fanye ul {
+  margin: 0 5px;
+  display: inline-block;
+}
+.fanye li {
+  color: #666;
+  margin: 0 10px;
+  cursor: pointer;
+  list-style: none;
+  display: inline-block;
+}
+.fanye .total {
+  color: #999;
+  margin-right: 23px;
+  font-size: 14px;
+}
+.fanye .fanye_options {
+  color: #666;
+  width: 61px;
+  height: 21px;
+  border: none;
+  margin: 0 5px;
+  outline: none;
+  cursor: pointer;
+  line-height: 21px;
+  background: #E1E1E1;
+}
+.fanye .tp {
+  width: 53px;
+  height: 19px;
+  outline: none;
+  margin-right: 8px;
+  border: 1px solid #D3D2D2;
+}
+.fanye .tp::-webkit-input-placeholder {
+  text-align: center;
+}
+
+/*===================*/
+
+#popup {
+  height: 0px;
+}
+#popup #background {
+  z-index: 2;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  min-height: 100%;
+  background: rgba(151,151,151,0.5);
+}
+#background #poplist {
+  width: 80%;
+  margin: 50px auto;
+  background: #FFF;
+}
+#background #poplist #pop_table_body {
+  min-height: 300px;
+}
+#popbody {
+  width: 457px;
+  height: 250px;
+  background: #FFF;
+  text-align: center;
+  margin: 200px auto;
+}
+#popbody #msg {
+  width: 80%;
+  height: 160px;
+  padding: 80px 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  line-height: 25px;
+  font-size: 18px;
+}
+#popbody button {
+  width: 91px;
+  height: 31px;
+  outline: none;
+  cursor: pointer;
+  margin: 0 16px;
+  border: 1px solid #007A51;
+  line-height: 31px;
+  font-size: 14px;
+}
+#popbody #popup_OK {
+  color: #FFF;
+  background: #007A51;
+}
+#popbody #popup_back {
+  color: #007A51;
+  background: #FFF;
+}
+
+#ops>p {
+  line-height: 40px;
+}
+#ops>div {
+  float: right;
+  font-size: 14px;
+  margin-bottom: 13px;
+}
+#ops input {
+  width: 92px;
+  height: 23px;
+  margin-left: 5px;
+  margin-right: 8px;
+  line-height: 25px;
+  border: 1px solid #A9A9A9;
+}
+#ops button {
+  width: 63px;
+  height: 25px;
+  border: none;
+  line-height: 25px;
+  background: #009261;
+  color: #FFF;
+}

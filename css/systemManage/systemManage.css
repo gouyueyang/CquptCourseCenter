@@ -1,0 +1,50 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input,tr,td,tbody,table{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	font: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+a{
+	text-decoration:none;
+	color: black;
+}
+
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+#header{
+	height:50px;
+	width: 100%;
+	top:0;
+	left: 0;
+	position: fixed;
+	z-index: 10;
+	background: green;
+}
+
+#nav{
+	position: fixed;
+	height: 100%;
+	top:0;
+	width:10%;
+	background: red;
+}
+
+#content{
+	background: blue;
+	margin-left: 10%;
+	margin-right: 0;
+	margin-top: 50px;
+	height: 1800px;
+}
+
+

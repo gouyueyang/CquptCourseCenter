@@ -1,0 +1,59 @@
+/* group general styles
+------------------------------------------------------- */
+div,body,ul,li,img{
+	font-family: "Microsoft Yahei UI" ! important;
+	padding:0;
+	margin:0;
+}
+body,html{
+	height: 100%;
+	width:100%;
+}
+ul{
+	list-style:none;
+}
+
+img{
+	border: none;
+}
+
+.wrap_center{/*限制宽度*/
+	width:100%;
+	margin:0 auto;
+	position:relative;
+	height: 100%;
+}
+
+/* group page structure
+------------------------------------------------------- */
+
+
+#content{
+	width:100%;
+	height: 100%;
+	background-color:#f7f7f7;
+	overflow: auto;
+}
+
+
+
+.warnImg{
+	width: 150px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left:-75px;
+	margin-top:-175px;
+}
+.warn{
+	position: absolute;
+	height: 30px;
+	top: 50%;
+	left: 50%;
+	margin-left:-64px;
+	margin-top:-15px;
+	display: block;
+	text-align: center;
+	width:128px;
+}
+

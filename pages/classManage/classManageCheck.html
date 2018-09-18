@@ -1,0 +1,54 @@
+<!Doctype html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta name="renderer" content="webkit|ie-stand">
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<title>课程管理中心-课程维护</title>
+	<link rel="stylesheet" type="text/css" href="../../css/classManage/classManageCheck.css">
+</head>
+<body>
+	<div id="body" class="warp">
+		<div class="warp_center">
+			<div id="head">
+				<div id="search">
+					<input id="search-input" placeholder="请输入课程名称"/>
+					<button id="search-btn"/>
+				</div>
+			</div>
+			<div id="content">
+				<div id="rightContent">
+				</div>
+				<div id="leftContent">
+					<div id="class_nav">
+					</div>
+					<div class="wrap_center">
+						<iframe id="myIframe" name="content">
+						</iframe>
+					</div>
+					<div class="content" id="content">
+					</div>
+					<p id="ResourceNum-title">资源总计</p>
+					<div id="ResourceNum">
+					</div>
+					<div class="review">
+						<span class="title">审核备注</span>
+						<textarea type="text" name="review" id="review"></textarea>
+						<div class="control">
+							<button  class="left" id="pass">提交/审核</button>
+							<button class="right" id="reject">驳回</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="no-data" style="display: none">
+				<img class="warnImg" src="../../imgs/public/error.png">
+				<div class="warn">暂无待审核课程</div>
+			</div>
+		</div>
+	</div>
+<script src="../../js/libs/courseCenter.config.js"></script>
+<script src="../../js/libs/react.min.js"></script>
+<script  src="../../js/pages/classManageCheck.js"></script>
+</body>
+</html>

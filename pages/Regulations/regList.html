@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+	<title>规章制度</title>	
+	<link rel="stylesheet" type="text/css" href="../../css/plugins/blueMonUI.css">
+	<link rel="stylesheet" type="text/css" href="../../css/Regulation/regList.css">
+</head>
+<body>
+	<div class="outer">
+		<div id="head">
+			<div class="center-content">
+				<a href="http://cc.cqupt.edu.cn/CquptCourseCenter/pages/classList.jsp">
+					<img src="../../imgs/public/biglogo.png"></a>
+				</div>
+			</div>
+		</div>
+		
+	<div id="shadow"></div>
+
+	<div class="outer">
+		<div class="center-content">
+			<div id="body-list">
+				<div id="containBg">
+					<div id="contain">
+						<p id="title">规章制度</p>
+						<hr>
+						<div id="Filters">
+							<div id="filter">
+								<input id="searchTxt" type="text" placeholder="请输入规章制度标题名">
+								<button id="search"><a>查询</a></button>
+							</div>   
+						</div>
+
+						<div id="list">
+							<ul></ul>
+						</div>
+						
+					</div>
+				</div>	
+
+				<div id="test_fanye">
+					<div id="test_fanye_content">
+						<span id="listSum">共有45条记录</span>
+						<a class="changePT" href="regList.html?page=1"><span>首页</span></a>
+						<a class="changePT" href="regList.html?page=1"><span>上一页</span></a>
+						<a class="pageNum" href="regList.html?page=1">1</a>
+						<a class="pageNum" href="regList.html?page=2">2</a>
+						<a class="pageNum" href="regList.html?page=3">3</a>
+						<a class="pageNum" href="regList.html?page=4">4</a>
+						<a class="pageNum" href="regList.html?page=5">5</a>
+						<input id="inputPage" type="text" onkeydown="jump();" value="100/500">
+						<a class="changePT" href="regList.html?page=1"><span>下一页</span></a>
+						<a class="changePT" href="regList.html?page=1"><span>尾页</span></a>
+					</div>
+				</div>		
+			</div>
+		</div>
+
+		<div id="footer" class="outer">
+			<div class="center-content">
+				<span class="copyRight">
+					版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+				</span>
+			</div>
+		</div>
+		<script src="../../js/libs/courseCenter.config.js"></script>
+		<script src="../../js/pages/regList.ajax.js"></script>
+	</body>
+	</html>

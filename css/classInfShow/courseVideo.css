@@ -1,0 +1,97 @@
+/* group page structure
+------------------------------------------------------- */
+
+
+#head{
+	min-width:1180px;
+	height:123px;
+	background-color:#f7f7f7;
+	color:#000;
+	font-size:30px;
+}
+
+
+#body{
+	min-height: 860px;
+	min-width:1180px;
+	padding-top: 50px;
+	background-color: #ffffff;
+}
+video::-webkit-media-controls-enclosure {
+	overflow:hidden;
+}
+video::-webkit-media-controls-panel {
+	width: calc(100% + 30px);
+}
+
+
+#footer{
+	height:71px;
+	background-color: #007a51;
+	text-align: center;
+}
+
+
+/*group page components
+------------------------------------------------------- */
+
+
+
+
+/*课程中心标志栏，设置校徽图片的格式，用float设置课程中心标志和课程名称*/
+#head #head_photo{
+	width:296px;
+	height:71px;
+	float:left;
+	margin-top:28px;
+
+}
+
+
+#head #head_photo img{
+	width:100%;
+	height:100%;
+}
+
+#head #logo{
+	text-decoration: none;
+	color:#007a51;
+	float:left;
+	margin-left: 42px;
+	margin-top:50px;
+	position: static;
+}
+
+#head p{
+	position: absolute;
+	right: 0;
+	top:50px;
+}
+#head span{
+	float:left;
+}
+
+
+/*中间内容样式，设置内容栏的顶头标题，用border设置下划线，padding-bottom设置下划线和字体的距离*/
+
+
+
+
+#body video{
+	width: 1080px;
+	display: block;
+	margin: auto;
+}
+#body .error{
+	margin-top: 100px;
+	display: none;
+}
+#body .warnImg{
+	margin: auto;
+	display: block;
+}
+#body .warn{
+	text-align: center;
+}
+	/*页脚的字体定位样式*/
+

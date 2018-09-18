@@ -1,0 +1,277 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+	display: block;
+}
+button{
+	display: block;
+	border:1px solid black;
+	padding:0 6px;
+}
+.warp{
+	min-width: 1550px;
+}
+
+.warp_center{
+	position: relative;
+	width:1550px ;
+	margin: auto;
+	height:100%;
+}
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+#body{
+	background-color: #f7f7f7;
+	min-height: 872px;
+	overflow: hidden;
+}
+
+/*  -------- 内容部分 -----------------------------------------------------
+--------------------------------------------------------*/
+#body #wpEditorTitle{
+	font-size: 14px;
+	color:#333;
+	margin-top: 31px;
+}
+#body #wpEditorTitle .courseName,
+#body #wpEditorTitle .teamName{
+	float: left;
+}
+#body #wpEditorTitle p{
+	overflow: hidden;
+}
+#body #wpEditorTitle .teamName{
+	margin-left: 47px;
+	color: #666;
+}
+#body #wpEditorTitle .courseName .title{
+	color:#009361;
+}
+
+/* 翻页组件 */
+
+.BluMUI_PT{
+	display: inline-block;
+	margin-top: 17px;
+}
+.BluMUI_PT  button{
+	float: left;
+	height: 20px;
+	width:60px;
+	color:#666;
+	font-size: 12px;
+	background:#e1e1e1;
+	border: none;
+	margin-left: 10px;
+	outline: none;
+}
+.BluMUI_PT .last{
+	margin-right: 10px;
+}
+.BluMUI_PT .next{
+}
+.BluMUI_PT .toTop{
+	margin-left: 0px;
+}
+.BluMUI_PT .toBottom{
+}
+.BluMUI_PT #warp {
+	float: left;
+	list-style: none;
+}
+.BluMUI_PT #warp li{
+	float: left;
+	font-size: 16px;
+	color: #666;
+	line-height: 20px;
+	height: 20px;
+	width: 30px;
+	text-align: center;
+}
+.BluMUI_PT #warp .cur{
+	color: #00af62;
+}
+.BluMUI_PT #warp li:hover{
+	opacity: 0.5;
+	cursor: pointer;
+}
+.BluMUI_PT .inputWarp{
+	float: left;
+	border: 1px solid #d1d1d1;
+	background: #fff;
+}
+.BluMUI_PT .inputWarp input{
+	border: none;
+	height:18px;
+	text-align: center;
+	width:20px;
+	line-height: 18px;
+	outline: none;
+	font-size: 14px;
+	color: #999;
+}
+.BluMUI_PT .inputWarp .sum{
+	font-size: 14px;
+	color: #999;
+}
+.BluMUI_PT  .allNum{
+	float: left;
+	font-size: 14px;
+	color: #999;
+	margin-right: 26px;
+	line-height: 18px;
+}
+
+
+/* hasEditored */
+
+#body #hasEditored{
+	margin-top:27px ;
+	float: left;
+	width: 50%;
+}
+#body #addEditor{
+	float: left;
+	margin-top:27px ;
+	width: 50%;
+}
+#body .radio{
+	height: 12px;
+	width:12px;
+	border: 1px solid #333333;
+	background: #fff;
+	display: inline-block;
+	margin-right: 15px;
+	margin-left: 15px;
+}
+#body .radio-selected{
+	height: 12px;
+	width:12px;
+	border: 1px solid #333333;
+	display: inline-block;
+	margin-right: 15px;
+	margin-left: 15px;
+	cursor: default;
+	background: url('../../imgs/systemManage/selected.png') no-repeat;
+	background-color: #fff;
+}
+
+#body .titleWarp{
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+#body .titleWarp .title{
+	color:#009361;
+	font-size: 16px;
+	line-height: 20px;
+	float: left;
+	cursor: pointer;
+}
+#body .titleWarp .WarpTitle{
+	float: left;
+	color:#007A51;
+	font-size: 18px;
+	margin-left: 240px;
+	font-weight: bold;
+}
+#body .titleWarp .btn{
+	display: inline-block;
+	width:13px;
+	height:16px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	float: left;
+	margin-top: 2px;
+	margin-left: 6px;
+	cursor: pointer;
+}
+#body .titleWarp .addList{
+	width:16px;
+}
+#body .headerLine{
+	background: #009361;
+	height: 40px;
+	color: #fff;
+	font-size: 16px;
+	line-height: 40px;
+}
+#body .ListWarp{
+	width:750px;
+	height: 588px;
+	overflow: hidden;
+	background: #fff;
+}
+#body .ListWarp li{
+	float: left;
+	height: 100%;
+	text-align: center;
+}
+#body .ListWarp .courseName{
+	width:120px;
+	overflow: hidden;
+}
+#body .ListWarp  .courseId{
+	width:120px;
+	overflow: hidden;
+}
+#body .ListWarp   .masters{
+	width:206px;
+	overflow: hidden;
+}
+#body .ListWarp   .college{
+	width:176px;
+	overflow: hidden;
+}
+#body .ListWarp .styTime{
+	width:100px;
+	overflow: hidden;
+}
+#body .ListWarp  .opera{
+	width:50px;
+	overflow: hidden;
+}
+#body .ListWarp .operaBtn{
+	color: #009361;
+	cursor: pointer;
+}
+#body .ListWarp .List {
+	height: 65px;
+	line-height: 65px;
+	background: #fff;
+	border-top: 1px solid #f1f1f1;
+}
+#body .ListWarp .List .Num{
+	color: #009361;
+}
+#body .bodyList{
+	height: 548px;
+	overflow: auto;
+}
+#body .editorWarp{
+	overflow: hidden;
+	width: 100%;
+}
+#body .btnWarp{
+	margin-top: 30px;
+}
+#body .btnWarp button{
+	background: #fff;
+	color: #007A51;
+	font-size: 14px;
+	width:90px;
+	height:30px;
+	border: 1px solid #007A51;
+	outline: none;
+}

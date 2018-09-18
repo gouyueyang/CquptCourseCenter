@@ -1,0 +1,5 @@
+insert into wineTypeInf Values('0110','0110','°×¾Æ',50,10,'white','middle');
+insert into wineTypeInf Values('0110','0110','¹ûÖ­',50,10,'orange','middle');
+insert into wineTypeInf Values('0110','0110','Ñó¾Æ',50,10,'purple','middle');
+insert into wineTypeInf Values('0110','0110','Æ¡¾Æ',50,10,'green','middle');
+insert into wineTypeInf Values('0110','0110','ÒûÁÏ',50,10,'red','middle');

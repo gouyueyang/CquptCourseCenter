@@ -1,0 +1,470 @@
+* { padding: 0; margin: 0; }
+body {
+  background: #F7F6F6;
+}
+#option {
+  background: #FFF;
+  padding-left: 25px;
+}
+#up button {
+  width: 85px;
+  height: 30px;
+  color: #FFF;
+  font-size: 14px;
+  margin: 20px 0;
+  cursor: pointer;
+  outline: none;
+  line-height: 30px;
+  background: #009261;
+  border: 1px solid #009261;
+}
+#down {
+  height: 40px;
+  /*line-height: 50px;*/
+  /*padding: 0px 0 15px 0;*/
+}
+#down  span {
+  color: #333;
+  font-size: 14px;
+}
+
+#down select {
+  color: #333;
+  width: 160px;
+  height: 23px;
+  outline: none;
+  border: 1px solid #AAA;
+}
+#down button {
+  width: 63px;
+  height: 25px;
+  color: #FFF;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  margin-left: 150px;
+  /*line-height: 30px;*/
+  background: #009261;
+  border: 1px solid #009261;
+}
+/*=====================================*/
+
+#List {
+  min-height: 560px;
+  background: #FFF;
+  box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+}
+table {
+  width: 100%;
+  font-size: 14px;
+  background: #FFF;
+  text-align: center;
+  border-collapse: collapse;
+}
+td a {
+  margin: 0 5px;
+  color: #007A51;
+  text-decoration: none;
+}
+thead {
+  color: #FFF;
+}
+thead tr td {
+  height: 40px;
+  background: #009361;
+}
+.lefttd, .righttd {
+  width: 25px;
+  background: transparent;
+}
+.lefttd>div, .righttd>div {
+  height: 100%;
+}
+thead tr td.lefttd>div, thead tr td.righttd>div {
+  background: #009361;
+}
+.lefttd>div {
+  border-radius: 3px 0 0 3px;
+}
+.righttd>div {
+  border-radius: 0 3px 3px 0;
+}
+tbody tr td {
+  height: 52px;
+  border-bottom: 1px solid #EEE;
+}
+tbody tr td.lefttd,
+tbody tr td.righttd {
+  border-bottom: none;
+  /*background: red;*/
+}
+tbody tr.noborder td {
+  border-bottom: none;
+}
+
+/*=====================================*/
+
+/* Fanye */
+
+.fanye {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 30px 0;
+  /*background: #F7F6F6;*/
+}
+.fanye ul {
+  margin: 0 5px;
+  display: inline-block;
+}
+.fanye li {
+  color: #666;
+  margin: 0 10px;
+  cursor: pointer;
+  list-style: none;
+  display: inline-block;
+}
+.fanye .total {
+  color: #999;
+  margin-right: 23px;
+  font-size: 14px;
+}
+.fanye .fanye_options {
+  color: #666;
+  width: 61px;
+  height: 21px;
+  border: none;
+  margin: 0 5px;
+  outline: none;
+  cursor: pointer;
+  line-height: 21px;
+  background: #E1E1E1;
+}
+.fanye .tp {
+  width: 53px;
+  height: 19px;
+  outline: none;
+  margin-right: 8px;
+  border: 1px solid #D3D2D2;
+}
+.fanye .tp::-webkit-input-placeholder {
+  text-align: center;
+}
+
+/*======================================*/
+
+
+#popup {
+  width: 100%;
+  height: 100%;
+  background: rgba(151,151,151,0.5);
+  z-index: 2;
+  display: none;
+  position: fixed;
+  top: 0;
+
+}
+#popbody {
+  width: 457px;
+  height: 250px;
+  background: #FFF;
+  text-align: center;
+  margin: 200px auto;
+}
+#popbody #msg {
+  width: 80%;
+  height: 160px;
+  padding: 80px 0;
+  margin: 0 auto;
+  box-sizing: border-box;
+  line-height: 25px;
+  font-size: 18px;
+}
+#popbody button {
+  width: 91px;
+  height: 31px;
+  outline: none;
+  cursor: pointer;
+  margin: 0 16px;
+  border: 1px solid #007A51;
+  line-height: 31px;
+  font-size: 14px;
+}
+#popbody #popup_OK {
+  color: #FFF;
+  background: #007A51;
+}
+#popbody #popup_back {
+  color: #007A51;
+  background: #FFF;
+}
+
+/*===============================*/
+/*popup_edit*/
+.zbEditor {
+  width:720px;
+  overflow: auto;
+}
+.zbEditor .radio{
+  height: 12px;
+  width:12px;
+  border: 1px solid #333333;
+  background: #fff;
+  display: inline-block;
+  margin-right: 8px;
+  margin-left: 19px;
+  margin-top: 5px;
+  float: left;
+}
+.zbEditor .radio-selected{
+  height: 12px;
+  width:12px;
+  border: 1px solid #333333;
+  display: inline-block;
+  margin-right: 8px;
+  margin-left: 19px;
+  background: url('../../imgs/systemManage/selected.png') no-repeat;
+  background-color: #fff;
+  margin-top: 5px;
+  float: left;
+}
+.zbEditor .radioTitle{
+  font-size: 14px;
+  margin-top: 2px;
+  float: left;
+}
+
+.zbEditor .container{
+  background: #fff;
+  overflow: hidden;
+  width: 720px;
+  height: 750px;
+  margin: auto;
+  margin-top: 30px;
+}
+.zbEditor .inputWarp{
+  position: relative;
+  overflow: hidden;
+}
+.zbEditor .inputWarp .title{
+  color: #333;
+  font-size: 16px;
+  width:75px;
+  height:18px;
+  display: inline-block;
+  line-height: 18px;
+  outline: none;
+  float: left;
+  margin-top: 3px;
+  padding-left: 10px;
+  margin-left: 30px;
+}
+.zbEditor .inputWarp .add{
+  display: inline-block;
+  background: #007A51;
+  color: white;
+  font-size: 14px;
+  height:21px;
+  border: 1px solid #007A51;
+  margin-left: 30px;
+  width: 80px;
+  text-align: center;
+  margin-top: 30px;
+}
+.zbEditor .inputWarp  .text{
+  width:217px;
+  height: 20px;
+  border: 1px solid #999;
+  margin-left: 19px;
+  display: inline-block;
+  padding-left: 10px;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  float: left;
+}
+.zbEditor .inputWarp #textArea{
+  float: left;
+  height: 45px;
+}
+.zbEditor .inputWarp  .must{
+  background: url('../../imgs/public/red_star1.png') no-repeat 0 4px;
+}
+.zbEditor .editorBody{
+  margin-left: 30px;
+  margin-top: 10px;
+  margin-right: 30px;
+}
+.zbEditor .editorBody .header{
+  border-bottom: 1px solid #007A51;
+}
+.zbEditor .editorBody .header .title{
+  border: 1px solid #007A51;
+  display: inline-block;
+  text-align: center;
+  width:120px;
+  height:25px;
+  line-height: 25px;
+  color: #007A51;
+  font-size: 14px;
+}
+.zbEditor .editorBody .header .selected{
+  background: #007A51;
+  color: #fff;
+}
+
+.zbEditor .editorBody .header-list{
+  background: #007A51;
+  color: white;
+  height: 30px;
+  line-height: 30px;
+}
+.zbEditor .editorBody .header-list li{
+  height: 30px;
+  line-height: 30px;
+}
+.zbEditor .editorBody .items-body{
+  border-top: none;
+  height: 481px;
+  overflow: auto;
+}
+.zbEditor .editorBody ul{
+  overflow: hidden;
+  height: 50px;
+  line-height: 50px;
+}
+.zbEditor .editorBody li{
+  list-style: none;
+  float: left;
+  text-align: center;
+  height:50px;
+  line-height: 50px;
+}
+.zbEditor .editorBody .project{
+  width:150px;
+}
+.zbEditor .editorBody .score{
+  width:150px;
+}
+.zbEditor .editorBody .desc{
+  width:356px;
+}
+.zbEditor .editorBody .desc1{
+  width:286px;
+  line-height: 25px;
+  overflow: hidden;
+  word-break:keep-all;
+  word-wrap: break-word;
+  text-align: left;
+}
+.zbEditor .editorBody .desc2{
+  width:286px;
+
+}
+.zbEditor .editorBody .delete{
+  width:70px;
+  color: #007A51;
+  cursor: pointer;
+}
+.zbEditor .editorBody .delete1{
+  width:70px;
+}
+
+.zbEditor .InputNumber{
+  border: 1px solid #999;
+  width: 55px;
+  height:26px;
+  display: inline-block;
+  margin-top: 11px;
+}
+.zbEditor .InputNumber input{
+  width:32px;
+  height:26px;
+  border: none;
+  outline: none;
+  float: left;
+  display: block;
+  text-align: center;
+}
+.zbEditor   .numberControl {
+  float: left;
+  width:23px;
+  height:26px;
+  position: relative;
+}
+.zbEditor  .numberControl button{
+  display: block;
+  height: 50%;
+  width: 100%;
+  border: none;
+  outline: none;
+}
+.zbEditor .numberControl .up{
+  background: url('../../imgs/courseMaster/number_up.png') no-repeat 6px 2px;
+}
+.zbEditor .numberControl .down{
+  background: url('../../imgs/courseMaster/number_down.png') no-repeat 6px 1px;
+}
+.zbEditor textarea{
+  resize: none;
+  width:330px;
+  margin: auto;
+  height: 40px;
+  display: inline-block;
+  margin-top: 5px;
+  outline: none;
+}
+.zbEditor .editorBody  .scorePanel{
+  color: #ff9b29;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.zbEditor .editorBody .btnWarp{
+  width: 215px;
+  height:30px;
+  margin: auto;
+  background: #fff;
+  margin-top: 25px;
+}
+.zbEditor .editorBody .btnWarp button{
+  width:90px;
+  height:30px;
+  border: 1px solid #007a51;
+  outline: none;
+}
+.zbEditor .editorBody .btnWarp .left{
+  float: left;
+  background: #007a51;
+  color: white;
+}
+.zbEditor .editorBody .btnWarp .right{
+  float: right;
+  background: #fff;
+  color: #007a51;
+}
+.zbEditor #common{
+  height:323px;
+}
+.zbEditor #commonInputScore{
+  margin-top: 0;
+  margin-left: 19px;
+}
+
+.zbEditor .warn{
+  display: inline-block;
+  line-height: 24px;
+  margin-left: 132px;
+  height: 24px;
+  font-size: 12px;
+  color: red;
+}
+
+
+
+
+
+
+
+

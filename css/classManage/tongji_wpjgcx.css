@@ -1,0 +1,194 @@
+* { margin: 0; padding: 0; }
+html {
+  font-size: 13px;
+}
+
+.top>span {
+  color: #333;
+  vertical-align: middle;
+}
+.top>select, .top>input {
+  display: inline-block;
+  padding-left: 3px;
+  margin: 0 20px 0 5px;
+}
+.top>select {
+  height: 20px;
+  font-size: 12px;
+  outline: none;
+  vertical-align: middle;
+  border: 1px solid #009361;
+  color: #009361;
+  line-height: 20px;
+}
+.top>input[type='text'] {
+  height: 18px;
+  width: 110px;
+  outline: none;
+  color: #009361;
+  vertical-align: middle;
+  border: 1px solid #009361;
+  line-height: 18px;
+}
+.top>#search {
+  width: 62px;
+  height: 25px;
+  background: #009261;
+  color: #FFF;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: 20px;
+}
+.top {
+  padding: 17px 0;
+  padding-left: 15px;
+}
+
+/*=======================================*/
+
+table {
+  width: 100%;
+  font-size: 14px;
+  background: #FFF;
+  text-align: center;
+  border-collapse: collapse;
+  box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+}
+thead {
+  color: #FFF;
+}
+thead tr td {
+  height: 40px;
+  background: #009361;
+}
+.lefttd, .righttd {
+  width: 25px;
+  background: transparent;
+}
+.lefttd>div, .righttd>div {
+  height: 100%;
+}
+thead tr td.lefttd>div, thead tr td.righttd>div {
+  background: #009361;
+}
+.lefttd>div {
+  border-radius: 3px 0 0 3px;
+}
+.righttd>div {
+  border-radius: 0 3px 3px 0;
+}
+tbody td {
+  height: 52px;
+  border-bottom: 1px solid #EEE;
+}
+tbody td:first-child, tbody td:last-child {
+  border-bottom: none;
+}
+tbody tr.noborder td {
+  border-bottom: none;
+}
+tbody td .zj_num {
+  color: red;
+  margin-right: 5px;
+}
+tbody td .zj_name {
+  margin: 0 5px;
+}
+tbody td>span {
+  cursor: pointer;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.list-item {
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background: #eeeeee;
+}
+
+.item-td {
+  padding-top: 20px;
+  background: #f9f9f9;
+}
+
+.th {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.items {
+  text-align: left;
+}
+
+.item-zj {
+  width: 33.33%;
+  padding-left: 30px;
+  padding-bottom: 20px;
+  line-height: 1.5em;
+}
+
+.item-l {
+  display: inline-block;
+  width: 80px;
+}
+
+.item-r {
+  display: inline-block;
+  width: 40px;
+  text-align: center;
+}
+
+.df {
+  margin-left: 20px;
+}
+
+
+/* 翻页条 */
+.fanye {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 30px 0;
+}
+.fanye ul {
+  margin: 0 5px;
+  display: inline-block;
+}
+.fanye li {
+  color: #666;
+  margin: 0 10px;
+  cursor: pointer;
+  list-style: none;
+  display: inline-block;
+}
+.fanye .total {
+  color: #999;
+  margin-right: 23px;
+  font-size: 14px;
+}
+.fanye .fanye_options {
+  color: #666;
+  width: 61px;
+  height: 21px;
+  border: none;
+  margin: 0 5px;
+  outline: none;
+  cursor: pointer;
+  line-height: 21px;
+  background: #E1E1E1;
+}
+.fanye .tp {
+  width: 53px;
+  height: 19px;
+  outline: none;
+  margin-right: 8px;
+  text-align: center;
+  border: 1px solid #D3D2D2;
+}

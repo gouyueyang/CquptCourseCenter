@@ -1,0 +1,343 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	font: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	 text-decoration:none;
+	 color: black;
+ }
+.warp{
+	min-width: 1180px;
+}
+
+.warp_center{
+	position: relative;
+	width:1120px ;
+	margin: auto;
+	height:100%;
+}
+iframe{
+	display: none;
+}
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------*/
+#header{
+	height: 48px;
+	background-color:#dcdcdc;
+}
+#logo{
+	height:136px;
+	background-color: #f7f7f7;
+}
+#body{
+	min-height: 800px;
+	border-top: 6px solid #007a51;
+	padding-bottom: 20px;
+	background-color: #f7f7f7;
+}
+#body .warp_center{
+	overflow: hidden;
+	height: auto;
+	padding: 10px;
+}
+#footer{
+	height:71px;
+	background-color: #007a51;
+	text-align: center;
+}
+/*------结构内容部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+/*header - UserLoginState*/
+
+.BluMUI_UserLoginState ul{
+	float: right;
+	height: 48px;
+}
+.BluMUI_UserLoginState li{
+	cursor: default;
+	float: right;
+	margin-left: 24px;
+}
+.BluMUI_UserLoginState hr{
+	display: block;
+	float: right;
+	height:11px;
+	width: 1px;
+	background-color: #666666;
+	border:1px solid #ababab;
+	margin-top: 19px;
+	margin-left:23px;
+	margin-right:23px;
+}
+.BluMUI_UserLoginState .clearFloat{
+	clear: both;
+}
+.BluMUI_UserLoginState{
+	width: 1120px;
+	font-size: 14px;
+	line-height: 49px;
+	height: 48px;
+}
+.BluMUI_UserLoginState .userInf{
+	display: inline-block;
+	position: relative;
+	float: right;
+	cursor: pointer;
+	height: 49px;
+}
+.BluMUI_UserLoginState .login{
+	color:#007a51;
+	margin-left: 25px;
+	font-size: 14px;
+	float: right;
+	cursor: default;
+}
+.BluMUI_UserLoginState .loginNum{
+	float: left;
+	height: 48px;
+}
+.BluMUI_UserLoginState .loginExtInf{
+	color: red;
+	float: right;
+	margin-left: 23px;
+}
+.BluMUI_UserLoginState .userName {
+	height: 49px;
+	overflow: hidden;
+}
+.BluMUI_UserLoginState  #show{
+	display: none;
+}
+.BluMUI_UserLoginState #userName{
+	float: left;
+	height: 49px;
+	line-height: 49px;
+	background-color:inherit;
+
+}
+.BluMUI_UserLoginState #userDrop{
+	width: 24px;
+	height: 49px;
+	float: left;
+	margin-left: 0;
+	background:url('../../imgs/public/userList.png') no-repeat 0px 20px;
+}
+.BluMUI_UserLoginState .userList{
+	z-index: 10;
+	position: absolute;
+	top:35px;
+	right:0;
+}
+.BluMUI_UserLoginState .userList .func {
+	float: none;
+	height: 24px;
+	width: 100px;
+	background-color: #d8d8d8;
+	margin-top: 2px;
+	line-height: 24px;
+	text-align: center;
+	color: #ffffff;
+}
+.BluMUI_UserLoginState .userList .func:hover{
+	background-color: #999999;
+}
+.BluMUI_UserLoginState  .inLoginText{
+	float: right;
+}
+/* logo-logo_warp */
+#logo .logo_warp{
+	height:86px;
+	margin-top: 33px;
+	width: 443px;
+	overflow: hidden;
+	float: left;
+	display: inline-block;
+}
+#logo .logo{
+	height: 100%;
+	float: left;
+	width: 304px;
+	background:url("../../imgs/public/logo.png") no-repeat 0px 7px;
+}
+#logo .logo_text{
+	height: 100%;
+	float: left;
+	font-size:30px;
+	line-height:86px;
+	margin-left: 19px;
+	color: #007a51;
+}
+
+/* body */
+#body .warp_center{
+	background: #fff;
+	padding-left: 108px;
+	padding-right: 108px;
+	padding-top: 80px;
+	width: 904px;
+	height:780px;
+}
+
+
+/* body nav*/
+#body #mySETNavList  li{
+	float: left;
+	width:184px;
+	height:50px;
+	text-align: center;
+	line-height: 50px;
+	border: 1px solid #a0aba8;
+}
+#body #mySETNavList li a{
+	font-size: 19px;
+	color: #292f2d;
+}
+#body #mySETNavList .selected{
+	background: #009361;
+}
+#body #mySETNavList .selected a{
+	color:#fff;
+}
+#body #mySETNavList {
+	overflow: hidden;
+}
+/* body set */
+#body #keyModify{
+	height:366px;
+	border: 1px solid #007a51;
+}
+#body #mySET #keyModify input{
+	width:330px;
+	height:30px;
+	padding-left:10px;
+	padding-right: 10px;
+	font-size: 18px;
+	border:1px solid #999999;
+}
+#body #mySET #keyModify .title{
+	width:90px;
+	font-size: 18px;
+	color:#333;
+	text-align: right;
+	padding-right: 18px;
+	display: inline-block;
+}
+#body #mySET #keyModify .warn{
+	color: #999999;
+	font-size: 14px;
+	margin-left: 20px;
+}
+#body #mySET #keyModify .inputWarp{
+	margin-top: 31px;
+	margin-left: 160px;
+}
+#body #mySET #keyModify button{
+	height:30px;
+	width:90px;
+	background:#007a51;
+	color: #fff;
+	margin-left: 268px;
+	margin-top: 40px;
+}
+
+#body #mySET #myself{
+	overflow: hidden;
+	height:526px;
+	border: 1px solid #007a51;
+
+}
+#body #mySET #myself .inputWarp{
+	float: left;
+	width: 347px;
+	margin-top: 9px;
+	margin-left: 45px;
+}
+#body #mySET #myself .leftWarp{
+	margin-left: 136px;
+}
+#body #mySET #myself .must{
+	background: url('../../imgs/public/red_star1.png') no-repeat 0 6px;
+}
+#body #mySET #myself .title{
+	width:72px;
+	display:inline-block;
+	padding-left:22px;
+	padding-right: 8px;
+	font-size: 18px;
+	color: #666;
+}
+#body #mySET #myself .warn{
+	display: block;
+	color: red;
+	font-size: 14px;
+	margin-left: 102px;
+	height: 20px;
+	line-height: 20px;
+}
+#body #mySET #myself .extwarn{
+	color:#ff9b29;
+}
+#body #mySET #myself .title .left{
+	width:50%;
+	text-align: left;
+	display: inline-block;
+}
+#body #mySET #myself .title .right{
+	width:50%;
+	text-align: right;
+	display: inline-block;
+}
+#body #mySET #myself input{
+	width:225px;
+	height:26px;
+	border:1px solid #999;
+	color:#2b3230;
+	font:16px;
+	padding-left:8px;
+	padding-right: 8px;
+}
+
+#body #mySET #myself button{
+	height:30px;
+	width:90px;
+	background:#007a51;
+	color: #fff;
+	margin-left: 430px;
+	margin-top: 40px;
+}
+#body #mySET #myself .radio{
+	height:14px;
+	width:14px;
+	border:1px solid #d5d3d1;
+	display: inline-block;
+	-webkit-border-radius:;
+	-moz-border-radius:;
+	border-radius: 50%;
+	margin-left: 7px;
+	cursor: pointer;
+}
+#body #mySET #myself .on{
+	background:#009361;
+	border-color: #009361;
+}
+#body #mySET #myself .radioWarp{
+	display: inline-block;
+}
+
+	/* footer */
+
+#footer .copyRight{
+	font-size: 16px;
+	color: #ffffff;
+	height:71px;
+	line-height: 71px;
+}

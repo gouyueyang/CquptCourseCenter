@@ -1,0 +1,502 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a{
+	margin: 0;
+	padding: 0;
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+}
+button{
+	display: block;
+	border:1px solid black;
+	padding:0 6px;
+}
+/*------组件基础样式部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+/*
+*BluMUI_PT
+*翻页组件,修改样式参考下面，没有注释的不用改
+*/
+
+.BluMUI_PT{
+	float: left;
+}
+
+/*按钮通用样式*/
+.BluMUI_PT  button{
+	float: left;
+	height: 30px;
+}
+/*上一页按钮样式*/
+.BluMUI_PT .last{
+
+}
+/*下一页按钮样式*/
+.BluMUI_PT .next{
+
+}
+/*首页按钮样式*/
+.BluMUI_PT .toTop{
+
+}
+/*尾页按钮样式*/
+.BluMUI_PT .toBottom{
+
+}
+
+.BluMUI_PT #warp {
+	float: left;
+	list-style: none;
+}
+/*中间的页码块样式*/
+.BluMUI_PT #warp li{
+	float: left;
+	font-size: 25px;
+	line-height: 30px;
+	height: 30px;
+	width: 30px;
+	border:1px solid #ddd;
+	text-align: center;
+}
+/*当前页码块样式*/
+.BluMUI_PT #warp .cur{
+	background-color:#337ab7;
+	border-color: #337ab7;
+	color: white;
+}
+/*页码块样式hovet的样式*/
+.BluMUI_PT #warp li:hover{
+	opacity: 0.5;
+	cursor: pointer;
+}
+
+
+
+/*
+*BluMUI_BoxW*
+*弹框提示组件
+*/
+
+/*遮盖层样式*/
+.BluMUI_BoxW{
+	width:100%;
+	height:100%;
+	top:0;
+	bottom: 0;
+	background:rgba(0,0,0,0.7);
+	/*filter为了兼容IE8,实现透明背景*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#B2000000,endColorstr=#B2000000);/*IE8*/
+	position:absolute;
+	z-index:99;
+}
+/*弹框样式*/
+.BluMUI_BoxW .box{
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -100px;
+	margin-top: -75px;
+	width: 200px;
+	height: 150px;
+	border: 1px solid block;
+}
+
+/*弹框内容包裹层样式*/
+.BluMUI_BoxW .content_warp{
+	opacity: 1;
+	padding-left: 15px;
+	padding-right: 15px;
+	height: 100px;
+	background: white;
+}
+/*弹框内容样式*/
+.BluMUI_BoxW .content_warp span{
+	padding: 25% 10%;
+	display: block;
+	text-align: center;
+}
+/*弹框按钮通用样式*/
+.BluMUI_BoxW .buttonArea button{
+	width: 50%;
+	height: 30px;
+	float: left;
+}
+/*弹框右边按钮通用样式*/
+.BluMUI_BoxW .buttonArea .right{
+}
+
+/*弹框左边边按钮通用样式*/
+.BluMUI_BoxW .buttonArea .left{
+}
+
+
+/*
+*BluMUI_Btn
+*按钮组件
+*/
+
+/*按钮的样式*/
+.BluMUI_Btn{
+	height: 30px;
+}
+
+/*
+*BluMUI_Sch
+*搜索框组件
+*/
+
+/*搜索框组件最外层div的样式*/
+.BluMUI_Sch {
+	height:50px;
+}
+
+/*搜素框搜素区域样式，input+button的总区域*/
+.BluMUI_Sch .searchArea{
+	width: 216px;
+	overflow: hidden;
+}
+
+/*搜素框input*/
+.BluMUI_Sch .searchArea input{
+	height: 24px;
+	float: left;
+}
+/*搜素框button*/
+.BluMUI_Sch .searchArea button{
+	height: 30px;
+	float: left;
+}
+/*搜素框关键字区域样式*/
+.BluMUI_Sch .keyArea{
+	height: 20px;
+	list-style: none;
+}
+
+/*搜素框关键字样式*/
+.BluMUI_Sch .keyArea li{
+	float: left;
+	margin-left: 20px;
+}
+
+/*
+*BluMUI_Drop
+*下拉按钮组件
+*/
+
+/*下拉按钮-按钮的样式*/
+.BluMUI_Drop{
+	text-align: center;
+	border:1px solid #BABABA;
+	border-top-right-radius:2px;
+	border-top-left-radius:2px;
+	width: 98px;
+	height: 30px;
+	line-height: 30px;
+	margin-top: 20px;
+	position: relative;
+}
+/*下拉按钮-按钮内容的样式*/
+.BluMUI_Drop span{
+	width:98px;
+	height:30px;
+	display: block;
+	font-size:12px;
+}
+/*不用管*/
+.BluMUI_Drop ul{
+	list-style: none;
+	border-top:none;
+	width:100%;
+	float: left;
+}
+
+
+/*下拉按钮-选项的样式*/
+.BluMUI_Drop li{
+	width:100%;
+	height: 28px;
+	font-size:12px;
+	color: #969696;
+	background-color: #F7F7F7;
+}
+.BluMUI_Drop li:hover{
+	background-color: #F0F0F0;
+}
+
+
+/*选择区域样式*/
+.BluMUI_Drop .selectArea{
+	border:1px solid #BABABA;
+	width: 100%;
+	position: absolute;
+	overflow: hidden;
+	margin-left: -1px;
+}
+
+/*美化自定义滚动条*/
+
+/*滚动条区域样式*/
+.BluMUI_Drop .selectArea #scroll{
+	width:10%; /*不要动这个*/
+	height: 100%;/*不要动这个*/
+	float: left;
+}
+
+/*滚动条样式*/
+.BluMUI_Drop .selectArea #bar{
+	width: 100%;/*不要动这个*/
+	height: 20px;
+	border: none;
+	outline: none;
+	background-color:black;
+	opacity: 0.7;
+	display: block;/*不要动这个*/
+}
+
+/*
+*BluMUI_DropList
+*如果想要修改某一层级的li标签样式或者ul的样式，则需要像下面这样：
+*IE8：在使用背景图片作为logo时，不支持backgrond-size属性，需要手动更改png图片大小。
+*/
+
+
+.BluMUI_DropList ul{
+	list-style: none;
+}
+/* 消去浮动 */
+.BluMUI_DropList div{
+	overflow: hidden;
+}
+
+/* 菜单栏item  左右logo背景 通用样式*/
+.BluMUI_DropList span{
+	cursor: default;
+	display: inline-block;
+	float: left;
+}
+
+/* 左右logo背景样式 */
+.BluMUI_DropList .leftLogo,.rightLogo{
+	background-position: 2px 2px;
+	background-repeat: no-repeat;
+	background-size:18px 18px;
+	width:20px;
+	height:21px;
+}
+/* 菜单栏item的通用样式 */
+.BluMUI_DropList .item_warp{
+}
+/* 菜单栏内容的通用样式 */
+.BluMUI_DropList .name{
+	width:150px;
+}
+
+/*
+*BluMUI_Carousel
+*轮播图组件
+*/
+
+/*轮播区域最外层包裹样式*/
+.BluMUI_Carousel{
+	position: relative;
+	height: 200px;
+	width: 200px;
+	overflow: hidden;
+}
+
+/*轮播区域样式*/
+.BluMUI_Carousel .body{
+	list-style: none;
+	height: 200px;
+	position: absolute;
+}
+/*单个轮播块样式*/
+.BluMUI_Carousel .body li{
+	float: left;
+	width: 200px;
+	height: 200px;
+}
+
+/*导航区域样式*/
+.BluMUI_Carousel .nav{
+	position: absolute;
+	z-index: 2;
+	bottom: 10px;
+	width: 132px;
+	left: 50%;
+	margin-left: -64px;
+}
+
+.BluMUI_Carousel .nav ul{
+}
+
+/*小圆点的通用样式*/
+.BluMUI_Carousel .nav li{
+	cursor: pointer;
+	float: left;
+	border: 1px solid #fff;
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+.BluMUI_Carousel img{
+	width: 100%;
+	height: 100%;
+}
+
+/*当前小圆点的背景样式*/
+.BluMUI_Carousel .on{
+	background:orangered;
+}
+/*普通小圆点的背景样式*/
+.BluMUI_Carousel .off{
+	background: #333;
+}
+
+/*last按钮样式*/
+.BluMUI_Carousel .nav .last{
+	float: left;
+	margin-right: 5px;
+}
+
+/*next按钮样式*/
+.BluMUI_Carousel .nav .next{
+	float: left;
+}
+
+/*
+*BlueMUI_Review
+*评论组件
+*/
+
+.BlueMUI_Review{
+	overflow: hidden;
+}
+/*评价组件的名字样式*/
+.BlueMUI_Review .name{
+	display: block;
+	float: left;
+	height: 18px;
+}
+/*星星的形状样式*/
+.BlueMUI_Review .star{
+	display: block;
+	float: left;
+	width: 18px;
+	height: 18px;
+	cursor: pointer;
+}
+/*有星星的背景图样式*/
+.BlueMUI_Review .onstar{
+	background: url("../source/img/star1.png");
+}
+
+/*无星星的背景图样式*/
+.BlueMUI_Review .nostar{
+	background: url("../source/img/star.png");
+}
+
+
+
+/*
+*BlueMUI_checkBox
+*选框组件
+*/
+/*选框按钮的样式*/
+.BlueMUI_checkBox .radio{
+	margin-left:10px;
+	display: block;
+	width:18px;
+	height: 18px;
+	background: #fff;
+	border:1px solid gray ;
+	background-size:100% 100%;
+	float:left;
+	line-height: 21px;
+}
+/*选框按钮-选中的样式*/
+.BlueMUI_checkBox .selected{
+	background-image: url("../source/img/selected.png");
+}
+
+/*选框名字样式*/
+.BlueMUI_checkBox .name{
+	display: block;
+	float:left;
+}
+/*选框样式*/
+.BlueMUI_checkBox .items{
+	overflow: hidden;
+	margin-top: 10px;
+	width:150px;
+}
+/*------实例测试部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+#test1{
+
+
+}
+#test{
+	margin-top: 10px;
+	margin-left: 10px;
+	overflow: hidden;
+	width: 446px;
+}
+
+#test2{
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 89px;
+}
+
+#test3{
+	margin-top: 10px;
+	margin-left: 10px;
+	width: 216px;
+}
+
+#test4{
+	width: 32px;
+	margin-left: 10px;
+}
+
+#test5{
+	width: 200px;
+	overflow: hidden;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+#test5 .BluMUI_DropList-0-0{
+	color: blue;
+}
+#test5 .BluMUI_DropList-0 span{
+	color: red;
+}
+
+#test6{
+	overflow: hidden;
+	width:200px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+#test7{
+	width: 208px;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+#test8{
+	margin-top: 10px;
+	margin-left: 10px;
+}
+#test9{
+	margin-top: 10px;
+	margin-left: 10px;
+}

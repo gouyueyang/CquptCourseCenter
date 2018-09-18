@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="renderer" content="webkit|ie-stand">
+	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>课程中心-微视频</title>
+	 <link rel="stylesheet" type="text/css" href="../../css/classInfShow/courseVideo.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public/main.css">
+</head>
+<body>
+<div id="head">
+	<div class="wrap_center">
+		<div id="head_photo"><img src="../../imgs/public/logo.png" /></div>
+		<p id="logo">课程中心</p>
+		<p id="courseName"></p>
+	</div>
+</div>
+<div id="body">
+	<div class="wrap_center" id="warp">
+		<video controls="controls" id="video" src="../../videos/1.mp4" autoplay="autoplay">
+		</video>
+		<div class="error" id="error">
+			<img class="warnImg" src="../../imgs/public/error.png">
+			<div class="warn">视频加载失败</div>
+		</div>
+	</div>
+</div>
+<div id="footer" class="warp">
+	<div class="warp_center">
+				<span class="copyRight">
+					版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+				</span>
+	</div>
+</div>
+<script src="../../js/libs/react.min.js"></script>
+<script src="../../js/libs/courseCenter.config.js"></script>
+<script src="../../js/pages/courseVideo.js"></script>
+</body>
+</html>

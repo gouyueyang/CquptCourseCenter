@@ -1,0 +1,361 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input,tr,td,tbody,table{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	border: none;
+	font: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+}
+.warp{
+	width: 1180px;
+}
+
+.warp_center{
+	position: relative;
+	width:1180px ;
+	margin: auto;
+	height:100%;
+	overflow: hidden;
+}
+
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------*/
+#body{
+	background: #f7f7f7;
+}
+#content {
+	overflow: hidden;
+}
+#leftContent{
+	float: right;
+	width: 940px;
+}
+
+#rightContent{
+	float: left;
+}
+#ResourceNum-title{
+	padding-left: 75px;
+	padding-top: 15px;
+	background: url("../../imgs/classListInfShow/class_review_resource.png") no-repeat 50px 17px;
+	background-size: 18px 18px;
+	background-color: #fff;
+}
+#head {
+	background: #fff;
+	width: 100%;
+	height: 68px;
+}
+/*------结构内容部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+
+
+/*body classNameShow*/
+
+
+
+/*选框按钮的样式*/
+.BlueMUI_Radio .radio{
+	display: block;
+	width:16px;
+	height: 16px;
+	background: #fff;
+	border:1px solid gray ;
+	background-size:100% 100%;
+	float:left;
+	line-height: 21px;
+	margin-top: 3px;
+}
+
+
+/*选框按钮-选中的样式*/
+.BlueMUI_Radio .selected{
+	background-image: url("../../imgs/classManangeEditor/selected.png");
+}
+/*选框名字样式*/
+.BlueMUI_Radio .name{
+	display: block;
+	float:left;
+	width:64px;
+	height: 21px;
+	overflow: hidden;
+	margin-left: 15px;
+}
+/*选框样式*/
+.BlueMUI_Radio{
+	overflow: hidden;
+	width:150px;
+	margin-top: 10px;
+}
+
+/* 左边导航 */
+.BlueMUI_List{
+	width: 200px;
+}
+.BlueMUI_List div{
+	height: 1319px;
+	overflow: auto;
+}
+.BlueMUI_List li {
+	height: 82px;
+	line-height: 82px;
+	background: #fff;
+	text-align: center;
+	border-top:1px solid #eeeeee;
+	overflow: hidden;
+	cursor: pointer;
+}
+.BlueMUI_List p {
+	height: 20px;
+	line-height: 20px;
+	width: 180px;
+	overflow: hidden;
+}
+.BlueMUI_List .course-name{
+	margin-top: 20px;
+}
+.BlueMUI_List .course-status{
+	font-size: 14px;
+	color: #999;
+	height: 16px;
+	line-height: 16px;
+}
+.BlueMUI_List .first{
+	background: #007A51;
+	color: white;
+	height: 56px;
+	line-height: 56px;
+	border: none;
+}
+.BlueMUI_List .first span{
+	padding-left: 25px;
+	background: url('../../imgs/classListInfShow/class_list.png') no-repeat;
+	background-size: 16px 16px;
+	background-position: 0 4px;
+}
+.BlueMUI_List .selected{
+	background: #f6f6f6;
+	border: 1px solid #007A51;
+	border-left: 6px solid #007A51;
+}
+/* body - content*/
+
+
+
+#body .content{
+	width:1180px;
+	background: #ffffff;
+	overflow: hidden;
+	position: relative;
+}
+
+.BlueMUI_MouduleCheck .radiosWarp .BlueMUI_Radio{
+	float: left;
+}
+
+.BlueMUI_MouduleCheck .radiosWarp{
+	float: left;
+	width: 900px;
+	margin-left: 50px;
+}
+.BlueMUI_MouduleCheck .radioTitle{
+	float: left;
+	font-size: 18px;
+	font-weight: bold;
+	margin-top: 10px;
+
+}
+.BlueMUI_MouduleCheck .Warp{
+	width: 1050px;
+	overflow: hidden;
+	margin-top: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+
+
+
+	/*body - review */
+#body .review{
+	width: 940px;
+	height: 282px;
+	background: #ffffff;
+}
+#body .review .title{
+	display: inline-block;
+	width: 114px;
+	text-align: center;
+	margin-left: 51px;
+	margin-top: 22px;
+	height: 22px;
+	color:#333333;
+	font-size: 16px;
+	background: url("../../imgs/classManageCheck/review_logo.png") no-repeat;
+}
+#body .review textarea{
+	width:835px;
+	height: 128px;
+	resize: none;
+	display: inline-block;
+	border: 1px solid #d2d2d2;
+	margin-left: 51px;
+	margin-top: 21px;
+}
+#body .review .control{
+	width: 373px;
+	height:33px;
+	margin: auto;
+	margin-top: 24px;
+}
+#body .review button{
+	color:#099d6b;
+	font-size:14px;
+	text-align: center;
+	height: 30px;
+	width: 105px;
+	background: #ffffff;
+	border: 1px solid #099d6b;
+	float: right;
+}
+#body .review button:hover{
+	 color:#ffffff;
+	 background-color: #099d6b;
+ }
+#body .review #reject{
+	margin-left: 30px;
+}
+#body .review .right{
+	float: right;
+}
+#body .review .left{
+	float: left;
+}
+
+/* body - review*/
+
+
+#body  .BluMUI_NavList{
+	width:940px;
+}
+#body  .BluMUI_NavList li{
+	height:56px;
+	line-height: 56px;
+	text-align: center;
+	background: #007a51;
+	float: left;
+	position: relative;
+	cursor: pointer;
+}
+#body  .BluMUI_NavList li a{
+	color: white;
+	font-size: 19px;
+}
+
+#body  .BluMUI_NavList .selected {
+	background: #007a51;
+	width: 11px;
+	height: 5px;
+	margin-left: -5.5px;
+	background: url("../../imgs/courseMaster/selected.png") no-repeat;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+}
+
+#myIframe{
+	border: none;
+	display: block;
+	min-width: 940px;
+	min-height: 806px;
+}
+
+/*totalInf*/
+#body .classNameShow #totalInf{
+	padding-right: 46px;
+	padding-left: 46px;
+	padding-bottom: 20px;
+	overflow: hidden;
+	height: auto;
+}
+#body .ResourceNum{
+	background: #fff;
+	width:940px;
+	overflow: hidden;
+	padding-bottom: 22px;
+}
+#body .ResourceNum li{
+	margin-top: 22px;
+	position: relative;
+	float: left;
+	width:30px;
+	height:16px;
+	padding-bottom: 20px;
+	margin-left: 98px;
+	margin-right: 72px;
+	text-align: center;
+	color: white;
+	font-size: 12px;
+	line-height: 17px;
+	background: url('../../imgs/courseMaster/number.png') no-repeat;
+}
+#body #ResourceNum .ResourceNum .index4,
+#body #ResourceNum .ResourceNum .index9,
+#body #ResourceNum .ResourceNum  m,l.index14{
+	margin-right: 0;
+}
+#body #ResourceNum .ResourceNum .name{
+	color: #333;
+	position: absolute;
+	text-align: right;
+	width:160px;
+	right: 20px;
+	top:20px;
+}
+
+/* 搜素框 */
+#search {
+	border: 1px solid #007A51;
+	height: 30px;
+	overflow: hidden;
+	width: 265px;
+	float: right;
+	margin-top: 18px;
+	margin-right: 40px	;
+}
+#search input {
+	height: 30px;
+	width: 190px;
+	padding-left: 10px;
+	float: left;
+}
+#search button {
+	display: block;
+	float: left;
+	width: 65px;
+	height: 30px;
+	background: url('../../imgs/public/search.png') no-repeat;
+	background-color: #007A51;
+	background-position: 24px 7px;
+	background-size: 17px 17px;
+}
+#no-data {
+	display: none;
+	text-align: center;
+}
+#no-data .warnImg{
+	width: 150px;
+	margin: auto;
+	margin-top: 100px;
+}

@@ -1,0 +1,249 @@
+/* group general styles
+------------------------------------------------------- */
+div,body,ul,li,img{
+	font-family: "Microsoft Yahei UI" ! important;
+	padding:0;
+	margin:0;
+}
+
+
+ul{
+	list-style:none;
+}
+
+img{
+	border: none;
+}
+
+.wrap_center{/*限制宽度*/
+	margin:0 auto;
+	position:relative;
+	height:inherit;
+	overflow: hidden;
+}
+
+/* group page structure
+------------------------------------------------------- */
+
+
+#content{
+	min-width:1120px;
+	min-height:806px;
+	background-color:#f7f7f7;
+	overflow: auto;
+}
+
+
+
+
+/*group page components
+------------------------------------------------------- */
+/*页面最上面的样式，用列表来排版欢迎词和登录*/
+#top ul{
+	float: right;
+	line-height:47px;
+}
+
+#top li{
+	float:left;
+}
+
+#top a:link{
+	color:#007a51;
+}
+#top a:visited{
+	color:#007a51;
+}
+
+#top a:hover{
+	color:#666666;
+}
+
+/*课程中心标志栏，设置校徽图片的格式，用float设置课程中心标志和课程名称*/
+
+
+/*中间内容样式，设置内容栏的顶头标题，用border设置下划线，padding-bottom设置下划线和字体的距离*/
+#content .content_title{
+	padding-bottom: 1px;
+	border-bottom: 4px solid #006948;
+	font-size:16px;
+	color:#006948;
+	float:left;
+	margin-top:31px;
+	margin-left:28px;
+}
+
+/* left */
+
+
+.BluMUI_DropList{
+	position: relative;
+	background-color: #ffffff;
+	width:256px;
+	border-radius: 3px;
+}
+.BluMUI_DropList ul{
+	list-style: none;
+}
+
+.BluMUI_DropList span{
+	cursor: default;
+	display: inline-block;
+	float: left;
+}
+.BluMUI_DropList .rightLogo,.leftLogo{
+	background-repeat: no-repeat;
+	height:46px;
+}
+.BluMUI_DropList .leftLogo{
+	width:18px;
+	background-size: 7px 7px;
+	background-position:24px 20px;
+	padding-left: 24px;
+}
+.BluMUI_DropList .name{
+	color:#333333;
+	height: 46px;
+	line-height: 46px;
+}
+.BluMUI_DropList .warp{
+	min-width: auto;
+}
+
+.BluMUI_DropList .selected .name{
+	color: #1f8663;
+}
+#content_left{
+	width:256px;
+	float:left;
+	margin-top:30px;
+	background-color:#fff;
+}
+
+/*contentNav 知识体系导航栏*/
+.BluMUI_DropList ul{
+	list-style: none;
+}
+.BluMUI_DropList div{
+	overflow: hidden;
+	width: 256px;
+}
+.BluMUI_DropList span{
+	cursor: default;
+	display: inline-block;
+	float: left;
+}
+.BluMUI_DropList .leftLogo{
+	background-repeat: no-repeat;
+	height:56px;
+}
+
+.BluMUI_DropList .leftLogo{
+	background-position: 13px 16px;
+	background-size:24px 24px;
+}
+.BluMUI_DropList .secondItem .leftLogo{
+	background-position: 29px 24px;
+	background-size:8px 8px ;
+}
+.BluMUI_DropList .warp{
+	min-width: auto;
+}
+.BluMUI_DropList .BluMUI_DropList-0 .warp,
+.BluMUI_DropList .BluMUI_DropList-1 .warp{
+	max-height: 716px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	width: 244px;
+}
+
+
+.BluMUI_DropList .BluMUI_DropList-0 .warp .warp,
+.BluMUI_DropList .BluMUI_DropList-1 .warp .warp{
+	height: auto;
+	overflow: hidden;
+}
+.BluMUI_DropList ul{
+	width: 256px;
+}
+.BluMUI_DropList .name{
+	width:157px;
+	font-size:14px;
+	height: 56px;
+	text-align: left;
+	padding-left: 12px;
+	line-height: 56px;
+	color: #333333;
+}
+.BluMUI_DropList .item-1-selected{
+	background-color: #007a51;
+}
+.BluMUI_DropList .item-1-selected .name{
+	color:white;
+}
+.BluMUI_DropList .item-2-selected .name{
+	color:#007a51;
+}
+
+/* fileList 其他模块的左边的导航栏*/
+#content_left #fileList{
+	height: 724px;
+	overflow: auto;
+}
+#content_left #fileList  .selected{
+	/*color:#007a51;*/
+	background: #007a51;
+	color:white;
+}
+#content_left #fileList li{
+	overflow: hidden;
+	padding-left: 37px;
+	height: 56px;
+	color: #333333;
+	font-size: 16px;
+	line-height: 56px;
+	/*background: url("../../imgs/classListInfShow/item_logo.png") no-repeat 25px 24px;*/
+}
+#content_left #fileList li a{
+	width: 170px;
+	display: inline-block;
+	height: 100%;
+	overflow: hidden;
+	word-break: break-all;
+}
+#content_right{
+	width:855px;
+	float:right;
+	margin-right: 2px;
+	margin-top:30px;
+}
+
+#content_right_noNav{
+	width:1120px;
+	height:754px;
+	margin: auto;
+	margin-top:30px;
+}
+
+#content_right_noNav  #documentViewer iframe,
+#content_right #documentViewer iframe{
+	height:724px;
+	display: block;
+	width: 100%;
+	border: none;
+}
+
+#right_download a{
+	cursor: pointer;
+	display: inline-block;
+	color:#666666;
+	padding-left: 24px;
+	height: 32px;
+	line-height: 32px;
+	font-size:12px;
+	background:url('../../imgs/public/download.png') no-repeat 0px 8px ;
+	background-color: #f7f7f7;
+}
+#downLoad{
+	display: none;
+}

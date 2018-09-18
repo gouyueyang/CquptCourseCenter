@@ -1,0 +1,148 @@
+/* group general styles
+------------------------------------------------------- */
+div,body,ul,li,img{
+	font-family: "Microsoft Yahei UI" ! important;
+	padding:0;
+	margin:0;
+}
+a{
+	text-decoration:none;
+}
+ul{
+	list-style:none;
+}
+
+img{
+	border: none;
+}
+
+.wrap_center{/*限制宽度*/
+	width:1180px;
+	margin:0 auto;
+	position:relative;
+	height:inherit;
+	overflow: hidden;
+}
+
+/* group page structure
+------------------------------------------------------- */
+
+
+#content{
+	min-width:1180px;
+	min-height:806px;
+	background-color:#f7f7f7;
+	overflow: auto;
+}
+
+
+
+/*group page components
+------------------------------------------------------- */
+/*页面最上面的样式，用列表来排版欢迎词和登录*/
+#top ul{
+	float: right;
+	line-height:47px;
+}
+
+#top li{
+	float:left;
+}
+
+#top a:link{
+	color:#007a51;
+}
+#top a:visited{
+	color:#007a51;
+}
+
+#top a:hover{
+	color:#666666;
+}
+
+/*课程中心标志栏，设置校徽图片的格式，用float设置课程中心标志和课程名称*/
+
+
+#content_left{
+	width:191px;
+	float:left;
+	margin-top:18px;
+	background-color:#fff;
+	max-height: 674px;
+	overflow: auto;
+}
+
+
+
+
+#content_right{
+	width:963px;
+	float:right;
+}
+
+#content_right_noNav{
+	width:1180px;
+	height:704px;
+	margin: auto;
+	margin-top:18px;
+}
+
+#content_left #fileList  .selected{
+	/*color:#007a51;*/
+	background: #007a51;
+	color:white;
+}
+#content_left #fileList li{
+	overflow: hidden;
+	text-align: center;
+	height: 56px;
+	padding-right: 20px;
+	color: #333333;
+	/*font-size: 14px;*/
+	font-size: 16px;
+	line-height: 56px;
+	/*background: url("../../imgs/classListInfShow/item_logo.png") no-repeat 25px 24px;*/
+}
+
+.BluMUI_TeachPlan{
+	min-height:674px;
+	background: #fff;
+	margin-top:18px;
+}
+
+.BluMUI_TeachPlan .list{
+	margin: 0 22px;
+	border-bottom: 1px solid #f7f6f6;
+	height: 75px;
+	line-height: 75px;
+	overflow: hidden;
+}
+.BluMUI_TeachPlan .course-no{
+	font-size: 16px;
+	margin-left: 12px;
+	width: 320px;
+	display: inline-block;
+	color: #333;
+	font-weight: bold;
+	float:left;
+}
+.BluMUI_TeachPlan .course-team{
+	font-size: 14px;
+	width: 460px;
+	display: inline-block;
+	color: #666;
+	float:left;
+	height: 75px;
+	word-break: break-all;
+}
+.BluMUI_TeachPlan .download{
+	font-size: 14px;
+	color: #099d6b;
+	padding-left: 24px;
+	background: url("../../imgs/public/download.png") no-repeat;
+	background-size: 16px 16px;
+}
+#downLoad{
+	display:none;
+}
+

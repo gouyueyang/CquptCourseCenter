@@ -1,0 +1,143 @@
+/*------通用部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+html,body,div,ul,li,a,hr,p,span,button,input{
+	margin: 0;
+	padding: 0;
+	font-family: "Microsoft YaHei UI";
+}
+ul{
+	list-style: none;
+}
+a{
+	text-decoration:none;
+	color: black;
+	display: block;
+}
+button{
+	border:1px solid black;
+	padding:0 6px;
+}
+.warp{
+	min-width: 1550px;
+}
+
+.warp_center{
+	position: relative;
+	width:1550px ;
+	margin: auto;
+	height:100%;
+}
+
+/*------结构部分--------------------------------------------------------
+----------------------------------------------------------------------*/
+
+#body{
+	background-color:#fff;
+	min-height: 872px;
+	overflow: hidden;
+}
+
+/*  -------- 内容部分 -----------------------------------------------------
+--------------------------------------------------------*/
+#body .header{
+	margin-left: 100px;
+	margin-top: 50px;
+}
+#body .header .title{
+	color: #333;
+}
+#body .header .name{
+	color: #666;
+	margin-left: 15px;
+}
+#body .inputWarp{
+	margin-left: 100px;
+	margin-top: 20px;
+	overflow: hidden;
+}
+#body .inputWarp span{
+	color:#333;
+	float: left;
+}
+#body .inputWarp textarea{
+	resize: none;
+	float: left;
+	margin-left: 30px;
+	width:200px;
+	height:50px;
+	outline: none;
+}
+#body .inputWarp  input{
+	outline: none;
+	border: 1px solid #999;
+	padding-left: 5px;
+	padding-right: 5px;
+	height: 20px;
+	width:194px;
+	margin-left: 14px;
+}
+#body .inputWarp button{
+	background: #009361;
+	border: none;
+	color: white;
+	font-size: 14px;
+	height:22px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: 15px;
+	margin-top: 33px;
+}
+#body .warn{
+	font-size: 12px;
+	color: #999;
+	margin-left: 100px;
+	margin-top: 5px;
+}
+#body .ListWarp{
+	margin-left: 100px;
+	margin-top: 20px;
+	color: #333;
+	overflow: hidden;
+}
+#body .ListWarp .List{
+	overflow: hidden;
+	float: left;
+	margin-left: 20px;
+}
+#body .ListWarp .title{
+	float: left;
+	overflow: hidden;
+}
+#body .ListWarp .List li .name{
+	width:150px;
+	display: inline-block;
+	overflow: hidden;
+}
+#body .ListWarp .List li .delte{
+	margin-left: 50px;
+	color: #007A51;
+	cursor: pointer;
+}
+#body .save{
+	background: #009361;
+	border: none;
+	color: white;
+	font-size: 14px;
+	height:22px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: 100px;
+	margin-top: 33px;
+	outline: none;
+}
+#body .back{
+	margin-left: 20px;
+	border: 1px solid #009361;
+	background: #fff;
+	color: #009361;
+	font-size: 14px;
+	height:22px;
+	padding-left: 15px;
+	padding-right: 15px;
+	outline: none;
+}

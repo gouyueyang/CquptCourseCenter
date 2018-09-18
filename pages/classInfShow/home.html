@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="content-type" content="text/html;charset:UTF-8" />
+  <title>课程主页</title>
+  <link rel="stylesheet" type="text/css" href="../../css/public/theory.css" />
+  <link rel="stylesheet" type="text/css" href="../../css/classInfShow/home.css" />
+</head>
+
+<body>
+  <div id="gdxy">
+    <img src="../../imgs/classListInfShow/close.png" id="close">
+    <div id="xys"></div>
+  </div>
+  <div id="content">
+    <div class="wrap_center">
+      <!--左侧模块-->
+      <div id="home_left">
+        <div class="left">
+          <p class="content_title">课程介绍</p>
+            <p class="intro">
+              <span data-name="courseNumber">课程名称 :</span>
+              <span id="kcmc"></span>
+            </p>
+            <p class="intro">
+              <span data-name="courseNumber">课程编号 :</span>
+              <span id="kcbh"></span>
+            </p>
+            <p class="intro">
+              <span data-name="courseNumber">学分 :</span>
+              <span id="xf"></span>
+            </p>
+            <p class="intro">
+              <span data-name="courseTime">学时 :</span>
+              <span id="xs"></span>
+            </p>
+            <p class="intro">
+              <span data-name="compulsory">课程类型 :</span>
+              <span id="kclx"></span>
+            </p>
+            <p class="intro">
+              <span data-name="suitable">适合学院 :</span>
+              <span id="syxy">
+                <!--经济管理学院<br />-->
+                <!--计算机科学与技术学院 <br/>-->
+                <!--<span id="moreSpan">···<a href="#" id="showMore">[ 显示全部 ]</a></span>-->
+              </span>
+            </p>
+        </div>
+        <div class="left" id="rkjs">
+          <p class="content_title">任课教师</p>
+          <div id="rkjs_table"></div>
+        </div>
+      </div>
+      <!--右侧板块-->
+      <div id="home_right">
+        <!--第一个板块-->
+        <div id="r1">
+          <div id="r1_content">
+            <div id="left_photo">
+              <a href="#"><img id="fengmian" src="" width="150px" height="150px"/></a>
+            </div>
+            <!--课程信息-->
+            <div id="course_message">
+              <span id="bigkcmc"></span>
+              <!--这个div构成页面中的更多链接-->
+              <a id="more_info" class="more" href="#">更多》</a>
+              <div id="course_details">
+                <p data-name="courseIntroduction" id="kcjs"></p>
+              </div>
+              <span id="visited">0人看过</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="Resources"></div>
+
+        <div id="r4">
+          <p class="content_title">课程综合评价</p>
+          <div id="praise">
+            <ul id="evaluation">
+              <li id="evaluation1"></li>
+              <li id="evaluation2"></li>
+              <li>
+                <input id='value1' type="text" value='5' style='display: none;'>
+                <input id='value2' type="text" value='5' style='display: none;'>
+              </li>
+            </ul>
+            <form>
+              <input id="button" type="submit" value="确定">
+              <div id="warn" style="color: red"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../../js/libs/courseCenter.config.js"></script>
+  <script src="../../js/pages/react.zq.js"></script>
+  <script src="../../js/pages/homeCourse.zq.js"></script>
+</body>
+
+</html>
