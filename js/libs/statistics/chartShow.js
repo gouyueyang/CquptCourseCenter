@@ -10,12 +10,14 @@ import * as echarts from 'echarts/lib/echarts';
 // 引入饼状图和条形图。
 import 'echarts/lib/chart/pie';
 import 'echarts/lib/chart/bar';
+import 'echarts/lib/chart/line';
 // 引入提示框组件、标题组件组件。
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 import 'echarts/lib/component/legend';
 import 'echarts/lib/component/dataset';
 import 'echarts/lib/component/visualMap';
+import 'echarts/lib/component/dataZoom';
 
 const ajax = require('../post_ajax.js');
 const SET = (key, value) => {
@@ -39,7 +41,7 @@ class Filter extends React.Component {
     var defaultEnd = moment(nowDate).format(this.format);
     this.wrapId = this.props.wrapId;  //图表外层id
     this.chartTitle = this.props.chartTitle; //图表名称
-    
+
     this.state = {
       kssj: defaultStart,   //开始时间
       jssj: defaultEnd,   //结束时间
@@ -82,9 +84,9 @@ class Filter extends React.Component {
     if (oDate1.getTime() > oDate2.getTime()) {
       alert("开始时间应小于结束时间!");
     }
-    
-    
-    console.log(this.state);
+
+
+    //console.log(this.state);
     var Dates = {
       unifyCode: getCookie("userId"),
       kssj: this.state.kssj,
@@ -117,7 +119,7 @@ class Filter extends React.Component {
   handleChange1(newDate) {
     var a = newDate._d;
     var date = moment(a).format('YYYY-MM-DD HH:mm:ss');
-    return this.setState({ kssj: date }); 
+    return this.setState({ kssj: date });
   }
 
   handleChange2(newDate) {
@@ -135,7 +137,7 @@ class Filter extends React.Component {
         <span>目标:{this.state.sstypeText}&nbsp;&nbsp;</span>
 
         <span>统计类别:</span>
-        <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value });}}>
+        <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
           <option value="1">登陆次数</option>
           <option value="2">操作次数</option>
         </select>
@@ -143,16 +145,16 @@ class Filter extends React.Component {
 
         <DateTime
           className="inlineBlock"
-          dateFormat = 'YYYY-MM-DD'
-          timeFormat = 'HH:mm:ss'
+          dateFormat='YYYY-MM-DD'
+          timeFormat='HH:mm:ss'
           defaultValue={moment(new Date() - 30 * 24 * 3600 * 1000).format(this.format)}
           onChange={this.handleChange1}
         ></DateTime>
         <span> —— </span>
         <DateTime
           className="inlineBlock"
-          dateFormat = 'YYYY-MM-DD'
-          timeFormat = 'HH:mm:ss'
+          dateFormat='YYYY-MM-DD'
+          timeFormat='HH:mm:ss'
           defaultValue={moment(new Date()).format(this.format)}
           onChange={this.handleChange2}
         ></DateTime>
@@ -167,6 +169,121 @@ class Filter extends React.Component {
   }
 }
 
+//筛选条件组件
+class FilterLine extends React.Component {
+  constructor(props) {
+    super(props);
+    this.format = 'YYYY-MM';  //日期格式
+    var nowDate = new Date();
+    var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
+    var defaultStart = moment(oneMonthDate).format(this.format);
+    var defaultEnd = moment(nowDate).format(this.format);
+    this.wrapId = this.props.wrapId;  //图表外层id
+    this.chartTitle = this.props.chartTitle; //图表名称
+
+    this.state = {
+      kssj: defaultStart,   //开始时间
+      jssj: defaultEnd,   //结束时间
+      type: this.props.type,   //筛选范围
+      lists: [],    //存储结果
+      typeText: '',   //筛选范围文字
+    };
+    this.showChart = this.showChart.bind(this);
+    this.callback = this.props.callback.bind(this);
+    this.handleChange1 = this.handleChange1.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
+  }
+
+  //向后台发送请求
+  showChart() {
+    if (this.state.type == '1') {
+      this.setState({
+        typeText: '老师'
+      });
+    } else if (this.state.type == '2') {
+      this.setState({
+        typeText: '学生'
+      });
+    }
+    
+
+    var oDate1 = new Date(this.state.kssj);
+    var oDate2 = new Date(this.state.jssj);
+    if (oDate1.getTime() > oDate2.getTime()) {
+      alert("开始时间应小于结束时间!");
+    }
+
+
+    //console.log(this.state);
+    var Dates = {
+      unifyCode: getCookie("userId"),
+      kssj: this.state.kssj,
+      jssj: this.state.jssj,
+      type: this.state.type,
+    };
+
+    ajax({
+      url: courseCenter.host + "getYfTjData",
+      data: Dates,
+      success: (gets) => {
+        let datas = JSON.parse(gets);
+        if (datas.meta.result === 100) {
+          this.setState({
+            lists: datas.data.rows
+          });
+        }
+        //调用回调函数绘制图表
+        if (this.callback) {
+          this.callback(this.state.lists, this.wrapId, this.chartTitle);
+        }
+      }
+    });
+  }
+
+
+  handleChange1(newDate) {
+    var a = newDate._d;
+    var date = moment(a).format('YYYY-MM');
+    return this.setState({ kssj: date });
+  }
+
+  handleChange2(newDate) {
+    var a = newDate._d;
+    var date = moment(a).format('YYYY-MM');
+    return this.setState({ jssj: date });
+  }
+
+
+  render() {
+    return (<div className='filters'>
+      <div className="top">
+        <span>统计{this.state.typeText}&nbsp;&nbsp;</span>
+        <span>时间区间:</span>
+        <DateTime
+          className="inlineBlock"
+          dateFormat='YYYY-MM'
+          //timeFormat='HH:mm:ss'
+          defaultValue={moment(new Date() - 30 * 24 * 3600 * 1000).format(this.format)}
+          onChange={this.handleChange1}
+        ></DateTime>
+        <span> —— </span>
+        <DateTime
+          className="inlineBlock"
+          dateFormat='YYYY-MM'
+          //timeFormat='HH:mm:ss'
+          defaultValue={moment(new Date()).format(this.format)}
+          onChange={this.handleChange2}
+        ></DateTime>
+
+        <button id="search" onClick={this.showChart.bind(this, 1)}>展示结果</button>
+      </div>
+    </div>);
+  }
+
+  componentDidMount() {
+    this.showChart(1);
+  }
+}
 
 class Item extends React.Component {
   constructor(props) {
@@ -179,6 +296,8 @@ class Item extends React.Component {
     };
     this.pieOption = this.pieOption.bind(this);
     this.barOption = this.barOption.bind(this);
+    this.lineOption = this.lineOption.bind(this);
+    this.draw = this.draw.bind(this);
   }
 
   //饼状图数据配置
@@ -284,6 +403,70 @@ class Item extends React.Component {
     };
   }
 
+  //折线图配置
+  lineOption() {
+    alert("lineOption");
+    // let result = [
+    //   ['month', 'a', 'b', 'c'],
+    //   ['2015/1', 43.3, 85.8, 93.7],
+    //   ['2015/2', 83.1, 73.4, 55.1],
+    //   ['2015/3', 86.4, 65.2, 82.5],
+    //   ['2015/4', 72.4, 53.9, 39.1]
+    // ];
+    let result = this.datas;
+    let len = result.length;
+    let seriesArr = [];
+    for(let i =0;i<len-1;i++){
+      seriesArr.push("{type:'line'}");
+    }
+
+    this.option = {
+      title: {
+        text: this.chartTitle,
+        x: 'center'
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      legend: {},
+      dataset: {
+        source: result
+      },
+      xAxis: {
+        name: '日期',
+        type: 'category',
+        boundaryGap: false,
+      },
+      yAxis: {
+        name: '操作次数',
+      },
+      //控制缩放
+      dataZoom: [
+        {
+            type: 'slider',
+            xAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'slider',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'inside',
+            xAxisIndex: 0,
+            filterMode: 'empty'
+        },
+        {
+            type: 'inside',
+            yAxisIndex: 0,
+            filterMode: 'empty'
+        }
+    ],
+      series: seriesArr
+    }
+  }
+
   draw() {
     let chartDom = document.getElementById(this.wrapId);
     // let chartDom = React.createElement("div",{style:"width:600px;height:400px;"});
@@ -293,6 +476,8 @@ class Item extends React.Component {
       this.barOption();
     } else if (this.state.type == "pie") {
       this.pieOption();
+    }else if (this.state.type == "line"){
+      this.lineOption();
     }
     // 绘制图表
     myChart.setOption(this.option);
@@ -311,7 +496,8 @@ class Item extends React.Component {
 
 var BluMUI_M = {
   BluMUI_Filter: Filter,
-  BluMUI_Item: Item,
+  BluMUI_FilterLine:FilterLine,
+  BluMUI_Item: Item
 }
 
 var BluMUI = {
