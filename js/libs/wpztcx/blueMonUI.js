@@ -27,7 +27,7 @@ class Filter extends React.Component {
       kkxbzx: '',
       page: 1,
       pages: 1,
-      total: 1,
+      total: 0,
       lists: []
     };
   }
@@ -159,7 +159,7 @@ class Filter extends React.Component {
       <Fanye options={{
           page: this.state.page,
           pages: this.state.pages,
-          total: this.state.total
+          rows: this.state.total
         }}
         This={this}
         callback={this._get_list.bind(this)}

@@ -1,17 +1,15 @@
 * {
-	margin: 0;
+	margin: 10px auto;
 	padding: 0;
 }
 
 html {
 	font-size: 13px;
 }
-
 /* title */
 h2.inner_title{
     background-color: #007a51;
-	color:#fff;
-	margin-top: 20px;
+    color:#fff;
     line-height: 40px;
     padding-left: 20px;
 }
@@ -67,24 +65,17 @@ h2.inner_title{
 
 /* 图表 */
 
-#tea_chart_wrap,#stu_chart_wrap {
+#course_fix_wrap,#course_audit_wrap {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
 }
 
-/* #tjtck>div {
+#course_fix_wrap>div,#course_audit_wrap>div {
 	width: 49%;
 	display: inline-block;
 	margin-bottom: 20px;
 	border: 1px solid #ccc;
-} */
-#tea_chart_wrap>div,#stu_chart_wrap >div {
-	width: 456px;
-	height: 560px;
-	display: inline-block;
-	margin-bottom: 20px;
-	/* border: 1px solid #ccc; */
 }
 
 /*时间选择框样式*/

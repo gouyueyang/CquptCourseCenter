@@ -25,7 +25,7 @@ class Filter extends React.Component {
       kkxbzx: '',
       page: 1,
       pages: 1,
-      total: 1,
+      total: 0,
       lists: []
     };
   }
@@ -144,10 +144,10 @@ class Filter extends React.Component {
       <Fanye options={{
           page: this.state.page,
           pages: this.state.pages,
-          total: this.state.total
+          rows: this.state.total
         }}
         This={this}
-        callback={this._get_list.bind(this,1)}
+        callback={this._get_list.bind(this)}
       ></Fanye>
     </div>);
   }
@@ -190,7 +190,7 @@ class Table extends React.Component {
         <td></td>
         <td></td>
       </tr>);
-      lists.push(<Item key={'it-'+index} show={this.state.showToggles[index]} wpid={e.wpid} kcbh={e.kcbh}></Item>);
+      lists.push(<Item key={'it-'+e.kcbh} show={this.state.showToggles[index]} wpid={e.wpid} kcbh={e.kcbh}></Item>);
     });
     return(<tbody>
       { lists }
@@ -232,8 +232,8 @@ class Item extends React.Component {
       teachers: []
     };
   }
-
   render() {
+    // this.getData();
     let pf = this.state.teachers.map((e,ei) => <div className="item-zj" key={ei}>
       <p>专家姓名：{e.xm}<span className="df">总分：{e.zf}</span></p>
       <p><span className="item-l">指标项</span><span className="item-r">得分</span></p>
@@ -256,6 +256,24 @@ class Item extends React.Component {
     </tr>);
   }
 
+  // getData(){
+  //   ajax({
+  //     url: courseCenter.host + 'getWpjgxqList',
+  //     data: {
+  //       unifyCode: getCookie('userId'),
+  //       reviewId: this.props.wpid,// wpid
+  //       courseNo: this.props.kcbh,//kcbh
+  //       count: 10 * _COUNT,
+  //       page: 1
+  //     },
+  //     success: (gets) => {
+  //       let datas = JSON.parse(gets);
+  //       this.setState({
+  //         teachers: datas.data.wpjgxqList
+  //       });
+  //     }
+  //   });
+  // }
   componentDidMount() {
     ajax({
       url: courseCenter.host + 'getWpjgxqList',

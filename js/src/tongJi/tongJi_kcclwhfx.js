@@ -1,16 +1,16 @@
-var BluMUI = require('../libs/statistics/chartShow.js');
+var BluMUI = require('../../libs/statistics/kcclwhfx.js');
 
 //创建饼状图筛选栏
 BluMUI.create({
-  id: 'tea_pie_filter',
-  wrapId:'tea_pie_chart',
+  id: 'course_fix_pie_filter',
+  wrapId:'course_fix_pie_chart',
   callback:callback1,
   type:'1',  //学院
   sstype:'1',   //老师
-  chartTitle:'各学院老师操作统计图'
+  chartTitle:'各学院课程维护统计图'
 },
   'BluMUI_Filter',
-  document.getElementById('tea_pie_filter')
+  document.getElementById('course_fix_pie_filter')
 );
 BluMUI.create({
   id: 'stu_pie_filter',
@@ -18,7 +18,7 @@ BluMUI.create({
   callback:callback1,
   type:'1',  //学院
   sstype:'2', //学生
-  chartTitle:'各学院学生操作统计图'
+  chartTitle:'各学院课程审核统计图'
 },
   'BluMUI_Filter',
   document.getElementById('stu_pie_filter')
@@ -108,54 +108,3 @@ function callback3(datas,wrapId,chartTitle) {
     document.getElementById(wrapId)
   );
 }
-
-
-// var echarts = require('echarts');
-// var chartDom = document.getElementById("pieChart");
-// var myChart = echarts.init(chartDom);
-// var option = {
-//   title: {
-//     text: 'ECharts 入门示例'
-//   },
-//   tooltip: {},
-//   xAxis: {
-//     data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-//   },
-//   yAxis: {},
-//   series: [{
-//     name: '销量',
-//     type: 'bar',
-//     data: [5, 20, 36, 10, 10, 20]
-//   }]
-// };
-// myChart.setOption(option);
-
-// var chartDom2 = document.getElementById("barChart");
-// var myChart2 = echarts.init(chartDom2);
-// var option2= {
-//   legend: {},
-//   tooltip: {},
-//   dataset: {
-//     // source: result
-//     source: [
-//       ['xm','collegeName', 'amount'],
-//       ['','aa', 122],
-//       ['','bb', 123],
-//       ['','cc', 456],
-//       ['','dd', 300],
-//       ['','ee', 200]
-//     ]
-//   },
-//   series: [
-//     {
-//       type: 'pie',
-//       radius: 150,
-//       center: ['50%', '50%'],
-//       encode: {
-//         itemName: 'collegeName',
-//         value: 'amount'
-//       }
-//     }
-//   ]
-// }
-// myChart2.setOption(option2);

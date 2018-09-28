@@ -14,7 +14,7 @@ iframe {
 /* head */
 #head {
   width: 100%;
-  min-width: 1920px;
+  min-width: 1800px;
   height: 100px;
   background-color: #fff;
   margin-bottom: 20px;
@@ -43,7 +43,7 @@ iframe {
 /* main-body */
 #body {
   width: 100%;
-  min-width: 1920px;
+  min-width: 1800px;
   min-height: 743px;
 }
 
@@ -82,8 +82,10 @@ iframe {
 /* content */
 #content {
   float: left;
-  min-width: 82.03125%;
+  /* min-width: 82.03125%; */
+  min-width:80%;
   min-height: 600px;
+  max-height: 2000px;
   display: inline-block;
   padding-left: 25px;
   box-sizing: border-box;
@@ -126,11 +128,12 @@ iframe {
 /* tab */
 #tab iframe {
   width: 100%;
+  min-height: 710px;
 }
 
 /* footer */
 #footer {
-  width: 1920px;
+  width: 100%px;
   height: 75px;
   line-height: 75px;
   color: #FFF;

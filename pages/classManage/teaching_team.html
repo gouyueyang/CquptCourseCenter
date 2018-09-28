@@ -2,54 +2,55 @@
 <html>
 <head>
   <meta charset="utf-8"/>
-	<meta name="renderer" content="webkit|ie-stand">
-	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
+  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
   <title>教学团队</title>
   <link rel="stylesheet" href="../../css/public/teaching_team.css">
 </head>
 <body>
-  <div id="header" class="warp">
-    <div class="warp_center">
-      <div id="test"></div>
-    </div>
-  </div>
   <div id="logo" class="warp">
-    <div class="warp_center">
-      <div class="logo_warp">
-        <span class="logo"></span>
-        <span class="logo_text">课程中心</span>
+    <div id="head">
+      <div class="warp-center">
+        <a href="http://cc.cqupt.edu.cn/CquptCourseCenter/pages/classList.jsp">
+        <img src="../../imgs/public/biglogo.png"></a>
       </div>
     </div>
   </div>
 
-  <div id="body-a">
-  <div class="warp_center">
+  <div id="shadow"></div>
+
+  <div id="body-a" class="warp">
+  <div class="warp-center">
+  <div id="big-table">
     <div id="body_head">
-      <span id="table_title">
-        <ul><li>教学团队信息维护</li></ul>
+      <span id="table_title"><!-- react -->
+        <ul><li><!-- 教学团队信息维护 --></li></ul>
       </span>
       <div id="hr"></div>
+
       <div id="out_serch">
-        <span>教学团队名称：</span>
-        <input type="text" id="jxtdss">
-        <span id="serch_btn">搜索</span>
+        <span id="serch_title">课程名称：</span><!-- 
+         --><input type="text" id="jxtdss" placeholder="请输入课程名称">
+        <div id="serch_btn"><img src="../../imgs/public/fangdajing.png"></div>
       </div>
+
       <div style="clear: both;"></div>
     </div>
-    <div id="list">
-    </div>
+    <div id="list"></div>
+  </div>
   </div>
   </div>
   <div id="popup" style="display: none;"></div>
 
   <div id='footer' class="warp">
-    <div class="warp_center">
-          <span class="copyRight">
-            版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
-          </span>
+    <div class="warp-center">
+      <span class="copyRight">
+        版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+      </span>
     </div>
   </div>
-  <script src="../../js/libs/courseCenter.config.js"></script>>
-  <script src="../../js/pages/teaching_team.js"></script>
+  <script src="../../js/libs/courseCenter.config.js"></script>
+  <script src="../../js/pages/react.bundle.js"></script>
+  <script src="../../js/pages/teaching_team.bundle.js"></script>
+  <!-- <script src="../../js/pages/teachingTeam/teachingTeam.bundle.js"></script> -->
 </body>
 </html>

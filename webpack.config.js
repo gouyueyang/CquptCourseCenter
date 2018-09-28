@@ -1,10 +1,11 @@
 var webpack = require('webpack');
 module.exports = {
   entry: {
-    tongJi_chart: './js/src/tongJi_chart.js'
+    tongJi_wpjgcx: './js/src/tongJi/tongJi_wpjgcx.js',
+    tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js'
   },
   output: {
-    path: './js/pages/statistics',
+    path: './js/pages/statistics/',
     filename: "[name].bundle.js",
     publicPath: 'http://localhost:8080/pages'
   },

@@ -46,17 +46,188 @@
 
 	'use strict';
 
-	var BluMUI = __webpack_require__(178);
-	// var ajax = require('../libs/post_ajax.js');
+	var BluMUI = __webpack_require__(1);
+	var ajax = __webpack_require__(176);
 
-	// 
+	// 需要获取用户id
+	var User = {
+	  name: "",
+	  id: ""
+	};
+	User.id = getCookie('userId');
 
-	BluMUI.create({
-	    id: 'filter'
-	}, 'BluMUI_Filter', document.getElementById('TJ'));
+	BluMUI.result.user_id = User.id;
+	ajax({
+	  url: courseCenter.host + 'getMenu',
+	  data: {
+	    unifyCode: User.id,
+	    module: 11
+	  },
+	  success: function success(gets) {
+	    // 未获取到数据则刷新页面
+	    if (JSON.parse(gets).meta.result != 100) {
+	      alert("数据获取失败，请重新登录！");
+	    }
+	    var datas = JSON.parse(gets);
+	    BluMUI.create({
+	      id: 'Tab',
+	      role: datas.data
+	    }, 'CreateTab', document.getElementById('table_title'));
+	  }
+	});
 
 /***/ }),
-/* 1 */,
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(36);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var BlueMUI_Login = function (_React$Component) {
+		_inherits(BlueMUI_Login, _React$Component);
+
+		function BlueMUI_Login(props) {
+			_classCallCheck(this, BlueMUI_Login);
+
+			var _this = _possibleConstructorReturn(this, (BlueMUI_Login.__proto__ || Object.getPrototypeOf(BlueMUI_Login)).call(this, props));
+
+			_this.state = {
+				rember: false,
+				account: '',
+				key: '',
+				ca: '',
+				isLogin: false
+			};
+			_this._input = _this._input.bind(_this);
+			return _this;
+		}
+
+		_createClass(BlueMUI_Login, [{
+			key: '_click',
+			value: function _click() {
+				this.setState({
+					rember: !this.state.rember
+				});
+			}
+		}, {
+			key: '_login',
+			value: function _login() {
+				var data = {
+					userId: this.state.account,
+					passWord: this.state.key,
+					captcha: this.state.ca
+				};
+				this.props.ajax(data);
+			}
+		}, {
+			key: '_reset',
+			value: function _reset() {
+				this.setState({
+					key: '',
+					account: '',
+					isLogin: false
+				});
+			}
+		}, {
+			key: '_input',
+			value: function _input(name) {
+				var that = this;
+				return function (e) {
+					var value = e.target.value,
+					    state = {};
+					state[name] = value;
+					that.setState(state, function () {
+						var isLogin;
+						if (that.state.key.length > 0 && that.state.account.length > 0 && that.state.ca.length > 0) isLogin = true;else isLogin = false;
+						that.setState({
+							isLogin: isLogin
+						});
+					});
+				};
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2["default"].createElement(
+					'div',
+					{ className: 'Login' },
+					_react2["default"].createElement(
+						'p',
+						{ className: 'loginTitle' },
+						'\u7528\u6237\u767B\u5F55'
+					),
+					_react2["default"].createElement(
+						'div',
+						{ className: 'inputWarp' },
+						_react2["default"].createElement('span', { className: 'title account' }),
+						_react2["default"].createElement('input', { type: 'text', placeholder: '\u8BF7\u8F93\u5165\u8D26\u53F7', onInput: this._input('account'), value: this.state.account })
+					),
+					_react2["default"].createElement(
+						'div',
+						{ className: 'inputWarp', style: { marginTop: 20 } },
+						_react2["default"].createElement('span', { className: 'title key' }),
+						_react2["default"].createElement('input', { type: 'password', placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801', onInput: this._input('key'), value: this.state.key })
+					),
+					_react2["default"].createElement(
+						'div',
+						{ className: 'inputWarp', style: { marginTop: 20 } },
+						_react2["default"].createElement('span', { className: 'title1 ca1' }),
+						_react2["default"].createElement('input', { style: { width: 151, height: 30 }, type: 'text', placeholder: '', onInput: this._input('ca'), value: this.state.ca }),
+						_react2["default"].createElement('span', { className: 'ca', style: { backgroundImage: 'url(' + this.props.host + 'CquptCourseCenter/pages/courseMaster/identify_Code.jsp)' } })
+					),
+					_react2["default"].createElement(
+						'button',
+						{ className: this.state.isLogin ? 'login' : 'disable', onClick: this._login.bind(this) },
+						'\u767B\u5F55'
+					),
+					_react2["default"].createElement(
+						'button',
+						{ className: 'reset', onClick: this._reset.bind(this) },
+						'\u91CD\u7F6E'
+					)
+				);
+			}
+		}]);
+
+		return BlueMUI_Login;
+	}(_react2["default"].Component);
+
+	var BluMUI_M = {
+		Login: BlueMUI_Login
+	};
+	var BluMUI = {
+		result: {},
+		create: function create(data, type, elem) {
+			var props = data,
+			    Blu = BluMUI_M[type];
+			this.result[props.id] = _reactDom2["default"].render(_react2["default"].createElement(Blu, props), elem);
+		}
+	};
+	exports["default"] = BluMUI;
+	module.exports = exports['default'];
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21527,678 +21698,6 @@
 	};
 
 	exports["default"] = post_ajax;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 177 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Fanye = function (_React$Component) {
-	  _inherits(Fanye, _React$Component);
-
-	  function Fanye(props) {
-	    _classCallCheck(this, Fanye);
-
-	    return _possibleConstructorReturn(this, (Fanye.__proto__ || Object.getPrototypeOf(Fanye)).call(this, props));
-	  }
-
-	  _createClass(Fanye, [{
-	    key: "create_popup_fanye",
-	    value: function create_popup_fanye() {
-	      var _this2 = this;
-
-	      var nums = [];
-	      var start = 1;
-	      var end = this.props.options.pages || 1;
-	      var now = this.props.options.page || 1;
-	      var page_on = { color: "#007A51" };
-
-	      var change_page = function change_page(p) {
-	        if (p === now) {
-	          nums.push(_react2["default"].createElement(
-	            "li",
-	            { key: p, style: page_on },
-	            p
-	          ));
-	        } else {
-	          nums.push(_react2["default"].createElement(
-	            "li",
-	            { key: p, onClick: _this2.fanye.bind(_this2, p) },
-	            p
-	          ));
-	        }
-	      };
-
-	      if (end < 1) {
-	        nums.push(_react2["default"].createElement(
-	          "li",
-	          { key: "only", onClick: this.fanye.bind(this, 1) },
-	          "1"
-	        ));
-	      } else if (end <= 5) {
-	        for (var i = 1; i <= end; i++) {
-	          change_page(i);
-	        }
-	      } else {
-	        if (now < 3) {
-	          for (var _i = 1; _i <= 5; _i++) {
-	            change_page(_i);
-	          }
-	        } else if (now > end - 3) {
-	          for (var _i2 = end - 5; _i2 <= end; _i2++) {
-	            change_page(_i2);
-	          }
-	        } else {
-	          for (var _i3 = now - 2; _i3 <= now + 2; _i3++) {
-	            change_page(_i3);
-	          }
-	        }
-	      }
-
-	      return _react2["default"].createElement(
-	        "div",
-	        { className: "fanye" },
-	        _react2["default"].createElement(
-	          "span",
-	          { id: "rows" },
-	          "\u5171",
-	          this.props.options.rows >= 0 ? this.props.options.rows : 1,
-	          "\u6761\u8BB0\u5F55"
-	        ),
-	        _react2["default"].createElement("input", { className: "fanye_options", type: "button", value: "\u9996\u9875", id: "fanye_start", onClick: this.fanye.bind(this, 1) }),
-	        _react2["default"].createElement("input", { className: "fanye_options", type: "button", value: "\u4E0A\u4E00\u9875", id: "fanye_pre", onClick: this.fanye.bind(this, now === 1 ? 0 : now - 1) }),
-	        _react2["default"].createElement(
-	          "ul",
-	          { id: "fanye_nums" },
-	          nums
-	        ),
-	        _react2["default"].createElement("input", { type: "text", id: "tp", ref: "tp", placeholder: this.props.options.page + "/" + this.props.options.pages }),
-	        _react2["default"].createElement("input", { className: "fanye_options", type: "button", value: "\u4E0B\u4E00\u9875", id: "fanye_next", onClick: this.fanye.bind(this, now === end ? 0 : now + 1) }),
-	        _react2["default"].createElement("input", { className: "fanye_options", type: "button", value: "\u5C3E\u9875", id: "fanye_end", onClick: this.fanye.bind(this, end) })
-	      );
-	    }
-
-	    //翻页函数
-
-	  }, {
-	    key: "fanye",
-	    value: function fanye(p) {
-	      this.refs.tp.value = null;
-	      if (p == 0) {
-	        return;
-	      }
-	      this.props.callback(p);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return this.create_popup_fanye();
-	    }
-	  }, {
-	    key: "componentDidMount",
-	    value: function componentDidMount() {
-	      var _this3 = this;
-
-	      // 手动跳转翻页
-	      this.refs.tp.onkeydown = function (eve) {
-	        if (eve.keyCode === 13) {
-	          if (!isNaN(+eve.target.value)) {
-	            _this3.fanye(+eve.target.value);
-	          } else {
-	            eve.target.value = null;
-	            eve.target.blur();
-	          }
-	        }
-	      };
-	    }
-	  }]);
-
-	  return Fanye;
-	}(_react2["default"].Component);
-
-	exports["default"] = Fanye;
-	module.exports = exports['default'];
-
-/***/ }),
-/* 178 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(36);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ajax = __webpack_require__(176);
-	var Fanye = __webpack_require__(177);
-
-	var _COUNT = 10;
-
-	var SET = function SET(key, value) {
-	  sessionStorage.setItem("wpjgcx-" + key, value);
-	  return value;
-	};
-
-	var GET = function GET(key) {
-	  return sessionStorage.getItem("wpjgcx-" + key) || '';
-	};
-
-	var Filter = function (_React$Component) {
-	  _inherits(Filter, _React$Component);
-
-	  function Filter(props) {
-	    _classCallCheck(this, Filter);
-
-	    var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
-
-	    _this.state = {
-	      kcmc: '',
-	      zjxm: '',
-	      zt: 0,
-	      wppc: '',
-	      kkxy: '',
-	      kkxbzx: '',
-	      page: 1,
-	      pages: 1,
-	      total: 0,
-	      lists: []
-	    };
-	    return _this;
-	  }
-
-	  //网评批次选项
-
-
-	  _createClass(Filter, [{
-	    key: 'get_wppc_select',
-	    value: function get_wppc_select() {
-	      var _this2 = this;
-
-	      ajax({
-	        url: courseCenter.host + 'reviewBriefList',
-	        data: {
-	          userID: getCookie('userId'),
-	          state: 4,
-	          expGroup: ''
-	        },
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          var ops = ['<option value="">\u8BF7\u9009\u62E9</option>'];
-	          datas.data.list.forEach(function (e) {
-	            ops.push('<option value="' + e.wppc + '">' + e.wppc + '</option>');
-	          });
-	          _this2.wppc_select.innerHTML = ops.join('');
-	        }
-	      });
-	    }
-	    //开课学院选项
-
-	  }, {
-	    key: 'get_kkxy_select',
-	    value: function get_kkxy_select() {
-	      var _this3 = this;
-
-	      ajax({
-	        url: courseCenter.host + 'getCollege',
-	        data: {
-	          unifyCode: getCookie('userId')
-	        },
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          var ops = ['<option value="">\u8BF7\u9009\u62E9</option>'];
-	          datas.data.forEach(function (e) {
-	            ops.push('<option value="' + e.kkxymc + '">' + e.kkxymc + '</option>');
-	          });
-	          _this3.kkxy_select.innerHTML = ops.join('');
-	        }
-	      });
-	    }
-
-	    //开课系部中心选项
-
-	  }, {
-	    key: 'get_kkxbzx_select',
-	    value: function get_kkxbzx_select(college) {
-	      var _this4 = this;
-
-	      ajax({
-	        url: courseCenter.host + 'getCourseDepartment',
-	        data: {
-	          unifyCode: getCookie('userId'),
-	          college: college
-	        },
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          var ops = ['<option value="">\u8BF7\u9009\u62E9</option>'];
-	          datas.data.forEach(function (e) {
-	            ops.push('<option value="' + e.jysmc + '">' + e.jysmc + '</option>');
-	          });
-	          _this4.kkxbzx_select.innerHTML = ops.join('');
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'change_zt',
-	    value: function change_zt(eve) {
-	      this.setState({ zt: eve.target.value }, this._get_list);
-	    }
-	  }, {
-	    key: '_get_list',
-	    value: function _get_list(p) {
-	      var _this5 = this;
-
-	      p = p || 1;
-	      var D = {
-	        unifyCode: getCookie("userId"),
-	        reviewBatch: this.state.wppc,
-	        college: this.state.kkxy,
-	        courseDepartment: this.state.kkxbzx,
-	        courseName: this.state.kcmc,
-	        evaluateName: this.state.zjxm,
-	        state: this.state.zt,
-	        page: p,
-	        count: _COUNT
-	      };
-	      ajax({
-	        url: courseCenter.host + "getWpztList",
-	        data: D,
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          if (datas.meta.result === 100) {
-	            _this5.setState({
-	              page: p,
-	              pages: datas.data.totalPages,
-	              total: datas.data.total,
-	              lists: datas.data.wpztList
-	            });
-	          }
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this6 = this;
-
-	      return _react2["default"].createElement(
-	        'div',
-	        { className: 'filters' },
-	        _react2["default"].createElement(
-	          'div',
-	          { className: 'top' },
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u7F51\u8BC4\u6279\u6B21\uFF1A'
-	          ),
-	          _react2["default"].createElement(
-	            'select',
-	            { name: 'wppc', id: 'wppc', onChange: function onChange(eve) {
-	                _this6.state.wppc = eve.target.value;
-	              }, ref: function ref(sel) {
-	                return _this6.wppc_select = sel;
-	              } },
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '' },
-	              '\u8BF7\u9009\u62E9'
-	            )
-	          ),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u5F00\u8BFE\u5B66\u9662\uFF1A'
-	          ),
-	          _react2["default"].createElement(
-	            'select',
-	            { name: 'kkxy', id: 'kkxy', onChange: function onChange(eve) {
-	                _this6.state.kkxy = eve.target.value;_this6.get_kkxbzx_select(eve.target.value);
-	              }, ref: function ref(sel) {
-	                return _this6.kkxy_select = sel;
-	              } },
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '' },
-	              '\u8BF7\u9009\u62E9'
-	            )
-	          ),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u5F00\u8BFE\u7CFB\u90E8\u4E2D\u5FC3\uFF1A'
-	          ),
-	          _react2["default"].createElement(
-	            'select',
-	            { name: 'kkxbzx', id: 'kkxbzx', onChange: function onChange(eve) {
-	                _this6.state.kkxbzx = eve.target.value;
-	              }, ref: function ref(sel) {
-	                return _this6.kkxbzx_select = sel;
-	              } },
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '' },
-	              '\u8BF7\u9009\u62E9'
-	            )
-	          ),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u8BFE\u7A0B\u540D\u79F0\uFF1A'
-	          ),
-	          _react2["default"].createElement('input', { placeholder: '\u8BF7\u8F93\u5165\u8BFE\u7A0B\u540D\u79F0', type: 'text', value: this.state.kcmc,
-	            onChange: function onChange(eve) {
-	              _this6.setState({ kcmc: eve.target.value });
-	            },
-	            onKeyDown: function onKeyDown(eve) {
-	              if (eve.keyCode === 13) _this6._get_list(1);
-	            }
-	          }),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u4E13\u5BB6\u59D3\u540D\uFF1A'
-	          ),
-	          _react2["default"].createElement('input', { placeholder: '\u8BF7\u8F93\u5165\u4E13\u5BB6\u59D3\u540D', type: 'text', value: this.state.zjxm,
-	            onChange: function onChange(eve) {
-	              _this6.setState({ zjxm: eve.target.value });
-	            },
-	            onKeyDown: function onKeyDown(eve) {
-	              if (eve.keyCode === 13) _this6._get_list(1);
-	            }
-	          }),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u72B6\u6001\uFF1A'
-	          ),
-	          _react2["default"].createElement(
-	            'select',
-	            { name: 'zt', id: 'zt', ref: function ref(sel) {
-	                return _this6.zt_select = sel;
-	              }, onChange: this.change_zt.bind(this), defaultValue: this.state.zt },
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '0' },
-	              '\u5F85\u8BC4\u4EF7'
-	            ),
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '1' },
-	              '\u5F85\u63D0\u4EA4'
-	            ),
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '2' },
-	              '\u5DF2\u63D0\u4EA4'
-	            )
-	          ),
-	          _react2["default"].createElement(
-	            'button',
-	            { id: 'search', onClick: this._get_list.bind(this, 1) },
-	            '\u641C\u7D22'
-	          )
-	        ),
-	        _react2["default"].createElement(Table, { lists: this.state.lists }),
-	        _react2["default"].createElement(Fanye, { options: {
-	            page: this.state.page,
-	            pages: this.state.pages,
-	            rows: this.state.total
-	          },
-	          This: this,
-	          callback: this._get_list.bind(this)
-	        })
-	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.get_wppc_select();
-	      this.get_kkxy_select();
-	      this._get_list(1);
-	    }
-	  }]);
-
-	  return Filter;
-	}(_react2["default"].Component);
-
-	var Table = function (_React$Component2) {
-	  _inherits(Table, _React$Component2);
-
-	  function Table(props) {
-	    _classCallCheck(this, Table);
-
-	    var _this7 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
-
-	    _this7.state = {
-	      showToggles: new Array(10).fill(false)
-	    };
-	    return _this7;
-	  }
-
-	  _createClass(Table, [{
-	    key: 'show_detail',
-	    value: function show_detail(index) {
-	      var toggles = this.state.showToggles;
-	      toggles[index] = !toggles[index];
-	      this.setState({
-	        showToggles: toggles
-	      });
-	    }
-	  }, {
-	    key: 'create_tbody',
-	    value: function create_tbody() {
-	      var _this8 = this;
-
-	      var lists = [];
-	      this.props.lists.forEach(function (e, index) {
-	        lists.push(_react2["default"].createElement(
-	          'tr',
-	          { className: 'list-item', key: index, onClick: _this8.show_detail.bind(_this8, index) },
-	          _react2["default"].createElement('td', null),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.wppc
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.kkxymc
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.jysmc
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.kcbh
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.kcmc
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.ZJXM
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.JSSJ
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.TJZT
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.CZSJ
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            parseInt(+e.ZF)
-	          ),
-	          _react2["default"].createElement(
-	            'td',
-	            null,
-	            e.PJ
-	          ),
-	          _react2["default"].createElement('td', null)
-	        ));
-	      });
-	      return _react2["default"].createElement(
-	        'tbody',
-	        null,
-	        lists
-	      );
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2["default"].createElement(
-	        'table',
-	        null,
-	        _react2["default"].createElement(
-	          'thead',
-	          null,
-	          _react2["default"].createElement(
-	            'tr',
-	            null,
-	            _react2["default"].createElement('td', { className: 'lefttd' }),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u7F51\u8BC4\u6279\u6B21'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u5B66\u9662\u540D\u79F0'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u7CFB\u90E8\u4E2D\u5FC3'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u8BFE\u7A0B\u7F16\u53F7'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u8BFE\u7A0B\u540D\u79F0'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u4E13\u5BB6\u59D3\u540D'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u7ED3\u675F\u65F6\u95F4'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u63D0\u4EA4\u72B6\u6001'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u63D0\u4EA4\u65F6\u95F4'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              null,
-	              '\u603B\u5206'
-	            ),
-	            _react2["default"].createElement(
-	              'td',
-	              { style: { maxWidth: "200px" } },
-	              '\u8BC4\u4EF7'
-	            ),
-	            _react2["default"].createElement('td', { className: 'righttd' })
-	          )
-	        ),
-	        this.create_tbody()
-	      );
-	    }
-	  }, {
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate(prevProps, prevState) {
-	      if (window.frameElement) {
-	        window.frameElement.height = document.body.scrollHeight;
-	      }
-	    }
-	  }]);
-
-	  return Table;
-	}(_react2["default"].Component);
-
-	var BluMUI_M = {
-	  BluMUI_Filter: Filter
-	};
-
-	var BluMUI = {
-	  result: {},
-	  menues: [],
-	  menue_names: {},
-	  create: function create(data, type, elem) {
-	    var props = data,
-	        Blu = BluMUI_M[type];
-	    this.result[props.id] = _reactDom2["default"].render(_react2["default"].createElement(Blu, props), elem);
-	  }
-	};
-
-	exports["default"] = BluMUI;
 	module.exports = exports['default'];
 
 /***/ })
