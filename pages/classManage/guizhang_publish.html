@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>发布规章制度</title>
+  <link rel="stylesheet" href="../../css/classManage/guizhang_publish.css">
+  <link rel="stylesheet" href="../../css/classManage/wangEditor.min.css">
+
+
+</head>
+<body>
+  <div id="content">
+    <form action="" method="post" enctype="multipart/form-data" id="form">
+      <input type="text" id="unifyCode" name="unifyCode" style="display: none">
+      <span class="title_span">标题：</span>
+      <input type="text" id="title" name="head">
+      <span id="warn">20字以内</span>
+      <span class="title_span">来源：</span>
+      <input type="text" id="source" name="source">
+      <span class="title_span">正文：</span>
+      <div id="fuwenben" style="width: 100%;">
+        <textarea id="inputs" name="body" style="height: 400px;">
+        </textarea>
+      </div>
+      <div id="fujian">
+        <span>附件：</span>
+
+        <div id="file_style">
+          <input type="file" multiple="multiple" id="files" name="filee">
+        </div>
+        <ul id="file_names"></ul>
+
+      </div>
+      <span id="publish" class="btn">保存</span><span id="back" class="btn">返回</span>
+    </form>
+  </div>
+  <script id="container" name="content" type="text/plain">
+      这里写你的初始化内容
+  </script>
+
+  <script src="../../js/libs/courseCenter.config.js"></script>
+  <!-- <script src="../../js/libs/jquery.min.js"></script> -->
+  <script src="../../js/libs/ueditor.config.js"></script>
+  <script src="../../js/libs/ueditor.all.min.js"></script>
+  <!-- <script src="../../js/pages/wangEditor.min.js"></script> -->
+  <script src="../../js/pages/react.bundle.js"></script>
+  <script src="../../js/pages/guizhang_publish.js"></script>
+</body>
+</html>

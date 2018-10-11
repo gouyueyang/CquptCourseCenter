@@ -1,8 +1,10 @@
+/*源码有误，使用的是之前转换好的代码*/
+
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-const ajax=require('../libs/post_ajax.js');
-const Fanye=require('../libs/fanye.js');
+const ajax=require('../../libs/post_ajax.js');
+const Fanye=require('../../libs/turnPage.js');
 
 const _COUNT = 10;
 
@@ -24,7 +26,7 @@ class Option extends React.Component {
       TP: {
         page: 1,
         pages: 1,
-        total: 1
+        rows: 0
       },
       list: [],
       fzpc_select: []
@@ -34,11 +36,11 @@ class Option extends React.Component {
   insert_pici() {
     let pc=`<option value="">请选择</option>`;
     this.state.fzpc_select.map(e=>pc+=`<option ${(this.fzpc===e.fzpc)?"selected":''} value=${e.fzpc} >${e.fzpc}</option>`);
-    this.pici.innerHTML=pc;
+    this.pici.innerHTML=pc;      /*这里会报错*/
   }
 
   search() {
-    this.fzpc=this.pici.value;
+    this.fzpc=this.refs.pici.value;
     SET("fzpc", this.fzpc);
     this.get_list(1);
   }
@@ -60,7 +62,7 @@ class Option extends React.Component {
           TP: {
             page: page,
             pages: datas.data.totalPages,
-            total:datas.data.total
+            rows:datas.data.total
           },
           list: datas.data.groupList
         })
@@ -80,7 +82,7 @@ class Option extends React.Component {
             <select 
               name="fzpc" 
               id="fzpc_select" 
-              ref={sel=>(this.pici=sel)} 
+              ref={sel=>this.pici=sel} 
               defaultValue={this.fzpc}
             >
               {
@@ -93,7 +95,7 @@ class Option extends React.Component {
         </div>
 
         <List list={this.state.list} />
-        <Fanye TP={this.state.TP} callback={(p)=>{this.get_list(p)}} />
+        <Fanye options={this.state.TP} callback={(p)=>{this.get_list(p)}} />
       </div>
     );
   }
@@ -246,7 +248,7 @@ class Popup extends React.Component {
     // background click to cancel
     this.refs.pb.onclick=e=>e.stopPropagation();
     // back button click to cancel
-    this.back.onclick=cancel_popup;
+    this.refs.back.onclick=cancel_popup;
     // OK button option
     let dat={};
 

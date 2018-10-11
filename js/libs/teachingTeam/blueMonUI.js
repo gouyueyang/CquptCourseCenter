@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-var ajax = require('../libs/post_ajax.js');
+var ajax = require('../post_ajax.js');
 var _count = 10;
 
 //创建绿色的表头（又是绿色= =！）
@@ -1140,6 +1140,7 @@ class BlueMUI_CreateTab extends React.Component {
       Rank: +this.props.role[0].subModule,
     };
     this.show_list = this.show_list.bind(this);
+    
   }
 
   componentDidMount() {
@@ -1158,6 +1159,13 @@ class BlueMUI_CreateTab extends React.Component {
         that.refs['Rank-' + e.subModule].style.color = '#999999'
       });
       that.refs['Rank-' + that.state.Rank].style.color = '#009361';
+      let outputLink = document.querySelector('#output');
+      if (that.state.Rank == 2) {
+        outputLink.href = `${courseCenter.host}exportKcfzrExcel?unifyCode=${getCookie("userId")}&selectName=${document.getElementById('jxtdss').value}`
+        outputLink.style.display = 'block';
+      }else{
+        outputLink.style.display = 'none';
+      }
     }
 
     /*绑定搜素*/
@@ -1184,6 +1192,8 @@ class BlueMUI_CreateTab extends React.Component {
             total: datas.data.total,
             totalPages: datas.data.totalPages
           });
+          let outputLink = document.querySelector('#output');
+          outputLink.href = `${courseCenter.host}exportKcfzrExcel?unifyCode=${getCookie("userId")}&selectName=${document.getElementById('jxtdss').value}`
         }
       });
     }

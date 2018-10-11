@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const _COUNT = 10;
 const ajax=require('../libs/post_ajax.js');
-const Fanye=require('../libs/fanye');
+const Fanye=require('../libs/fanye.js');
 var masterNames=[];
 
 function SET(key,value) {

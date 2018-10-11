@@ -3,7 +3,7 @@ require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 var doc = document,
-	BluMUI = require('../libs/blueMonUI.js'),
+	BluMUI = require('../js/libs/masterAddZbEditor/blueMonUI.js'),
 	ajaxPading = require('../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	query = parseHash(window.location.href),

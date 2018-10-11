@@ -723,3 +723,19 @@ body {
 #downloadIframe{
   display: none;
 }
+
+#output{
+  display: none;
+  float: left;
+  margin:10px;
+  text-decoration: none;
+  width:100px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  background-color: #007a51;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}

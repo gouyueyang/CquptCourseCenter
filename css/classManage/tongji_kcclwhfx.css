@@ -1,10 +1,13 @@
 * {
-	margin: 10px auto;
+	margin: 0;
 	padding: 0;
 }
 
 html {
 	font-size: 13px;
+}
+body{
+	margin:10px auto;
 }
 /* title */
 h2.inner_title{
@@ -75,9 +78,45 @@ h2.inner_title{
 	width: 49%;
 	display: inline-block;
 	margin-bottom: 20px;
-	border: 1px solid #ccc;
+	box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
 }
 
+
+#course_fix_table_content table,#course_audit_table_content table{
+	width:100%;
+	font-size: 14px;
+	background: #FFF;
+	text-align: center;
+	border-collapse: collapse;
+	border: 1px solid #EEEEEE;
+}
+#course_fix_table_content thead,#course_audit_table_content thead {
+	color: #FFF;
+  }
+  
+  #course_fix_table_content thead tr th,#course_audit_table_content thead tr th {
+	height: 30px;
+	background: #009361;
+	border: 1px solid #EEEEEE;
+  }
+  #course_fix_table_content tbody tr td,#course_audit_table_content tbody tr td {
+	height: 30px;
+	border: 1px solid #EEEEEE;
+  }
+  .output{
+	  float: right;
+	  margin:10px;
+	  text-decoration: none;
+	  width:100px;
+	  height: 30px;
+	  text-align: center;
+	  line-height: 30px;
+	  background-color: #007a51;
+	  border-radius: 5px;
+	  color: #fff;
+	  font-size: 16px;
+	  cursor: pointer;
+  }
 /*时间选择框样式*/
 
 .inlineBlock{

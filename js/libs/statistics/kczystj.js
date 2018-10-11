@@ -16,10 +16,17 @@ class Filter extends React.Component {
       name: "",
       page: 1,
       pages :1,
-      rows: 1
-    }
+      rows: 1,
+      output:`unifyCode=${getCookie("userId")}`
+    };
+    this.changeOutput = this.changeOutput.bind(this);
   }
 
+  changeOutput(){
+    this.setState({
+      output:`unifyCode=${getCookie("userId")}&college=${this.state.college}&courseDepartment=${this.state.department}&courseName=${this.state.name}`
+    });
+  }
   render() {
     return (<div id="kczystj">
       <div id="kczystj_filter">
@@ -31,6 +38,8 @@ class Filter extends React.Component {
         </select>
         <input type="text" id="filter_name" placeholder="请输入课程名称" ref="name"/>
         <input type="button" id="btn" ref="btn" value="搜索"/>
+        
+        <a className="output" href={courseCenter.host + "exportKcZysExcel?" +this.state.output}>导出</a>
       </div>
       <Lists  ref="list" options={this.state} />
     </div>);
@@ -75,6 +84,12 @@ class Filter extends React.Component {
 
     // 单击搜索按钮的事件
     this.refs.btn.onclick=(e)=>{
+      this.setState({
+        college: this.refs.college.value,
+        department: this.refs.department.value,
+        name: this.refs.name.value
+      });
+      this.changeOutput();
       this.refs.list.refresh(1,{
         college: this.refs.college.value,
         department: this.refs.department.value,
