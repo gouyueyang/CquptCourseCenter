@@ -43,7 +43,7 @@ export default class Fanye extends React.Component {
       }
   
       return (<div className="fanye">
-        <span id="rows">共{this.props.options.rows>=0?this.props.options.rows:1}条记录</span>
+        <span id="rows">共{this.props.options.rows>=0?this.props.options.rows:0}条记录</span>
         <input className="fanye_options" type="button" value="首页"   id="fanye_start" onClick={this.fanye.bind(this,1)} />
         <input className="fanye_options" type="button" value="上一页" id="fanye_pre"   onClick={this.fanye.bind(this,now===1?0:now-1)} />
         <ul id="fanye_nums">{nums}</ul>

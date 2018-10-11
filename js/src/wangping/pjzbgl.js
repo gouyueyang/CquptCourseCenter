@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-const ajax=require('../libs/post_ajax.js');
+const ajax=require('../../libs/post_ajax.js');
 // const Fanye=require('../libs/fanye.js');
-const Fanye = require('../libs/turnPage.js');
+const Fanye = require('../../libs/turnPage.js');
 
 const _COUNT = 10;
 
@@ -25,7 +25,7 @@ class Option extends React.Component {
       TP: {
         page: 1,
         pages: 1,
-        total: 1
+        rows: 1
       },
       list: [],
       zbpc_select: []
@@ -35,11 +35,11 @@ class Option extends React.Component {
   insert_pici() {
     let pc=`<option value="">请选择</option>`;
     this.state.zbpc_select.map(e=>pc+=`<option ${(this.zbpc===e.zbpc)?"selected":''} value=${e.zbpc} >${e.zbpc}</option>`);
-    this.pici.innerHTML=pc;
+    this.refs.test.innerHTML=pc;
   }
 
   search() {
-    this.zbpc=SET("zbpc", this.pici.value);
+    this.zbpc=SET("zbpc", this.refs.test.value);
     this.get_list(1);
   }
 
@@ -60,7 +60,7 @@ class Option extends React.Component {
           TP: {
             page: page,
             pages: datas.data.totalPages,
-            total:datas.data.total
+            rows:datas.data.total
           },
           list: datas.data.indexList
         })
@@ -80,7 +80,8 @@ class Option extends React.Component {
             <select 
               name="zbpc" 
               id="zbpc_select" 
-              ref={sel=>this.pici=sel} 
+              /* ref={sel=>this.pici=sel}  */
+              ref = 'test'
               defaultValue={this.zbpc}
             >
               {
@@ -93,7 +94,7 @@ class Option extends React.Component {
         </div>
 
         <List list={this.state.list} />
-        <Fanye TP={this.state.TP} callback={(p)=>{this.get_list(p)}} />
+        <Fanye options={this.state.TP} callback={(p)=>{this.get_list(p)}} />
       </div>
     );
   }
@@ -114,7 +115,7 @@ class Option extends React.Component {
 
     this.get_list();
     // bind search option
-    this.pici.onchange=this.search.bind(this);
+    this.refs.test.onchange=this.search.bind(this);
     // bind search option
     this.add.onclick=()=>{window.location.href='./masterAddZbEditor.html'};
   }

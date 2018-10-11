@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-const ajax=require('../libs/post_ajax.js');
-const Fanye=require('../libs/turnPage.js');
+const ajax=require('../../libs/post_ajax.js');
+const Fanye=require('../../libs/turnPage.js');
 
 const _COUNT = 10;
 

@@ -604,7 +604,6 @@ class Item extends React.Component {
             readOnly: true,
             optionToContent: function (opt) {
               var datas = result;
-              console.log(datas);
               var tableDom = document.createElement("table");
               tableDom.style.cssText = "width:100%;border:1px solid #ccc;border-collapse: collapse;text-align:center";
               var len1 = datas.length;

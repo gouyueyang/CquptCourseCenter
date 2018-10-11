@@ -337,7 +337,7 @@ class BluMUI_PT extends React.Component{
 class WpEditorTitle extends React.Component{
 	render(){
 		var { masterPC,groupPC,fzx } = this.props;
-
+		console.log(fzx);
 		return(
 			<div className="warp">
 				<span className="courseName">专家分组批次:<span className="title">{masterPC}</span></span>
