@@ -6,8 +6,8 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../libs/wangping/materCourseSort.js'),
-	ajaxPading = require('../libs/ajaxExpand.mini.min'),
+var BluMUI = require('../../libs/wangping/materCourseSort.js'),
+	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	doc = document,
 	unifyCode = getCookie('userId'),
@@ -291,7 +291,7 @@ BluMUI.create({
 	name:'已分配课程',
 	items:[],
 	titleName:'删除选择',
-	titleIcon:'../../imgs/systemManage/delete.png',
+	titleIcon:'../../../imgs/systemManage/delete.png',
 	titleCallback:exchangeAll,
 	operaions:[{
 		name:'删除',
@@ -317,7 +317,7 @@ BluMUI.create({
 	name:'待分配课程',
 	items:[],
 	titleName:'加入分组',
-	titleIcon:'../../imgs/systemManage/add.png',
+	titleIcon:'../../../imgs/systemManage/add.png',
 	titleCallback:exchangeAll,
 	operaions:[{
 		name:'添加',

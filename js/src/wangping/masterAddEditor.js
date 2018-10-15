@@ -1,9 +1,10 @@
+// 课程中心-专家库管理-编辑/添加
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../libs/masterAddEditor/blueMonUI.js'),
-	ajaxPading = require('../libs/ajaxExpand.mini.min'),
+var BluMUI = require('../../libs/wangping/masterAddEditor.js'),
+	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	doc = document,
 	query = parseHash(window.location.href),
@@ -335,7 +336,7 @@ if(isEditor){
 		setTimeout(function () {
 			height = document.documentElement.offsetHeight;
 			if(window.frameElement) {
-				window.frameElement.height = height
+				window.frameElement.height = height;
 			}
 		},0);
 	};

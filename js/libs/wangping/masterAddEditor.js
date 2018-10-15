@@ -1,6 +1,7 @@
+// 课程中心-专家库管理-编辑/添加
 import React from 'react';
 import ReactDOM from 'react-dom';
-var ajax=require('./post_ajax.js');
+var ajax=require('../post_ajax.js');
 var OUT_COUNT=10;
 
 
@@ -513,7 +514,7 @@ class BlueMUI_CreateFanye extends React.Component {
 		let start=1;
 		let end=this.props.pages;
 		let style_on={
-			background:"url('../../imgs/courseAudit/fanye_bg.png')",
+			background:"url('../../../imgs/courseAudit/fanye_bg.png')",
 			backgroundRepeat:'no-repeat',
 			backgroundPosition:'5px 5px',
 			color:'#FFF'
@@ -577,11 +578,11 @@ class BlueMUI_CreateFanye extends React.Component {
 			fanye.push(<li key={this.props.pages} onClick={this.fanye.bind(this,this.props.pages)}>{this.props.pages}</li>);
 		}
 		return(<div id={this.props.id}>
-			<div id="fanye_pre" ref="pre" onClick={this.fanye.bind(this,this.props.page-1<1?0:this.props.page-1)}><img src="../../imgs/courseAudit/fanye_left.png" alt=""/></div>
+			<div id="fanye_pre" ref="pre" onClick={this.fanye.bind(this,this.props.page-1<1?0:this.props.page-1)}><img src="../../../imgs/courseAudit/fanye_left.png" alt=""/></div>
 			<ul ref="popup_fanye">
 				{fanye}
 			</ul>
-			<div id="fanye_next" ref="next" onClick={this.fanye.bind(this,this.props.page+1>this.props.pages?0:this.props.page+1)}><img src="../../imgs/courseAudit/fanye_right.png" alt=""/></div>
+			<div id="fanye_next" ref="next" onClick={this.fanye.bind(this,this.props.page+1>this.props.pages?0:this.props.page+1)}><img src="../../../imgs/courseAudit/fanye_right.png" alt=""/></div>
 		</div>);
 	}
 
@@ -917,7 +918,7 @@ class BlueMUI_CreateList extends React.Component {
 		if(this.state.Lists.length==0) {
 			return(<tr style={{background:'transparent'}} ><td id='ND'>
 				<div className='no_data'>
-					<img width='150px' height='150px' src="../../imgs/public/error.png"/>
+					<img width='150px' height='150px' src="../../../imgs/public/error.png"/>
 					<br/>
 					<span>没有数据</span>
 				</div>
@@ -1009,7 +1010,7 @@ class BlueMUI_CreatePopup extends React.Component {
 	create_popup_top() {
 		return(<div id="top">
 			<span>历史信息</span>
-			<span id="popup_close" ref="close"><img src="../../imgs/classListInfShow/close.png" alt="close"/></span>
+			<span id="popup_close" ref="close"><img src="../../../imgs/classListInfShow/close.png" alt="close"/></span>
 		</div>);
 	}
 
@@ -1115,7 +1116,7 @@ class Tijiaoshenhe extends React.Component {
 		return(<div>
 			<div id="tijiaoshenhe_head">
 				<span>提交审核</span>
-				<img ref='close' src="../../imgs/courseAudit/close.png"/>
+				<img ref='close' src="../../../imgs/courseAudit/close.png"/>
 			</div>
 			<p>材料将提交至教学院长、系部中心主任、<br/>课程负责人进行审核，提交后不可修改。</p>
 			<div id="tijiao_div">

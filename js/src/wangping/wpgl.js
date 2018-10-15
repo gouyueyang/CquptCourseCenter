@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const ajax=require('../libs/post_ajax.js');
-const Fanye=require('../libs/turnPage.js');
+const ajax=require('../../libs/post_ajax.js');
+const Fanye=require('../../libs/turnPage.js');
 const _prefix="wpgl-";
 const _COUNT=10;
 
@@ -99,7 +99,7 @@ class Option extends React.Component {
           </div>
         </div>
         <Lists ref="list" Lists={this.state.list} />
-        <Fanye TP={this.state.TP} callback={(p)=>{this._get_list(p)}} />
+        <Fanye options={this.state.TP} callback={(p)=>{this._get_list(p)}} />
       </div>
     );
   }
@@ -160,7 +160,7 @@ class Lists extends React.Component {
             ref={check=>this.allcheck=check} 
           />
           <label htmlFor="allcheck">
-            <img src="../../imgs/public/hook.png"/>
+            <img src="../../../imgs/public/hook.png"/>
           </label>
         </td>
         <td>网评批次</td>
@@ -219,7 +219,7 @@ class Lists extends React.Component {
         <tr>
           <td className="lefttd"></td>
           <td colSpan="7" style={{borderBottom: 'none'}}>
-            <img id="err_img" src="../../imgs/public/error.png"/>
+            <img id="err_img" src="../../../imgs/public/error.png"/>
             <div>没有数据</div>
           </td>
           <td className="righttd"></td>
@@ -239,7 +239,7 @@ class Lists extends React.Component {
             onChange={this.check.bind(this,e.id,e.wppc)} 
           />
           <label htmlFor={"input-"+index} >
-            <img src="../../imgs/public/hook.png"/>
+            <img src="../../../imgs/public/hook.png"/>
           </label>
         </td>
         <td>{e.wppc}</td>

@@ -36,7 +36,7 @@ class Option extends React.Component {
   insert_pici() {
     let pc=`<option value="">请选择</option>`;
     this.state.fzpc_select.map(e=>pc+=`<option ${(this.fzpc===e.fzpc)?"selected":''} value=${e.fzpc} >${e.fzpc}</option>`);
-    this.pici.innerHTML=pc;      /*这里会报错*/
+    this.refs.pici.innerHTML=pc;      /*这里会报错*/
   }
 
   search() {
@@ -82,7 +82,7 @@ class Option extends React.Component {
             <select 
               name="fzpc" 
               id="fzpc_select" 
-              ref={sel=>this.pici=sel} 
+              ref='pici' 
               defaultValue={this.fzpc}
             >
               {
@@ -114,7 +114,7 @@ class Option extends React.Component {
       }
     });
 
-    this.pici.onchange=this.search.bind(this);
+    this.refs.pici.onchange=this.search.bind(this);
 
     this.get_list();
     // bind search option
@@ -162,7 +162,7 @@ class List extends React.Component {
           <tr>
             <td className="lefttd"></td>
             <td colSpan="7" style={{borderBottom: 'none'}}>
-              <img id="err_img" src="../../imgs/public/error.png"/>
+              <img id="err_img" src="../../../imgs/public/error.png"/>
               <div>没有数据</div>
             </td>
             <td className="righttd"></td>

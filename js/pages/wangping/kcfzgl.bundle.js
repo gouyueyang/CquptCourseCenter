@@ -65,18 +65,17 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ajax = __webpack_require__(175);
-	// const Fanye=require('../libs/fanye.js');
 	var Fanye = __webpack_require__(176);
 
 	var _COUNT = 10;
 
 	var SET = function SET(key, value) {
-	  sessionStorage.setItem("pjzbgl-" + key, value);
+	  sessionStorage.setItem("kcfzgl-" + key, value);
 	  return value;
 	};
 
 	var GET = function GET(key) {
-	  return sessionStorage.getItem("pjzbgl-" + key) || '';
+	  return sessionStorage.getItem("kcfzgl-" + key) || '';
 	};
 
 	var Option = function (_React$Component) {
@@ -85,71 +84,134 @@
 	  function Option(props) {
 	    _classCallCheck(this, Option);
 
+	    // read cache
 	    var _this = _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).call(this, props));
 
-	    _this.pici_insert = [];
-	    _this.zbpc = GET("zbpc") || '';
+	    _this.search_cache = {
+	      wppc: GET("wppc"),
+	      fzx: GET("fzx"),
+	      kcmc: GET("kcmc")
+	    };
 	    _this.state = {
 	      TP: {
 	        page: 1,
 	        pages: 1,
-	        rows: 1
+	        rows: 0
 	      },
 	      list: [],
-	      zbpc_select: []
+
+	      wppc: GET("wppc"),
+	      fzx: GET("fzx"),
+	      kcmc: GET("kcmc"),
+	      wppc_select: [],
+	      fzx_select: []
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Option, [{
-	    key: 'insert_pici',
-	    value: function insert_pici() {
-	      var _this2 = this;
-
-	      var pc = '<option value="">\u8BF7\u9009\u62E9</option>';
-	      this.state.zbpc_select.map(function (e) {
-	        return pc += '<option ' + (_this2.zbpc === e.zbpc ? "selected" : '') + ' value=' + e.zbpc + ' >' + e.zbpc + '</option>';
-	      });
-	      this.refs.test.innerHTML = pc;
-	    }
-	  }, {
 	    key: 'search',
 	    value: function search() {
-	      this.zbpc = SET("zbpc", this.refs.test.value);
-	      this.get_list(1);
+	      // cache search datas
+	      this.search_cache = {
+	        wppc: SET('wppc', this.state.wppc),
+	        fzx: SET('fzx', this.state.fzx),
+	        kcmc: SET('kcmc', this.state.kcmc)
+	      };
+	      this._get_list(1);
 	    }
 	  }, {
-	    key: 'get_list',
-	    value: function get_list(p) {
-	      var _this3 = this;
+	    key: '_get_list',
+	    value: function _get_list(p) {
+	      var _this2 = this;
 
 	      var page = p || +GET("page") || 1;
+
 	      ajax({
-	        url: courseCenter.host + "getPjzbList",
+	        url: courseCenter.host + "getKcfzList",
 	        data: {
 	          unifyCode: getCookie('userId'),
-	          indexBatch: this.zbpc,
+	          reviewBatch: this.search_cache.wppc,
+	          courseName: this.search_cache.kcmc,
+	          group: this.search_cache.fzx,
 	          count: _COUNT,
 	          page: page
 	        },
 	        success: function success(gets) {
 	          var datas = JSON.parse(gets);
 	          SET("page", page);
-	          _this3.setState({
+	          _this2.setState({
 	            TP: {
 	              page: page,
 	              pages: datas.data.totalPages,
 	              rows: datas.data.total
 	            },
-	            list: datas.data.indexList
+	            list: datas.data.courseGroupList
 	          });
 	        }
 	      });
 	    }
 	  }, {
+	    key: 'change_wppc',
+	    value: function change_wppc(e) {
+	      var _this3 = this;
+
+	      var reviewBatch = void 0,
+	          fzx = void 0;
+	      if (e) {
+	        // handle trriger
+	        fzx = "";
+	        reviewBatch = e.target.value;
+	        // sessionStorage.removeItem("fzx");
+	      } else {
+	        // auto trriger
+	        fzx = this.search_cache.fzx;
+	        reviewBatch = this.state.wppc;
+	      }
+	      this.setState({
+	        wppc: reviewBatch
+	      }, function () {
+	        _this3.search();
+	      });
+
+	      // charge fzx select list
+	      ajax({
+	        url: courseCenter.host + "getFzxByWppc",
+	        data: {
+	          unifyCode: getCookie("userId"),
+	          reviewBatch: reviewBatch
+	        },
+	        success: function success(gets) {
+	          var datas = JSON.parse(gets);
+	          if (datas.meta.result !== 100) {
+	            _this3.setState({
+	              fzx: fzx,
+	              fzx_select: []
+	            });
+	          } else {
+	            _this3.setState({
+	              fzx: fzx,
+	              fzx_select: datas.data
+	            });
+	          }
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'change_fzx',
+	    value: function change_fzx(e) {
+	      var _this4 = this;
+
+	      this.setState({
+	        fzx: e.target.value
+	      }, function () {
+	        _this4.search();
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      return _react2["default"].createElement(
 	        'div',
@@ -159,71 +221,100 @@
 	          { id: 'option' },
 	          _react2["default"].createElement(
 	            'div',
-	            { id: 'up' },
-	            _react2["default"].createElement(
-	              'button',
-	              { id: 'add', ref: function ref(btn) {
-	                  return _this4.add = btn;
-	                } },
-	              '\u6DFB\u52A0\u6307\u6807'
-	            )
-	          ),
-	          _react2["default"].createElement(
-	            'div',
 	            { id: 'down' },
 	            _react2["default"].createElement(
 	              'span',
 	              null,
-	              '\u6307\u6807\u6279\u6B21\uFF1A'
+	              '\u7F51\u8BC4\u6279\u6B21\uFF1A'
 	            ),
 	            _react2["default"].createElement(
 	              'select',
 	              {
-	                name: 'zbpc',
-	                id: 'zbpc_select'
-	                /* ref={sel=>this.pici=sel}  */
-	                , ref: 'test',
-	                defaultValue: this.zbpc
+	                name: 'wppc_select',
+	                id: 'wppc_select',
+	                ref: function ref(sel) {
+	                  return _this5.wppc_select = sel;
+	                },
+	                value: this.state.wppc,
+	                onChange: this.change_wppc.bind(this)
 	              },
-	              this.state.zbpc_select.length ? this.insert_pici() : _react2["default"].createElement(
+	              [_react2["default"].createElement(
 	                'option',
-	                { value: '' },
-	                this.zbpc || "请选择"
-	              )
+	                { value: '', key: 'default' },
+	                '\u8BF7\u9009\u62E9'
+	              )].concat(this.state.wppc_select.map(function (op, index) {
+	                return _react2["default"].createElement(
+	                  'option',
+	                  { value: op.wppc, key: index },
+	                  op.wppc
+	                );
+	              }))
+	            ),
+	            _react2["default"].createElement(
+	              'span',
+	              null,
+	              '\u5206\u7EC4\u9879\uFF1A'
+	            ),
+	            _react2["default"].createElement(
+	              'select',
+	              {
+	                name: 'fzx_select',
+	                id: 'fzx_select',
+	                ref: function ref(sel) {
+	                  return _this5.fzx_select = sel;
+	                },
+	                value: this.state.fzx,
+	                onChange: this.change_fzx.bind(this)
+	              },
+	              [_react2["default"].createElement(
+	                'option',
+	                { value: '', key: 'default' },
+	                '\u8BF7\u9009\u62E9'
+	              )].concat(this.state.fzx_select.map(function (op, index) {
+	                return _react2["default"].createElement(
+	                  'option',
+	                  { value: op.fzx, key: index },
+	                  op.fzx
+	                );
+	              }))
 	            )
 	          )
 	        ),
 	        _react2["default"].createElement(List, { list: this.state.list }),
 	        _react2["default"].createElement(Fanye, { options: this.state.TP, callback: function callback(p) {
-	            _this4.get_list(p);
+	            _this5._get_list(p);
 	          } })
 	      );
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      var _this5 = this;
+	      var _this6 = this;
 
+	      // charge wppc select
 	      ajax({
-	        url: courseCenter.host + "getPjzbpc",
+	        url: courseCenter.host + "reviewBriefList",
 	        data: {
-	          unifyCode: getCookie('userId')
+	          userID: getCookie('userId'),
+	          state: 1,
+	          expGroup: ''
 	        },
 	        success: function success(gets) {
 	          var datas = JSON.parse(gets);
-	          _this5.setState({
-	            zbpc_select: datas.data
-	          });
+	          if (datas.meta.result === 100) {
+	            _this6.setState({
+	              wppc_select: datas.data.list
+	            });
+	          } else {
+	            _this6.setState({
+	              wppc_select: []
+	            });
+	          }
 	        }
 	      });
+	      this.change_wppc();
 
-	      this.get_list();
-	      // bind search option
-	      this.refs.test.onchange = this.search.bind(this);
-	      // bind search option
-	      this.add.onclick = function () {
-	        window.location.href = './masterAddZbEditor.html';
-	      };
+	      this._get_list();
 	    }
 	  }]);
 
@@ -253,23 +344,33 @@
 	            { className: 'lefttd' },
 	            _react2["default"].createElement('div', null)
 	          ),
-	          _react2["default"].createElement('td', { width: '5px' }),
+	          _react2["default"].createElement('td', { width: '0px' }),
 	          _react2["default"].createElement(
 	            'td',
-	            { width: '30%' },
-	            '\u6307\u6807\u6279\u6B21'
+	            { width: '10%' },
+	            '\u7F51\u8BC4\u6279\u6B21'
 	          ),
 	          _react2["default"].createElement(
 	            'td',
-	            { width: '30%' },
-	            '\u6307\u6807\u7C7B\u522B'
+	            { width: '15%' },
+	            '\u5206\u7EC4\u6279\u6B21'
 	          ),
 	          _react2["default"].createElement(
 	            'td',
-	            { width: '30%' },
+	            { width: '15%' },
+	            '\u5206\u7EC4\u9879'
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            null,
+	            '\u8BFE\u7A0B\u5217\u8868'
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            { width: '15%' },
 	            '\u64CD\u4F5C'
 	          ),
-	          _react2["default"].createElement('td', { width: '5px' }),
+	          _react2["default"].createElement('td', { width: '0px' }),
 	          _react2["default"].createElement(
 	            'td',
 	            { className: 'righttd' },
@@ -280,45 +381,29 @@
 	    }
 	  }, {
 	    key: 'option',
-	    value: function option(type, zbpc, lb, eve) {
+	    value: function option(type, data, data2, data3, eve) {
 	      eve.preventDefault();
 	      switch (type) {
 	        case 'edit':
-	          var a = './masterAddZbEditor.html?isEditor=true&type=' + +(lb === "通用") + '&indexBatch=' + zbpc;
-	          window.location.href = a;
+	          window.location.href = './materCourseSort.html?fzx=' + data2 + '&wppc=' + data + '&wppcId=' + data3;
 	          break;
 	        case 'delete':
-	          Creat_popup('delete', zbpc);
+	          Creat_popup('delete', data);
+	          break;
+	        case 'show':
+	          Creat_popup('show', data.map(function (e) {
+	            return e.kcmc;
+	          }));
+	          break;
+	        default:
 	          break;
 	      }
 	    }
 	  }, {
 	    key: 'creat_tbody',
 	    value: function creat_tbody() {
-	      var _this7 = this;
+	      var _this8 = this;
 
-	      if (this.props.list.length === 0) {
-	        return _react2["default"].createElement(
-	          'tbody',
-	          null,
-	          _react2["default"].createElement(
-	            'tr',
-	            null,
-	            _react2["default"].createElement('td', { className: 'lefttd' }),
-	            _react2["default"].createElement(
-	              'td',
-	              { colSpan: '7', style: { borderBottom: 'none' } },
-	              _react2["default"].createElement('img', { id: 'err_img', src: '../../../imgs/public/error.png' }),
-	              _react2["default"].createElement(
-	                'div',
-	                null,
-	                '\u6CA1\u6709\u6570\u636E'
-	              )
-	            ),
-	            _react2["default"].createElement('td', { className: 'righttd' })
-	          )
-	        );
-	      }
 	      return _react2["default"].createElement(
 	        'tbody',
 	        null,
@@ -331,25 +416,55 @@
 	            _react2["default"].createElement(
 	              'td',
 	              null,
-	              e.zbpc
+	              e.wppc
 	            ),
 	            _react2["default"].createElement(
 	              'td',
 	              null,
-	              e.zblb
+	              e.fzpc
+	            ),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
+	              e.fzx
 	            ),
 	            _react2["default"].createElement(
 	              'td',
 	              null,
 	              _react2["default"].createElement(
-	                'a',
-	                { href: '#', onClick: _this7.option.bind(_this7, 'edit', e.zbpc, e.zblb) },
-	                '\u7F16\u8F91'
+	                'span',
+	                { className: 'kcmc_num' },
+	                '[' + e.kcs + ']'
 	              ),
 	              _react2["default"].createElement(
+	                'span',
+	                { className: 'kcmc_list', onClick: _this8.option.bind(_this8, 'show', e.courseList, e.fzx, e.wpid) },
+	                +e.kcmcs > 3 ? e.courseList.map(function (kcmc, kcmcNo) {
+	                  return kcmcNo < 3 && _react2["default"].createElement(
+	                    'span',
+	                    { key: kcmcNo, className: 'kcmc_name' },
+	                    kcmc.xm
+	                  );
+	                }).concat(_react2["default"].createElement(
+	                  'span',
+	                  { key: 'dot' },
+	                  '\u2026\u2026'
+	                )) : e.courseList.map(function (kcmc, kcmcNo) {
+	                  return _react2["default"].createElement(
+	                    'span',
+	                    { key: kcmcNo, className: 'kcmc_name' },
+	                    kcmc.kcmc
+	                  );
+	                })
+	              )
+	            ),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
+	              _react2["default"].createElement(
 	                'a',
-	                { href: '#', onClick: _this7.option.bind(_this7, 'delete', e.zbpc, e.zblb) },
-	                '\u5220\u9664'
+	                { href: '#', onClick: _this8.option.bind(_this8, 'edit', e.wppc, e.fzx, e.wpid) },
+	                '\u7F16\u8F91'
 	              )
 	            ),
 	            _react2["default"].createElement('td', null),
@@ -396,7 +511,7 @@
 	  _createClass(Popup, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this9 = this;
+	      var _this10 = this;
 
 	      var _props = this.props,
 	          type = _props.type,
@@ -426,26 +541,35 @@
 	              _react2["default"].createElement(
 	                'button',
 	                { id: 'popup_OK', ref: function ref(btn) {
-	                    return _this9.OK = btn;
+	                    return _this10.OK = btn;
 	                  } },
 	                '\u786E\u5B9A'
 	              ),
 	              _react2["default"].createElement(
 	                'button',
 	                { id: 'popup_back', ref: function ref(btn) {
-	                    return _this9.back = btn;
+	                    return _this10.back = btn;
 	                  } },
 	                '\u53D6\u6D88'
 	              )
 	            )
 	          );
 	          break;
-	        case 'edit':
+	        case 'show':
 	          return _react2["default"].createElement(
 	            'div',
-	            null,
-	            _react2["default"].createElement('dev', { ref: 'pb' }),
-	            _react2["default"].createElement(Popup_edit, null)
+	            { id: 'popbody', ref: 'pb' },
+	            _react2["default"].createElement(
+	              'div',
+	              { id: 'kcmcs' },
+	              id.map(function (kcmc, index) {
+	                return _react2["default"].createElement(
+	                  'span',
+	                  { key: index, className: 'kcmc' },
+	                  kcmc
+	                );
+	              })
+	            )
 	          );
 	          break;
 	        default:
@@ -456,36 +580,33 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      if (window.frameElement) {
-	        window.frameElement.height = document.body.offsetHeight;
-	      }
-	      // background click to cancel
 	      var _props2 = this.props,
 	          id = _props2.id,
 	          type = _props2.type;
+	      // background click to cancel
 
+	      this.refs.pb.onclick = function (e) {
+	        return e.stopPropagation();
+	      };
 	      var dat = {};
 
 	      switch (type) {
 	        case "delete":
 	          dat = {
 	            unifyCode: getCookie("userId"),
-	            indexBatch: id
+	            reviewId: id
 	          };
-	          break;
-	        case 'edit':
-	          return;
 	          break;
 	        default:
 	          break;
 	      }
 
 	      // back button click to cancel
-	      this.back.onclick = cancel_popup;
+	      this.back && (this.back.onclick = cancel_popup);
 	      // OK button option
-	      this.OK.onclick = function () {
+	      this.OK && (this.OK.onclick = function () {
 	        var data_map = {
-	          "delete": "deletePjzb"
+	          "delete": "deleteKcfz"
 	        };
 	        ajax({
 	          url: courseCenter.host + data_map[type],
@@ -494,11 +615,11 @@
 	            var datas = JSON.parse(gets);
 	            if (datas.meta.result == 100) {
 	              cancel_popup();
-	              pjzbgl_option.get_list(1);
+	              Kcfzgl_option._get_list();
 	            }
 	          }
 	        });
-	      };
+	      });
 	    }
 	  }]);
 
@@ -523,7 +644,7 @@
 	  _reactDom2["default"].unmountComponentAtNode(popup);
 	}
 
-	var pjzbgl_option = _reactDom2["default"].render(_react2["default"].createElement(Option, null), document.getElementById('pjzbgl'));
+	var Kcfzgl_option = _reactDom2["default"].render(_react2["default"].createElement(Option, null), document.getElementById('kcfzgl'));
 
 /***/ }),
 /* 1 */

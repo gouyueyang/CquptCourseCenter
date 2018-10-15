@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-const ajax=require('../libs/post_ajax.js');
-const Fanye=require('../libs/turnPage.js');
+const ajax=require('../../libs/post_ajax.js');
+const Fanye=require('../../libs/turnPage.js');
 
 const _COUNT = 10;
 
@@ -24,7 +24,6 @@ class Option extends React.Component {
       fzx: GET("fzx"),
       kcmc: GET("kcmc")
     };
-
     this.state={
       TP: {
         page: 1,
@@ -168,7 +167,7 @@ class Option extends React.Component {
         </div>
 
         <List list={this.state.list} />
-        <Fanye TP={this.state.TP} callback={(p)=>{this._get_list(p)}} />
+        <Fanye options={this.state.TP} callback={(p)=>{this._get_list(p)}} />
       </div>
     );
   }

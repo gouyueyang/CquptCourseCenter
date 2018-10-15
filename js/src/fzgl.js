@@ -1,55 +1,57 @@
+/*源码有误，使用的是之前转换好的代码*/
+
 import ReactDOM from 'react-dom';
 import React from 'react';
 
-const ajax=require('../../libs/post_ajax.js');
-// const Fanye=require('../libs/fanye.js');
-const Fanye = require('../../libs/turnPage.js');
+const ajax=require('../libs/post_ajax.js');
+const Fanye=require('../libs/turnPage.js');
 
 const _COUNT = 10;
 
 const SET = (key, value) => {
-  sessionStorage.setItem("pjzbgl-"+key, value);
+  sessionStorage.setItem("fzgl-"+key, value);
   return value;
 }
 
 const GET = (key) => {
-  return sessionStorage.getItem("pjzbgl-"+key) || '';
+  return sessionStorage.getItem("fzgl-"+key) || '';
 }
 
 class Option extends React.Component {
   constructor(props) {
     super(props);
     this.pici_insert=[];
-    this.zbpc=GET("zbpc")||'';
+    this.fzpc=GET("fzpc")||'';
     this.state={
       TP: {
         page: 1,
         pages: 1,
-        rows: 1
+        rows: 0
       },
       list: [],
-      zbpc_select: []
+      fzpc_select: []
     };
   }
 
   insert_pici() {
     let pc=`<option value="">请选择</option>`;
-    this.state.zbpc_select.map(e=>pc+=`<option ${(this.zbpc===e.zbpc)?"selected":''} value=${e.zbpc} >${e.zbpc}</option>`);
-    this.refs.test.innerHTML=pc;
+    this.state.fzpc_select.map(e=>pc+=`<option ${(this.fzpc===e.fzpc)?"selected":''} value=${e.fzpc} >${e.fzpc}</option>`);
+    this.refs.pici.innerHTML=pc;      /*这里会报错*/
   }
 
   search() {
-    this.zbpc=SET("zbpc", this.refs.test.value);
+    this.fzpc=this.refs.pici.value;
+    SET("fzpc", this.fzpc);
     this.get_list(1);
   }
 
   get_list(p) {
     let page=p||+GET("page")||1;
     ajax({
-      url: courseCenter.host+"getPjzbList",
+      url: courseCenter.host+"getFzList",
       data: {
         unifyCode: getCookie('userId'),
-        indexBatch: this.zbpc,
+        groupBatch: this.fzpc,
         count: _COUNT,
         page: page
       },
@@ -62,7 +64,7 @@ class Option extends React.Component {
             pages: datas.data.totalPages,
             rows:datas.data.total
           },
-          list: datas.data.indexList
+          list: datas.data.groupList
         })
       }
     });
@@ -73,21 +75,20 @@ class Option extends React.Component {
       <div id="Option_react">
         <div id="option">
           <div id="up">
-            <button id="add" ref={btn=>this.add=btn}>添加指标</button>
+            <button id="add" ref={btn=>this.add=btn}>添加分组</button>
           </div>
           <div id="down">
-            <span>指标批次：</span>
+            <span>分组批次：</span>
             <select 
-              name="zbpc" 
-              id="zbpc_select" 
-              /* ref={sel=>this.pici=sel}  */
-              ref = 'test'
-              defaultValue={this.zbpc}
+              name="fzpc" 
+              id="fzpc_select" 
+              ref='pici' 
+              defaultValue={this.fzpc}
             >
               {
-                this.state.zbpc_select.length
+                this.state.fzpc_select.length
                 ?this.insert_pici()
-                :<option value="">{this.zbpc||"请选择"}</option>
+                :<option value="">{this.fzpc||"请选择"}</option>
               }
             </select>
           </div>
@@ -101,23 +102,23 @@ class Option extends React.Component {
 
   componentDidMount() {
     ajax({
-      url: courseCenter.host+"getPjzbpc",
+      url: courseCenter.host+"getFzpc",
       data: {
         unifyCode: getCookie('userId')
       },
       success: (gets)=>{
         let datas=JSON.parse(gets);
         this.setState({
-          zbpc_select: datas.data
+          fzpc_select: datas.data
         })
       }
     });
 
+    this.refs.pici.onchange=this.search.bind(this);
+
     this.get_list();
     // bind search option
-    this.refs.test.onchange=this.search.bind(this);
-    // bind search option
-    this.add.onclick=()=>{window.location.href='./masterAddZbEditor.html'};
+    this.add.onclick=()=>{window.location.href='./masterSortEditor.html'};
   }
 }
 
@@ -132,9 +133,9 @@ class List extends React.Component {
         <tr>
           <td className="lefttd"><div></div></td>
           <td width="5px"></td>
-          <td width="30%">指标批次</td>
-          <td width="30%">指标类别</td>
-          <td width="30%">操作</td>
+          <td width="20%">分组批次</td>
+          <td width="55%">分组项</td>
+          <td width="20%">操作</td>
           <td width="5px"></td>
           <td className="righttd"><div></div></td>
         </tr>
@@ -142,15 +143,14 @@ class List extends React.Component {
     );
   }
 
-  option(type, zbpc, lb, eve) {
+  option(type, fzpc, eve) {
     eve.preventDefault();
     switch(type) {
-      case 'edit':
-        let a = `./masterAddZbEditor.html?isEditor=true&type=${+(lb==="通用")}&indexBatch=${zbpc}`;
-        window.location.href=a;
+      case 'edit': 
+        window.location.href='./masterSortEditor.html?isEditor=true&groupBatch='+fzpc;
         break;
       case 'delete':
-        Creat_popup('delete', zbpc);
+        Creat_popup('delete', fzpc);
         break;
     }
   }
@@ -175,11 +175,15 @@ class List extends React.Component {
         {this.props.list.map((e,index)=><tr key={index}>
           <td className="lefttd"></td>
           <td></td>
-          <td>{e.zbpc}</td>
-          <td>{e.zblb}</td>
+          <td>{e.fzpc}</td>
           <td>
-            <a href="#" onClick={this.option.bind(this,'edit',e.zbpc,e.zblb)} >编辑</a>
-            <a href="#" onClick={this.option.bind(this,'delete',e.zbpc,e.zblb)} >删除</a>
+            {
+              e.groups.map((fzx,index)=><span key={index}>{fzx.fzx}</span>)
+            }
+          </td>
+          <td>
+            <a href="#" onClick={this.option.bind(this,'edit',e.fzpc)} >编辑</a>
+            <a href="#" onClick={this.option.bind(this,'delete',e.fzpc)} >删除</a>
           </td>
           <td></td>
           <td className='righttd'></td>
@@ -233,14 +237,6 @@ class Popup extends React.Component {
           </div>
         );
         break;
-      case 'edit':
-        return(
-          <div>
-            <dev ref="pb"></dev>
-            <Popup_edit/>
-          </div>
-        );
-        break;
       default: 
         return(<div></div>);
         break;
@@ -248,33 +244,28 @@ class Popup extends React.Component {
   }
 
   componentDidMount() {
-    if(window.frameElement) {
-      window.frameElement.height=document.body.offsetHeight;
-    }
-    // background click to cancel
     const {id,type}=this.props;
+    // background click to cancel
+    this.refs.pb.onclick=e=>e.stopPropagation();
+    // back button click to cancel
+    this.refs.back.onclick=cancel_popup;
+    // OK button option
     let dat={};
 
     switch(type) {
       case "delete":
         dat={
           unifyCode: getCookie("userId"),
-          indexBatch: id
+          groupBatch: id
         };
-        break;
-      case 'edit':
-        return;
         break;
       default:
         break;
     }
 
-    // back button click to cancel
-    this.back.onclick=cancel_popup;
-    // OK button option
     this.OK.onclick=()=>{
       let data_map={
-        "delete": "deletePjzb"
+        "delete": "deleteFz"
       };
       ajax({
         url: courseCenter.host+data_map[type],
@@ -283,7 +274,7 @@ class Popup extends React.Component {
           let datas=JSON.parse(gets);
           if(datas.meta.result==100) {
             cancel_popup();
-            pjzbgl_option.get_list(1);
+            Fzgl_option.get_list();
           }
         }
       });
@@ -312,7 +303,7 @@ function cancel_popup() {
   ReactDOM.unmountComponentAtNode(popup);
 }
 
-var pjzbgl_option=ReactDOM.render(
+var Fzgl_option=ReactDOM.render(
   <Option />,
-  document.getElementById('pjzbgl')
+  document.getElementById('fzgl')
 );

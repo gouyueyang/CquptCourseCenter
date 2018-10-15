@@ -48,13 +48,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _reactDom = __webpack_require__(1);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
 	var _react = __webpack_require__(168);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(1);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -65,19 +65,20 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var ajax = __webpack_require__(175);
-	// const Fanye=require('../libs/fanye.js');
 	var Fanye = __webpack_require__(176);
-
+	var _prefix = "wpgl-";
 	var _COUNT = 10;
 
 	var SET = function SET(key, value) {
-	  sessionStorage.setItem("pjzbgl-" + key, value);
+	  sessionStorage.setItem(_prefix + key, value);
 	  return value;
 	};
 
 	var GET = function GET(key) {
-	  return sessionStorage.getItem("pjzbgl-" + key) || '';
+	  return sessionStorage.getItem(_prefix + key) || '';
 	};
+
+	var WPPCS = [];
 
 	var Option = function (_React$Component) {
 	  _inherits(Option, _React$Component);
@@ -87,142 +88,171 @@
 
 	    var _this = _possibleConstructorReturn(this, (Option.__proto__ || Object.getPrototypeOf(Option)).call(this, props));
 
-	    _this.pici_insert = [];
-	    _this.zbpc = GET("zbpc") || '';
+	    _this.search_cache = {
+	      wppc: GET("wppc")
+	    };
 	    _this.state = {
 	      TP: {
 	        page: 1,
 	        pages: 1,
-	        rows: 1
+	        rows: 0
 	      },
 	      list: [],
-	      zbpc_select: []
+	      wppc: GET("wppc"),
+	      wppc_select: []
 	    };
 	    return _this;
 	  }
 
 	  _createClass(Option, [{
-	    key: 'insert_pici',
-	    value: function insert_pici() {
+	    key: '_get_list',
+	    value: function _get_list(p) {
 	      var _this2 = this;
 
-	      var pc = '<option value="">\u8BF7\u9009\u62E9</option>';
-	      this.state.zbpc_select.map(function (e) {
-	        return pc += '<option ' + (_this2.zbpc === e.zbpc ? "selected" : '') + ' value=' + e.zbpc + ' >' + e.zbpc + '</option>';
-	      });
-	      this.refs.test.innerHTML = pc;
-	    }
-	  }, {
-	    key: 'search',
-	    value: function search() {
-	      this.zbpc = SET("zbpc", this.refs.test.value);
-	      this.get_list(1);
-	    }
-	  }, {
-	    key: 'get_list',
-	    value: function get_list(p) {
-	      var _this3 = this;
-
 	      var page = p || +GET("page") || 1;
+
 	      ajax({
-	        url: courseCenter.host + "getPjzbList",
+	        url: courseCenter.host + "reviewList",
 	        data: {
-	          unifyCode: getCookie('userId'),
-	          indexBatch: this.zbpc,
-	          count: _COUNT,
-	          page: page
+	          unifyCode: getCookie("userId"),
+	          name: this.search_cache.wppc,
+	          page: page,
+	          count: _COUNT
 	        },
 	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
 	          SET("page", page);
-	          _this3.setState({
+	          var datas = JSON.parse(gets);
+	          _this2.setState({
 	            TP: {
 	              page: page,
 	              pages: datas.data.totalPages,
 	              rows: datas.data.total
 	            },
-	            list: datas.data.indexList
+	            list: datas.data.list
 	          });
 	        }
 	      });
 	    }
 	  }, {
+	    key: 'change_wppc',
+	    value: function change_wppc(e) {
+	      this.setState({
+	        wppc: e ? e.target.value : this.state.wppc
+	      }, this.search);
+	    }
+	  }, {
+	    key: 'search',
+	    value: function search() {
+	      this.search_cache.wppc = SET("wppc", this.state.wppc);
+	      this._get_list(1);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this3 = this;
 
 	      return _react2["default"].createElement(
 	        'div',
-	        { id: 'Option_react' },
+	        { id: 'wpgl_option' },
 	        _react2["default"].createElement(
 	          'div',
 	          { id: 'option' },
 	          _react2["default"].createElement(
 	            'div',
-	            { id: 'up' },
+	            { id: 'big_btns' },
 	            _react2["default"].createElement(
 	              'button',
-	              { id: 'add', ref: function ref(btn) {
-	                  return _this4.add = btn;
+	              { className: 'big_btn', ref: function ref(btn) {
+	                  return _this3.fqwp = btn;
 	                } },
-	              '\u6DFB\u52A0\u6307\u6807'
+	              '\u53D1\u8D77\u7F51\u8BC4'
+	            ),
+	            _react2["default"].createElement(
+	              'button',
+	              { className: 'big_btn', ref: function ref(btn) {
+	                  return _this3.PLdelete = btn;
+	                } },
+	              '\u6279\u91CF\u5220\u9664'
 	            )
 	          ),
 	          _react2["default"].createElement(
 	            'div',
-	            { id: 'down' },
+	            { id: 'filter_bar' },
 	            _react2["default"].createElement(
 	              'span',
-	              null,
-	              '\u6307\u6807\u6279\u6B21\uFF1A'
+	              { id: 'wppc' },
+	              '\u7F51\u8BC4\u6279\u6B21\uFF1A'
 	            ),
 	            _react2["default"].createElement(
 	              'select',
 	              {
-	                name: 'zbpc',
-	                id: 'zbpc_select'
-	                /* ref={sel=>this.pici=sel}  */
-	                , ref: 'test',
-	                defaultValue: this.zbpc
+	                name: 'wppc_select',
+	                id: 'wppc_select',
+	                ref: function ref(sel) {
+	                  return _this3.wppc_select = sel;
+	                },
+	                value: this.state.wppc,
+	                onChange: this.change_wppc.bind(this)
 	              },
-	              this.state.zbpc_select.length ? this.insert_pici() : _react2["default"].createElement(
+	              [_react2["default"].createElement(
 	                'option',
-	                { value: '' },
-	                this.zbpc || "请选择"
-	              )
+	                { value: '', key: 'default' },
+	                '\u8BF7\u9009\u62E9'
+	              )].concat(this.state.wppc_select.map(function (op, index) {
+	                return _react2["default"].createElement(
+	                  'option',
+	                  { value: op.wppc, key: index },
+	                  op.wppc
+	                );
+	              }))
 	            )
 	          )
 	        ),
-	        _react2["default"].createElement(List, { list: this.state.list }),
+	        _react2["default"].createElement(Lists, { ref: 'list', Lists: this.state.list }),
 	        _react2["default"].createElement(Fanye, { options: this.state.TP, callback: function callback(p) {
-	            _this4.get_list(p);
+	            _this3._get_list(p);
 	          } })
 	      );
+	    }
+	  }, {
+	    key: 'get_wppc_select',
+	    value: function get_wppc_select() {
+	      var _this4 = this;
+
+	      // 填充网评批次下拉菜单
+	      ajax({
+	        url: courseCenter.host + "reviewBriefList",
+	        data: {
+	          userID: getCookie("userId"),
+	          state: 1,
+	          expGroup: ""
+	        },
+	        success: function success(gets) {
+	          var datas = JSON.parse(gets);
+	          _this4.setState({
+	            wppc_select: JSON.parse(gets).data.list
+	          });
+	        }
+	      });
 	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var _this5 = this;
 
-	      ajax({
-	        url: courseCenter.host + "getPjzbpc",
-	        data: {
-	          unifyCode: getCookie('userId')
-	        },
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          _this5.setState({
-	            zbpc_select: datas.data
-	          });
-	        }
-	      });
+	      this.fqwp.onclick = function () {
+	        window.location.href = './masterPublishWp.html';
+	      };
 
-	      this.get_list();
-	      // bind search option
-	      this.refs.test.onchange = this.search.bind(this);
-	      // bind search option
-	      this.add.onclick = function () {
-	        window.location.href = './masterAddZbEditor.html';
+	      this.get_wppc_select();
+	      // // 首次查询列表并填充
+	      this._get_list();
+
+	      var pop = document.getElementById('popup');
+	      // PiLiangDelete
+	      this.PLdelete.onclick = function () {
+	        Creat_popup('PLdelete', WPPCS, _this5.refs.list.ids);
+	        pop.style.display = 'block';
 	      };
 	    }
 	  }]);
@@ -230,18 +260,23 @@
 	  return Option;
 	}(_react2["default"].Component);
 
-	var List = function (_React$Component2) {
-	  _inherits(List, _React$Component2);
+	var Lists = function (_React$Component2) {
+	  _inherits(Lists, _React$Component2);
 
-	  function List(props) {
-	    _classCallCheck(this, List);
+	  function Lists(props) {
+	    _classCallCheck(this, Lists);
 
-	    return _possibleConstructorReturn(this, (List.__proto__ || Object.getPrototypeOf(List)).call(this, props));
+	    var _this6 = _possibleConstructorReturn(this, (Lists.__proto__ || Object.getPrototypeOf(Lists)).call(this, props));
+
+	    _this6.ids = [];
+	    return _this6;
 	  }
 
-	  _createClass(List, [{
-	    key: 'creat_thead',
-	    value: function creat_thead() {
+	  _createClass(Lists, [{
+	    key: 'create_head',
+	    value: function create_head() {
+	      var _this7 = this;
+
 	      return _react2["default"].createElement(
 	        'thead',
 	        null,
@@ -250,29 +285,65 @@
 	          null,
 	          _react2["default"].createElement(
 	            'td',
-	            { className: 'lefttd' },
+	            { width: '25px', className: 'td_head' },
 	            _react2["default"].createElement('div', null)
 	          ),
-	          _react2["default"].createElement('td', { width: '5px' }),
+	          _react2["default"].createElement('td', { width: '0px', className: 'td_left_space' }),
 	          _react2["default"].createElement(
 	            'td',
-	            { width: '30%' },
+	            { width: '20px' },
+	            _react2["default"].createElement('input', {
+	              type: 'checkbox',
+	              id: 'allcheck',
+	              ref: function ref(check) {
+	                return _this7.allcheck = check;
+	              }
+	            }),
+	            _react2["default"].createElement(
+	              'label',
+	              { htmlFor: 'allcheck' },
+	              _react2["default"].createElement('img', { src: '../../../imgs/public/hook.png' })
+	            )
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            null,
+	            '\u7F51\u8BC4\u6279\u6B21'
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            { width: '10%' },
+	            '\u5206\u7EC4\u6279\u6B21'
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            { width: '10%' },
 	            '\u6307\u6807\u6279\u6B21'
 	          ),
 	          _react2["default"].createElement(
 	            'td',
-	            { width: '30%' },
-	            '\u6307\u6807\u7C7B\u522B'
+	            { width: '13%' },
+	            '\u4E13\u5BB6\u5206\u7EC4\u6279\u6B21'
 	          ),
 	          _react2["default"].createElement(
 	            'td',
-	            { width: '30%' },
+	            null,
+	            '\u8D77\u6B62\u65F6\u95F4'
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            { width: '10%' },
+	            '\u5206\u914D\u8BFE\u7A0B'
+	          ),
+	          _react2["default"].createElement(
+	            'td',
+	            { width: '10%' },
 	            '\u64CD\u4F5C'
 	          ),
-	          _react2["default"].createElement('td', { width: '5px' }),
+	          _react2["default"].createElement('td', { width: '0px', className: 'td_right_space' }),
 	          _react2["default"].createElement(
 	            'td',
-	            { className: 'righttd' },
+	            { width: '25px', className: 'td_end' },
 	            _react2["default"].createElement('div', null)
 	          )
 	        )
@@ -280,24 +351,51 @@
 	    }
 	  }, {
 	    key: 'option',
-	    value: function option(type, zbpc, lb, eve) {
+	    value: function option(type, id, wppc, eve) {
 	      eve.preventDefault();
+
 	      switch (type) {
-	        case 'edit':
-	          var a = './masterAddZbEditor.html?isEditor=true&type=' + +(lb === "通用") + '&indexBatch=' + zbpc;
-	          window.location.href = a;
-	          break;
 	        case 'delete':
-	          Creat_popup('delete', zbpc);
+	          Creat_popup('delete', wppc, id);
+	          document.getElementById('popup').style.display = "block";
+	          break;
+	        case 'fenpei':
+	          window.location.href = './wpgl-fenpei.html?wppc=' + wppc + '&id=' + id;
+	          break;
+	        case 'jieguo':
+	          window.location.href = './wpgl-jieguo.html?wppc=' + wppc + '&id=' + id;
+	          break;
+	        case 'edit':
+	          window.location.href = './masterPublishWp.html?wpId=' + id + '&isEditor=true';
+	          break;
+	        default:
 	          break;
 	      }
 	    }
 	  }, {
-	    key: 'creat_tbody',
-	    value: function creat_tbody() {
-	      var _this7 = this;
+	    key: 'check',
+	    value: function check(id, wppc, eve) {
+	      this.allcheck.checked = false;
+	      if (eve.target.checked) {
+	        // add
+	        this.ids.push(id);
+	        WPPCS.push(wppc);
+	      } else {
+	        // delet
+	        this.ids = this.ids.filter(function (e) {
+	          return e !== id;
+	        });
+	        WPPCS = WPPCS.filter(function (e) {
+	          return e !== wppc;
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'create_body',
+	    value: function create_body() {
+	      var _this8 = this;
 
-	      if (this.props.list.length === 0) {
+	      if (this.props.Lists.length === 0) {
 	        return _react2["default"].createElement(
 	          'tbody',
 	          null,
@@ -319,15 +417,41 @@
 	          )
 	        );
 	      }
+
 	      return _react2["default"].createElement(
 	        'tbody',
 	        null,
-	        this.props.list.map(function (e, index) {
+	        this.props.Lists.map(function (e, index) {
 	          return _react2["default"].createElement(
 	            'tr',
 	            { key: index },
-	            _react2["default"].createElement('td', { className: 'lefttd' }),
+	            _react2["default"].createElement('td', { className: 'td_head' }),
 	            _react2["default"].createElement('td', null),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
+	              _react2["default"].createElement('input', {
+	                type: 'checkbox',
+	                id: "input-" + index,
+	                value: e.id + "#" + e.wppc,
+	                onChange: _this8.check.bind(_this8, e.id, e.wppc)
+	              }),
+	              _react2["default"].createElement(
+	                'label',
+	                { htmlFor: "input-" + index },
+	                _react2["default"].createElement('img', { src: '../../../imgs/public/hook.png' })
+	              )
+	            ),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
+	              e.wppc
+	            ),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
+	              e.fzpc
+	            ),
 	            _react2["default"].createElement(
 	              'td',
 	              null,
@@ -336,24 +460,51 @@
 	            _react2["default"].createElement(
 	              'td',
 	              null,
-	              e.zblb
+	              e.zjfzpc
+	            ),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
+	              e.kssj + "-" + e.jssj
 	            ),
 	            _react2["default"].createElement(
 	              'td',
 	              null,
 	              _react2["default"].createElement(
-	                'a',
-	                { href: '#', onClick: _this7.option.bind(_this7, 'edit', e.zbpc, e.zblb) },
-	                '\u7F16\u8F91'
-	              ),
+	                'div',
+	                null,
+	                _react2["default"].createElement(
+	                  'span',
+	                  { className: 'green_btn', onClick: _this8.option.bind(_this8, "fenpei", e.id, e.wppc) },
+	                  '\u5206\u914D'
+	                ),
+	                _react2["default"].createElement(
+	                  'span',
+	                  { className: 'green_btn', onClick: _this8.option.bind(_this8, "jieguo", e.id, e.wppc) },
+	                  '\u7ED3\u679C'
+	                )
+	              )
+	            ),
+	            _react2["default"].createElement(
+	              'td',
+	              null,
 	              _react2["default"].createElement(
-	                'a',
-	                { href: '#', onClick: _this7.option.bind(_this7, 'delete', e.zbpc, e.zblb) },
-	                '\u5220\u9664'
+	                'div',
+	                null,
+	                _react2["default"].createElement(
+	                  'span',
+	                  { className: 'green_btn', onClick: _this8.option.bind(_this8, "edit", e.id, e.wppc) },
+	                  '\u7F16\u8F91'
+	                ),
+	                _react2["default"].createElement(
+	                  'span',
+	                  { className: 'yellow_btn', onClick: _this8.option.bind(_this8, "delete", e.id, e.wppc) },
+	                  '\u5220\u9664'
+	                )
 	              )
 	            ),
 	            _react2["default"].createElement('td', null),
-	            _react2["default"].createElement('td', { className: 'righttd' })
+	            _react2["default"].createElement('td', { className: 'td_end' })
 	          );
 	        })
 	      );
@@ -363,14 +514,28 @@
 	    value: function render() {
 	      return _react2["default"].createElement(
 	        'div',
-	        { id: 'List' },
+	        { id: 'wpgl_table' },
 	        _react2["default"].createElement(
 	          'table',
-	          null,
-	          this.creat_thead(),
-	          this.creat_tbody()
+	          { ref: 'table' },
+	          this.create_head(),
+	          this.create_body()
 	        )
 	      );
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this9 = this;
+
+	      this.allcheck.onchange = function (eve) {
+	        _this9.ids = [];
+	        WPPCS = [];
+	        var checks = Array.from(document.querySelectorAll('tbody td input[type="checkbox"]'));
+	        checks.map(function (e) {
+	          (e.checked = eve.target.checked) && _this9.ids.push(e.value.split("#")[0]) && WPPCS.push(e.value.split("#")[1]);
+	        });
+	      };
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -381,7 +546,7 @@
 	    }
 	  }]);
 
-	  return List;
+	  return Lists;
 	}(_react2["default"].Component);
 
 	var Popup = function (_React$Component3) {
@@ -396,17 +561,19 @@
 	  _createClass(Popup, [{
 	    key: 'render',
 	    value: function render() {
-	      var _this9 = this;
+	      var _this11 = this;
 
 	      var _props = this.props,
 	          type = _props.type,
-	          id = _props.id;
+	          names = _props.names;
 
 	      var MAP = {
+	        "PLdelete": "删除",
 	        "delete": "删除"
 	      };
 
 	      switch (type) {
+	        case 'PLdelete':
 	        case 'delete':
 	          return _react2["default"].createElement(
 	            'div',
@@ -417,7 +584,7 @@
 	              _react2["default"].createElement(
 	                'p',
 	                null,
-	                '\u786E\u5B9A\u8981' + (MAP[type] + id) + '?'
+	                '\u786E\u5B9A\u8981' + (MAP[type] + names) + '?'
 	              )
 	            ),
 	            _react2["default"].createElement(
@@ -426,26 +593,18 @@
 	              _react2["default"].createElement(
 	                'button',
 	                { id: 'popup_OK', ref: function ref(btn) {
-	                    return _this9.OK = btn;
+	                    return _this11.OK = btn;
 	                  } },
 	                '\u786E\u5B9A'
 	              ),
 	              _react2["default"].createElement(
 	                'button',
 	                { id: 'popup_back', ref: function ref(btn) {
-	                    return _this9.back = btn;
+	                    return _this11.back = btn;
 	                  } },
 	                '\u53D6\u6D88'
 	              )
 	            )
-	          );
-	          break;
-	        case 'edit':
-	          return _react2["default"].createElement(
-	            'div',
-	            null,
-	            _react2["default"].createElement('dev', { ref: 'pb' }),
-	            _react2["default"].createElement(Popup_edit, null)
 	          );
 	          break;
 	        default:
@@ -456,65 +615,92 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      if (window.frameElement) {
-	        window.frameElement.height = document.body.offsetHeight;
-	      }
-	      // background click to cancel
 	      var _props2 = this.props,
 	          id = _props2.id,
 	          type = _props2.type;
+	      // background click to cancel
 
+	      this.refs.pb.onclick = function (e) {
+	        return e.stopPropagation();
+	      };
+	      // back button click to cancel
+	      this.back.onclick = cancel_popup;
+	      // OK button option
 	      var dat = {};
 
 	      switch (type) {
+	        case "PLdelete":
 	        case "delete":
 	          dat = {
 	            unifyCode: getCookie("userId"),
-	            indexBatch: id
+	            ID: id
 	          };
-	          break;
-	        case 'edit':
-	          return;
 	          break;
 	        default:
 	          break;
 	      }
 
-	      // back button click to cancel
-	      this.back.onclick = cancel_popup;
-	      // OK button option
 	      this.OK.onclick = function () {
 	        var data_map = {
-	          "delete": "deletePjzb"
+	          "PLdelete": "deleteReview",
+	          "delete": "deleteReview"
 	        };
 	        ajax({
 	          url: courseCenter.host + data_map[type],
 	          data: dat,
 	          success: function success(gets) {
 	            var datas = JSON.parse(gets);
-	            if (datas.meta.result == 100) {
-	              cancel_popup();
-	              pjzbgl_option.get_list(1);
+	            if (datas.meta.result !== 100) {
+	              return;
 	            }
+	            cancel_popup();
+	            WPGL._get_list();
+	            WPGL.get_wppc_select();
 	          }
 	        });
 	      };
+
+	      if (window.frameElement) {
+	        var H = document.body.offsetHeight;
+	        if (650 > parseInt(document.body.offsetHeight)) {
+	          H = 650;
+	        }
+	        window.frameElement.height = H;
+	      }
 	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      if (window.frameElement) {
+	        window.frameElement.height = document.body.offsetHeight;
+	      }
+	    }
+
+	    // componentDidUpdate(prevProps, prevState) {
+	    //   if(window.frameElement) {
+	    //     let H=document.body.offsetHeight;
+	    //     if(this.refs.pb.offsetHeight>parseInt(document.body.offsetHeight)) {
+	    //       H=this.refs.pb.offsetHeight;
+	    //     }
+	    //     window.frameElement.height=H;
+	    //   }
+	    // }
+
 	  }]);
 
 	  return Popup;
 	}(_react2["default"].Component);
 
-	function Creat_popup(type, id) {
-	  var popup = document.getElementById('popup');
+	function Creat_popup(type, names, id) {
 	  var popup_datas = {
 	    type: type,
+	    names: names,
 	    id: id
 	  };
-	  _reactDom2["default"].render(_react2["default"].createElement(Popup, popup_datas), document.getElementById('popup'));
+	  var popup = _reactDom2["default"].render(_react2["default"].createElement(Popup, popup_datas), document.getElementById('popup'));
+
 	  // click to close popup
-	  popup.style.display = "block";
-	  popup.onclick = cancel_popup;
+	  document.getElementById('popup').onclick = cancel_popup;
 	}
 
 	function cancel_popup() {
@@ -523,7 +709,7 @@
 	  _reactDom2["default"].unmountComponentAtNode(popup);
 	}
 
-	var pjzbgl_option = _reactDom2["default"].render(_react2["default"].createElement(Option, null), document.getElementById('pjzbgl'));
+	var WPGL = _reactDom2["default"].render(_react2["default"].createElement(Option, null), document.getElementById('wpgl'));
 
 /***/ }),
 /* 1 */

@@ -2,7 +2,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/masterSortTeam/blueMonUI.js'),
+var BluMUI = require('../../libs/wangping/masterSortTeam.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	doc = document,
@@ -373,7 +373,7 @@ BluMUI.create({
 	items: [],
 	name: "已选择专家",
 	titleName: '删除选择',
-	titleIcon: '../../imgs/systemManage/delete.png',
+	titleIcon: '../../../imgs/systemManage/delete.png',
 	titleCallback: exchangeAll,
 	operaions: [{
 		name: '删除',
@@ -386,7 +386,7 @@ BluMUI.create({
 	items: [],
 	name: "待选择专家",
 	titleName: '加入分配',
-	titleIcon: '../../imgs/systemManage/add.png',
+	titleIcon: '../../../imgs/systemManage/add.png',
 	titleCallback: exchangeAll,
 	operaions: [{
 		name: '添加',

@@ -3,11 +3,20 @@ module.exports = {
   entry: {
     // teaching_team:'./js/src/teachingTeam/teachingTeam.js',
 
+
+    // zjkgl: './js/src/wangping/zjkgl.js',
+    // masterAddEditor: './js/src/wangping/masterAddEditor.js',
+    // fzgl: './js/src/wangping/fzgl.js',
     // masterSortEditor: './js/src/wangping/masterSortEditor.js',
-    //  pjzbgl:'./js/src/wangping/pjzbgl.js',
-    //  masterAddZbEditor: './js/src/wangping/masterAddZbEditor.js',
-     zjfzgl:'./js/src/wangping/zjfzgl.js',
-     masterSortTeam:'./js/src/wangping/masterSortTeam.js',
+    // pjzbgl: './js/src/wangping/pjzbgl.js',
+    // masterAddZbEditor: './js/src/wangping/masterAddZbEditor.js',
+    zjfzgl: './js/src/wangping/zjfzgl.js',
+    masterSortMasterEditor:'./js/src/wangping/masterSortMasterEditor.js',
+    // masterSortTeam: './js/src/wangping/masterSortTeam.js',
+    // wpgl: './js/src/wangping/wpgl.js',
+    // masterPublishWp: './js/src/wangping/masterPublishWp.js',
+    // kcfzgl: './js/src/wangping/kcfzgl.js',
+    // materCourseSort: './js/src/wangping/materCourseSort.js',
 
     // tongJi_kczystj:'./js/src/tongJi/tongJi_kczystj.js',
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',

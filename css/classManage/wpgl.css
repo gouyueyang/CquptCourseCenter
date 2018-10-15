@@ -179,7 +179,7 @@ label>img {
   list-style: none;
   display: inline-block;
 }
-.fanye .total {
+.fanye #rows {
   color: #999;
   margin-right: 23px;
   font-size: 14px;
@@ -195,14 +195,14 @@ label>img {
   line-height: 21px;
   background: #E1E1E1;
 }
-.fanye .tp {
+.fanye #tp {
   width: 53px;
   height: 19px;
   outline: none;
   margin-right: 8px;
   border: 1px solid #D3D2D2;
 }
-.fanye .tp::-webkit-input-placeholder {
+.fanye #tp::-webkit-input-placeholder {
   text-align: center;
 }
 

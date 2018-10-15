@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const _COUNT = 10;
-const ajax=require('../libs/post_ajax.js');
-const Fanye=require('../libs/turnPage.js');
+const ajax=require('../../libs/post_ajax.js');
+const Fanye=require('../../libs/turnPage.js');
 var masterNames=[];
 
 function SET(key,value) {
@@ -55,7 +55,7 @@ class Option extends React.Component {
       case 'in':
         inputs = <div id="option_input">
           <span>所属学院：</span>
-          <select id="xueyuan" ref={select=>this.xueyuan=select}>
+          <select id="xueyuan" ref="xueyuan">
             <option value="">{"请选择"}</option>
           </select>
           <span>教师姓名：</span>
@@ -71,10 +71,10 @@ class Option extends React.Component {
           <div id="option_search">
             <span>账号状态：</span>
             <input type="checkbox" id="qy" ref={input=>this.qy=input} />
-            <label htmlFor="qy"><img src="../../imgs/public/hook.png"/></label>
+            <label htmlFor="qy"><img src="../../../imgs/public/hook.png"/></label>
             <span>启用</span>
             <input type="checkbox" id="ty" ref={input=>this.ty=input} />
-            <label htmlFor="ty"><img src="../../imgs/public/hook.png"/></label>
+            <label htmlFor="ty"><img src="../../../imgs/public/hook.png"/></label>
             <span>停用</span>
             <button ref={search=>this.search=search} id="search">搜索</button>
           </div>
@@ -94,8 +94,8 @@ class Option extends React.Component {
         datas.data.map(e=>{
           options+=`<option value=${e.kkxymc} ${e.kkxymc==GET('ssxy')?"selected":''}>${e.kkxymc}</option>`;
         });
-        this.xueyuan.innerHTML=options;
-        this.xueyuan.onchange=()=>{
+        this.refs.xueyuan.innerHTML=options;
+        this.refs.xueyuan.onchange=()=>{
           this.search_handler()
         }
       }
@@ -131,7 +131,7 @@ class Option extends React.Component {
     switch(this.state.master) {
       case 'in':
         this.search_data={
-          ssxy: SET('ssxy',this.xueyuan.value),
+          ssxy: SET('ssxy',this.refs.xueyuan.value),
           jsxm: SET("jsxm",this.refs.jsxm.value)
         };
         break;
@@ -239,7 +239,7 @@ class Option extends React.Component {
               onChange={()=>{this.change_master_state('out')}}
               defaultChecked={master==='out'}
             />
-            <label htmlFor="master_in"><img src="../../imgs/public/hook.png"/></label>
+            <label htmlFor="master_in"><img src="../../../imgs/public/hook.png"/></label>
             <span>显示校外专家</span>
             <input 
               type="radio" 
@@ -249,13 +249,13 @@ class Option extends React.Component {
               onChange={()=>{this.change_master_state('in')}}
               defaultChecked={master==='in'}
             />
-            <label htmlFor="master_out"><img src="../../imgs/public/hook.png"/></label>
+            <label htmlFor="master_out"><img src="../../../imgs/public/hook.png"/></label>
             <span>显示校内专家</span>
           </div>
           {this.creat_option_down()}
         </div>
         <List list={this.state.list} master={this.state.master} ref="list" />
-        <Fanye TP={this.state.TP} callback={(p)=>{this.get_list(p)}} />
+        <Fanye options={this.state.TP} callback={(p)=>{this.get_list(p)}} />
       </div>
     );
   }
@@ -303,7 +303,6 @@ class Option extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     this.set_default();
     if(window.frameElement) {
-      console.log('sf');
       window.frameElement.height=document.body.offsetHeight;
     }
   }
@@ -331,7 +330,7 @@ class List extends React.Component {
                   ref={check=>this.allcheck=check} 
                 />
                 <label htmlFor="allcheck">
-                  <img src="../../imgs/public/hook.png"/>
+                  <img src="../../../imgs/public/hook.png"/>
                 </label>
               </td>
               <td width="15%">账号</td>
@@ -360,7 +359,7 @@ class List extends React.Component {
                   ref={check=>this.allcheck=check} 
                 />
                 <label htmlFor="allcheck">
-                  <img src="../../imgs/public/hook.png"/>
+                  <img src="../../../imgs/public/hook.png"/>
                 </label>
               </td>
               <td width="15%">姓名</td>
@@ -383,7 +382,7 @@ class List extends React.Component {
           <tr>
             <td className="lefttd"></td>
             <td colSpan="7" style={{borderBottom: 'none'}}>
-              <img id="err_img" src="../../imgs/public/error.png"/>
+              <img id="err_img" src="../../../imgs/public/error.png"/>
               <div>没有数据</div>
             </td>
             <td className="righttd"></td>
@@ -408,7 +407,7 @@ class List extends React.Component {
                   onChange={this.check.bind(this,e.id,e.xm)} 
                 />
                 <label htmlFor={"input-"+index} >
-                  <img src="../../imgs/public/hook.png"/>
+                  <img src="../../../imgs/public/hook.png"/>
                 </label>
               </td>
               <td>{e.id}</td>
@@ -446,7 +445,7 @@ class List extends React.Component {
                   onChange={this.check.bind(this,e.sfrzh,e.xm)} 
                 />
                 <label htmlFor={"input-"+index} >
-                  <img src="../../imgs/public/hook.png"/>
+                  <img src="../../../imgs/public/hook.png"/>
                 </label>
               </td>
               <td>{e.xm}</td>

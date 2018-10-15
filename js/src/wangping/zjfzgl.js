@@ -258,7 +258,7 @@ class List extends React.Component {
           <tr>
             <td className="lefttd"></td>
             <td colSpan="7" style={{borderBottom: 'none'}}>
-              <img id="err_img" src="../../imgs/public/error.png"/>
+              <img id="err_img" src="../../../imgs/public/error.png"/>
               <div>没有数据</div>
             </td>
             <td className="righttd"></td>
