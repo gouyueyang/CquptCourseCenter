@@ -13,7 +13,7 @@ class Filter extends React.Component {
       name: "",
       page: 1,
       pages: 1,
-      rows: 1,
+      rows: 0,
       output: `unifyCode=${getCookie("userId")}`
     };
     this.changeOutput = this.changeOutput.bind(this);

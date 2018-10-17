@@ -137,7 +137,6 @@ class NewFilter extends React.Component {
     
   }
   funAjax(url,Datas,callback,wrapId,chartTitle){
-    console.log('funAjaxRun');
     ajax({
       url: courseCenter.host + url,
       data: Datas,
@@ -494,7 +493,7 @@ class Item extends React.Component {
   pieOption() {
     let datas = this.datas;
     let result = [];
-    let head = ['collegeName', 'amount'];//学院名称，点击数量
+    let head = ['学院名称', '点击数量'];//学院名称，点击数量
     result.push(head);
     datas.forEach((val) => {
       let item = [];
@@ -579,7 +578,7 @@ class Item extends React.Component {
     let min = this.datas[this.datas.length - 1].djsl;
     let datas = this.datas.reverse();
     let result = [];
-    let head = ['name', 'collegeName', 'amount'];//姓名，学院名称，点击数量
+    let head = ['姓名', '学院名称', '点击数量'];//姓名，学院名称，点击数量
     result.push(head);
     datas.forEach(val => {
       let item = [];
@@ -630,7 +629,7 @@ class Item extends React.Component {
       dataset: {
         source: result
       },
-      xAxis: { name: '操作次数' },
+      xAxis: { name: '操作数' },
       yAxis: {
         name: '姓名',
         type: 'category'
@@ -640,7 +639,7 @@ class Item extends React.Component {
         left: 'center',
         min: min,
         max: max,
-        text: ['High Amount', 'Low Amount'],
+        text: ['高', '低'],
         // Map the amount column to color
         dimension: 2,
         inRange: {
@@ -652,9 +651,9 @@ class Item extends React.Component {
           type: 'bar',
           encode: {
             // 将 "amount" 列映射到 X 轴。
-            x: 'amount',
+            x: '点击数量',
             // 将 "teacherName" 列映射到 Y 轴。
-            y: 'name'
+            y: '姓名'
           }
         }
       ]
