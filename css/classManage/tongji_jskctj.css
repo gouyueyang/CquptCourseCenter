@@ -1,0 +1,128 @@
+/* 教师课程统计 */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-size: 13px;
+}
+body{
+	margin:10px auto;
+}
+/* title */
+h2.inner_title{
+    background-color: #007a51;
+    color:#fff;
+    line-height: 40px;
+    padding-left: 20px;
+}
+/* 条件筛选部分 */
+
+.top>span {
+	color: #333;
+	vertical-align: middle;
+}
+
+.top>select,
+.top>input {
+	display: inline-block;
+	padding-left: 3px;
+	margin: 0 20px 0 5px;
+}
+
+.top>select {
+	height: 20px;
+	font-size: 12px;
+	outline: none;
+	vertical-align: middle;
+	border: 1px solid #009361;
+	color: #009361;
+	line-height: 20px;
+}
+
+.top>input[type='text'] {
+	height: 18px;
+	width: 110px;
+	outline: none;
+	color: #009361;
+	vertical-align: middle;
+	border: 1px solid #009361;
+	line-height: 18px;
+}
+
+.top>#search {
+	width: 62px;
+	height: 25px;
+	background: #009261;
+	color: #FFF;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	margin-left: 20px;
+}
+
+.top {
+	padding: 17px 0;
+	padding-left: 15px;
+}
+
+/* 图表 */
+
+#course_tj_wrap {
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+
+#course_tj_wrap>div {
+    width: 32%;
+    height: 600px;
+	display: inline-block;
+	margin-bottom: 20px;
+	box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+}
+
+
+#tea_course_wrap table{
+    margin:20px auto;
+    width:90%;
+	font-size: 14px;
+	background: #FFF;
+	table-layout: fixed;
+	text-align: center;
+	border-collapse: collapse;
+	border: 1px solid #EEEEEE;
+}
+#tea_course_wrap thead {
+	color: #FFF;
+  }
+  
+  #tea_course_wrap thead tr th {
+	height: 30px;
+	background: #009361;
+	border: 1px solid #EEEEEE;
+  }
+  #tea_course_wrap tbody tr td {
+	height: 30px;
+	border: 1px solid #EEEEEE;
+  }
+  .output{
+	  float: right;
+	  margin:10px;
+	  text-decoration: none;
+	  width:100px;
+	  height: 30px;
+	  text-align: center;
+	  line-height: 30px;
+	  background-color: #007a51;
+	  border-radius: 5px;
+	  color: #fff;
+	  font-size: 16px;
+	  cursor: pointer;
+  }
+/*时间选择框样式*/
+
+.inlineBlock{
+	display: inline-block;
+}
