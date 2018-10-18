@@ -20,6 +20,8 @@ import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/toolbox';
 
 const ajax = require('../post_ajax.js');
+const Fanye = require('../turnPage.js');
+const _Count = 15;
 const SET = (key, value) => {
     sessionStorage.setItem("chart-" + key, value);
     return value;
@@ -71,6 +73,8 @@ class PieFilter extends React.Component {
             jssj: this.state.jssj,
             type: this.props.type,   //wh:维护数据，sh：审核数据
             txtype: 'tx',  //表现形式 tx:图形 tb:图表
+            page:0,
+            count:_Count
         };
         //课程审核饼状图
 
@@ -155,34 +159,36 @@ class TableFilter extends React.Component {
 
         this.wrapId = this.props.wrapId;  //图表外层id
         this.chartTitle = this.props.chartTitle; //图表名称
-        this.callback = this.props.callback;
+        // this.callback = this.props.callback;
 
         this.state = {
             kssj: defaultStart,   //开始时间
             jssj: defaultEnd,   //结束时间
             type: this.props.type,   //wh:维护数据，sh：审核数据
+            txtype: 'tb',  //表现形式 tx:图形 tb:图表
             xm: this.props.xm || '',    //姓名
             xymc: this.props.xymc || '',  //学院名称
-            lists: [],    //存储结果
+            list: [],    //存储结果
             page: 1,
             pages: 1,
-            rows: 1,
-            output:`unifyCode=${getCookie("userId")}`
-    };
-    
+            rows: 0,
+            count: _Count,
+            output: `unifyCode=${getCookie("userId")}`
+        };
+
         this.showChart = this.showChart.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
         this.handleChange2 = this.handleChange2.bind(this);
-        this.funAjax = this.funAjax.bind(this);
+        // this.funAjax = this.funAjax.bind(this);
         this.changeOutput = this.changeOutput.bind(this);
     }
 
-    changeOutput(){
+    changeOutput() {
         this.setState({
-          output:`unifyCode=${getCookie("userId")}&lx=clwh&type=${this.state.type}&xm=${this.state.xm}&xymc=${this.state.xymc}&kssj=${this.state.kssj}&jssj=${this.state.jssj}`
+            output: `unifyCode=${getCookie("userId")}&lx=clwh&type=${this.state.type}&xm=${this.state.xm}&xymc=${this.state.xymc}&kssj=${this.state.kssj}&jssj=${this.state.jssj}`
         });
 
-      }
+    }
     //向后台发送请求
     showChart() {
         this.changeOutput();
@@ -191,39 +197,8 @@ class TableFilter extends React.Component {
         if (oDate1.getTime() > oDate2.getTime()) {
             alert("开始时间应小于结束时间!");
         }
+        this.refs.list.refresh(1, this.state);
 
-
-        //请求数据
-        var datas = {
-            unifyCode: getCookie("userId"),
-            kssj: this.state.kssj,
-            jssj: this.state.jssj,
-            type: this.props.type,   //wh:维护数据，sh：审核数据
-            txtype: 'tb',  //表现形式 tx:图形 tb:图表
-            xm: this.state.xm || '',    //姓名
-            xymc: this.state.xymc || ''
-        };
-
-        this.funAjax('getKcclWhFxData', datas, this.callback, this.wrapId);
-
-    }
-    funAjax(url, Datas, callback, wrapId) {
-        ajax({
-            url: courseCenter.host + url,
-            data: Datas,
-            success: (gets) => {
-                let datas = JSON.parse(gets);
-                if (datas.meta.result === 100) {
-                    this.setState({
-                        lists: datas.data.rows
-                    });
-                }
-                //调用回调函数绘制图表
-                if (callback) {
-                    callback(this.state.lists, wrapId, this.state.output);
-                }
-            }
-        });
     }
 
 
@@ -241,34 +216,43 @@ class TableFilter extends React.Component {
 
 
     render() {
-        return (<div className='filters'>
-            <div className="top">
+        return (
+            <div>
+                <div className='filters'>
+                    <div className="top">
 
-                <span>时间区间:</span>
+                        <span>时间区间:</span>
 
-                <DateTime
-                    className="inlineBlock"
-                    dateFormat='YYYY-MM-DD'
-                    timeFormat=''
+                        <DateTime
+                            className="inlineBlock"
+                            dateFormat='YYYY-MM-DD'
+                            timeFormat=''
 
-                    defaultValue={moment(new Date("2017-01-01")).format(this.format)}
-                    onChange={this.handleChange1}
-                ></DateTime>
-                <span>—</span>
-                <DateTime
-                    className="inlineBlock"
-                    dateFormat='YYYY-MM-DD'
-                    timeFormat=''
-                    defaultValue={moment(new Date()).format(this.format)}
-                    onChange={this.handleChange2}
-                ></DateTime>
-                <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
-                    <option value="">请选择学院</option>
-                </select>
-                <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
-                <button id="search" onClick={this.showChart.bind(this)}>查询</button>
+                            defaultValue={moment(new Date("2017-01-01")).format(this.format)}
+                            onChange={this.handleChange1}
+                        ></DateTime>
+                        <span>—</span>
+                        <DateTime
+                            className="inlineBlock"
+                            dateFormat='YYYY-MM-DD'
+                            timeFormat=''
+                            defaultValue={moment(new Date()).format(this.format)}
+                            onChange={this.handleChange2}
+                        ></DateTime>
+                        <span>学院:</span>
+                        <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
+                            <option value="">请选择学院</option>
+                        </select>
+                        <span>教师姓名:</span>
+                        <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
+                        <button id="search" onClick={this.showChart.bind(this)}>查询</button>
+                        <a className="output" href={courseCenter.host + "exportExcel?" + this.state.output}>导出</a>
+                    </div>
+                </div>
+                <TableChart ref="list" options={this.state}/>
             </div>
-        </div>);
+
+        );
     }
     componentDidMount() {
         this.showChart(1);
@@ -304,7 +288,7 @@ class PieChart extends React.Component {
     pieOption() {
         let datas = this.datas;
         let result = [];
-        let head = ['collegeName', 'amount'];//学院名称，点击数量
+        let head = ['学院名称', '操作数量'];//学院名称，点击数量
         result.push(head);
         datas.forEach((val) => {
             let item = [];
@@ -319,7 +303,7 @@ class PieChart extends React.Component {
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{c} ({d}%)"
+                formatter: "{c}</br> ({d}%)"
             },
             toolbox: {          //右上角工具栏，数据源、还原、下载
                 feature: {
@@ -405,14 +389,20 @@ class PieChart extends React.Component {
 class TableChart extends React.Component {
     constructor(props) {
         super(props);
+        let newState = {};
+        for (let i in this.props.options) {
+            newState[i] = this.props.options[i];
+        }
+        newState.list = [];
+        this.state = newState;
         this.create_tbody = this.create_tbody.bind(this);
     }
 
     create_tbody() {
         let lists = [];
-        this.props.datas.forEach((e, index) => {
+        this.state.list.forEach((e, index) => {
             lists.push(<tr key={index}>
-                <td>{index+1}</td>
+                <td>{(this.state.page-1)*_Count+index + 1}</td>
                 <td>{e.xymc}</td>
                 <td>{e.xm}</td>
                 <td>{e.djsl}</td>
@@ -423,11 +413,41 @@ class TableChart extends React.Component {
         </tbody>);
     }
 
-    
+    refresh(page, { ...sets }) {
+        // 未传第二个参数时sets为空对象{}
+        // 判断sets是否为空（是否只是翻页）
+        if (JSON.stringify(sets) !== "{}") {
+            this.state = sets;
+        }
+        ajax({
+            url: courseCenter.host + "getKcclWhFxData",
+            data: {
+                unifyCode: getCookie("userId"),
+                kssj: this.state.kssj,
+                jssj: this.state.jssj,
+                type: this.state.type,   //wh:维护数据，sh：审核数据
+                txtype: 'tb',  //表现形式 tx:图形 tb:图表
+                xm: this.state.xm || '',    //姓名
+                xymc: this.state.xymc || '',
+                page: page,
+                count: _Count
+            },
+            success: (gets) => {
+                let datas = JSON.parse(gets);
+                this.setState({
+                    list: datas.data.rows,
+                    page: page,
+                    pages: datas.data.Page,
+                    rows: datas.data.total
+                });
+            }
+        });
+    }
+
     render() {
         return (
             <div>
-                <div className="table_wrap" style={{ height: 500 + 'px', overflow: 'auto' }}>
+                <div className="table_wrap">
                     <table>
                         <thead>
                             <tr>
@@ -440,9 +460,44 @@ class TableChart extends React.Component {
                         {this.create_tbody()}
                     </table>
                 </div>
-                <a className="output" href={courseCenter.host + "exportExcel?" +this.props.output}>导出</a>
+                <Fanye This={this}
+                    options={{
+                        page: this.state.page || 1,
+                        pages: this.state.pages || 1,
+                        rows: this.state.rows
+                    }}
+                    callback={this.refresh.bind(this)}
+                />
+                
             </div>
+
         )
+    }
+
+    componentDidMount() {
+        ajax({
+            url: courseCenter.host + "getKcclWhFxData",
+            data: {
+                unifyCode: getCookie("userId"),
+                kssj: this.props.options.kssj,
+                jssj: this.props.options.jssj,
+                type: this.props.options.type,   //wh:维护数据，sh：审核数据
+                txtype: 'tb',  //表现形式 tx:图形 tb:图表
+                xm: this.props.options.xm || '',    //姓名
+                xymc: this.props.options.xymc || '',
+                page: 1,
+                count: _Count
+            },
+            success: (gets) => {
+                let datas = JSON.parse(gets);
+                this.setState({
+                    list: datas.data.rows,
+                    page: 1,
+                    pages: datas.data.Page,
+                    rows: datas.data.total
+                });
+            }
+        });
     }
 }
 

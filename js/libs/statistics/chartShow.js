@@ -38,7 +38,7 @@ class NewFilter extends React.Component {
     //var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
     var defaultStart = moment(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
     var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
-    
+
     this.wrapId = this.props.wrapId;  //图表外层id
     this.chartTitle = this.props.chartTitle; //图表名称
     this.callback = this.props.callback;
@@ -119,24 +119,24 @@ class NewFilter extends React.Component {
       type: '1',
     };
     var len = this.wrapId.length;
-    for(var i =0;i<len;i++){
-      if(this.wrapId[i] == 'tea_pie_chart'){
-        this.funAjax('getStatisticalData',teaPie,this.callback[i],this.wrapId[i],this.chartTitle[i]);
-      }else if(this.wrapId[i] == 'tea_bar_chart'){
-        this.funAjax('getStatisticalData',teaBar,this.callback[i],this.wrapId[i],this.chartTitle[i]);
-      }else if(this.wrapId[i] == 'tea_line_chart'){
-        this.funAjax('getYfTjData',teaLine,this.callback[i],this.wrapId[i],this.chartTitle[i]);
-      }else if(this.wrapId[i] == 'stu_pie_chart'){
-        this.funAjax('getStatisticalData',stuPie,this.callback[i],this.wrapId[i],this.chartTitle[i]);
-      }else if(this.wrapId[i] == 'stu_bar_chart'){
-        this.funAjax('getStatisticalData',stuBar,this.callback[i],this.wrapId[i],this.chartTitle[i]);
-      }else if(this.wrapId[i] == 'stu_line_chart'){
-        this.funAjax('getYfTjData',stuLine,this.callback[i],this.wrapId[i],this.chartTitle[i]);
+    for (var i = 0; i < len; i++) {
+      if (this.wrapId[i] == 'tea_pie_chart') {
+        this.funAjax('getStatisticalData', teaPie, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+      } else if (this.wrapId[i] == 'tea_bar_chart') {
+        this.funAjax('getStatisticalData', teaBar, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+      } else if (this.wrapId[i] == 'tea_line_chart') {
+        this.funAjax('getYfTjData', teaLine, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+      } else if (this.wrapId[i] == 'stu_pie_chart') {
+        this.funAjax('getStatisticalData', stuPie, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+      } else if (this.wrapId[i] == 'stu_bar_chart') {
+        this.funAjax('getStatisticalData', stuBar, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+      } else if (this.wrapId[i] == 'stu_line_chart') {
+        this.funAjax('getYfTjData', stuLine, this.callback[i], this.wrapId[i], this.chartTitle[i]);
       }
     }
-    
+
   }
-  funAjax(url,Datas,callback,wrapId,chartTitle){
+  funAjax(url, Datas, callback, wrapId, chartTitle) {
     ajax({
       url: courseCenter.host + url,
       data: Datas,
@@ -172,8 +172,8 @@ class NewFilter extends React.Component {
   render() {
     return (<div className='filters'>
       <div className="top">
-       
-        
+
+
 
         <span>统计类别:</span>
         <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
@@ -186,16 +186,16 @@ class NewFilter extends React.Component {
           className="inlineBlock"
           dateFormat='YYYY-MM-DD'
           timeFormat=''
-         
-          defaultValue = {moment(new Date("2017-01-01")).format(this.format)}
+
+          defaultValue={moment(new Date("2017-01-01")).format(this.format)}
           onChange={this.handleChange1}
         ></DateTime>
         <span>—</span>
         <DateTime
           className="inlineBlock"
           dateFormat='YYYY-MM-DD'
-          timeFormat=''  
-          defaultValue = {moment(new Date()).format(this.format)}
+          timeFormat=''
+          defaultValue={moment(new Date()).format(this.format)}
           onChange={this.handleChange2}
         ></DateTime>
 
@@ -216,7 +216,7 @@ class Filter extends React.Component {
     //var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
     var defaultStart = moment(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
     var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
-    
+
     this.wrapId = this.props.wrapId;  //图表外层id
     this.chartTitle = this.props.chartTitle; //图表名称
 
@@ -310,8 +310,8 @@ class Filter extends React.Component {
   render() {
     return (<div className='filters'>
       <div className="top">
-       
-        
+
+
 
         <span>统计类别:</span>
         <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
@@ -324,8 +324,8 @@ class Filter extends React.Component {
           className="inlineBlock"
           dateFormat='YYYY-MM-DD'
           //timeFormat='00:00:00'
-         
-          defaultValue = {moment(new Date("2017-01-01")).format(this.format)}
+
+          defaultValue={moment(new Date("2017-01-01")).format(this.format)}
           onChange={this.handleChange1}
         ></DateTime>
         <span>—</span>
@@ -333,7 +333,7 @@ class Filter extends React.Component {
           className="inlineBlock"
           dateFormat='YYYY-MM-DD'
           //timeFormat='00:00:00'  
-          defaultValue = {moment(new Date()).format(this.format)}
+          defaultValue={moment(new Date()).format(this.format)}
           onChange={this.handleChange2}
         ></DateTime>
 
@@ -356,7 +356,7 @@ class FilterLine extends React.Component {
     var oneMonthDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
     var defaultStart = moment(oneMonthDate).format(this.format);
     var defaultEnd = moment(nowDate).format(this.format);
-    
+
     this.wrapId = this.props.wrapId;  //图表外层id
     this.chartTitle = this.props.chartTitle; //图表名称
 
@@ -446,7 +446,7 @@ class FilterLine extends React.Component {
   render() {
     return (<div className='filters'>
       <div className="top">
-        
+
         <span>时间区间:</span>
         <DateTime
           className="inlineBlock"
@@ -660,6 +660,8 @@ class Item extends React.Component {
     };
   }
 
+
+
   //折线图配置
   lineOption() {
     // let result = [
@@ -685,6 +687,40 @@ class Item extends React.Component {
         trigger: 'axis',
         axisPointer: {
           type: 'cross'
+        },
+        formatter: function (params) {
+          var arr = [];
+          var paramsLen = params.length;
+          for (let i = 0; i < paramsLen; i++) {
+            arr.push({
+              name: params[i].seriesName,
+              value: params[i].data[i + 1]
+            })
+          }
+          //由对象构成的数组依照某一对象属性的排序函数
+          var myOrder = function (arr, orderType, property) {
+            var compare = function (property) {
+              return function (a, b) {
+                var value1 = a[property];
+                var value2 = b[property];
+                if (orderType == 'small_to_big') {
+                  return value1 - value2;
+                } else if (orderType == 'big_to_small') {
+                  return value2 - value1;
+                }
+              }
+            };
+            return arr.sort(compare(property));
+          };
+
+          var newarr = myOrder(arr, 'big_to_small', 'value');
+
+          var len = newarr.length;
+          var res = '<div><p>时间：' + params[0].name + '</p></div>'
+          for (let i = 0; i < len; i++) {
+            res += '<p>' + newarr[i].name + ':' + newarr[i].value + '</p>'
+          }
+          return res;
         }
       },
       toolbox: {          //右上角工具栏，数据源、还原、下载
@@ -796,7 +832,7 @@ class Item extends React.Component {
 var BluMUI_M = {
   BluMUI_Filter: Filter,
   BluMUI_FilterLine: FilterLine,
-  BluMUI_NewFilter:NewFilter,
+  BluMUI_NewFilter: NewFilter,
   BluMUI_Item: Item
 }
 

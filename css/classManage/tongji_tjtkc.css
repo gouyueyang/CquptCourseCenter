@@ -84,6 +84,7 @@ h2.inner_title{
 	height: 560px;
 	display: inline-block;
 	margin-bottom: 20px;
+	box-shadow: 5px 14px 17px -10px rgba(120,120,120,.20);
 	/* border: 1px solid #ccc; */
 }
 

@@ -2,9 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-
-import DateTime from 'react-datetime';
-import moment from 'moment';
 // 引入 echarts 主模块。
 import * as echarts from 'echarts/lib/echarts';
 // 引入饼状图和条形图。
@@ -52,7 +49,7 @@ class Top10Filter extends React.Component {
             unifyCode: getCookie("userId"),
             lx: this.state.lx
         }
-        var len = this.wrapId.length;
+
 
         ajax({
             url: courseCenter.host + "selectJsKcData",
@@ -75,7 +72,7 @@ class Top10Filter extends React.Component {
         return (<div className='filters'>
             <div className="top">
                 <span>排名类型:</span>
-                <select name="tjlb" id="tjlb" defaultValue="fzr" onChange={(eve) => { this.setState({ lx: eve.target.value }); }}>
+                <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }); }}>
                     <option value="">请选择</option>
                     <option value="fzr">负责人</option>
                     <option value="rkjs">任课教师</option>
@@ -96,45 +93,21 @@ class KclbFilter extends React.Component {
         this.state = {
             xm: '',      //姓名
             xymc: '',    //学院名称
-            lx: 'fzr',     //fzr:负责人    rkjs:任课教师
+            lx: '',     //fzr:负责人    rkjs:任课教师
             lists: [],    //存储结果
-            // page: 1,
-            // pages: 1,
-            // rows: 0,
+            page: 1,
+            pages: 1,
+            rows: 0,
         };
         this.showChart = this.showChart.bind(this);
-        this.callback = this.props.callback.bind(this);
         this.changeOutput = this.changeOutput.bind(this);
     }
 
     //向后台发送请求
     showChart(p) {
-        //console.log(this.state);
         this.changeOutput();
-        var Dates = {
-            unifyCode: getCookie("userId"),
-            xm: this.state.xm,
-            xymc: this.state.xymc,
-            lx: this.state.lx,
-            output: `unifyCode=${getCookie("userId")}`
-            // page:p,
-            // count:_COUNT
-        };
-
-        ajax({
-            url: courseCenter.host + "selectMgJsKcData",
-            data: Dates,
-            success: (gets) => {
-                let datas = JSON.parse(gets);
-                if (datas.meta.result === 100) {
-                    this.setState({
-                        lists: datas.data.rows
-                    });
-                }
-                //调用回调函数绘制图表
-                this.callback(this.state);
-            }
-        });
+        this.refs.list.refresh(1, this.state);
+        
     }
 
     changeOutput() {
@@ -145,21 +118,31 @@ class KclbFilter extends React.Component {
 
     render() {
         return (
-            <div className='filters'>
-                <div className="top">
+            <div>
+                <div className='tea_course_filter'>
+                    <div className='filters'>
+                        <div className="top">
 
-                    <span>排名类型:</span>
-                    <select name="tjlb" id="tjlb" defaultValue="fzr" onChange={(eve) => { this.setState({ lx: eve.target.value }); }}>
-                        <option value="">请选择</option>
-                        <option value="fzr">负责人</option>
-                        <option value="rkjs">任课教师</option>
-                    </select>
-                    <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
-                        <option value="">请选择学院</option>
-                    </select>
-                    <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
-                    <a className="output" href={courseCenter.host + "exportExcel?" + this.state.output}>导出</a>
-                    <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+                            <span>排名类型:</span>
+                            <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }); }}>
+                                <option value="">请选择</option>
+                                <option value="fzr">负责人</option>
+                                <option value="rkjs">任课教师</option>
+                            </select>
+                            <span>学院:</span>
+                            <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
+                                <option value="">请选择学院</option>
+                            </select>
+                            <span>教师姓名:</span>
+                            <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
+                            
+                            <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+                            <a className="output" href={courseCenter.host + "exportExcel?" + this.state.output}>导出</a>
+                        </div>
+                    </div>
+                </div>
+                <div className='tea_course_table'>
+                    <Lists ref="list" options={this.state} />
                 </div>
             </div>
         );
@@ -206,7 +189,7 @@ class Item extends React.Component {
     pieOption() {
         let datas = this.datas;
         let result = [];
-        let head = ['学院名称','课程数量','学院号'];//学院名称，数量
+        let head = ['学院名称', '课程数量', '学院号'];//学院名称，数量
         result.push(head);
         datas.forEach((val) => {
             let item = [];
@@ -218,11 +201,20 @@ class Item extends React.Component {
         this.option = {
             title: {
                 text: this.chartTitle,
-                x: 'center'
+                x: 'center',
+                top: 20
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{c} ({d}%)"
+                //formatter: "{c} ({d}%)"
+                formatter: function (a) {
+                    return (
+                        `学院名称:${a.value[0]}</br>
+                        课程数量:${a.value[1]}</br>
+                        学院号:${a.value[2]}</br>
+                        百分比:${a.percent}%`
+                    )
+                }
             },
             toolbox: {          //右上角工具栏，数据源、还原、下载
                 feature: {
@@ -231,7 +223,6 @@ class Item extends React.Component {
                         readOnly: true,
                         optionToContent: function (opt) {
                             var datas = result;
-                            console.log(datas);
                             var tableDom = document.createElement("table");
                             tableDom.style.cssText = "width:100%;border:1px solid #ccc;border-collapse: collapse;text-align:center";
                             var len1 = datas.length;
@@ -287,7 +278,7 @@ class Item extends React.Component {
     subpieOption() {
         let datas = this.datas;
         let result = [];
-        let head = [ '教研室名称','课程数量', '教研室号'];//学院名称，数量
+        let head = ['教研室名称', '课程数量', '教研室号'];//学院名称，数量
         result.push(head);
         datas.forEach((val) => {
             let item = [];
@@ -299,11 +290,20 @@ class Item extends React.Component {
         this.option = {
             title: {
                 text: this.chartTitle,
-                x: 'center'
+                x: 'center',
+                top: 20
             },
             tooltip: {
                 trigger: 'item',
-                formatter: "{c} ({d}%)"
+                // formatter: "{c} ({d}%)"
+                formatter: function (a) {
+                    return (
+                        `教研室名称:${a.value[0]}</br>
+                        课程数量:${a.value[1]}</br>
+                        教研室号:${a.value[2]}</br>
+                        百分比:${a.percent}%`
+                    )
+                }
             },
             toolbox: {          //右上角工具栏，数据源、还原、下载
                 feature: {
@@ -312,7 +312,6 @@ class Item extends React.Component {
                         readOnly: true,
                         optionToContent: function (opt) {
                             var datas = result;
-                            console.log(datas);
                             var tableDom = document.createElement("table");
                             tableDom.style.cssText = "width:100%;border:1px solid #ccc;border-collapse: collapse;text-align:center";
                             var len1 = datas.length;
@@ -497,13 +496,14 @@ class Item extends React.Component {
                     success: (gets) => {
                         let datas = JSON.parse(gets);
                         if (datas.meta.result === 100) {
+                            document.querySelector("#department_course_pie").style.display = "block";
                             let lists = datas.data.rows;
                             BluMUI.create({
                                 id: "department_course_pie",
                                 datas: lists,
                                 type: "subpie",
                                 wrapId: "department_course_pie",
-                                chartTitle: `${xymc}课程统计`
+                                chartTitle: `${xymc}各教研室课程统计`
                             },
                                 'BluMUI_Item',
                                 document.getElementById("department_course_pie")
@@ -538,14 +538,19 @@ class Item extends React.Component {
 class Lists extends React.Component {
     constructor(props) {
         super(props);
-        this.state = this.props.options;
+        let newState = {};
+        for (let i in this.props.options) {
+            newState[i] = this.props.options[i];
+        }
+        newState.lists = [];
+        this.state = newState;
     }
 
     create_list() {
         let tds = [];
-        this.props.options.lists.map((e, index) => {
-            tds.push(<tr key={index} className={index == 9 ? "noborder" : null}>
-                <td>{index + 1}</td>
+        this.state.lists.map((e, index) => {
+            tds.push(<tr key={index}>
+                <td>{(this.state.page-1)*_COUNT+index + 1}</td>
                 <td>{e.xm}</td>
                 <td>{e.xymc}</td>
                 <td>{e.kcbh}</td>
@@ -566,16 +571,19 @@ class Lists extends React.Component {
             url: courseCenter.host + "selectMgJsKcData",
             data: {
                 unifyCode: getCookie("userId"),
-                college: sets.college || this.state.college,
+                xm: this.state.xm,
+                xymc: this.state.xymc,
+                lx: this.state.lx,
                 page: page,
                 count: _COUNT
+
             },
             success: (gets) => {
                 let datas = JSON.parse(gets);
                 this.setState({
-                    list: datas.data.KcztList,
+                    lists: datas.data.rows,
                     page: page,
-                    //pages: datas.data.totalPages,
+                    pages: datas.data.Page,
                     rows: datas.data.total
                 });
             }
@@ -599,14 +607,14 @@ class Lists extends React.Component {
                     {this.create_list()}
                 </table>
             </div>
-            {/* <Fanye This={this}
-          options={{
-            page: this.state.page || 1,
-            pages: this.state.pages || 1,
-            rows: this.state.rows
-          }}
-          callback={this.refresh.bind(this)}
-        /> */}
+            <Fanye This={this}
+                options={{
+                    page: this.state.page || 1,
+                    pages: this.state.pages || 1,
+                    rows: this.state.rows || 0
+                }}
+                callback={this.refresh.bind(this)}
+            />
         </div>);
     }
 
@@ -618,16 +626,17 @@ class Lists extends React.Component {
                 lx: this.props.options.lx,
                 xm: this.props.options.xm,
                 xymc: this.props.options.xymc,
-                //   page: this.props.options.page,
-                //   count: _COUNT
+                page: this.props.options.page,
+                count: _COUNT
             },
             success: (gets) => {
                 let datas = JSON.parse(gets);
+                let total = datas.data.total;
                 this.datas = datas.data.rows;
                 this.setState({
-                    list: datas.data.rows,
-                    //pages: datas.data.totalPages,
-                    rows: datas.data.total
+                    lists: datas.data.rows,
+                    pages: datas.data.Page,
+                    rows: total
                 });
             }
         });

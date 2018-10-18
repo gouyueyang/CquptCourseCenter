@@ -61,10 +61,23 @@ h2.inner_title{
 	cursor: pointer;
 	margin-left: 20px;
 }
-
+.top .output{
+	float: right;
+	text-decoration: none;
+	width:100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #007a51;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
 .top {
 	padding: 17px 0;
 	padding-left: 15px;
+	line-height: 30px;
 }
 
 /* 图表 */
@@ -72,7 +85,7 @@ h2.inner_title{
 #course_tj_wrap {
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 #course_tj_wrap>div {
@@ -80,13 +93,16 @@ h2.inner_title{
     height: 600px;
 	display: inline-block;
 	margin-bottom: 20px;
-	box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+	box-shadow: 5px 14px 17px -10px rgba(120,120,120,.20);
 }
 
-
+#tea_course_wrap>div{
+	width:90%;
+	margin:20px auto;
+}
 #tea_course_wrap table{
-    margin:20px auto;
-    width:90%;
+	margin:20px auto;
+	width:100%;
 	font-size: 14px;
 	background: #FFF;
 	table-layout: fixed;
@@ -106,20 +122,6 @@ h2.inner_title{
   #tea_course_wrap tbody tr td {
 	height: 30px;
 	border: 1px solid #EEEEEE;
-  }
-  .output{
-	  float: right;
-	  margin:10px;
-	  text-decoration: none;
-	  width:100px;
-	  height: 30px;
-	  text-align: center;
-	  line-height: 30px;
-	  background-color: #007a51;
-	  border-radius: 5px;
-	  color: #fff;
-	  font-size: 16px;
-	  cursor: pointer;
   }
 /*时间选择框样式*/
 

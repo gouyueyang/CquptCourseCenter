@@ -12,12 +12,10 @@ BluMUI.create({
 );
 //创建教师任课列表筛选栏
 BluMUI.create({
-    id: 'tea_course_filter',
-    wrapId: 'tea_course_table',
-    callback: tableCallback
+    id: 'tea_course_wrap'
 },
     'BluMUI_KclbFilter',
-    document.getElementById('tea_course_filter')
+    document.getElementById('tea_course_wrap')
 );
 
 
@@ -49,17 +47,7 @@ function barCallback(datas, wrapId, chartTitle) {
         document.getElementById(wrapId)
     );
 }
-//表格回调
-function tableCallback(datas) {
-    BluMUI.create({
-        id:"tea_course_table",
-        options: datas,
-        wrapId: "tea_course_table"
-    },
-        'BluMUI_Lists',
-        document.getElementById("tea_course_table")
-    );
-}
+
 
 ajax({
     url: courseCenter.host + "getXykcData",

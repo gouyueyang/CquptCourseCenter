@@ -6,16 +6,19 @@
 html {
 	font-size: 13px;
 }
-body{
-	margin:10px auto;
+
+body {
+	margin: 10px auto;
 }
+
 /* title */
-h2.inner_title{
-    background-color: #007a51;
-    color:#fff;
-    line-height: 40px;
-    padding-left: 20px;
+h2.inner_title {
+	background-color: #007a51;
+	color: #fff;
+	line-height: 40px;
+	padding-left: 20px;
 }
+
 /* 条件筛选部分 */
 
 .top>span {
@@ -64,61 +67,76 @@ h2.inner_title{
 .top {
 	padding: 17px 0;
 	padding-left: 15px;
+	line-height: 30px;
 }
 
 /* 图表 */
 
-#course_fix_wrap,#course_audit_wrap {
+#course_fix_wrap,
+#course_audit_wrap {
 	display: flex;
 	flex-flow: row wrap;
 	justify-content: space-between;
 }
 
-#course_fix_wrap>div,#course_audit_wrap>div {
+#course_fix_wrap>div,
+#course_audit_wrap>div {
 	width: 49%;
 	display: inline-block;
 	margin-bottom: 20px;
-	box-shadow: 0 14px 17px -12px rgba(120,120,120,.20);
+	box-shadow: 0 14px 17px -12px rgba(120, 120, 120, .20);
 }
 
+.table_wrap {
+	height: 500 px;
+	overflow: auto;
+	width: 100%;
+}
 
-#course_fix_table_content table,#course_audit_table_content table{
-	width:100%;
+#TJ table,
+#TJ table {
+	width: 100%;
 	font-size: 14px;
 	background: #FFF;
 	text-align: center;
 	border-collapse: collapse;
 	border: 1px solid #EEEEEE;
 }
-#course_fix_table_content thead,#course_audit_table_content thead {
+
+#TJ thead,
+#TJ thead {
 	color: #FFF;
-  }
-  
-  #course_fix_table_content thead tr th,#course_audit_table_content thead tr th {
+}
+
+#TJ thead tr th,
+#TJ thead tr th {
 	height: 30px;
 	background: #009361;
 	border: 1px solid #EEEEEE;
-  }
-  #course_fix_table_content tbody tr td,#course_audit_table_content tbody tr td {
+}
+
+#TJ tbody tr td,
+#TJ tbody tr td {
 	height: 30px;
 	border: 1px solid #EEEEEE;
-  }
-  .output{
-	  float: right;
-	  margin:10px;
-	  text-decoration: none;
-	  width:100px;
-	  height: 30px;
-	  text-align: center;
-	  line-height: 30px;
-	  background-color: #007a51;
-	  border-radius: 5px;
-	  color: #fff;
-	  font-size: 16px;
-	  cursor: pointer;
-  }
+}
+
+.output {
+	float: right;
+	text-decoration: none;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #007a51;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
 /*时间选择框样式*/
 
-.inlineBlock{
+.inlineBlock {
 	display: inline-block;
 }

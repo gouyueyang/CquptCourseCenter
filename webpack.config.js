@@ -24,7 +24,7 @@ module.exports = {
     // tongJi_kczystj:'./js/src/tongJi/tongJi_kczystj.js',
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',
     // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
-    // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
+    tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
     tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
   },
   output: {
