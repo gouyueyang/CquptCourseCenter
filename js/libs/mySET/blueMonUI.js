@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+const ajax = require('../post_ajax.js');
 class BluMUI_NavList extends  React.Component{
 	constructor(props) {
 		super(props);
@@ -84,14 +86,15 @@ class BluMUI_Set extends  React.Component{
 					title:'银行卡号'
 				}
 			],
-			sex:'男',
+			
 			curKeyWord: this.props.curKeyWord || '',
 			curKeyWordWarn:'',
 			newKeyWord: this.props.newKeyWord || '',
 			newKeyWordWarn:'密码长度至少为6位',
 			newKeyWordSure: this.props.newKeyWordSure || '',
 			newKeyWordSureWarn:'请在自再次输入新密码',
-			account:this.props.userId,
+			account: this.props.account || '',     //账号
+			sex:this.props.sex ||'男',
 			name: this.props.name || '',
 			nameWarn: '',
 			zc: this.props.zc || '',
@@ -162,7 +165,6 @@ class BluMUI_Set extends  React.Component{
 				break;
 			case 'bank':
 				pattern =  /^(\d{16}|\d{19})$/;
-				console.log(pattern.test(value));
 				if(value.length > 0&&!pattern.test(value)){
 					warn = '银行卡位数错误，应该是16位或者19位'
 				}
@@ -277,7 +279,7 @@ class BluMUI_Set extends  React.Component{
 									<span className="left">账</span>
 									<span className="right">号</span>
 								</span>
-								<input type="text" className="text" disabled value={this.props.userId}/>
+								<input type="text" className="text" disabled value={this.state.account}/>
 								<span className="warn"></span>
 							</div>
 							<div className="inputWarp leftWarp" style={{marginTop:58}}>
@@ -386,6 +388,37 @@ class BluMUI_Set extends  React.Component{
 
 			</div>
 		)
+	}
+	componentDidMount(){
+		ajax({
+            url: courseCenter.host + "getZj",
+            data: {
+				unifyCode:getCookie("userId"),
+				userId:this.props.userId
+            },
+            success: (gets) => {
+				let datas = JSON.parse(gets);
+				let Data = datas.data;
+                if (datas.meta.result == 100) {
+                    if (Data[0]) {
+						let data = Data[0];
+						this.setState({
+							account:data.id,
+							name: data.xm,
+							sex:data.xb,
+							dw:data.dw,
+							zc: data.zc,
+							zy: data.xkly,
+							email: data.dzyx,
+							tel: data.lxdh,
+							uid:data.sfzh,
+							bankname: data.khyh,
+							bank: data.yhkh,
+						});
+					}
+                }
+            }
+        });
 	}
 }
 class BluMUI_UserLoginState extends React.Component{

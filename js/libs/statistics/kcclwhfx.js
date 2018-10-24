@@ -437,7 +437,7 @@ class TableChart extends React.Component {
                 this.setState({
                     list: datas.data.rows,
                     page: page,
-                    pages: datas.data.Page,
+                    pages: datas.data.totalPages,
                     rows: datas.data.total
                 });
             }
@@ -493,7 +493,7 @@ class TableChart extends React.Component {
                 this.setState({
                     list: datas.data.rows,
                     page: 1,
-                    pages: datas.data.Page,
+                    pages: datas.data.totalPages,
                     rows: datas.data.total
                 });
             }

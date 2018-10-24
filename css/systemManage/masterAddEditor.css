@@ -105,7 +105,7 @@ button{
 }
 
 
-.BluMUI_PT{
+/* .BluMUI_PT{
 	display: inline-block;
 	margin-top: 17px;
 	margin-left: 165px;
@@ -121,16 +121,7 @@ button{
 	margin-left: 10px;
 	outline: none;
 }
-.BluMUI_PT .last{
-	margin-right: 10px;
-}
-.BluMUI_PT .next{
-}
-.BluMUI_PT .toTop{
-	margin-left: 0px;
-}
-.BluMUI_PT .toBottom{
-}
+
 .BluMUI_PT #warp {
 	float: left;
 	list-style: none;
@@ -182,7 +173,7 @@ button{
 	color: #999;
 	margin-right: 26px;
 	line-height: 18px;
-}
+} */
 
 #body .Radio{
 	height: 12px;
@@ -235,17 +226,44 @@ button{
 #body .AddEditor .radio .selected{
 	background-image: url('../../imgs/systemManage/selected.png');
 }
+/* 重写的校外专家添加页面css */
 
+#body .AddEditor .sexRadio{
+	height:14px;
+	width:14px;
+	border:1px solid #d5d3d1;
+	display: inline-block;
+	border-radius: 50%;
+	margin-left: 7px;
+	cursor: pointer;
+}
+#body .AddEditor .sexOn{
+	background:#009361;
+	border-color: #009361;
+}
+#body .AddEditor .sexRadioWarp{
+	display: inline-block;
+	margin-left: 19px;
+	padding-left: 18px;
+}
+#body .AddEditor .sexRadioTitle{
+	margin-left: 10px;
+}
 
 #body .formWarp{
 	width: 1100px;
 	margin-left: 60px;
 	overflow: hidden;
 }
+#body .inputGroup{
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
 #body .inputWarp{
 	height: 28px;
 	margin-top: 24px;
-	width: 550px;
+	width: 50%;
 	float: left;
 }
 #body .inputWarp .must{
@@ -300,7 +318,9 @@ button{
 	outline: none;
 	float: left;
 }
-
+#body .extwarn{
+	color:#ff9b29;
+}
 #body .btn{
 	width:90px;
 	height:30px;
@@ -311,8 +331,9 @@ button{
 	height:30px;
 	width: 240px;
 	overflow: hidden;
-	margin-left: 450px;
-	margin-top: 50px;
+	margin:10px auto 0 auto;
+	/* margin-left: 450px;
+	margin-top: 50px; */
 }
 #body .btnWarp .left{
 	background: #007A51;
@@ -330,33 +351,10 @@ button{
 	color:red;
 	font-size: 14px;
 	margin-left:12px;
-}
+} 
+
 
 /* inside */
-
-#body .inside .BluMUI_Drop{
-	border: 1px solid #999;
-	border-top-right-radius:2px;
-	border-top-left-radius:2px;
-	width: 163px;
-	height: 28px;
-	line-height: 28px;
-	position: relative;
-	display: inline-block;
-	margin-left: 19px;
-
-}
-#body .inside .BluMUI_Drop span{
-	width:145px;
-	display: block;
-	font-size:12px;
-	height:28px;
-	color: #999;
-	background:url("../../imgs/courseMaster/dropDown.png") no-repeat;
-	background-color: #fff;
-	background-position: 145px 11px;
-	padding-left: 18px;
-}
 #body .inside .header{
 	height:30px;
 }
@@ -364,6 +362,7 @@ button{
 	margin-left: 55px;
 	float: left;
 }
+
 #body .inside .header .title{
 	color: #333;
 	font-size: 16px;
@@ -374,7 +373,8 @@ button{
 	margin-left: 30px;
 	line-height: 30px;
 }
-#body .inside .searchWarp .inputWarp{
+
+#body .inside .searchWarp .inputWarp,.selectWrap{
 	float: left;
 	width:auto;
 	margin: 0;
@@ -382,14 +382,15 @@ button{
 	height: 30px;
 	margin-left: 10px;
 }
-#body .inside .searchWarp input{
+
+#body .inside .searchWarp input,#body .inside .searchWarp select{
 	float: left;
 	border: none;
 	outline: none;
 	height: 30px;
 	padding-left: 10px;
 	padding-right: 10px;
-	width:140px;
+	width:177px;
 }
 #body .inside .searchWarp button{
 	float: left;
@@ -410,6 +411,10 @@ button{
 	height:448px;
 	overflow: hidden;
 
+}
+#body .fanye{
+	width:887px;
+	padding:10px 0;
 }
 #body .ListWarp ul{
 	width:887px;

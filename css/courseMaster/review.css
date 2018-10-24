@@ -215,6 +215,9 @@ button{
 #body #reviewList .file{
 	color: #007A51;
 }
+#body #infShow .file{
+	color:#007A51;
+}
 #body  .no-review-title{
 	text-align: center;
 	width:670px;

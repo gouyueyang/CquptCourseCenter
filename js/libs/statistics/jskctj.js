@@ -583,7 +583,7 @@ class Lists extends React.Component {
                 this.setState({
                     lists: datas.data.rows,
                     page: page,
-                    pages: datas.data.Page,
+                    pages: datas.data.totalPages,
                     rows: datas.data.total
                 });
             }
@@ -635,7 +635,7 @@ class Lists extends React.Component {
                 this.datas = datas.data.rows;
                 this.setState({
                     lists: datas.data.rows,
-                    pages: datas.data.Page,
+                    pages: datas.data.totalPages,
                     rows: total
                 });
             }
