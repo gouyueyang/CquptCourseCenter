@@ -97,6 +97,7 @@ if(session.getAttribute("uid") != null) {
 	<iframe></iframe>
 	<script src="../js/libs/react.min.js"></script>
 	<script src="../js/libs/courseCenter.config.js"></script>
-	<script src="../js/pages/classList.js"></script>
+	<!-- <script src="../js/pages/classList.js"></script> -->
+	<script src="../js/pages/classList/classList.bundle.js"></script>
 </body>
 </html>

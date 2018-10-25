@@ -3,8 +3,8 @@ require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 
-var BluMUI = require('../libs/classList/blueMonUI'),
-	ajaxPading = require('../libs/ajaxExpand.mini.min'),
+var BluMUI = require('../../libs/classList/blueMonUI'),
+	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	unifyCode = getCookie('userId'),
 	userName =  getCookie('userName'),
 	count = 12,

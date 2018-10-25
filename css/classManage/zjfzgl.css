@@ -213,6 +213,7 @@ tbody td>span {
   border: 1px solid #007A51;
   line-height: 31px;
   font-size: 14px;
+  bottom: 20px;
 }
 #popbody #popup_OK {
   color: #FFF;
@@ -229,14 +230,17 @@ tbody td>span {
 }
 #popbody #zjs {
   width: 80%;
-  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin: 30px auto 0 auto;
 }
 #popbody #zjs .zj {
   display: inline-block;
-  width: 61px;
+  width: 80px;
   margin: 8px 15px;
   text-align: center;
+  border:1px solid #007A51;
   /*text-align: left;*/
   /*line-height: 30px;*/
 }

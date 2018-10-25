@@ -815,7 +815,6 @@ class BluMUI_TopPic extends React.Component {
 		this.topUrl = this.props.topURL;
 		this.card = this.props.zyh;
 		this.url = this.topUrl+this.card+".jpg";
-
 	}
 	_handleClick(){
 		window.open(this.url,this.card+".jpg");

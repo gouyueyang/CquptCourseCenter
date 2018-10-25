@@ -181,7 +181,6 @@ class Option extends React.Component {
             <button ref={btn=>this.search_btn=btn} onClick={this.search.bind(this)} >搜索</button>
           </div>
         </div>
-
         <List list={this.state.list} />
         <Fanye options={this.state.TP} callback={(p)=>{this._get_list(p)}} />
       </div>
@@ -244,7 +243,7 @@ class List extends React.Component {
         Creat_popup('delete', zjfzpc);
         break;
       case 'show':
-        Creat_popup('show', zjfzpc.map(e=>e.xm));
+        Creat_popup('show', zjfzpc);
         break;
       default:
         break;
@@ -270,18 +269,19 @@ class List extends React.Component {
     return(
       <tbody>
         {this.props.list.map((e,index)=><tr key={index}>
+          
           <td className="lefttd"></td>
           <td></td>
           <td>{e.zjfzpc}</td>
           <td>{e.fzpc}</td>
           <td>{e.fzx}</td>
           <td>
-            <span className="zj_list" onClick={this.option.bind(this,'show',e.evaluates,'','')}>
+            <span className="zj_list" onClick={this.option.bind(this,'show',e.xm.split(','),'','')}>
               <span className="zj_num">{`[${e.zjs}]`}</span>
               {
                 (+e.zjs)>4 ?
-                e.evaluates.map((zj,zjNo)=>zjNo<4&&<span key={zjNo} className="zj_name">{zj.xm}</span>).concat(<span key="dot">……</span>) :
-                e.evaluates.map((zj,zjNo)=><span key={zjNo} className="zj_name">{zj.xm}</span>)
+                e.xm.split(',').map((zj,zjNo)=>zjNo<4&&<span key={zjNo} className="zj_name">{zj}</span>).concat(<span key="dot">……</span>) :
+                e.xm.split(',').map((zj,zjNo)=><span key={zjNo} className="zj_name">{zj}</span>)
               }
             </span>
           </td>
@@ -346,6 +346,7 @@ class Popup extends React.Component {
         return(
           <div id="popbody" ref="pb">
             <div id="zjs">{id.map((zj,index)=><span key={index} className="zj">{zj}</span>)}</div>
+            <div id="popup_back"><button ref={btn=>this.back=btn}>关闭</button></div>
           </div>
         );
         break;

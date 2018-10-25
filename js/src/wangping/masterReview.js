@@ -8,7 +8,7 @@ require('es6-promise');
 var doc = document,
 	 BluMUI = require('../../libs/masterReview/blueMonUI.js'),
 	 ajaxPading = require('../../libs/ajaxExpand.mini.min'),
-	 userId = getCookie('userId')	,// 专家ID
+	 userId = 'gyy2' || getCookie('userId')	,// 专家ID
 	 iframe = window.frames['myiframe'],
 	 iframeDom = doc.getElementById('myiframe'),
 	 revewBody = doc.getElementById('revewBody'),

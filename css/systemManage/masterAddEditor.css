@@ -324,28 +324,26 @@ button{
 #body .btn{
 	width:90px;
 	height:30px;
-	float: left;
+	display: block;
 	border: 1px solid #007a51;
+	background: #fff;
+	color: #007A51;
 }
 #body .btnWarp{
 	height:30px;
-	width: 240px;
+	width: 320px;
+	display:flex;
+	justify-content: space-between;
 	overflow: hidden;
-	margin:10px auto 0 auto;
+	margin:30px auto 0 auto;
+	font-size: 14px;
 	/* margin-left: 450px;
 	margin-top: 50px; */
 }
-#body .btnWarp .left{
+
+#body .btnWarp .choose{
 	background: #007A51;
 	color: white;
-	font-size: 14px;
-	float: left;
-}
-#body .btnWarp .right{
-	background: #fff;
-	color: #007A51;
-	font-size: 14px;
-	float: right;
 }
 #body  .warn{
 	color:red;
@@ -451,4 +449,10 @@ button{
 }
 #body .ListWarp .index-0{
 	border: none;
+}
+
+#body .tips{
+	width:100%;
+	text-align: center;
+	color:red;
 }

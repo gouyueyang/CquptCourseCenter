@@ -1,16 +1,23 @@
 var webpack = require('webpack');
 module.exports = {
   entry: {
+    //首页列表：
+    // classList:'./js/src/classList/classList.js',
+    //教学团队
     // teaching_team:'./js/src/teachingTeam/teachingTeam.js',
-    mySET:'./js/src/mySet/mySET.js',
 
+    //个人设置
+    // mySET:'./js/src/mySet/mySET.js',
+
+    //网评
     // masterSortEditor: './js/src/wangping/masterSortEditor.js',
-
-    // masterAddEditor:'./js/src/wangping/masterAddEditor.js',
+    // zjkgl:'./js/src/wangping/zjkgl.js',
+    
+    masterAddEditor:'./js/src/wangping/masterAddEditor.js',
     //  pjzbgl:'./js/src/wangping/pjzbgl.js',
     //  masterAddZbEditor: './js/src/wangping/masterAddZbEditor.js',
-    //  zjfzgl:'./js/src/wangping/zjfzgl.js',
-    //  masterSortTeam:'./js/src/wangping/masterSortTeam.js',
+     zjfzgl:'./js/src/wangping/zjfzgl.js',
+     masterSortTeam:'./js/src/wangping/masterSortTeam.js',
 
     // pjzbgl: './js/src/wangping/pjzbgl.js',
     // masterAddZbEditor: './js/src/wangping/masterAddZbEditor.js',
@@ -19,13 +26,15 @@ module.exports = {
     // masterSortTeam: './js/src/wangping/masterSortTeam.js',
     // wpgl: './js/src/wangping/wpgl.js',
     // masterPublishWp: './js/src/wangping/masterPublishWp.js',
+    // wpgl_fenpei:'./js/src/wangping/wpgl_fenpei.js'
     // kcfzgl: './js/src/wangping/kcfzgl.js',
     // materCourseSort: './js/src/wangping/materCourseSort.js',
 
-    // masterReview:'./js/src/wangping/masterReview.js',
+    masterReview:'./js/src/wangping/masterReview.js',
     // masterHistory:'./js/src/wangping/masterHistory.js',
+    // masterResult:'./js/src/wangping/masterResult.js',
 
-
+    //统计
     // tongJi_kczystj:'./js/src/tongJi/tongJi_kczystj.js',
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',
     // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
@@ -33,9 +42,10 @@ module.exports = {
     // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
   },
   output: {
+    // path:'./js/pages/classList',
     // path:'./js/pages/teachingTeam',
-    path:'./js/pages/mySet',
-    //path: './js/pages/wangping/',
+    // path:'./js/pages/mySet',
+    path: './js/pages/wangping/',
     // path:'./js/pages/statistics/',
     filename: "[name].bundle.js",
     publicPath: 'http://localhost:8080/pages'

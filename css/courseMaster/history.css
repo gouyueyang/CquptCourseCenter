@@ -102,6 +102,7 @@ button{
 	width:10%; /*不要动这个*/
 	height: 100%;/*不要动这个*/
 	float: left;
+	background-color: white;
 }
 .BluMUI_Drop .selectArea #bar{
 	width: 100%;/*不要动这个*/
@@ -121,21 +122,21 @@ button{
 	border: 1px solid #55b796;
 	border-top-right-radius:2px;
 	border-top-left-radius:2px;
-	width: 138px;
+	width: 200px;
 	height: 20px;
 	line-height: 20px;
 	position: relative;
 	float: left;
 }
 #selectFunc .selectWarp .BluMUI_Drop span{
-	width:138px;
+	width:200px;
 	display: block;
 	font-size:12px;
 	height:20px;
 	color: #999;
 	background:url("../../imgs/courseMaster/dropDown.png") no-repeat;
 	background-color: #fff;
-	background-position: 118px 7px;
+	background-position: 180px 7px;
 }
 #selectFunc .selectWarp .BluMUI_Drop ul{
 	list-style: none;
@@ -153,7 +154,7 @@ button{
 	cursor: default;
 }
 #selectFunc .selectWarp{
-	width:240px;
+	width:300px;
 	height:22px;
 	float: right;
 	margin-top: 4px;
@@ -187,7 +188,7 @@ button{
 	color: #333;
 	background:url("../../imgs/courseMaster/dropDown.png") no-repeat;
 	background-color: #fff;
-	background-position: 90px 11px;
+	background-position: 180px 11px;
 }
 #selectFunc .inputWarp .BluMUI_Drop ul{
 	list-style: none;

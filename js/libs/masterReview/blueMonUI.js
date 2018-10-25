@@ -459,7 +459,12 @@ class BluMUI_ReviewCourse extends  React.Component{
 			evaluation:this.reviewInput.value,
 			type:type
 		};
-		this.props.submit(data,type);
+		if(this.state.courseScore == 0){
+			alert("不能评价为0分！");
+		}else{
+			this.props.submit(data,type);
+		}
+		
 	}
 	render(){
 		var { courseScore,courseName,courseMoudule, courseReview, isEditor } = this.state;
@@ -502,7 +507,7 @@ class BluMUI_ReviewCourse extends  React.Component{
 						{
 							isEditor&&
 							<div className="btnWarp">
-								<button className="left" onClick={this.ajax.bind(this,1)}>保存</button>
+								<button className="left" onClick={this.ajax.bind(this,1)}>暂存</button>
 								<button className="right" onClick={this.ajax.bind(this,2)}>提交</button>
 							</div>
 						}

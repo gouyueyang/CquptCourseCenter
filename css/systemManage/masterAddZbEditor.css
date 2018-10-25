@@ -150,7 +150,7 @@
 	width:356px;
 }
 .zbEditor .editorBody .desc1{
-	width:286px;
+	width:272px;   /*防止出现滚动条后把删除挤到下一排*/
 	line-height: 25px;
 	overflow: hidden;
 	word-break:keep-all;
