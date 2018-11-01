@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import Alert from "../../util/alert.js";
 class BluMUI_InputNumber extends React.Component {
 	constructor(props) {
 		super(props);
@@ -267,9 +267,13 @@ class ByCourseItem extends React.Component {
 		) {
 			this.props.sure([llData, sjData]);
 		} else if (this.getTotal.call(this, 0) !== 100) {
-			alert('理论课指标总分不为100分');
+			Alert.open({
+				alertTip:'理论课指标总分不为100分！'
+			});
 		} else if (this.getTotal.call(this, 1) !== 100) {
-			alert('实训课指标总分不为100分');
+			Alert.open({
+				alertTip:'实训课指标总分不为100分！'
+			});
 		}
 	}
 	render() {
@@ -367,7 +371,9 @@ class ByCommon extends React.Component {
 		if (this.getTotal.call(this) === 100) {
 			this.props.sure([data]);
 		} else {
-			alert('通用课指标总分不为100');
+			Alert.open({
+				alertTip:'通用课指标总分不为100！'
+			});
 		}
 	}
 	render() {

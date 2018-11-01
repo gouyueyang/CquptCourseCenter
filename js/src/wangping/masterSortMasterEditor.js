@@ -1,3 +1,6 @@
+
+import Alert from './../../util/alert.js';
+
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
@@ -54,12 +57,16 @@ function save(data){
 								data.evaluateGroupBatch + '&groupPC=' + data.groupBatch +
 								'&groupItem=' + groupItem;
 						}else{
-							alert(meta.msg);
+							Alert.open({
+								alertTip:meta.msg
+							});
 						}
 					}
 				},'getFzxByZjfzpc')
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 		}
 	},'addZjfzpc');
@@ -96,7 +103,9 @@ ajaxPading.send({
 				save:save
 			},'App',doc.getElementById('form'));
 		} else {
-			alert(meta.msg);
+			Alert.open({
+				alertTip:meta.msg
+			});
 		}
 	}
 

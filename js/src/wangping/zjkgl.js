@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Alert from "../../util/alert.js";
 
 const _COUNT = 10;
 const ajax = require('../../libs/post_ajax.js');
@@ -38,6 +39,7 @@ class Option extends React.Component {
     }
     this.key = this.key.bind(this);
     this.search_handler = this.search_handler.bind(this);
+    this.changePassword = this.changePassword.bind(this);
   }
 
   creat_option_down() {
@@ -153,8 +155,6 @@ class Option extends React.Component {
     }
     SET('qy', +this.qy.checked);
     SET('ty', +this.ty.checked);
-    console.log("qy:"+this.qy.checked);
-    console.log("ty:"+this.ty.checked);
     this.search_data.state = this.qy.checked === this.ty.checked ? '' : +this.qy.checked;
     this.get_list(1);
   }
@@ -232,14 +232,23 @@ class Option extends React.Component {
   changePassword() {
     if (this.state.master === 'out') {
       if (this.refs.list.ids.length > 1) {
-        alert('一次只能修改一个专家的密码！');
+        Alert.open({
+          alertTip: "一次只能修改一个专家的密码！",
+          closeAlert: function () {}
+        });
+        
         return;
       }
       if (this.refs.list.ids.length === 0) {
-        alert('请先选中要修改密码的专家！');
+        Alert.open({
+          alertTip: "请先选中要修改密码的专家！",
+          closeAlert: function () {}
+        });
         return;
       }
-      Creat_popup('change_PW', masterNames, this.refs.list.ids[0])
+      Creat_popup('change_PW', masterNames, this.refs.list.ids[0]);
+      
+     let pop = document.getElementById('popup');
       pop.style.display = 'block';
     };
   }
@@ -302,7 +311,10 @@ class Option extends React.Component {
     // PiLiangDelete
     this.PLdelete.onclick = () => {
       if (masterNames.length == 0 || this.refs.list.ids.length == 0) {
-        alert("请先勾选删除对象！");
+        Alert.open({
+          alertTip: "请先勾选删除对象！",
+          closeAlert: function () {}
+        });
       } else {
         Creat_popup('PLdelete', masterNames, this.refs.list.ids)
         pop.style.display = 'block';
@@ -670,11 +682,17 @@ class Popup extends React.Component {
       };
       if (type == 'change_PW') {
         if (!(this.refs.xmm.value && this.refs.xmmqr.value)) {
-          alert("请检查参数！");
+          Alert.open({
+            alertTip: "请检查输入！",
+            closeAlert: function () {}
+          });
           return;
         }
         if (this.refs.xmm.value !== this.refs.xmmqr.value) {
-          alert("新密码确认错误，请检查！");
+          Alert.open({
+            alertTip: "新密码确认错误，请检查！",
+            closeAlert: function () {}
+          });
           return;
         } else {
           dat = {
@@ -692,11 +710,17 @@ class Popup extends React.Component {
         success: (gets) => {
           let datas = JSON.parse(gets);
           if (datas.meta.result == 100) {
-            alert("操作成功！");
+            Alert.open({
+              alertTip: "操作成功！",
+              closeAlert: function () {}
+            });
             cancel_popup();
             OptionComponent.get_list();
           } else {
-            // alert("操作失败");
+            Alert.open({
+              alertTip: "操作失败!",
+              closeAlert: function () {}
+            });
           }
         }
       });

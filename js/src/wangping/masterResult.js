@@ -1,6 +1,7 @@
 /**
  * Created by swull on 2017/7/13.
  */
+import Alert from './../../util/alert.js';
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
@@ -106,7 +107,9 @@ function renderMenu(type) {
 					items:items
 				})
 			}else{
-				alert(meta.msg);
+				Alert({
+					alertTip:meta.msg
+				});
 			}
 		}
 	},'getMenu')
@@ -133,7 +136,9 @@ function getBaseInf() {
 					downLoad: Download
 				},'Result',doc.getElementById('resultInf'));
 			}else{
-				alert(meta.msg);
+				Alert({
+					alertTip:meta.msg
+				});
 			}
 		}
 	},'queryInfoInReview');
@@ -176,7 +181,9 @@ function getCourseInf() {
 					courseMoudule:items
 				},'ReviewCourse',doc.getElementById('reviewCourse'));
 			}else{
-				alert(meta.msg);
+				Alert({
+					alertTip:meta.msg
+				});
 			}
 		}
 	},'reviewCourseInfo')

@@ -460,7 +460,9 @@ class BluMUI_ReviewCourse extends  React.Component{
 			type:type
 		};
 		if(this.state.courseScore == 0){
-			alert("不能评价为0分！");
+			Alert.open({
+				alertTip:'不能评价为0分！'
+			});
 		}else{
 			this.props.submit(data,type);
 		}

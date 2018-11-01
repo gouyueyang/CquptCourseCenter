@@ -1,4 +1,5 @@
 // 网评管理-》发起网评
+import Alert from "../../util/alert.js";
 
 require('es5-shim');
 require('es5-shim/es5-sham');
@@ -87,10 +88,14 @@ function ajaxSumbit(data, fileList){
 			onSuccess:function(result){
 				var meta = result.meta;
 				if(meta.result == 100){
-					alert('网评编辑成功!');
+					Alert.open({
+						alertTip:'网评编辑成功！'
+					});
 					window.location.href = 'wpgl.html';
 				}else{
-					alert(meta.msg);
+					Alert.open({
+						alertTip:meta.msg
+					});
 				}
 			}
 		},'createReview');
@@ -101,10 +106,14 @@ function ajaxSumbit(data, fileList){
 			onSuccess:function(result){
 				var meta = result.meta;
 				if(meta.result == 100){
-					alert('网评发起成功!');
+					Alert.open({
+						alertTip:'网评发起成功！'
+					});
 					window.location.href = 'wpgl.html';
 				}else{
-					alert(meta.msg);
+					Alert.open({
+						alertTip:meta.msg
+					});
 				}
 			}
 		},'createReview');
@@ -193,7 +202,9 @@ if(isEditor){
 			}else if(meta.result == 303 ){
 				window.location.href=loginURL;
 			}else if(meta.result !=101){
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 			BluMUI.create({
 				id:'app',
@@ -278,7 +289,9 @@ if(isEditor){
 							zb:zbs
 						});
 					}else {
-						alert(meta.msg);
+						Alert.open({
+							alertTip:meta.msg
+						});
 					}
 				}
 			},'queryReview');
@@ -306,7 +319,9 @@ if(isEditor){
 							zj:zjs
 						});
 					}else{
-						alert(meta.msg);
+						Alert.open({
+							alertTip:meta.msg
+						});
 					}
 				}
 			},'file');
@@ -385,7 +400,9 @@ if(isEditor){
 					zb:zbs
 				});
 			}else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 		}
 	},'queryReview');
@@ -413,7 +430,9 @@ if(isEditor){
 					zj:zjs
 				});
 			}else{
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 		}
 	},'file');

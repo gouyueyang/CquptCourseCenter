@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import { Alert } from 'antd';
 
 class List extends React.Component {
 	constructor(props) {
@@ -43,20 +44,30 @@ class App extends React.Component {
 			pc: this.props.pc || '',
 			pcWarn: ""
 		}
+		this.key = this.key.bind(this);
+		this.add = this.add.bind(this);
 	}
 
-	
-	
-	keypress() {
+	keypress (){
 
 	}
+	//回车添加
+	key(event) {
+		if (event.keyCode == "13") {//keyCode=13是回车键；数字不同代表监听的按键不同
+		  this.add();
+		}
+	  }
+	
+	
 	//检查参数是否合格并调用回调添加分组项
 	add() {
 		var pc = this.state.pc,
 			pcWarn = this.state.pcWarn;
 		if (!pc) {
 			pcWarn = '分组批次未填写';
-			alert(pcWarn);
+			Alert.open({
+				alertTip:pcWarn
+			});
 		}else{
 			pcWarn = '';
 		}
@@ -64,7 +75,9 @@ class App extends React.Component {
 			pcWarn: pcWarn
 		});
 		if (!this.state.fzx) {
-			alert('未添加分组项目');
+			Alert.open({
+				alertTip:'未添加分组项目！'
+			});
 		}
 		
 		if (!pcWarn) {
@@ -98,8 +111,8 @@ class App extends React.Component {
 				<div className="warn">{this.state.pcWarn}</div>
 				<div className="inputWarp">
 					<span>分组项:</span>
-					<textarea onKeyPress={this.keypress.bind(this)} type="text" ref={(ref)=>{this.fzxTextarea=ref}} onInput={(e) => { this.setState({ fzx: e.target.value }) }} />
-					<button onClick={this.add.bind(this)}>添加</button>
+					<textarea onKeyPress={this.keypress.bind(this)} type="text" ref={(ref)=>{this.fzxTextarea=ref}} onInput={(e) => { this.setState({ fzx: e.target.value }) }} onKeyDown={this.key}/>
+					<button onClick={this.add.bind(this)}>添加(回车)</button>
 				</div>
 				<div className="warn">
 					可以同时添加多个分组项，不同分组项用英文逗号：','隔开即可,不能与已添加的分组项重复

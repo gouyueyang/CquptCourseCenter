@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import Alert from "../../util/alert.js";
 
 const ajax = require('../post_ajax.js');
 const Fanye = require('../turnPage.js');
@@ -779,7 +779,10 @@ class Inside extends React.Component {
         if (this.state.selectZj.length > 0) {
             this.addMaster(this.state.selectZj);
         } else {
-            alert("未选勾选专家，无法添加！");
+            Alert.open({
+                alertTip:"未选勾选专家，无法添加！",
+                closeAlert:()=>{}
+            })
         }
 
     }

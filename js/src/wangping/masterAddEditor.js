@@ -1,3 +1,5 @@
+import Alert from "../../util/alert.js";
+
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
@@ -52,20 +54,32 @@ function addOutMaster(data, isEditor) {
 			var meta = result.meta;
 			if (meta.result == 100) {
 				if (isEditor) {
-					alert('修改成功!')
+					Alert.open({
+						alertTip: "修改成功！",
+						closeAlert: function () {}
+					  });
 				} else {
-					alert('添加成功!');
+					Alert.open({
+						alertTip: "添加成功！",
+						closeAlert: function () {}
+					  });
 				}
 			} else if (meta.result == 303) {
 				confirm(result.meta.msg);
 				window.location.href = loginURL;
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip: meta.msg,
+					closeAlert: function () {}
+				  });
 			}
 
 		},
 		onFail: function () {
-			alert('添加失败');
+			Alert.open({
+				alertTip: "添加失败！",
+				closeAlert: function () {}
+			  });
 		}
 	}, 'outMaster')
 
@@ -81,7 +95,10 @@ function addMaster(data) {
 		onSuccess: function (result) {
 			var meta = result.meta;
 			if (meta.result == 100) {
-				alert('添加成功!');
+				Alert.open({
+					alertTip: "添加成功！",
+					closeAlert: function () {}
+				  });
 				//刷新列表
 				BluMUI.result.app.inside.setState({
 					teaName: '',
@@ -92,7 +109,10 @@ function addMaster(data) {
 				confirm(result.meta.msg);
 				window.location.href = loginURL;
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip: meta.msg,
+					closeAlert: function () {}
+				  });
 			}
 		}
 	}, 'outMaster')
@@ -151,7 +171,10 @@ if (isEditor) {
 				confirm(result.meta.msg);
 				window.location.href = loginURL;
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip: meta.msg,
+					closeAlert: function () {}
+				  });
 			}
 		}
 	}, 'getInit');

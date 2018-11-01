@@ -1,3 +1,5 @@
+import Alert from './../../util/alert.js';
+
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
@@ -105,7 +107,9 @@ function Delete(item, index) {
 					items: items
 				});
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 		}
 	}, 'deleteFzx');
@@ -127,11 +131,15 @@ function add(value, pc) {
 				showFzxList();
 				BluMUI.result.app.fzxTextarea.value = '';
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 		},
 		onFail: function () {
-			alert('服务器发生错误!');
+			Alert.open({
+				alertTip:'服务器发生错误！'
+			});
 		}
 	}, 'addFz');
 }

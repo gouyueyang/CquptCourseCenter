@@ -1,3 +1,5 @@
+import Alert from "../../util/alert.js";
+
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
@@ -63,13 +65,19 @@ function ajax(datas){
 		taskManager(sendLLData, sendSJData).to(function (meta1, meta2) {
 			if(meta1.result == 100 && meta2.result == 100){
 				if(isEditor){
-					alert('编辑成功!')
+					Alert.open({
+						alertTip:'编辑成功！'
+					});
 				}else{
-					alert('添加成功!');
+					Alert.open({
+						alertTip:'添加成功！'
+					});
 				}
 				window.location.href = './pjzbgl.html';
 			} else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
 			}
 		}).run();
 	} else {
@@ -86,18 +94,24 @@ function ajax(datas){
 						// } else {
 						// 	alert('实训课指标编辑成功!')
 						// }
-						alert('编辑成功！');
+						Alert.open({
+							alertTip:'编辑成功！'
+						});
 					}else{
 						// if (courseType === 1) {
 						// 	alert('理论课指标添加成功!');
 						// } else {
 						// 	alert('实训课指标添加成功!')
 						// }
-						alert('添加成功！');
+						Alert.open({
+							alertTip:'添加成功！'
+						});
 					}
 					window.location.href= './pjzbgl.html';
 				} else {
-					alert(meta.msg);
+					Alert.open({
+						alertTip:meta.msg
+					});
 				}
 			}
 		},"addPjzb1")

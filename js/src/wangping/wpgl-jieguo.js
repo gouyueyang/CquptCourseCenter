@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Alert from './../../util/alert.js';
 
 const ajax=require('../../libs/post_ajax.js');
 const Fanye=require('../../libs/turnPage.js');
@@ -215,7 +216,9 @@ class Option extends React.Component {
       success: (gets)=>{
         let datas=JSON.parse(gets);
         if(datas.meta.result!==100) {
-          alert("下拉菜单获取失败！");
+          Alert.open({
+            alertTip:'下拉菜单获取失败！'
+          });
           return;
         }
         this.setState({

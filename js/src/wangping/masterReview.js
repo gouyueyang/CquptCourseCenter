@@ -1,92 +1,94 @@
 /**
  * Created by swull on 2017/7/13.
  */
+
+import Alert from './../../util/alert.js';
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 var doc = document,
-	 BluMUI = require('../../libs/masterReview/blueMonUI.js'),
-	 ajaxPading = require('../../libs/ajaxExpand.mini.min'),
-	 userId = 'gyy2' || getCookie('userId')	,// 专家ID
-	 iframe = window.frames['myiframe'],
-	 iframeDom = doc.getElementById('myiframe'),
-	 revewBody = doc.getElementById('revewBody'),
-	 noData = doc.getElementById('noData'),
-	 host = courseCenter.host,
-	 classListZJ = host + 'classListZJ',
-	 curClassId = '',
-	 curReviewID = '',
-	 downURL = host + 'fileDownLoad',
+	BluMUI = require('../../libs/masterReview/blueMonUI.js'),
+	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
+	userId = 'gyy2' || getCookie('userId'),// 专家ID
+	iframe = window.frames['myiframe'],
+	iframeDom = doc.getElementById('myiframe'),
+	revewBody = doc.getElementById('revewBody'),
+	noData = doc.getElementById('noData'),
+	host = courseCenter.host,
+	classListZJ = host + 'classListZJ',
+	curClassId = '',
+	curReviewID = '',
+	downURL = host + 'fileDownLoad',
 	//  getMenu = host + 'getMenu',
 	getMenu = host + 'getMenuByCourseNo',
-	 expReview = host + 'expReview',
-	 courseResCount = host + 'courseResCount',
- 	 reviewCourseInfo = host + 'reviewCourseInfo',
-	 queryInfoInReview = host + 'queryInfoInReview',
-	 expReviewList = host + 'expReviewList',
-	 reviewBriefList = host + 'reviewBriefList';
+	expReview = host + 'expReview',
+	courseResCount = host + 'courseResCount',
+	reviewCourseInfo = host + 'reviewCourseInfo',
+	queryInfoInReview = host + 'queryInfoInReview',
+	expReviewList = host + 'expReviewList',
+	reviewBriefList = host + 'reviewBriefList';
 ajaxPading.init({
-	name:'initList',
-	type:'post',
-	dataType:'json',
-	handleData:function (result) {
+	name: 'initList',
+	type: 'post',
+	dataType: 'json',
+	handleData: function (result) {
 		return JSON.parse(result);
 	},
-	async:true
+	async: true
 });
 
 
 ajaxPading.init({
-	name:'reviewBriefList',
-	type:'post',
-	dataType:'json',
-	handleData:function (result) {
+	name: 'reviewBriefList',
+	type: 'post',
+	dataType: 'json',
+	handleData: function (result) {
 		return JSON.parse(result);
 	},
-	async:true
+	async: true
 });
 ajaxPading.init({
-	name:"queryInfoInReview",
-	type:'post',
-	dataType:'json',
-	handleData:function (result) {
+	name: "queryInfoInReview",
+	type: 'post',
+	dataType: 'json',
+	handleData: function (result) {
 		return JSON.parse(result);
 	},
-	async:true
+	async: true
 });
 ajaxPading.init({
-	name:"reviewCourseInfo",
-	type:'post',
-	dataType:'json',
-	handleData:function (result) {
+	name: "reviewCourseInfo",
+	type: 'post',
+	dataType: 'json',
+	handleData: function (result) {
 		return JSON.parse(result);
 	},
-	async:true
+	async: true
 });
 ajaxPading.init({
-	name:'courseResCount',
-	type:'post',
-	dataType:'json',
-	handleData:function (result) {
+	name: 'courseResCount',
+	type: 'post',
+	dataType: 'json',
+	handleData: function (result) {
 		return JSON.parse(result);
 	},
-	async:true
+	async: true
 });
 ajaxPading.init({
-	name:'getMenu',
-	type:'post',
-	dataType:'json',
-	handleData:function (result) {
+	name: 'getMenu',
+	type: 'post',
+	dataType: 'json',
+	handleData: function (result) {
 		return JSON.parse(result);
 	},
-	async:true
+	async: true
 });
 
 //
 
-function  getNavURL(type,classId) {
-	switch (type){
+function getNavURL(type, classId) {
+	switch (type) {
 		case '课程简介':
 			return '../classInfShow/kechengJianjie.html?classId=' + classId;
 			break;
@@ -94,7 +96,7 @@ function  getNavURL(type,classId) {
 			return '../classInfShow/teamShow.html?classId=' + classId;
 			break;
 		case '电子教案':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName='+ encodeURIComponent('电子教案');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案');
 			break;
 		case '考试大纲':
 			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考试大纲');
@@ -122,53 +124,59 @@ function  getNavURL(type,classId) {
 
 	}
 	moduleURL = {
-		}
+	}
 }
 
 // 提交或者保存
 
-function  submit(data,type) {
+function submit(data, type) {
 	data.expID = userId;
-	data.reviewID =curReviewID;
+	data.reviewID = curReviewID;
 	data.courseNo = curClassId;
 	ajaxPading.send({
-		url:expReview,
-		data:data,
-		onSuccess:function (result) {
+		url: expReview,
+		data: data,
+		onSuccess: function (result) {
 			var meta = result.meta;
-			if(meta.result == 100){
-				if(type === 1){
-					alert('保存成功!');
+			if (meta.result == 100) {
+				if (type === 1) {
+					Alert.open({
+						alertTip: '保存成功！'
+					});
 
-				}else{
-					alert('提交成功!');
+				} else {
+					Alert.open({
+						alertTip: '提交成功！'
+					});
 					var that = BluMUI.result.drop;
 					that.setState({
 						reviewedNum: that.state.reviewedNum + 1,
 						notReviewNum: that.state.notReviewNum - 1
 					})
 				}
-			}else{
-				alert(meta.msg);
+			} else {
+				Alert.open({
+					alertTip: meta.msg
+				});
 			}
 		}
-	},'initList');
+	}, 'initList');
 }
 
-function changeBriefList(item){
+function changeBriefList(item) {
 	var that = BluMUI.result.drop,
-		 drop = that.state.drop;
+		drop = that.state.drop;
 	drop.value = item.name;
 	curReviewID = item.id;
 	renderLeftList(1);
 	that.setState({
-		drop:drop,
+		drop: drop,
 		selectIndex: 3
 	});
 	renderInfoInReview(item.id);
 }
 // 切换课程评审状态
-function changeState(status){
+function changeState(status) {
 	var that = BluMUI.result.drop;
 	that.setState({
 		selectIndex: +status
@@ -186,224 +194,228 @@ function changeReview(item) {
 	renderReviewInf(item.courseNo);
 }
 // 渲染审核信息
-function  renderReviewInf(courseNo, state) {
+function renderReviewInf(courseNo, state) {
 	changeNav('课程简介');
 	renderResource();
 	ajaxPading.send({
-		url:reviewCourseInfo,
-		data:{
-			expID:userId,
-			reviewID:curReviewID,
-			courseNo:courseNo
+		url: reviewCourseInfo,
+		data: {
+			expID: userId,
+			reviewID: curReviewID,
+			courseNo: courseNo
 		},
-		onSuccess:function (result) {
-				var meta = result.meta;
-				if(meta.result == 100){
-					var data = result.data,
-						 courseName = data.courseName,
-						 courseScore = data.score,
-						 courseType = data.kclx,
-						 courseMoudule = [],
-						 target = data.target,
-						 i,
-						 len = target.length;
-					for( i = 0 ; i < len ; i++){
-						courseMoudule.push({
-							name:target[i].itemName,
-							reviewDesc:target[i].standard || '暂无',
-							totalScore:target[i].fullScore,
-							curScore:target[i].pf,
-							id:target[i].itemID,
-							score: target[i].pf
-						});
-					}
-					console.log(courseMoudule);
-					renderMenu(courseType);
-					var that = BluMUI.result.course;
-					that.setState({
-						courseScore:courseScore,
-						courseName:courseName,
-						courseMoudule:courseMoudule,
-						courseReview: data.pj,
-						isEditor: state !== 2
+		onSuccess: function (result) {
+			var meta = result.meta;
+			if (meta.result == 100) {
+				var data = result.data,
+					courseName = data.courseName,
+					courseScore = data.score,
+					courseType = data.kclx,
+					courseMoudule = [],
+					target = data.target,
+					i,
+					len = target.length;
+				for (i = 0; i < len; i++) {
+					courseMoudule.push({
+						name: target[i].itemName,
+						reviewDesc: target[i].standard || '暂无',
+						totalScore: target[i].fullScore,
+						curScore: target[i].pf,
+						id: target[i].itemID,
+						score: target[i].pf
 					});
-				}else{
-					alert(meta.msg);
 				}
+				console.log(courseMoudule);
+				renderMenu(courseType);
+				var that = BluMUI.result.course;
+				that.setState({
+					courseScore: courseScore,
+					courseName: courseName,
+					courseMoudule: courseMoudule,
+					courseReview: data.pj,
+					isEditor: state !== 2
+				});
+			} else {
+				Alert.open({
+					alertTip: meta.msg
+				});
+			}
 		}
-	},'reviewCourseInfo')
+	}, 'reviewCourseInfo')
 }
 
 // 渲染课程导航菜单
 
 function renderMenu(type) {
 	ajaxPading.send({
-		url:getMenu,
+		url: getMenu,
 		// data: {
 		// 	unifyCode: userId,
 		// 	module: type == 1 ? 12 : 13
 		// },
-		data:{
-			usrId:userId,
-			courseNo:curClassId
+		data: {
+			usrId: userId,
+			courseNo: curClassId
 		},
-		onSuccess:function (result) {
+		onSuccess: function (result) {
 			var meta = result.meta;
-			if(meta.result == 100){
+			if (meta.result == 100) {
 				var data = result.data,
-					 i,
-					 len = data.length,
-					 items = [];
-				for( i = 0 ; i < len ; i++){
+					i,
+					len = data.length,
+					items = [];
+				for (i = 0; i < len; i++) {
 					items.push(data[i].cdmc);
 				}
 				var that = BluMUI.result.courseNav;
 				that.setState({
-					items:items
+					items: items
 				})
-			}else{
-				alert(meta.msg);
+			} else {
+				Alert.open({
+					alertTip: meta.msg
+				});
 			}
 		}
-	},'getMenu')
+	}, 'getMenu')
 }
 // 渲染课程的列表
 function renderLeftList(state) {
 	ajaxPading.send({
-		url:expReviewList,
-		data:{
-			expID:userId,
-			reviewID:curReviewID,
-			state:state
+		url: expReviewList,
+		data: {
+			expID: userId,
+			reviewID: curReviewID,
+			state: state
 		},
-		onSuccess:function (result) {
+		onSuccess: function (result) {
 			var meta = result.meta,
 				data = result.data,
 				items = [];
-			if(meta.result == 100){
+			if (meta.result == 100) {
 				var i,
 					len = data.length;
-				for( i = 0 ; i < len ; i++){
+				for (i = 0; i < len; i++) {
 					items.push({
-						courseNo:data[i].courseNo,
-						name:data[i].courseName,
-						score:data[i].score
+						courseNo: data[i].courseNo,
+						name: data[i].courseName,
+						score: data[i].score
 					});
 				}
 			}
 
 			var that = BluMUI.result.leftList;
-			if(len > 0 ){
-				iframeDom.style.cssText='display:block';
+			if (len > 0) {
+				iframeDom.style.cssText = 'display:block';
 				curClassId = data[0].courseNo;
 				renderReviewInf(data[0].courseNo, state);
-				noData.style.cssText='display:none';
-				revewBody.style.cssText='display:block';
+				noData.style.cssText = 'display:none';
+				revewBody.style.cssText = 'display:block';
 			} else {
-				revewBody.style.cssText='display:none';
-				iframeDom.style.cssText='display:none';
-				noData.style.cssText='display:block';
+				revewBody.style.cssText = 'display:none';
+				iframeDom.style.cssText = 'display:none';
+				noData.style.cssText = 'display:block';
 				BluMUI.result.course.setState({
 					courseMoudule: []
 				});
 				BluMUI.result.courseNav.setState({
-					items:[]
+					items: []
 				});
 				BluMUI.result.source.setState({
-					source:[]
+					source: []
 				});
 			}
 			that.setState({
-				index:0,
-				items:items
+				index: 0,
+				items: items
 			});
 		}
-	},'initList');
+	}, 'initList');
 }
 
 // 渲染该批次的基本信息
 function renderInfoInReview(id) {
 	ajaxPading.send({
-		url:queryInfoInReview,
-		data:{
-			zjid:userId,
-			ID:id
+		url: queryInfoInReview,
+		data: {
+			zjid: userId,
+			ID: id
 		},
-		onSuccess:function (result) {
+		onSuccess: function (result) {
 			var meta = result.meta;
-			if(meta.result == 100){
+			if (meta.result == 100) {
 				var data = result.data;
 				var that = BluMUI.result.drop;
 				that.setState({
-					totalNum:data.totalNum,
-					reviewedNum:data.reviewedNum,
-					notReviewNum:data.notReviewNum,
-					files:data.files,
-					time:data.kssj + '至' + data.jssj
+					totalNum: data.totalNum,
+					reviewedNum: data.reviewedNum,
+					notReviewNum: data.notReviewNum,
+					files: data.files,
+					time: data.kssj + '至' + data.jssj
 				})
 			}
 		}
-	},'queryInfoInReview');
+	}, 'queryInfoInReview');
 }
 
 // 渲染课程资源数量
 
-function  renderResource() {
+function renderResource() {
 	ajaxPading.send({
-		url:courseResCount,
-		data:{
-			unifyCode:userId,
-			courseNo:curClassId
+		url: courseResCount,
+		data: {
+			unifyCode: userId,
+			courseNo: curClassId
 		},
-		
-		onSuccess:function (result) {
+
+		onSuccess: function (result) {
 			var meta = result.meta;
-			if(meta.result == 100){
+			if (meta.result == 100) {
 				var data = result.data,
-					 res = data.res,
-					 i,
-					 len = res.length,
-					 items = [];
-				for( i = 0 ; i < len ; i++){
+					res = data.res,
+					i,
+					len = res.length,
+					items = [];
+				for (i = 0; i < len; i++) {
 					items.push({
-						name:res[i].name,
-						num:res[i].count
+						name: res[i].name,
+						num: res[i].count
 					});
 				}
 				var that = BluMUI.result.source;
 				that.setState({
-					source:items
+					source: items
 				})
 			}
 		}
-	},'courseResCount');
+	}, 'courseResCount');
 }
 
-function  changeNav(value) {
-	iframe.location.href = getNavURL(value,curClassId);
+function changeNav(value) {
+	iframe.location.href = getNavURL(value, curClassId);
 }
 // 初始化列表和预览模块
-(function(){
+(function () {
 	// 初始化
 	ajaxPading.send({
-		url:reviewBriefList,
-		data:{
-			userID:userId,
-			state:2,
-			expGroup:''
+		url: reviewBriefList,
+		data: {
+			userID: userId,
+			state: 2,
+			expGroup: ''
 		},
-		onSuccess:function (result) {
+		onSuccess: function (result) {
 			var meta = result.meta,
-				 data = result.data,
-				 items = [];
-			if(meta.result == 100 ){
+				data = result.data,
+				items = [];
+			if (meta.result == 100) {
 				var i,
-					 list = data.list,
-					 len = list.length;
-				for( i = 0 ; i < len ; i++){
+					list = data.list,
+					len = list.length;
+				for (i = 0; i < len; i++) {
 					items.push({
-						name:list[i].wppc,
-						id:list[i].id
+						name: list[i].wppc,
+						id: list[i].id
 					})
 					var that = BluMUI.result.drop,
 						drop = that.state.drop;
@@ -411,68 +423,68 @@ function  changeNav(value) {
 					drop.value = list[0].wppc;
 					curReviewID = list[0].id;
 					that.setState({
-						drop:drop
+						drop: drop
 					});
 					renderLeftList(3);
 					renderInfoInReview(list[0].id);
 				}
 			} else if (meta.result == 101) {
-				revewBody.style.cssText='display:none';
-				iframeDom.style.cssText='display:none';
-				noData.style.cssText='display:block';
+				revewBody.style.cssText = 'display:none';
+				iframeDom.style.cssText = 'display:none';
+				noData.style.cssText = 'display:block';
 			}
 
 		}
-	},'reviewBriefList');
+	}, 'reviewBriefList');
 
 })();
-function Download(item){
+function Download(item) {
 	var downLoadIframes = window.frames['downLoad'];
-	downLoadIframes.location.href = downURL + '?name='+ encodeURI(item.originalName) +'&oName=' + item.filename + '&unifyCode=' + userId;
+	downLoadIframes.location.href = downURL + '?name=' + encodeURI(item.originalName) + '&oName=' + item.filename + '&unifyCode=' + userId;
 }
 
 BluMUI.create({
-	id:'leftList',
-	items:[],
-	index:0,
-	callback:changeReview
-},'NavList',doc.getElementById('reviewList'));
+	id: 'leftList',
+	items: [],
+	index: 0,
+	callback: changeReview
+}, 'NavList', doc.getElementById('reviewList'));
 BluMUI.create({
-	id:'drop',
-	drop:{
-		initName:'请选择',
-		inputName:'select',
-		items:[],
-		max:4,
-		minbarH:8,
-		optionH:28,
-		callback:changeBriefList
+	id: 'drop',
+	drop: {
+		initName: '请选择',
+		inputName: 'select',
+		items: [],
+		max: 4,
+		minbarH: 8,
+		optionH: 28,
+		callback: changeBriefList
 	},
 	downloadFile: Download,
-	click:changeState,
-	files:[],
-	time:'',
-	totalNum:0,
-	reviewedNum:0,
-	notReviewNum:0,
-},'ReviewSelect',doc.getElementById('select'));
+	click: changeState,
+	files: [],
+	time: '',
+	totalNum: 0,
+	reviewedNum: 0,
+	notReviewNum: 0,
+}, 'ReviewSelect', doc.getElementById('select'));
 BluMUI.create({
-	id:'courseNav',
-	items:[],
-	index:0,
-	callback:changeNav
-},'NavListPercent',doc.getElementById('showAreaNav'));
+	id: 'courseNav',
+	items: [],
+	index: 0,
+	callback: changeNav
+}, 'NavListPercent', doc.getElementById('showAreaNav'));
 // reviewCourse
 selfAdaptionFrame('myiframe');
 BluMUI.create({
-	id:'course',
-	courseName:'',
-	courseScore:0,
-	courseMoudule:[],
-	submit:submit
-},'ReviewCourse',doc.getElementById('reviewCourse'));
+	id: 'course',
+	courseName: '',
+	courseScore: 0,
+	courseMoudule: [],
+	submit: submit
+}, 'ReviewCourse', doc.getElementById('reviewCourse'));
 
 BluMUI.create({
-	id:'source',
-	source:[]
-},'ResourceNum',doc.getElementById('resourceNum'));
+	id: 'source',
+	source: []
+}, 'ResourceNum', doc.getElementById('resourceNum'));

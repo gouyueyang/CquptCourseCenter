@@ -1,3 +1,5 @@
+import Alert from './../../util/alert.js';
+
 require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
@@ -110,7 +112,9 @@ function exchangeAll(type, that) {
 				renderSelectedList();
 			}
 			else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip: meta.msg
+				});
 			}
 		}
 	}, 'addZjfz');
@@ -143,7 +147,9 @@ function exchangeSingle(type, index, that) {
 				renderSelectedList();
 			}
 			else {
-				alert(meta.msg);
+				Alert.open({
+					alertTip: meta.msg
+				});
 			}
 		}
 	}, 'addZjfz');
@@ -184,7 +190,7 @@ function selectMasterType(type) {
 		PT = that.state.PT;
 	curDw = '';
 	curResearch = '';
-	
+
 	PT.index = 1;
 	that.setState({
 		PT: PT,
@@ -250,7 +256,7 @@ function renderSelectedList() {
 				var that = BluMUI.result.deleteList;
 				that.setState({ items: items, selected: false, selects: selects });
 			} else {
-				alert(meta.msg);
+				(meta.msgalert);
 			}
 		}
 	}, 'getZjfzList');
@@ -329,7 +335,9 @@ ajaxPading.send({
 				college: college
 			});
 		} else {
-			alert(meta.msg);
+			Alert.open({
+				alertTip: meta.msg
+			});
 		}
 	}
 }, 'college');
@@ -371,7 +379,9 @@ ajaxPading.send({
 				}
 			}, 'WpEditorTitle', doc.getElementById('wpEditorTitle'));
 		} else {
-			alert(meta.msg);
+			Alert.open({
+				alertTip: meta.msg
+			});
 		}
 	}
 }, 'getFzxByZjfzpc');
