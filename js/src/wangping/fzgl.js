@@ -36,7 +36,7 @@ class Option extends React.Component {
   insert_pici() {
     let pc=`<option value="">请选择</option>`;
     this.state.fzpc_select.map(e=>pc+=`<option ${(this.fzpc===e.fzpc)?"selected":''} value=${e.fzpc} >${e.fzpc}</option>`);
-    this.pici.innerHTML=pc;      /*这里会报错*/
+    this.refs.pici.innerHTML=pc;      /*这里会报错*/
   }
 
   search() {
@@ -82,7 +82,7 @@ class Option extends React.Component {
             <select 
               name="fzpc" 
               id="fzpc_select" 
-              ref={sel=>this.pici=sel} 
+              ref='pici'     //必须用字符串形式，使用回调方法会报错，原因嘛，恕我才疏学浅，还不能探明
               defaultValue={this.fzpc}
             >
               {
@@ -114,7 +114,7 @@ class Option extends React.Component {
       }
     });
 
-    this.pici.onchange=this.search.bind(this);
+    this.refs.pici.onchange=this.search.bind(this);
 
     this.get_list();
     // bind search option

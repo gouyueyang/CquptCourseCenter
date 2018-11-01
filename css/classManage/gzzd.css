@@ -62,7 +62,7 @@ span>a:visited {
 }
 #filter {
   float: right;
-  font-size: 10px;
+  font-size: 16px;
   color: #007A53;
 }
 #filter input[type='text'] {

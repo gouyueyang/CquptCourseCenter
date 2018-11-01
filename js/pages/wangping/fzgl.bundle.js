@@ -62,7 +62,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*源码有误，使用的是之前转换好的代码*/
 
 	var ajax = __webpack_require__(175);
 	var Fanye = __webpack_require__(176);
@@ -109,7 +109,7 @@
 	      this.state.fzpc_select.map(function (e) {
 	        return pc += '<option ' + (_this2.fzpc === e.fzpc ? "selected" : '') + ' value=' + e.fzpc + ' >' + e.fzpc + '</option>';
 	      });
-	      this.pici.innerHTML = pc;
+	      this.refs.pici.innerHTML = pc; /*这里会报错*/
 	    }
 	  }, {
 	    key: 'search',
@@ -181,10 +181,8 @@
 	              {
 	                name: 'fzpc',
 	                id: 'fzpc_select',
-	                ref: function ref(sel) {
-	                  return _this4.pici = sel;
-	                },
-	                defaultValue: this.fzpc
+	                ref: 'pici' //必须用字符串形式，使用回调方法会报错，原因嘛，恕我才疏学浅，还不能探明
+	                , defaultValue: this.fzpc
 	              },
 	              this.state.fzpc_select.length ? this.insert_pici() : _react2["default"].createElement(
 	                'option',
@@ -218,7 +216,7 @@
 	        }
 	      });
 
-	      this.pici.onchange = this.search.bind(this);
+	      this.refs.pici.onchange = this.search.bind(this);
 
 	      this.get_list();
 	      // bind search option
@@ -22086,7 +22084,7 @@
 	          "span",
 	          { id: "rows" },
 	          "\u5171",
-	          this.props.options.rows >= 0 ? this.props.options.rows : 1,
+	          this.props.options.rows >= 0 ? this.props.options.rows : 0,
 	          "\u6761\u8BB0\u5F55"
 	        ),
 	        _react2["default"].createElement("input", { className: "fanye_options", type: "button", value: "\u9996\u9875", id: "fanye_start", onClick: this.fanye.bind(this, 1) }),
@@ -22108,7 +22106,7 @@
 	    key: "fanye",
 	    value: function fanye(p) {
 	      this.refs.tp.value = null;
-	      if (p == 0) {
+	      if (p == 0 || p > this.props.options.pages) {
 	        return;
 	      }
 	      this.props.callback(p);

@@ -38,8 +38,7 @@
     height: 19px;
     outline: none;
     margin-right: 8px;
+    text-align: center;
     border: 1px solid #D3D2D2;
   }
-  .fanye #tp::-webkit-input-placeholder {
-    text-align: center;
-  }
+  

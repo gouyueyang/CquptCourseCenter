@@ -7,12 +7,12 @@ const Fanye=require('../../libs/turnPage.js');
 const _COUNT = 10;
 
 const SET = (key, value) => {
-  sessionStorage.setItem("zjfzgl-"+key, value);
+  sessionStorage.setItem("kcfzgl-"+key, value);
   return value;
 }
 
 const GET = (key) => {
-  return sessionStorage.getItem("zjfzgl-"+key) || '';
+  return sessionStorage.getItem("kcfzgl-"+key) || '';
 }
 
 class Option extends React.Component {
@@ -20,11 +20,10 @@ class Option extends React.Component {
     super(props);
     // read cache
     this.search_cache={
-      zjfzpc: GET("zjfzpc"),
+      wppc: GET("wppc"),
       fzx: GET("fzx"),
-      zj: GET("zj")
+      kcmc: GET("kcmc")
     };
-
     this.state={
       TP: {
         page: 1,
@@ -33,21 +32,20 @@ class Option extends React.Component {
       },
       list: [],
 
-      zjfzpc: GET("zjfzpc"),
+      wppc: GET("wppc"),
       fzx: GET("fzx"),
-      zj: GET("zj"),
-      zjfzpc_select: [],
+      kcmc: GET("kcmc"),
+      wppc_select: [],
       fzx_select: []
     };
-    this.key = this.key.bind(this);
   }
 
   search() {
     // cache search datas
     this.search_cache={
-      zjfzpc: SET('zjfzpc',this.state.zjfzpc),
+      wppc: SET('wppc',this.state.wppc),
       fzx: SET('fzx',this.state.fzx),
-      zj: SET('zj',this.state.zj)
+      kcmc: SET('kcmc',this.state.kcmc)
     };
     this._get_list(1);
   }
@@ -56,11 +54,11 @@ class Option extends React.Component {
     let page=p||+GET("page")||1;
 
     ajax({
-      url: courseCenter.host+"getZjfzList",
+      url: courseCenter.host+"getKcfzList",
       data: {
         unifyCode: getCookie('userId'),
-        evaluateName: this.search_cache.zj,
-        evaluateGroupBatch: this.search_cache.zjfzpc,
+        reviewBatch: this.search_cache.wppc,
+        courseName: this.search_cache.kcmc,
         group: this.search_cache.fzx,
         count: _COUNT,
         page: page
@@ -74,34 +72,36 @@ class Option extends React.Component {
             pages: datas.data.totalPages,
             rows:datas.data.total
           },
-          list: datas.data.evaluateGroupList
+          list: datas.data.courseGroupList
         });
       }
     });
   }
 
-  change_zjfzpc(e) {
-    let evaluateGroupBatch, fzx;
+  change_wppc(e) {
+    let reviewBatch, fzx;
     if(e) {
       // handle trriger
       fzx="";
-      evaluateGroupBatch=e.target.value;
+      reviewBatch=e.target.value;
       // sessionStorage.removeItem("fzx");
     } else {
       // auto trriger
       fzx=this.search_cache.fzx;
-      evaluateGroupBatch=this.state.zjfzpc;
+      reviewBatch=this.state.wppc;
     }
     this.setState({
-      zjfzpc: evaluateGroupBatch
+      wppc: reviewBatch
+    }, () => {
+      this.search();
     });
 
     // charge fzx select list
     ajax({
-      url: courseCenter.host+"getFzxByZjfzpc",
+      url: courseCenter.host+"getFzxByWppc",
       data: {
         unifyCode: getCookie("userId"),
-        evaluateGroupBatch: evaluateGroupBatch
+        reviewBatch: reviewBatch
       },
       success: (gets)=>{
         let datas=JSON.parse(gets);
@@ -109,12 +109,12 @@ class Option extends React.Component {
           this.setState({
             fzx: fzx,
             fzx_select: []
-          },this.search);
+          });
         } else {
           this.setState({
             fzx: fzx,
             fzx_select: datas.data
-          },this.search);
+          });
         }
       }
     });
@@ -123,39 +123,27 @@ class Option extends React.Component {
   change_fzx(e) {
     this.setState({
       fzx: e.target.value
-    },this.search);
-  }
-
-  change_zj(e) {
-    this.setState({
-      zj: e.target.value
+    }, () => {
+      this.search();
     });
   }
-  //回车搜索
-  key(event) {
-    if (event.keyCode == "13") {//keyCode=13是回车键；数字不同代表监听的按键不同
-      this.search();
-    }
-  }
+
   render() {
     return (
       <div id="Option_react">
         <div id="option">
-          <div id="up">
-            <button id="add" ref={btn=>this.add_btn=btn}>添加分组</button>
-          </div>
           <div id="down">
-            <span>专家分组批次：</span>
+            <span>网评批次：</span>
             <select 
-              name="zjfzpc_select" 
-              id="zjfzpc_select" 
-              ref={sel=>this.zjfzpc_select=sel}
-              value={this.state.zjfzpc}
-              onChange={this.change_zjfzpc.bind(this)}
+              name="wppc_select" 
+              id="wppc_select" 
+              ref={sel=>this.wppc_select=sel}
+              value={this.state.wppc}
+              onChange={this.change_wppc.bind(this)}
             >
               {
                 [<option value="" key="default">请选择</option>].concat(
-                  this.state.zjfzpc_select.map((op,index)=><option value={op.zjfzpc} key={index} >{op.zjfzpc}</option>)
+                  this.state.wppc_select.map((op,index)=><option value={op.wppc} key={index} >{op.wppc}</option>)
                 )
               }
             </select>
@@ -166,7 +154,7 @@ class Option extends React.Component {
               id="fzx_select" 
               ref={sel=>this.fzx_select=sel}
               value={this.state.fzx}
-              onInput={this.change_fzx.bind(this)}
+              onChange={this.change_fzx.bind(this)}
             >
               {
                 [<option value="" key="default">请选择</option>].concat(
@@ -175,19 +163,9 @@ class Option extends React.Component {
               }
             </select>
 
-            <span>专家：</span>
-            <input 
-              type="text" 
-              ref={input=>this.zj_input=input} 
-              id="zj_input" 
-              value={this.state.zj} 
-              onChange={this.change_zj.bind(this)}
-              onKeyDown={this.key}
-            />
-
-            <button ref={btn=>this.search_btn=btn} onClick={this.search.bind(this)} >搜索</button>
           </div>
         </div>
+
         <List list={this.state.list} />
         <Fanye options={this.state.TP} callback={(p)=>{this._get_list(p)}} />
       </div>
@@ -195,25 +173,30 @@ class Option extends React.Component {
   }
 
   componentDidMount() {
-    // charge zjfzpc select
+    // charge wppc select
     ajax({
-      url: courseCenter.host+"getZjfzpc",
+      url: courseCenter.host+"reviewBriefList",
       data: {
-        unifyCode: getCookie('userId')
+        userID: getCookie('userId'),
+        state: 1,
+        expGroup: ''
       },
       success: (gets)=>{
         let datas=JSON.parse(gets);
-        this.setState({
-          zjfzpc_select: datas.data
-        });
+        if(datas.meta.result===100) {
+          this.setState({
+            wppc_select: datas.data.list
+          });
+        } else {
+          this.setState({
+            wppc_select: []
+          });
+        }
       }
     });
-    this.change_zjfzpc();    
+    this.change_wppc();    
 
     this._get_list();
-
-    // bind add option
-    this.add_btn.onclick=()=>{window.location.href='./masterSortMasterEditor.html'};
   }
 }
 
@@ -227,30 +210,30 @@ class List extends React.Component {
       <thead>
         <tr>
           <td className="lefttd"><div></div></td>
-          <td width="5px"></td>
-          <td width="20%">专家分组批次</td>
+          <td width="0px"></td>
+          <td width="10%">网评批次</td>
           <td width="15%">分组批次</td>
           <td width="15%">分组项</td>
-          <td width="30%">专家列表</td>
+          <td>课程列表</td>
           <td width="15%">操作</td>
-          <td width="5px"></td>
+          <td width="0px"></td>
           <td className="righttd"><div></div></td>
         </tr>
       </thead>
     );
   }
 
-  option(type, zjfzpc, fzpc, fzx, eve) {
+  option(type, data, data2, data3, eve) {
     eve.preventDefault();
     switch(type) {
       case 'edit': 
-        window.location.href=`./masterSortTeam.html?masterPC=${zjfzpc}&groupPC=${fzpc}&groupItem=${fzx}`;
+        window.location.href=`./materCourseSort.html?fzx=${data2}&wppc=${data}&wppcId=${data3}`;
         break;
       case 'delete':
-        Creat_popup('delete', zjfzpc);
+        Creat_popup('delete', data);
         break;
       case 'show':
-        Creat_popup('show', zjfzpc);
+        Creat_popup('show', data.map(e=>e.kcmc));
         break;
       default:
         break;
@@ -258,43 +241,26 @@ class List extends React.Component {
   }
 
   creat_tbody() {
-    if(this.props.list.length===0) {
-      return (
-        <tbody>
-          <tr>
-            <td className="lefttd"></td>
-            <td colSpan="7" style={{borderBottom: 'none'}}>
-              <img id="err_img" src="../../imgs/public/error.png"/>
-              <div>没有数据</div>
-            </td>
-            <td className="righttd"></td>
-          </tr>
-        </tbody>
-      );
-    }
-
     return(
       <tbody>
         {this.props.list.map((e,index)=><tr key={index}>
-          
           <td className="lefttd"></td>
           <td></td>
-          <td>{e.zjfzpc}</td>
+          <td>{e.wppc}</td>
           <td>{e.fzpc}</td>
           <td>{e.fzx}</td>
           <td>
-            <span className="zj_list" onClick={this.option.bind(this,'show',e.xm.split(','),'','')}>
-              <span className="zj_num">{`[${e.zjs}]`}</span>
+            <span className="kcmc_num">{`[${e.kcs}]`}</span>
+            <span className="kcmc_list" onClick={this.option.bind(this,'show',e.courseList,e.fzx,e.wpid)}>
               {
-                (+e.zjs)>4 ?
-                e.xm.split(',').map((zj,zjNo)=>zjNo<4&&<span key={zjNo} className="zj_name">{zj}</span>).concat(<span key="dot">……</span>) :
-                e.xm.split(',').map((zj,zjNo)=><span key={zjNo} className="zj_name">{zj}</span>)
+                (+e.kcmcs)>3 ?
+                e.courseList.map((kcmc,kcmcNo)=>kcmcNo<3&&<span key={kcmcNo} className="kcmc_name">{kcmc.xm}</span>).concat(<span key="dot">……</span>) :
+                e.courseList.map((kcmc,kcmcNo)=><span key={kcmcNo} className="kcmc_name">{kcmc.kcmc}</span>)
               }
             </span>
           </td>
           <td>
-            <a href="#" onClick={this.option.bind(this,'edit',e.zjfzpc,e.fzpc,e.fzx)} >编辑</a>
-            <a href="#" onClick={this.option.bind(this,'delete',e.zjfzpc,e.fzpc,e.fzx)} >删除</a>
+            <a href="#" onClick={this.option.bind(this,'edit',e.wppc,e.fzx,e.wpid)} >编辑</a>
           </td>
           <td></td>
           <td className='righttd'></td>
@@ -341,7 +307,6 @@ class Popup extends React.Component {
             <div id="msg">
               <p>{`确定要${MAP[type]+id}?`}</p>
             </div>
-            <div className="warning">将会删除该专家分组批次下所有分组项及专家的分组，请谨慎操作。</div>
             <div id="popup_option">
               <button id="popup_OK" ref={btn=>this.OK=btn}>确定</button>
               <button id="popup_back" ref={btn=>this.back=btn}>取消</button>
@@ -352,8 +317,7 @@ class Popup extends React.Component {
       case 'show':
         return(
           <div id="popbody" ref="pb">
-            <div id="zjs">{id.map((zj,index)=><span key={index} className="zj">{zj}</span>)}</div>
-            <div id="popup_back"><button ref={btn=>this.back=btn}>关闭</button></div>
+            <div id="kcmcs">{id.map((kcmc,index)=><span key={index} className="kcmc">{kcmc}</span>)}</div>
           </div>
         );
         break;
@@ -373,7 +337,7 @@ class Popup extends React.Component {
       case "delete":
         dat={
           unifyCode: getCookie("userId"),
-          evaluateGroupBatch: id
+          reviewId: id
         };
         break;
       default:
@@ -385,7 +349,7 @@ class Popup extends React.Component {
     // OK button option
     this.OK&&(this.OK.onclick=()=>{
       let data_map={
-        "delete": "deleteZjfzpc"
+        "delete": "deleteKcfz"
       };
       ajax({
         url: courseCenter.host+data_map[type],
@@ -394,7 +358,7 @@ class Popup extends React.Component {
           let datas=JSON.parse(gets);
           if(datas.meta.result==100) {
             cancel_popup();
-            Zjfzgl_option._get_list();
+            Kcfzgl_option._get_list();
           }
         }
       });
@@ -423,7 +387,31 @@ function cancel_popup() {
   ReactDOM.unmountComponentAtNode(popup);
 }
 
-var Zjfzgl_option=ReactDOM.render(
+var Kcfzgl_option=ReactDOM.render(
   <Option />,
-  document.getElementById('zjfzgl')
+  document.getElementById('kcfzgl')
 );
+
+// (function () {
+// 	var height;
+// 	window.onload = function () {
+// 		setTimeout(function () {
+// 			height = document.documentElement.offsetHeight;
+// 			if (window.frameElement) {
+//         console.log(true);
+// 				window.frameElement.height = height
+//       }
+//       console.log(false);
+// 		}, 0);
+// 	};
+// 	window.onresize = function () {
+// 		setTimeout(function () {
+// 			height = document.documentElement.offsetHeight;
+// 			if (window.frameElement) {
+//         console.log(true);
+// 				window.frameElement.height = height;
+//       }
+//       console.log(false);
+// 		}, 0);
+// 	};
+// })();

@@ -3,9 +3,9 @@ var BluMUI = require('../../libs/statistics/chartShow.js');
 //创建教师筛选栏
 BluMUI.create({
   id: 'tea_filter',
-  wrapId: ['tea_pie_chart', 'tea_bar_chart', 'tea_line_chart'],
-  callback: [callback1, callback2, callback3],
-  chartTitle: ['各学院教师操作统计', '教师操作统计Top 10', '各学院每月教师操作数分析']
+  wrapId: ['tea_pie_chart1', 'tea_bar_chart1', 'tea_line_chart1','tea_pie_chart2', 'tea_bar_chart2', 'tea_line_chart2'],
+  callback: [callback1, callback2, callback3,callback1, callback2, callback3],
+  chartTitle: ['各学院教师登陆次数统计', '教师登陆次数统计Top 10', '各学院每月教师登陆次数分析','各学院教师操作次数统计', '教师操作次数统计Top 10', '各学院每月教师操作次数分析']
 },
   'BluMUI_NewFilter',
   document.getElementById('tea_chart_filter')
@@ -13,9 +13,9 @@ BluMUI.create({
 //创建学生筛选栏
 BluMUI.create({
   id: 'stu_filter',
-  wrapId: ['stu_pie_chart', 'stu_bar_chart', 'stu_line_chart'],
-  callback: [callback1, callback2, callback3],
-  chartTitle: ['各学院学生操作统计', '学生操作统计Top 10', '各学院每月学生操作数分析']
+  wrapId: ['stu_pie_chart1', 'stu_bar_chart1', 'stu_line_chart1','stu_pie_chart2', 'stu_bar_chart2', 'stu_line_chart2'],
+  callback: [callback1, callback2, callback3,callback1, callback2, callback3],
+  chartTitle: ['各学院学生登陆次数统计', '学生登陆次数统计Top 10', '各学院每月学生登陆次数分析','各学院学生操作次数统计', '学生操作次数统计Top 10', '各学院每月学生操作次数分析']
 },
   'BluMUI_NewFilter',
   document.getElementById('stu_chart_filter')

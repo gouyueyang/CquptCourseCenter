@@ -1,5 +1,5 @@
 var BluMUI = require('../../libs/tongji/blueMonUI.js');
-var ajax=require('../libs/post_ajax.js');
+var ajax=require('../../libs/post_ajax.js');
 
 var menues=[];
 var menue_names=BluMUI.menue_names;

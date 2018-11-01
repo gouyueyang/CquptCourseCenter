@@ -93,12 +93,13 @@ body{
 	background:url("../../imgs/courseMaster/ca.png") no-repeat ;
 	background-position:20px 2px ;
 }
-#Login .ca{
+#Login img.ca{
+	display: block;
 	height:32px;
 	width:93px;
 	float: left;
-	background-repeat: no-repeat;
-	background-size: cover;
+	/* background-repeat: no-repeat;
+	background-size: cover; */
 }
 #Login .inputWarp .account{
 	background:url("../../imgs/courseMaster/account.png") no-repeat ;

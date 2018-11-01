@@ -3,7 +3,7 @@ html {
 }
 body {
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
   background: #F7F6F6;
 }
 /*==========================*/
@@ -107,6 +107,7 @@ label>img {
 }
 #wpgl_table table {
   width: 100%;
+  font-size: 14px;
   text-align: center;
   border-collapse: collapse;
 }
@@ -139,7 +140,7 @@ label>img {
 /*-----------------------------*/
 
 #wpgl_table tbody td {
-  height: 66px;
+  height: 52px;
 }
 #wpgl_table tbody td {
   border-bottom: 1px solid #EEE;
@@ -157,53 +158,6 @@ label>img {
 }
 .yellow_btn {
   color: #ff9b29;
-}
-/*===================================================*/
-
-/* 翻页条 */
-.fanye {
-  width: 100%;
-  text-align: center;
-  font-size: 16px;
-  line-height: 16px;
-  padding: 30px 0;
-}
-.fanye ul {
-  margin: 0 5px;
-  display: inline-block;
-}
-.fanye li {
-  color: #666;
-  margin: 0 10px;
-  cursor: pointer;
-  list-style: none;
-  display: inline-block;
-}
-.fanye .total {
-  color: #999;
-  margin-right: 23px;
-  font-size: 14px;
-}
-.fanye .fanye_options {
-  color: #666;
-  width: 61px;
-  height: 21px;
-  border: none;
-  margin: 0 5px;
-  outline: none;
-  cursor: pointer;
-  line-height: 21px;
-  background: #E1E1E1;
-}
-.fanye .tp {
-  width: 53px;
-  height: 19px;
-  outline: none;
-  margin-right: 8px;
-  border: 1px solid #D3D2D2;
-}
-.fanye .tp::-webkit-input-placeholder {
-  text-align: center;
 }
 
 /*===================*/

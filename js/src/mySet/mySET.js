@@ -184,6 +184,10 @@ ajaxPading.send({
 							'规章制度':{
 								url:'../Regulations/regList.html?state=&title=&source=',
 								openType:'_blank'
+							},
+							'评审':{
+								url:'../courseMaster/review.html',
+								openType:'_self'
 							}
 						},
 						callback:changeMoulde,

@@ -18,6 +18,7 @@ var BluMUI = require('../../libs/masterSortTeam/blueMonUI.js'),
 	curCollege = '',
 	curResearch = '',
 	curEevaluateName = '',
+	curDw = '',
 	getFzxByZjfzpc = host + 'getFzxByZjfzpc',
 	getCollege = host + 'getCollege',
 	deleteZjfz = host + 'deleteZjfz',
@@ -159,11 +160,15 @@ function turn(value) {
 	renderList();
 }
 // 搜素课程名称
-function search(research, evaluateName) {
+function search(research, evaluateName, dw) {
 	curResearch = research || '';
 	curEevaluateName = evaluateName || '';
+	curDw = dw || '';
+	curPage = 1;
 	var that = BluMUI.result.addList,
 		PT = that.state.PT;
+
+
 	PT.index = 1;
 	that.setState({
 		PT: PT
@@ -174,11 +179,15 @@ function search(research, evaluateName) {
 
 function selectMasterType(type) {
 	curMasterType = type;
+
 	var that = BluMUI.result.addList,
 		PT = that.state.PT;
+	curDw = '';
+	curResearch = '';
+	
 	PT.index = 1;
 	that.setState({
-		PT: PT
+		PT: PT,
 	});
 	renderList();
 }
@@ -255,6 +264,7 @@ function renderList() {
 			type: curMasterType,
 			research: curMasterType === 1 ? curResearch : curCollege,
 			evaluateName: curEevaluateName,
+			dw: curDw,                //单位
 			count: 8,
 			page: curPage
 		},

@@ -51,16 +51,16 @@
 	//创建教师筛选栏
 	BluMUI.create({
 	  id: 'tea_filter',
-	  wrapId: ['tea_pie_chart', 'tea_bar_chart', 'tea_line_chart'],
-	  callback: [callback1, callback2, callback3],
-	  chartTitle: ['各学院教师操作统计', '教师操作统计Top 10', '各学院每月教师操作数分析']
+	  wrapId: ['tea_pie_chart1', 'tea_bar_chart1', 'tea_line_chart1', 'tea_pie_chart2', 'tea_bar_chart2', 'tea_line_chart2'],
+	  callback: [callback1, callback2, callback3, callback1, callback2, callback3],
+	  chartTitle: ['各学院教师登陆次数统计', '教师登陆次数统计Top 10', '各学院每月教师登陆次数分析', '各学院教师操作次数统计', '教师操作次数统计Top 10', '各学院每月教师操作次数分析']
 	}, 'BluMUI_NewFilter', document.getElementById('tea_chart_filter'));
 	//创建学生筛选栏
 	BluMUI.create({
 	  id: 'stu_filter',
-	  wrapId: ['stu_pie_chart', 'stu_bar_chart', 'stu_line_chart'],
-	  callback: [callback1, callback2, callback3],
-	  chartTitle: ['各学院学生操作统计', '学生操作统计Top 10', '各学院每月学生操作数分析']
+	  wrapId: ['stu_pie_chart1', 'stu_bar_chart1', 'stu_line_chart1', 'stu_pie_chart2', 'stu_bar_chart2', 'stu_line_chart2'],
+	  callback: [callback1, callback2, callback3, callback1, callback2, callback3],
+	  chartTitle: ['各学院学生登陆次数统计', '学生登陆次数统计Top 10', '各学院每月学生登陆次数分析', '各学院学生操作次数统计', '学生操作次数统计Top 10', '各学院每月学生操作次数分析']
 	}, 'BluMUI_NewFilter', document.getElementById('stu_chart_filter'));
 
 	// //创建饼状图筛选栏
@@ -257,8 +257,8 @@
 	    _this.format = 'YYYY-MM-DD'; //显示日期格式
 	    _this.monthFormat = 'YYYY-MM';
 	    var nowDate = new Date();
-	    //var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
-	    var defaultStart = (0, _moment2["default"])(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
+	    var oneYearDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
+	    var defaultStart = (0, _moment2["default"])(oneYearDate).format('YYYY-MM-DD 00:00:00');
 	    var defaultEnd = (0, _moment2["default"])(nowDate).format('YYYY-MM-DD 23:59:59');
 
 	    _this.wrapId = _this.props.wrapId; //图表外层id
@@ -268,7 +268,7 @@
 	    _this.state = {
 	      kssj: defaultStart, //开始时间
 	      jssj: defaultEnd, //结束时间
-	      tjlb: '', //统计类别
+	      tjlb: '', //统计类别  1:登陆 2:操作
 	      type: _this.props.type, //筛选范围
 	      sstype: _this.props.sstype, //筛选对象
 	      lists: [] //存储结果
@@ -293,71 +293,130 @@
 
 	      //console.log(this.state);
 	      //老师饼状图
-	      var teaPie = {
+	      var teaPie1 = {
 	        unifyCode: getCookie("userId"),
 	        kssj: this.state.kssj,
 	        jssj: this.state.jssj,
-	        tjlb: this.state.tjlb || '1',
+	        tjlb: '1',
+	        type: '1',
+	        sstype: '1'
+	      };
+	      var teaPie2 = {
+	        unifyCode: getCookie("userId"),
+	        kssj: this.state.kssj,
+	        jssj: this.state.jssj,
+	        tjlb: '2',
 	        type: '1',
 	        sstype: '1'
 	      };
 	      //老师柱状图
-	      var teaBar = {
+	      var teaBar1 = {
 	        unifyCode: getCookie("userId"),
 	        kssj: this.state.kssj,
 	        jssj: this.state.jssj,
-	        tjlb: this.state.tjlb || '1',
+	        tjlb: '1',
+	        type: '2',
+	        sstype: '1'
+	      };
+	      var teaBar2 = {
+	        unifyCode: getCookie("userId"),
+	        kssj: this.state.kssj,
+	        jssj: this.state.jssj,
+	        tjlb: '2',
 	        type: '2',
 	        sstype: '1'
 	      };
 	      //老师折线图
-	      var teaLine = {
+	      var teaLine1 = {
 	        unifyCode: getCookie("userId"),
 	        kssj: (0, _moment2["default"])(this.state.kssj).format('YYYY-MM'),
 	        jssj: (0, _moment2["default"])(this.state.jssj).format('YYYY-MM'),
-	        tjlb: this.state.tjlb || '1',
+	        tjlb: '1',
+	        type: '1'
+	      };
+	      var teaLine2 = {
+	        unifyCode: getCookie("userId"),
+	        kssj: (0, _moment2["default"])(this.state.kssj).format('YYYY-MM'),
+	        jssj: (0, _moment2["default"])(this.state.jssj).format('YYYY-MM'),
+	        tjlb: '2',
 	        type: '1'
 	      };
 	      //学生饼状图
-	      var stuPie = {
+	      var stuPie1 = {
 	        unifyCode: getCookie("userId"),
 	        kssj: this.state.kssj,
 	        jssj: this.state.jssj,
-	        tjlb: this.state.tjlb || '1',
+	        tjlb: '1',
+	        type: '1',
+	        sstype: '2'
+	      };
+	      var stuPie2 = {
+	        unifyCode: getCookie("userId"),
+	        kssj: this.state.kssj,
+	        jssj: this.state.jssj,
+	        tjlb: '2',
 	        type: '1',
 	        sstype: '2'
 	      };
 	      //学生柱状图
-	      var stuBar = {
+	      var stuBar1 = {
 	        unifyCode: getCookie("userId"),
 	        kssj: this.state.kssj,
 	        jssj: this.state.jssj,
-	        tjlb: this.state.tjlb || '1',
+	        tjlb: '1',
+	        type: '2',
+	        sstype: '2'
+	      };
+	      var stuBar2 = {
+	        unifyCode: getCookie("userId"),
+	        kssj: this.state.kssj,
+	        jssj: this.state.jssj,
+	        tjlb: '2',
 	        type: '2',
 	        sstype: '2'
 	      };
 	      //学生折线图
-	      var stuLine = {
+	      var stuLine1 = {
 	        unifyCode: getCookie("userId"),
 	        kssj: (0, _moment2["default"])(this.state.kssj).format('YYYY-MM'),
 	        jssj: (0, _moment2["default"])(this.state.jssj).format('YYYY-MM'),
-	        tjlb: this.state.tjlb || '1',
+	        tjlb: '1',
 	        type: '1'
 	      };
+	      var stuLine2 = {
+	        unifyCode: getCookie("userId"),
+	        kssj: (0, _moment2["default"])(this.state.kssj).format('YYYY-MM'),
+	        jssj: (0, _moment2["default"])(this.state.jssj).format('YYYY-MM'),
+	        tjlb: '2',
+	        type: '1'
+	      };
+
 	      var len = this.wrapId.length;
 	      for (var i = 0; i < len; i++) {
-	        if (this.wrapId[i] == 'tea_pie_chart') {
-	          this.funAjax('getStatisticalData', teaPie, this.callback[i], this.wrapId[i], this.chartTitle[i]);
-	        } else if (this.wrapId[i] == 'tea_bar_chart') {
-	          this.funAjax('getStatisticalData', teaBar, this.callback[i], this.wrapId[i], this.chartTitle[i]);
-	        } else if (this.wrapId[i] == 'tea_line_chart') {
-	          this.funAjax('getYfTjData', teaLine, this.callback[i], this.wrapId[i], this.chartTitle[i]);
-	        } else if (this.wrapId[i] == 'stu_pie_chart') {
-	          this.funAjax('getStatisticalData', stuPie, this.callback[i], this.wrapId[i], this.chartTitle[i]);
-	        } else if (this.wrapId[i] == 'stu_bar_chart') {
-	          this.funAjax('getStatisticalData', stuBar, this.callback[i], this.wrapId[i], this.chartTitle[i]);
-	        } else if (this.wrapId[i] == 'stu_line_chart') {
-	          this.funAjax('getYfTjData', stuLine, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        if (this.wrapId[i] == 'tea_pie_chart1') {
+	          this.funAjax('getStatisticalData', teaPie1, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'tea_bar_chart1') {
+	          this.funAjax('getStatisticalData', teaBar1, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'tea_line_chart1') {
+	          this.funAjax('getYfTjData', teaLine1, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'tea_pie_chart2') {
+	          this.funAjax('getStatisticalData', teaPie2, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'tea_bar_chart2') {
+	          this.funAjax('getStatisticalData', teaBar2, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'tea_line_chart2') {
+	          this.funAjax('getYfTjData', teaLine2, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'stu_pie_chart1') {
+	          this.funAjax('getStatisticalData', stuPie1, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'stu_bar_chart1') {
+	          this.funAjax('getStatisticalData', stuBar1, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'stu_line_chart1') {
+	          this.funAjax('getYfTjData', stuLine1, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'stu_pie_chart2') {
+	          this.funAjax('getStatisticalData', stuPie2, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'stu_bar_chart2') {
+	          this.funAjax('getStatisticalData', stuBar2, this.callback[i], this.wrapId[i], this.chartTitle[i]);
+	        } else if (this.wrapId[i] == 'stu_line_chart2') {
+	          this.funAjax('getYfTjData', stuLine2, this.callback[i], this.wrapId[i], this.chartTitle[i]);
 	        }
 	      }
 	    }
@@ -400,35 +459,12 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
-
 	      return _react2["default"].createElement(
 	        'div',
 	        { className: 'filters' },
 	        _react2["default"].createElement(
 	          'div',
 	          { className: 'top' },
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u7EDF\u8BA1\u7C7B\u522B:'
-	          ),
-	          _react2["default"].createElement(
-	            'select',
-	            { name: 'tjlb', id: 'tjlb', defaultValue: '1', onChange: function onChange(eve) {
-	                _this3.setState({ tjlb: eve.target.value });
-	              } },
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '1' },
-	              '\u767B\u9646\u6B21\u6570'
-	            ),
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '2' },
-	              '\u64CD\u4F5C\u6B21\u6570'
-	            )
-	          ),
 	          _react2["default"].createElement(
 	            'span',
 	            null,
@@ -439,7 +475,7 @@
 	            dateFormat: 'YYYY-MM-DD',
 	            timeFormat: '',
 
-	            defaultValue: (0, _moment2["default"])(new Date("2017-01-01")).format(this.format),
+	            defaultValue: (0, _moment2["default"])(new Date() - 365 * 24 * 3600 * 1000).format(this.format),
 	            onChange: this.handleChange1
 	          }),
 	          _react2["default"].createElement(
@@ -471,370 +507,293 @@
 
 	  return NewFilter;
 	}(_react2["default"].Component);
-	//筛选条件组件
+	// //筛选条件组件
+	// class Filter extends React.Component {
+	//   constructor(props) {
+	//     super(props);
+	//     this.format = 'YYYY-MM-DD';  //显示日期格式
+	//     var nowDate = new Date();
+	//     var oneYearDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
+	//     // var defaultStart = moment(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
+	//     var defaultStart = moment(oneYearDate.format('YYYY-MM-DD 00:00:00');
+	//     var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
+
+	//     this.wrapId = this.props.wrapId;  //图表外层id
+	//     this.chartTitle = this.props.chartTitle; //图表名称
+
+	//     this.state = {
+	//       kssj: defaultStart,   //开始时间
+	//       jssj: defaultEnd,   //结束时间
+	//       tjlb: '',   //统计类别
+	//       type: this.props.type,   //筛选范围
+	//       sstype: this.props.sstype,  //筛选对象
+	//       lists: [],    //存储结果
+	//       typeText: '',   //筛选范围文字
+	//       sstypeText: ''  //筛选对象文字 
+	//     };
+	//     this.showChart = this.showChart.bind(this);
+	//     this.callback = this.props.callback.bind(this);
+	//     this.handleChange1 = this.handleChange1.bind(this);
+	//     this.handleChange2 = this.handleChange2.bind(this);
+	//   }
+
+	//   //向后台发送请求
+	//   showChart() {
+	//     if (this.state.type == '1') {
+	//       this.setState({
+	//         typeText: '学院'
+	//       });
+	//     } else if (this.state.type == '2') {
+	//       this.setState({
+	//         typeText: '人'
+	//       });
+	//     }
+	//     if (this.state.sstype == '1') {
+	//       this.setState({
+	//         sstypeText: '老师'
+	//       });
+	//     } else if (this.state.sstype == '2') {
+	//       this.setState({
+	//         sstypeText: '学生'
+	//       });
+	//     }
+
+	//     var oDate1 = new Date(this.state.kssj);
+	//     var oDate2 = new Date(this.state.jssj);
+	//     if (oDate1.getTime() > oDate2.getTime()) {
+	//       alert("开始时间应小于结束时间!");
+	//     }
 
 
-	var Filter = function (_React$Component2) {
-	  _inherits(Filter, _React$Component2);
+	//     //console.log(this.state);
+	//     var Dates = {
+	//       unifyCode: getCookie("userId"),
+	//       kssj: this.state.kssj,
+	//       jssj: this.state.jssj,
+	//       tjlb: this.state.tjlb || '1',
+	//       type: this.state.type,
+	//       sstype: this.state.sstype,
 
-	  function Filter(props) {
-	    _classCallCheck(this, Filter);
+	//     };
 
-	    var _this4 = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
-
-	    _this4.format = 'YYYY-MM-DD'; //显示日期格式
-	    var nowDate = new Date();
-	    //var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
-	    var defaultStart = (0, _moment2["default"])(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
-	    var defaultEnd = (0, _moment2["default"])(nowDate).format('YYYY-MM-DD 23:59:59');
-
-	    _this4.wrapId = _this4.props.wrapId; //图表外层id
-	    _this4.chartTitle = _this4.props.chartTitle; //图表名称
-
-	    _this4.state = {
-	      kssj: defaultStart, //开始时间
-	      jssj: defaultEnd, //结束时间
-	      tjlb: '', //统计类别
-	      type: _this4.props.type, //筛选范围
-	      sstype: _this4.props.sstype, //筛选对象
-	      lists: [], //存储结果
-	      typeText: '', //筛选范围文字
-	      sstypeText: '' //筛选对象文字 
-	    };
-	    _this4.showChart = _this4.showChart.bind(_this4);
-	    _this4.callback = _this4.props.callback.bind(_this4);
-	    _this4.handleChange1 = _this4.handleChange1.bind(_this4);
-	    _this4.handleChange2 = _this4.handleChange2.bind(_this4);
-	    return _this4;
-	  }
-
-	  //向后台发送请求
+	//     ajax({
+	//       url: courseCenter.host + "getStatisticalData",
+	//       data: Dates,
+	//       success: (gets) => {
+	//         let datas = JSON.parse(gets);
+	//         if (datas.meta.result === 100) {
+	//           this.setState({
+	//             lists: datas.data.rows
+	//           });
+	//         }
+	//         //调用回调函数绘制图表
+	//         if (this.callback) {
+	//           this.callback(this.state.lists, this.wrapId, this.chartTitle);
+	//         }
+	//       }
+	//     });
+	//   }
 
 
-	  _createClass(Filter, [{
-	    key: 'showChart',
-	    value: function showChart() {
-	      var _this5 = this;
+	//   handleChange1(newDate) {
+	//     var a = newDate._d;
+	//     var date = moment(a).format('YYYY-MM-DD 00:00:00');
+	//     return this.setState({ kssj: date });
+	//   }
 
-	      if (this.state.type == '1') {
-	        this.setState({
-	          typeText: '学院'
-	        });
-	      } else if (this.state.type == '2') {
-	        this.setState({
-	          typeText: '人'
-	        });
-	      }
-	      if (this.state.sstype == '1') {
-	        this.setState({
-	          sstypeText: '老师'
-	        });
-	      } else if (this.state.sstype == '2') {
-	        this.setState({
-	          sstypeText: '学生'
-	        });
-	      }
-
-	      var oDate1 = new Date(this.state.kssj);
-	      var oDate2 = new Date(this.state.jssj);
-	      if (oDate1.getTime() > oDate2.getTime()) {
-	        alert("开始时间应小于结束时间!");
-	      }
-
-	      //console.log(this.state);
-	      var Dates = {
-	        unifyCode: getCookie("userId"),
-	        kssj: this.state.kssj,
-	        jssj: this.state.jssj,
-	        tjlb: this.state.tjlb || '1',
-	        type: this.state.type,
-	        sstype: this.state.sstype
-
-	      };
-
-	      ajax({
-	        url: courseCenter.host + "getStatisticalData",
-	        data: Dates,
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          if (datas.meta.result === 100) {
-	            _this5.setState({
-	              lists: datas.data.rows
-	            });
-	          }
-	          //调用回调函数绘制图表
-	          if (_this5.callback) {
-	            _this5.callback(_this5.state.lists, _this5.wrapId, _this5.chartTitle);
-	          }
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'handleChange1',
-	    value: function handleChange1(newDate) {
-	      var a = newDate._d;
-	      var date = (0, _moment2["default"])(a).format('YYYY-MM-DD 00:00:00');
-	      return this.setState({ kssj: date });
-	    }
-	  }, {
-	    key: 'handleChange2',
-	    value: function handleChange2(newDate) {
-	      var a = newDate._d;
-	      var date = (0, _moment2["default"])(a).format('YYYY-MM-DD 23:59:59');
-	      return this.setState({ jssj: date });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this6 = this;
-
-	      return _react2["default"].createElement(
-	        'div',
-	        { className: 'filters' },
-	        _react2["default"].createElement(
-	          'div',
-	          { className: 'top' },
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u7EDF\u8BA1\u7C7B\u522B:'
-	          ),
-	          _react2["default"].createElement(
-	            'select',
-	            { name: 'tjlb', id: 'tjlb', defaultValue: '1', onChange: function onChange(eve) {
-	                _this6.setState({ tjlb: eve.target.value });
-	              } },
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '1' },
-	              '\u767B\u9646\u6B21\u6570'
-	            ),
-	            _react2["default"].createElement(
-	              'option',
-	              { value: '2' },
-	              '\u64CD\u4F5C\u6B21\u6570'
-	            )
-	          ),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u65F6\u95F4\u533A\u95F4:'
-	          ),
-	          _react2["default"].createElement(_reactDatetime2["default"], {
-	            className: 'inlineBlock',
-	            dateFormat: 'YYYY-MM-DD'
-	            //timeFormat='00:00:00'
-
-	            , defaultValue: (0, _moment2["default"])(new Date("2017-01-01")).format(this.format),
-	            onChange: this.handleChange1
-	          }),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u2014'
-	          ),
-	          _react2["default"].createElement(_reactDatetime2["default"], {
-	            className: 'inlineBlock',
-	            dateFormat: 'YYYY-MM-DD'
-	            //timeFormat='00:00:00'  
-	            , defaultValue: (0, _moment2["default"])(new Date()).format(this.format),
-	            onChange: this.handleChange2
-	          }),
-	          _react2["default"].createElement(
-	            'button',
-	            { id: 'search', onClick: this.showChart.bind(this, 1) },
-	            '\u67E5\u8BE2'
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.showChart(1);
-	    }
-	  }]);
-
-	  return Filter;
-	}(_react2["default"].Component);
-
-	//筛选条件组件
+	//   handleChange2(newDate) {
+	//     var a = newDate._d;
+	//     var date = moment(a).format('YYYY-MM-DD 23:59:59');
+	//     return this.setState({ jssj: date });
+	//   }
 
 
-	var FilterLine = function (_React$Component3) {
-	  _inherits(FilterLine, _React$Component3);
-
-	  function FilterLine(props) {
-	    _classCallCheck(this, FilterLine);
-
-	    var _this7 = _possibleConstructorReturn(this, (FilterLine.__proto__ || Object.getPrototypeOf(FilterLine)).call(this, props));
-
-	    _this7.format = 'YYYY-MM'; //日期格式
-	    var nowDate = new Date();
-	    var oneMonthDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
-	    var defaultStart = (0, _moment2["default"])(oneMonthDate).format(_this7.format);
-	    var defaultEnd = (0, _moment2["default"])(nowDate).format(_this7.format);
-
-	    _this7.wrapId = _this7.props.wrapId; //图表外层id
-	    _this7.chartTitle = _this7.props.chartTitle; //图表名称
-
-	    _this7.state = {
-	      kssj: defaultStart, //开始时间
-	      jssj: defaultEnd, //结束时间
-	      type: _this7.props.type, //筛选范围
-	      lists: [], //存储结果
-	      typeText: '' //筛选范围文字
-	    };
-	    _this7.showChart = _this7.showChart.bind(_this7);
-	    _this7.callback = _this7.props.callback.bind(_this7);
-	    _this7.handleChange1 = _this7.handleChange1.bind(_this7);
-	    _this7.handleChange2 = _this7.handleChange2.bind(_this7);
-	    return _this7;
-	  }
-
-	  //向后台发送请求
+	//   render() {
+	//     return (<div className='filters'>
+	//       <div className="top">
 
 
-	  _createClass(FilterLine, [{
-	    key: 'showChart',
-	    value: function showChart() {
-	      var _this8 = this;
+	//         <span>统计类别:</span>
+	//         <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
+	//           <option value="1">登陆次数</option>
+	//           <option value="2">操作次数</option>
+	//         </select>
+	//         <span>时间区间:</span>
 
-	      if (this.state.type == '1') {
-	        this.setState({
-	          typeText: '老师'
-	        });
-	      } else if (this.state.type == '2') {
-	        this.setState({
-	          typeText: '学生'
-	        });
-	      }
+	//         <DateTime
+	//           className="inlineBlock"
+	//           dateFormat='YYYY-MM-DD'
+	//           //timeFormat='00:00:00'
 
-	      var oDate1 = new Date(this.state.kssj);
-	      var oDate2 = new Date(this.state.jssj);
-	      if (oDate1.getTime() > oDate2.getTime()) {
-	        alert("开始时间应小于结束时间!");
-	      }
+	//           defaultValue={moment(new Date("2017-01-01")).format(this.format)}
+	//           onChange={this.handleChange1}
+	//         ></DateTime>
+	//         <span>—</span>
+	//         <DateTime
+	//           className="inlineBlock"
+	//           dateFormat='YYYY-MM-DD'
+	//           //timeFormat='00:00:00'  
+	//           defaultValue={moment(new Date()).format(this.format)}
+	//           onChange={this.handleChange2}
+	//         ></DateTime>
 
-	      //console.log(this.state);
-	      var Dates = {
-	        unifyCode: getCookie("userId"),
-	        kssj: this.state.kssj,
-	        jssj: this.state.jssj,
-	        type: this.state.type
-	      };
+	//         <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+	//       </div>
+	//     </div>);
+	//   }
 
-	      ajax({
-	        url: courseCenter.host + "getYfTjData",
-	        data: Dates,
-	        success: function success(gets) {
-	          var datas = JSON.parse(gets);
-	          if (datas.meta.result === 100) {
-	            _this8.setState({
-	              lists: datas.data.rows
-	            });
-	          }
-	          // this.state.lists.forEach((val, index) => {
-	          //   if (val.djsl != 0) {   //有非0值时
-	          //     //调用回调函数绘制图表
-	          //     if (this.callback) {
-	          //       this.callback(this.state.lists, this.wrapId, this.chartTitle);
-	          //     }
-	          //   }else if(index == this.state.lists.length-1 && val.djsl ==0){
-	          //     doucument.getElementById(this.wrapId).lastElementChild.innerHTML = "查询数据均为0！请重新输出查询条件！";
-	          //   }
-	          // })
-	          //调用回调函数绘制图表
-	          if (_this8.callback) {
-	            _this8.callback(_this8.state.lists, _this8.wrapId, _this8.chartTitle);
-	          }
-	        }
-	      });
-	    }
-	  }, {
-	    key: 'handleChange1',
-	    value: function handleChange1(newDate) {
-	      var a = newDate._d;
-	      var date = (0, _moment2["default"])(a).format('YYYY-MM');
-	      return this.setState({ kssj: date });
-	    }
-	  }, {
-	    key: 'handleChange2',
-	    value: function handleChange2(newDate) {
-	      var a = newDate._d;
-	      var date = (0, _moment2["default"])(a).format('YYYY-MM');
-	      return this.setState({ jssj: date });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2["default"].createElement(
-	        'div',
-	        { className: 'filters' },
-	        _react2["default"].createElement(
-	          'div',
-	          { className: 'top' },
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u65F6\u95F4\u533A\u95F4:'
-	          ),
-	          _react2["default"].createElement(_reactDatetime2["default"], {
-	            className: 'inlineBlock',
-	            dateFormat: 'YYYY-MM'
-	            //timeFormat='HH:mm:ss'
-	            , defaultValue: (0, _moment2["default"])(new Date() - 365 * 24 * 3600 * 1000).format(this.format),
-	            onChange: this.handleChange1
-	          }),
-	          _react2["default"].createElement(
-	            'span',
-	            null,
-	            '\u2014'
-	          ),
-	          _react2["default"].createElement(_reactDatetime2["default"], {
-	            className: 'inlineBlock',
-	            dateFormat: 'YYYY-MM'
-	            //timeFormat='HH:mm:ss'
-	            , defaultValue: (0, _moment2["default"])(new Date()).format(this.format),
-	            onChange: this.handleChange2
-	          }),
-	          _react2["default"].createElement(
-	            'button',
-	            { id: 'search', onClick: this.showChart.bind(this, 1) },
-	            '\u67E5\u8BE2'
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.showChart(1);
-	    }
-	  }]);
+	//   componentDidMount() {
+	//     this.showChart(1);
+	//   }
+	// }
 
-	  return FilterLine;
-	}(_react2["default"].Component);
+	// //筛选条件组件
+	// class FilterLine extends React.Component {
+	//   constructor(props) {
+	//     super(props);
+	//     this.format = 'YYYY-MM';  //日期格式
+	//     var nowDate = new Date();
+	//     var oneMonthDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
+	//     var defaultStart = moment(oneMonthDate).format(this.format);
+	//     var defaultEnd = moment(nowDate).format(this.format);
 
-	var Item = function (_React$Component4) {
-	  _inherits(Item, _React$Component4);
+	//     this.wrapId = this.props.wrapId;  //图表外层id
+	//     this.chartTitle = this.props.chartTitle; //图表名称
+
+	//     this.state = {
+	//       kssj: defaultStart,   //开始时间
+	//       jssj: defaultEnd,   //结束时间
+	//       type: this.props.type,   //筛选范围
+	//       lists: [],    //存储结果
+	//       typeText: '',   //筛选范围文字
+	//     };
+	//     this.showChart = this.showChart.bind(this);
+	//     this.callback = this.props.callback.bind(this);
+	//     this.handleChange1 = this.handleChange1.bind(this);
+	//     this.handleChange2 = this.handleChange2.bind(this);
+	//   }
+
+	//   //向后台发送请求
+	//   showChart() {
+	//     if (this.state.type == '1') {
+	//       this.setState({
+	//         typeText: '老师'
+	//       });
+	//     } else if (this.state.type == '2') {
+	//       this.setState({
+	//         typeText: '学生'
+	//       });
+	//     }
+
+
+	//     var oDate1 = new Date(this.state.kssj);
+	//     var oDate2 = new Date(this.state.jssj);
+	//     if (oDate1.getTime() > oDate2.getTime()) {
+	//       alert("开始时间应小于结束时间!");
+	//     }
+
+
+	//     //console.log(this.state);
+	//     var Dates = {
+	//       unifyCode: getCookie("userId"),
+	//       kssj: this.state.kssj,
+	//       jssj: this.state.jssj,
+	//       type: this.state.type,
+	//     };
+
+	//     ajax({
+	//       url: courseCenter.host + "getYfTjData",
+	//       data: Dates,
+	//       success: (gets) => {
+	//         let datas = JSON.parse(gets);
+	//         if (datas.meta.result === 100) {
+	//           this.setState({
+	//             lists: datas.data.rows
+	//           });
+	//         }
+	//         // this.state.lists.forEach((val, index) => {
+	//         //   if (val.djsl != 0) {   //有非0值时
+	//         //     //调用回调函数绘制图表
+	//         //     if (this.callback) {
+	//         //       this.callback(this.state.lists, this.wrapId, this.chartTitle);
+	//         //     }
+	//         //   }else if(index == this.state.lists.length-1 && val.djsl ==0){
+	//         //     doucument.getElementById(this.wrapId).lastElementChild.innerHTML = "查询数据均为0！请重新输出查询条件！";
+	//         //   }
+	//         // })
+	//         //调用回调函数绘制图表
+	//         if (this.callback) {
+	//           this.callback(this.state.lists, this.wrapId, this.chartTitle);
+	//         }
+	//       }
+	//     });
+	//   }
+
+
+	//   handleChange1(newDate) {
+	//     var a = newDate._d;
+	//     var date = moment(a).format('YYYY-MM');
+	//     return this.setState({ kssj: date });
+	//   }
+
+	//   handleChange2(newDate) {
+	//     var a = newDate._d;
+	//     var date = moment(a).format('YYYY-MM');
+	//     return this.setState({ jssj: date });
+	//   }
+
+
+	//   render() {
+	//     return (<div className='filters'>
+	//       <div className="top">
+
+	//         <span>时间区间:</span>
+	//         <DateTime
+	//           className="inlineBlock"
+	//           dateFormat='YYYY-MM'
+	//           //timeFormat='HH:mm:ss'
+	//           defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
+	//           onChange={this.handleChange1}
+	//         ></DateTime>
+	//         <span>—</span>
+	//         <DateTime
+	//           className="inlineBlock"
+	//           dateFormat='YYYY-MM'
+	//           //timeFormat='HH:mm:ss'
+	//           defaultValue={moment(new Date()).format(this.format)}
+	//           onChange={this.handleChange2}
+	//         ></DateTime>
+
+	//         <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+	//       </div>
+	//     </div>);
+	//   }
+
+	//   componentDidMount() {
+	//     this.showChart(1);
+	//   }
+	// }
+
+	var Item = function (_React$Component2) {
+	  _inherits(Item, _React$Component2);
 
 	  function Item(props) {
 	    _classCallCheck(this, Item);
 
-	    var _this9 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+	    var _this3 = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
-	    _this9.datas = _this9.props.datas;
-	    _this9.wrapId = _this9.props.wrapId;
-	    _this9.chartTitle = _this9.props.chartTitle;
-	    _this9.state = {
-	      type: _this9.props.type
+	    _this3.wrapId = _this3.props.wrapId;
+	    _this3.chartTitle = _this3.props.chartTitle;
+	    _this3.state = {
+	      type: _this3.props.type,
+	      datas: _this3.props.datas
 	    };
-	    _this9.pieOption = _this9.pieOption.bind(_this9);
-	    _this9.barOption = _this9.barOption.bind(_this9);
-	    _this9.lineOption = _this9.lineOption.bind(_this9);
-	    _this9.draw = _this9.draw.bind(_this9);
-	    return _this9;
+	    _this3.pieOption = _this3.pieOption.bind(_this3);
+	    _this3.leftBarOption = _this3.leftBarOption.bind(_this3);
+	    _this3.rightBarOption = _this3.rightBarOption.bind(_this3);
+	    _this3.lineOption = _this3.lineOption.bind(_this3);
+	    _this3.draw = _this3.draw.bind(_this3);
+	    return _this3;
 	  }
 
 	  //饼状图数据配置
@@ -843,7 +802,7 @@
 	  _createClass(Item, [{
 	    key: 'pieOption',
 	    value: function pieOption() {
-	      var datas = this.datas;
+	      var datas = this.state.datas;
 	      var result = [];
 	      var head = ['学院名称', '点击数量']; //学院名称，点击数量
 	      result.push(head);
@@ -869,7 +828,6 @@
 	              readOnly: true,
 	              optionToContent: function optionToContent(opt) {
 	                var datas = result;
-	                console.log(datas);
 	                var tableDom = document.createElement("table");
 	                tableDom.style.cssText = "width:100%;border:1px solid #ccc;border-collapse: collapse;text-align:center";
 	                var len1 = datas.length;
@@ -919,11 +877,113 @@
 	      };
 	    }
 
-	    //柱状图配置函数
+	    //左侧柱状图配置函数
 
 	  }, {
-	    key: 'barOption',
-	    value: function barOption() {
+	    key: 'leftBarOption',
+	    value: function leftBarOption() {
+	      // let Data = Object.assign([],this.state.datas);
+	      // Data.filter((item) => { return item.type == 'xy' });
+	      // console.log(Data);
+	      var Data = this.state.datas;
+	      var max = Data[0].djsl;
+	      var min = Data[Data.length - 1].djsl;
+	      var result = [];
+	      var head = ['学院名称', '点击数量']; //学院名称，点击数量
+	      result.push(head);
+	      Data.forEach(function (val) {
+	        var item = [];
+	        item.push(val.xymc);
+	        item.push(val.djsl);
+	        result.push(item);
+	      });
+	      this.option = {
+	        title: {
+	          text: this.chartTitle,
+	          x: 'center'
+	        },
+	        grid: {
+	          x: 60,
+	          y2: 120
+	        },
+	        tooltip: {
+	          trigger: 'item',
+	          formatter: "{c}"
+	        },
+	        toolbox: { //右上角工具栏，数据源、还原、下载
+	          feature: {
+	            dataView: {
+	              show: true,
+	              readOnly: true,
+	              optionToContent: function optionToContent(opt) {
+	                var datas = result;
+	                var tableDom = document.createElement("table");
+	                tableDom.style.cssText = "width:100%;border:1px solid #ccc;border-collapse: collapse;text-align:center";
+	                var len1 = datas.length;
+	                var len2 = datas[0].length;
+	                var table = "";
+	                for (var i = 0; i < len1; i++) {
+	                  var trContent = "";
+	                  for (var j = 0; j < len2; j++) {
+	                    trContent += '<td style="border:1px solid #ccc;">' + datas[i][j] + '</td>';
+	                  }
+	                  table += '<tr>' + trContent + '</tr>';
+	                }
+
+	                tableDom.innerHTML = table;
+	                return tableDom;
+	              }
+
+	            },
+	            restore: { show: true },
+	            saveAsImage: { show: true }
+	          }
+	        },
+	        legend: {},
+	        dataset: {
+	          source: result
+	        },
+	        xAxis: {
+	          name: '学院',
+	          type: 'category',
+	          axisLabel: {
+	            interval: 0,
+	            rotate: 40
+	          }
+	        },
+	        yAxis: {
+	          name: '次数'
+	        },
+	        visualMap: {
+	          orient: 'horizontal',
+	          left: 'center',
+	          min: min,
+	          max: max,
+	          text: [max, min],
+	          // Map the amount column to color
+	          dimension: 2,
+	          inRange: {
+	            color: ['#D7DA8B', '#E15457']
+	          }
+	        },
+	        series: [{
+	          type: 'bar',
+	          encode: {
+	            // 将 "学院名称" 列映射到 X 轴。
+	            x: '学院名称',
+	            // 将 "点击数量" 列映射到 Y 轴。
+	            y: '点击数量'
+	          }
+	        }]
+	      };
+	    }
+
+	    //右侧柱状图配置函数
+
+	  }, {
+	    key: 'rightBarOption',
+	    value: function rightBarOption() {
+	      this.datas = this.state.datas;
 	      var max = this.datas[0].djsl;
 	      var min = this.datas[this.datas.length - 1].djsl;
 	      var datas = this.datas.reverse();
@@ -979,7 +1039,7 @@
 	        dataset: {
 	          source: result
 	        },
-	        xAxis: { name: '操作数' },
+	        xAxis: { name: '次数' },
 	        yAxis: {
 	          name: '姓名',
 	          type: 'category'
@@ -1020,7 +1080,7 @@
 	      //   ['2015/3', 86.4, 65.2, 82.5],
 	      //   ['2015/4', 72.4, 53.9, 39.1]
 	      // ];
-	      var result = this.datas;
+	      var result = this.state.datas;
 	      var len = result[0].length;
 	      var seriesArr = [];
 	      for (var i = 0; i < len - 1; i++) {
@@ -1117,27 +1177,27 @@
 	          boundaryGap: false
 	        },
 	        yAxis: {
-	          name: '操作次数'
+	          name: '次数'
 	        },
 	        grid: {
-	          top: 120
+	          top: 120,
+	          left: 60,
+	          right: 60
 	        },
 	        //控制缩放
 	        dataZoom: [{
 	          type: 'slider',
 	          xAxisIndex: 0,
 	          filterMode: 'empty'
-	        }, {
-	          type: 'slider',
-	          yAxisIndex: 0,
-	          filterMode: 'empty'
-	        }, {
+	        },
+	        // {
+	        //   type: 'slider',
+	        //   yAxisIndex: 0,
+	        //   filterMode: 'empty'
+	        // },
+	        {
 	          type: 'inside',
 	          xAxisIndex: 0,
-	          filterMode: 'empty'
-	        }, {
-	          type: 'inside',
-	          yAxisIndex: 0,
 	          filterMode: 'empty'
 	        }],
 	        series: seriesArr
@@ -1152,9 +1212,9 @@
 	      var myChart = echarts.init(chartDom);
 	      myChart.showLoading({ text: '正在努力的读取数据中...' });
 	      if (this.state.type == "bar") {
-	        this.barOption();
+	        this.rightBarOption();
 	      } else if (this.state.type == "pie") {
-	        this.pieOption();
+	        this.leftBarOption();
 	      } else if (this.state.type == "line") {
 	        this.lineOption();
 	      }
@@ -1178,8 +1238,8 @@
 	}(_react2["default"].Component);
 
 	var BluMUI_M = {
-	  BluMUI_Filter: Filter,
-	  BluMUI_FilterLine: FilterLine,
+	  // BluMUI_Filter: Filter,
+	  // BluMUI_FilterLine: FilterLine,
 	  BluMUI_NewFilter: NewFilter,
 	  BluMUI_Item: Item
 	};

@@ -14,7 +14,7 @@ class Iframe extends React.Component {
       enumerable: false
     });
     this.state.tabs.map((e,index)=>{
-      this.iframes[e]=<iframe src={'../systemManage/'+e+'.html'} frameBorder="0" id={'ifs-'+e} key={e} style={{display:'none'}} onLoad={this.ld.bind(this)} ></iframe>;
+      this.iframes[e]=<iframe src={'../systemManage/'+e+'.html'} frameBorder="0" id={'ifs-'+e} key={e} style={{display:'none'}} ></iframe>;
       this.iframes.length++;
     });
   }
@@ -23,7 +23,7 @@ class Iframe extends React.Component {
     } else if(nextProps.tabs.length>this.iframes.length) {
       nextProps.tabs.map(e=>{
         if(typeof this.iframes[e] =='undefined') {
-          this.iframes[e]=<iframe src={'../systemManage/'+e+'.html'} frameBorder="0" id={'ifs-'+e} key={e} style={{display:'none'}} onLoad={this.ld.bind(this)}></iframe>;
+          this.iframes[e]=<iframe src={'../systemManage/'+e+'.html'} frameBorder="0" id={'ifs-'+e} key={e} style={{display:'none'}} ></iframe>;
           this.iframes.length++;
         }
       });
@@ -40,6 +40,7 @@ class Iframe extends React.Component {
   }
   ld() {
     // 从外面设置iframe的高度
+    console.log("s");
     iframe_set('ifs-'+this.state.on);
   }
 
@@ -64,10 +65,10 @@ class Iframe extends React.Component {
   }
 }
 
-function iframe_set(elem) {
-  var child_iframe=document.getElementById(elem);
-  child_iframe.height=child_iframe.contentWindow.document.body.scrollHeight;
-}
+// function iframe_set(elem) {
+//   var child_iframe=document.getElementById(elem);
+//   child_iframe.height=child_iframe.contentWindow.document.body.scrollHeight;
+// }
 
 // 菜单
 

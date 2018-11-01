@@ -36,6 +36,8 @@ class Option extends React.Component {
         rows: 0
       }
     }
+    this.key = this.key.bind(this);
+    this.search_handler = this.search_handler.bind(this);
   }
 
   creat_option_down() {
@@ -45,11 +47,11 @@ class Option extends React.Component {
       case 'out':
         inputs = <div id="option_input">
           <span>账号：</span>
-          <input type="text" ref="zhanghao" />
+          <input type="text" ref="zhanghao" onKeyDown={this.key} />
           <span>姓名：</span>
-          <input type="text" ref="name" />
+          <input type="text" ref="name" onKeyDown={this.key} />
           <span>工作单位：</span>
-          <input type="text" ref="danwei" />
+          <input type="text" ref="danwei" onKeyDown={this.key} />
         </div>
         break;
       case 'in':
@@ -59,7 +61,7 @@ class Option extends React.Component {
             <option value="">{"请选择"}</option>
           </select>
           <span>教师姓名：</span>
-          <input type="text" ref="jsxm" />
+          <input type="text" ref="jsxm" onKeyDown={this.key} />
         </div>
         break;
       default:
@@ -70,10 +72,10 @@ class Option extends React.Component {
       {inputs}
       <div id="option_search">
         <span>账号状态：</span>
-        <input type="checkbox" id="qy" ref={input => this.qy = input} />
+        <input type="checkbox" id="qy" ref={input => this.qy = input} onChange={this.search_handler} />
         <label htmlFor="qy"><img src="../../imgs/public/hook.png" /></label>
         <span>启用</span>
-        <input type="checkbox" id="ty" ref={input => this.ty = input} />
+        <input type="checkbox" id="ty" ref={input => this.ty = input} onChange={this.search_handler} />
         <label htmlFor="ty"><img src="../../imgs/public/hook.png" /></label>
         <span>停用</span>
         <button ref={search => this.search = search} id="search">搜索</button>
@@ -81,6 +83,12 @@ class Option extends React.Component {
     </div>;
   }
 
+  //回车搜索
+  key(event) {
+    if (event.keyCode == "13") {//keyCode=13是回车键；数字不同代表监听的按键不同
+      this.search_handler();
+    }
+  }
   insert_xueyuan() {
     ajax({
       url: courseCenter.host + 'getCollege',
@@ -116,8 +124,8 @@ class Option extends React.Component {
     sessionStorage.clear();
     SET("master", state);
 
-    this.qy.checked = false;
-    this.ty.checked = false;
+    this.qy.checked = true;
+    this.ty.checked = true;
     Array.from(document.querySelectorAll("#down input[type='text']"))
       .map(e => e.value = "");
 
@@ -145,6 +153,8 @@ class Option extends React.Component {
     }
     SET('qy', +this.qy.checked);
     SET('ty', +this.ty.checked);
+    console.log("qy:"+this.qy.checked);
+    console.log("ty:"+this.ty.checked);
     this.search_data.state = this.qy.checked === this.ty.checked ? '' : +this.qy.checked;
     this.get_list(1);
   }
@@ -219,7 +229,7 @@ class Option extends React.Component {
     this.search_data.state = this.qy.checked === this.ty.checked ? '' : +this.qy.checked;
   }
 
-  changePassword(){
+  changePassword() {
     if (this.state.master === 'out') {
       if (this.refs.list.ids.length > 1) {
         alert('一次只能修改一个专家的密码！');
@@ -419,7 +429,7 @@ class List extends React.Component {
               <td>{e.xm}</td>
               <td>{e.dw}</td>
               <td>{e.lxdh}</td>
-              <td>{e.zt == '可用' ? '启用':'停用'}</td>
+              <td>{e.zt == '可用' ? '启用' : '停用'}</td>
               <td>
                 <a href="#" onClick={this.option.bind(this, 'edit', e.id, e.xm)}>编辑</a>
                 <a href="#" onClick={this.option.bind(this, 'del', e.id, e.xm)}>删除</a>
@@ -455,7 +465,7 @@ class List extends React.Component {
               </td>
               <td>{e.xm}</td>
               <td>{e.xymc}</td>
-              <td>{e.zt == '可用' ? '启用':'停用'}</td>
+              <td>{e.zt == '可用' ? '启用' : '停用'}</td>
               <td>
                 <a href="#" onClick={this.option.bind(this, 'del', e.sfrzh, e.xm)}>删除</a>
                 {

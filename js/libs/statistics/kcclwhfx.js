@@ -258,7 +258,7 @@ class TableFilter extends React.Component {
         this.showChart(1);
         // 获取学院
         ajax({
-            url: courseCenter.host + "getCollege",
+            url: courseCenter.host + "getTjfxCollege",
             data: {
                 unifyCode: getCookie("userId")
             },

@@ -8,7 +8,8 @@ class BlueMUI_Login extends  React.Component{
 			account:'',
 			key:'',
 			ca:'',
-			isLogin:false
+			isLogin:false,
+			identifyCodeUrl:'/CquptCourseCenter/pages/courseMaster/identify_Code.jsp'
 		}
 		this._input = this._input.bind(this);
 	}
@@ -29,7 +30,8 @@ class BlueMUI_Login extends  React.Component{
 		this.setState({
 			key:'',
 			account:'',
-			isLogin:false
+			isLogin:false,
+			
 		});
 	}
 	_input(name){
@@ -50,6 +52,7 @@ class BlueMUI_Login extends  React.Component{
 			});
 		}
 	}
+
 	render(){
 		return(
 			<div className="Login">
@@ -65,7 +68,7 @@ class BlueMUI_Login extends  React.Component{
 				<div className="inputWarp" style={{marginTop:20}}>
 					<span className="title1 ca1"></span>
 					<input style={{width:151,height:30}} type="text" placeholder="" onInput={this._input('ca')} value={this.state.ca}/>
-					<span className="ca" style={{backgroundImage:'url(' + this.props.host  + 'CquptCourseCenter/pages/courseMaster/identify_Code.jsp)'}}></span>
+					<img className='ca' src={this.state.identifyCodeUrl} onClick={()=>{this.setState({identifyCodeUrl:'/CquptCourseCenter/pages/courseMaster/identify_Code.jsp?time='+new Date().getTime()})}} alt="验证码"/>
 				</div>
 				<button className={this.state.isLogin?'login':'disable'} onClick={this._login.bind(this)}>登录</button>
 				<button className="reset" onClick={this._reset.bind(this)}>重置</button>

@@ -8,7 +8,7 @@ html {
 	font-size: 13px;
 }
 body{
-	margin:10px auto;
+	padding:10px auto;
 }
 /* title */
 h2.inner_title{
@@ -75,7 +75,6 @@ h2.inner_title{
 	cursor: pointer;
 }
 .top {
-	padding: 17px 0;
 	padding-left: 15px;
 	line-height: 30px;
 }

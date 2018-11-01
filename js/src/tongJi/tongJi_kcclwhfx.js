@@ -53,3 +53,9 @@ function pieCallback(datas,wrapId,chartTitle) {
   );
 }
 
+
+(function () {
+  if (window.frameElement) {
+    window.frameElement.height = document.body.offsetHeight;
+  }
+})();

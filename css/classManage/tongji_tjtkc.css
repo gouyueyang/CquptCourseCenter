@@ -11,7 +11,6 @@ html {
 h2.inner_title{
     background-color: #007a51;
 	color:#fff;
-	margin-top: 20px;
     line-height: 40px;
     padding-left: 20px;
 }
@@ -82,7 +81,6 @@ h2.inner_title{
 #tea_chart_wrap>div,#stu_chart_wrap >div {
 	width: 456px;
 	height: 560px;
-	display: inline-block;
 	margin-bottom: 20px;
 	box-shadow: 5px 14px 17px -10px rgba(120,120,120,.20);
 	/* border: 1px solid #ccc; */

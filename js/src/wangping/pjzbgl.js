@@ -200,6 +200,10 @@ class List extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    // console.log(self != top);
+    // console.log(window.frames.length);
+    // console.log(parent.frames.length);
+    // console.log(document.body.offsetHeight);
     if(window.frameElement) {
       window.frameElement.height=document.body.offsetHeight;
     }
