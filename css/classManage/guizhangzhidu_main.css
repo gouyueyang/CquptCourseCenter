@@ -149,6 +149,7 @@ iframe {
 #tab iframe {
   width: 100%;
   min-height: 780px;
+  background:#f7f6f6;
 }
 
 /* footer */

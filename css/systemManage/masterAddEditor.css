@@ -329,6 +329,14 @@ button{
 	background: #fff;
 	color: #007A51;
 }
+#body .stop{
+	width:90px;
+	height:30px;
+	display: block;
+	background: #fff;
+	border:1px solid #999;
+	color:#999;
+}
 #body .btnWarp{
 	height:30px;
 	width: 320px;

@@ -141,11 +141,12 @@ tbody td>span {
 #popbody {
   width: 457px;
   min-height: 250px;
+  max-height: 457px;
   padding-bottom: 20px;
   background: #FFF;
   text-align: center;
   margin: 200px auto;
-  overflow: hidden;
+  overflow: auto;
 }
 #popbody #msg {
   width: 80%;

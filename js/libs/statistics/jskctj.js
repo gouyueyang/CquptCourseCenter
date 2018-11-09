@@ -36,7 +36,7 @@ class Top10Filter extends React.Component {
         this.callback = this.props.callback;
 
         this.state = {
-            lx: 'fzr',      //fzr:负责人    rkjs:任课教师
+            lx: '',      //fzr:负责人    rkjs:任课教师
             lists: []    //存储结果
         };
         this.showChart = this.showChart.bind(this);
@@ -71,14 +71,13 @@ class Top10Filter extends React.Component {
     render() {
         return (<div className='filters'>
             <div className="top">
-                <span>排名类型:</span>
-                <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }); }}>
-                    <option value="">请选择</option>
+                <span>教师类型:</span>
+                <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }, this.showChart); }}>
+                    <option value="">全部</option>
                     <option value="fzr">负责人</option>
                     <option value="rkjs">任课教师</option>
                 </select>
-                <button id="search" onClick={this.showChart.bind(this)}>查询</button>
-                <button>查看更多</button>
+                <button id="showMore" onClick={() => { Creat_popup('showMore') }}>查看详细排名</button>
             </div>
         </div>);
     }
@@ -92,7 +91,8 @@ class KclbFilter extends React.Component {
         super(props);
         this.state = {
             xm: '',      //姓名
-            xymc: '',    //学院名称
+            xymc: '',    //所属单位
+            kkxymc: '',    //开课单位
             lx: '',     //fzr:负责人    rkjs:任课教师
             lists: [],    //存储结果
             page: 1,
@@ -101,13 +101,19 @@ class KclbFilter extends React.Component {
         };
         this.showChart = this.showChart.bind(this);
         this.changeOutput = this.changeOutput.bind(this);
+        this.key = this.key.bind(this);
     }
 
     //向后台发送请求
     showChart(p) {
         this.changeOutput();
         this.refs.list.refresh(1, this.state);
-        
+    }
+
+    key(e) {
+        if (e.keyCode == 13) {
+            this.refs.list.refresh(1, this.state);
+        }
     }
 
     changeOutput() {
@@ -123,19 +129,23 @@ class KclbFilter extends React.Component {
                     <div className='filters'>
                         <div className="top">
 
-                            <span>排名类型:</span>
-                            <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }); }}>
-                                <option value="">请选择</option>
+                            <span>教师类型:</span>
+                            <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }, this.showChart); }}>
+                                <option value="">全部</option>
                                 <option value="fzr">负责人</option>
                                 <option value="rkjs">任课教师</option>
                             </select>
-                            <span>学院:</span>
+                            <span>所属单位:</span>
+                            <input type="text" placeholder="请输入所属单位" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }} onKeyDown={this.key} ></input>
+                            {/* <span>学院:</span>
                             <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
                                 <option value="">请选择学院</option>
-                            </select>
+                            </select> */}
+                            <span>开课单位:</span>
+                            <input type="text" placeholder="请输入开课单位" onChange={(eve) => { this.setState({ kkxymc: eve.target.value }) }} onKeyDown={this.key} ></input>
                             <span>教师姓名:</span>
-                            <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
-                            
+                            <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} onKeyDown={this.key} />
+
                             <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
                             <a className="output" href={courseCenter.host + "exportExcel?" + this.state.output}>导出</a>
                         </div>
@@ -151,20 +161,20 @@ class KclbFilter extends React.Component {
     componentDidMount() {
         this.showChart(1);
         // 获取学院
-        ajax({
-            url: courseCenter.host + "getTjfxCollege",
-            data: {
-                unifyCode: getCookie("userId")
-            },
-            success: (gets) => {
-                let datas = JSON.parse(gets);
-                if (datas.meta.result == 100) {
-                    datas.data.map((e, index) => {
-                        this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
-                    });
-                }
-            }
-        });
+        // ajax({
+        //     url: courseCenter.host + "getTjfxCollege",
+        //     data: {
+        //         unifyCode: getCookie("userId")
+        //     },
+        //     success: (gets) => {
+        //         let datas = JSON.parse(gets);
+        //         if (datas.meta.result == 100) {
+        //             datas.data.map((e, index) => {
+        //                 this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
+        //             });
+        //         }
+        //     }
+        // });
     }
 }
 
@@ -267,6 +277,17 @@ class Item extends React.Component {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        },
+                        normal: {
+                            label: {
+                                show: true,
+                                formatter: function (a) {
+                                    return (
+                                        `${a.value[0]}:${a.value[1]} (${a.percent}%)`
+                                    )
+                                }
+                            },
+                            labelLine: { show: true }
                         }
                     }
                 }
@@ -356,6 +377,17 @@ class Item extends React.Component {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        },
+                        normal: {
+                            label: {
+                                show: true,
+                                formatter: function (a) {
+                                    return (
+                                        `${a.value[0]}:${a.value[1]} (${a.percent}%)`
+                                    )
+                                }
+                            },
+                            labelLine: { show: true }
                         }
                     }
                 }
@@ -445,9 +477,10 @@ class Item extends React.Component {
             visualMap: {
                 orient: 'horizontal',
                 left: 'center',
+                bottom:10,
                 min: min,
                 max: max,
-                text: ['高', '低'],
+                text: [max, min],
                 // Map the amount column to color
                 dimension: 2,
                 inRange: {
@@ -462,7 +495,19 @@ class Item extends React.Component {
                         x: '课程数量',
                         // 将 "teacherName" 列映射到 Y 轴。
                         y: '姓名'
-                    }
+                    },
+                    itemStyle: {
+                        normal: {
+                          label: {
+                            show: true, //开启显示
+                            position: 'right', //在上方显示
+                            textStyle: { //数值样式
+                              color: 'black',
+                              fontSize: 14
+                            }
+                          }
+                        }
+                      },
                 }
             ]
         };
@@ -550,9 +595,10 @@ class Lists extends React.Component {
         let tds = [];
         this.state.lists.map((e, index) => {
             tds.push(<tr key={index}>
-                <td>{(this.state.page-1)*_COUNT+index + 1}</td>
+                <td>{(this.state.page - 1) * _COUNT + index + 1}</td>
                 <td>{e.xm}</td>
                 <td>{e.xymc}</td>
+                <td>{e.kkxymc}</td>
                 <td>{e.kcbh}</td>
                 <td>{e.kcmc}</td>
                 <td>{e.jslx}</td>
@@ -573,6 +619,7 @@ class Lists extends React.Component {
                 unifyCode: getCookie("userId"),
                 xm: this.state.xm,
                 xymc: this.state.xymc,
+                kkxymc: this.state.kkxymc,
                 lx: this.state.lx,
                 page: page,
                 count: _COUNT
@@ -598,7 +645,8 @@ class Lists extends React.Component {
                         <tr>
                             <th>序号</th>
                             <th>教师姓名</th>
-                            <th>学院名称</th>
+                            <th>所属单位</th>
+                            <th>开课单位</th>
                             <th>课程编号</th>
                             <th>课程名称</th>
                             <th>角色</th>
@@ -618,12 +666,128 @@ class Lists extends React.Component {
         </div>);
     }
 
+    // componentDidMount() {
+    //     ajax({
+    //         url: courseCenter.host + "selectMgJsKcData",
+    //         data: {
+    //             unifyCode: getCookie("userId"),
+    //             lx: this.props.options.lx,
+    //             xm: this.props.options.xm,
+    //             xymc: this.props.options.xymc,
+    //             kkxymc:this.props.options.kkxymc,
+    //             page: this.props.options.page,
+    //             count: _COUNT
+    //         },
+    //         success: (gets) => {
+    //             let datas = JSON.parse(gets);
+    //             let total = datas.data.total;
+    //             this.datas = datas.data.rows;
+    //             this.setState({
+    //                 lists: datas.data.rows,
+    //                 pages: datas.data.totalPages,
+    //                 rows: total
+    //             });
+    //         }
+    //     });
+    // }
+
+    componentDidUpdate() {
+        // 设置该frame的高度自适应
+        if (window.frameElement) {
+            window.frameElement.height = document.body.offsetHeight;
+        }
+    }
+}
+class PopupList extends React.Component {
+    constructor(props) {
+        super(props);
+
+        let newState = {};
+        for (let i in this.props.options) {
+            newState[i] = this.props.options[i];
+        }
+        newState.lists = [];
+        this.state = newState;
+    }
+
+    create_list() {
+        let tds = [];
+        this.state.lists.map((e, index) => {
+            tds.push(<tr key={index}>
+                <td>{(this.state.page - 1) * _COUNT + index + 1}</td>
+                <td>{e.xm}</td>
+                <td>{e.sfrzh}</td>
+                <td>{e.xymc}</td>
+                <td>{e.kcsl}</td>
+            </tr>);
+        });
+        return (<tbody>{tds}</tbody>);
+    }
+
+    refresh(page, { ...sets }) {
+        // 未传第二个参数时sets为空对象{}
+        // 判断sets是否为空（是否只是翻页）
+        if (JSON.stringify(sets) !== "{}") {
+            this.state = sets;
+        }
+        ajax({
+            url: courseCenter.host + "selectMoreJsKcData",
+            data: {
+                unifyCode: getCookie("userId"),
+                lx: this.state.lx,
+                pxtype: this.state.pxtype,
+                xm: this.state.xm,
+                xymc: this.state.xymc,     //所属单位
+                page: page || 1,
+                count: _COUNT
+
+            },
+            success: (gets) => {
+                let datas = JSON.parse(gets);
+                this.setState({
+                    lists: datas.data.rows,
+                    page: page,
+                    pages: datas.data.totalPages,
+                    rows: datas.data.total
+                });
+            }
+        });
+    }
+
+    render() {
+        return (<div id="kczttj_lists">
+            <div id="kczttj_table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>姓名</th>
+                            <th>身份认证号</th>
+                            <th>所属单位</th>
+                            <th>课程数量</th>
+                        </tr>
+                    </thead>
+                    {this.create_list()}
+                </table>
+            </div>
+            <Fanye This={this}
+                options={{
+                    page: this.state.page || 1,
+                    pages: this.state.pages || 1,
+                    rows: this.state.rows || 0
+                }}
+                callback={this.refresh.bind(this)}
+            />
+        </div>);
+    }
+
     componentDidMount() {
         ajax({
-            url: courseCenter.host + "selectMgJsKcData",
+            url: courseCenter.host + "selectMoreJsKcData",
             data: {
                 unifyCode: getCookie("userId"),
                 lx: this.props.options.lx,
+                pxtype: this.props.options.pxtype,
                 xm: this.props.options.xm,
                 xymc: this.props.options.xymc,
                 page: this.props.options.page,
@@ -641,15 +805,154 @@ class Lists extends React.Component {
             }
         });
     }
+}
+class PopupBody extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            xm: '',      //姓名
+            xymc: '',    //所属单位
+            lx: '',     //fzr:负责人    rkjs:任课教师
+            pxtype: 'desc',  //desc 降序  asc:升序
+            lists: [],    //存储结果
+            page: 1,
+            pages: 1,
+            rows: 0,
+        };
+        this.getData = this.getData.bind(this);
+        this.changeOutput = this.changeOutput.bind(this);
+        this.key = this.key.bind(this);
+    }
 
-    componentDidUpdate() {
-        // 设置该frame的高度自适应
-        if (window.frameElement) {
-            window.frameElement.height = document.body.offsetHeight;
+    //向后台发送请求
+    getData() {
+        this.changeOutput();
+        this.refs.list.refresh(1, this.state);
+
+    }
+
+    key(e) {
+        if (e.keyCode == 13) {
+            this.refs.list.refresh(1, this.state);
         }
+    }
+
+    changeOutput() {
+        this.setState({
+            output: `unifyCode=${getCookie("userId")}&lx=${this.state.lx}&pxtype=${this.state.pxtype}&xm=${this.state.xm}&xymc=${this.state.xymc}`
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <div>
+                    <div className='filters'>
+                        <div className="top">
+                            <span>教师类型:</span>
+                            <select name="tjlb" id="tjlb" defaultValue="" onChange={(eve) => { this.setState({ lx: eve.target.value }, this.getData); }}>
+                                <option value="">全部</option>
+                                <option value="fzr">负责人</option>
+                                <option value="rkjs">任课教师</option>
+                            </select>
+                            <span>排序类型:</span>
+                            <select name="pxtype" id="pxtype" defaultValue="desc" onChange={(eve) => { this.setState({ pxtype: eve.target.value }, this.getData); }}>
+                                <option value="desc">降序</option>
+                                <option value="asc">升序</option>
+                            </select>
+                            <span>所属单位:</span>
+                            <input type="text" placeholder="请输入所属单位" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }} onKeyDown={this.key}></input>
+                            {/* <span>学院:</span>
+                            <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
+                                <option value="">请选择学院</option>
+                            </select> */}
+                            <span>教师姓名:</span>
+                            <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} onKeyDown={this.key} />
+
+                            <button id="search" onClick={this.getData}>查询</button>
+                            <a className="output" href={courseCenter.host + "exportMoreJsKcData?" + this.state.output}>导出</a>
+                        </div>
+                    </div>
+                </div>
+                <PopupList ref="list" options={this.state} />
+            </div>
+        )
+
+    }
+
+    componentDidMount() {
+        this.getData();
+        // 获取学院
+        // ajax({
+        //     url: courseCenter.host + "getTjfxCollege",
+        //     data: {
+        //         unifyCode: getCookie("userId")
+        //     },
+        //     success: (gets) => {
+        //         let datas = JSON.parse(gets);
+        //         if (datas.meta.result == 100) {
+        //             datas.data.map((e, index) => {
+        //                 this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
+        //             });
+        //         }
+        //     }
+        // });
+    }
+}
+class Popup extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { type } = this.props;
+
+        switch (type) {
+            case 'showMore':
+                return (
+                    <div id="popbody" ref="pb">
+                        <PopupBody />
+                        <div><button id="popup_back" ref={btn => this.back = btn}>关闭弹窗</button></div>
+                    </div>
+                );
+                break;
+            default:
+                return (<div></div>);
+                break;
+        }
+    }
+
+    componentDidMount() {
+        // background click to cancel
+        // this.refs.pb.onclick = e => e.stopPropagation();
+
+        // back button click to cancel
+        this.back && (this.back.onclick = cancel_popup);
+        // OK button option
+
     }
 }
 
+function Creat_popup(type, id) {
+    const popup = document.getElementById('popup');
+    const popup_datas = {
+        type: type,
+        id: id
+    };
+    ReactDOM.render(
+        <Popup {...popup_datas} />,
+        document.getElementById('popup')
+    );
+    // click to close popup
+    popup.style.display = "block";
+    // popup.onclick = cancel_popup;
+}
+
+function cancel_popup() {
+    let popup = document.getElementById('popup');
+    popup.style.display = "none";
+    ReactDOM.unmountComponentAtNode(popup);
+}
 var BluMUI_M = {
     BluMUI_Top10Filter: Top10Filter,
     BluMUI_KclbFilter: KclbFilter,

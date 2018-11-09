@@ -24,50 +24,68 @@ h2.inner_title {
 .top>span {
 	color: #333;
 	vertical-align: middle;
+	margin-right: 5px;
+	margin-left: 5px;
 }
-
-.top>select,
-.top>input {
-	display: inline-block;
-	padding-left: 3px;
-	margin: 0 20px 0 5px;
-}
-
-.top>select {
-	height: 20px;
+.top select {
+	height: 24px;
 	font-size: 12px;
 	outline: none;
 	vertical-align: middle;
 	border: 1px solid #009361;
 	color: #009361;
-	line-height: 20px;
+	line-height: 24px;
+	min-width: 140px;
+	padding-left: 3px;
 }
 
-.top>input[type='text'] {
-	height: 18px;
+.top input[type='text'] {
+	height: 22px;
 	width: 110px;
 	outline: none;
 	color: #009361;
 	vertical-align: middle;
 	border: 1px solid #009361;
-	line-height: 18px;
+	line-height: 22px;
+	min-width: 140px;
+	padding-left: 3px;
 }
 
 .top>#search {
-	width: 62px;
-	height: 25px;
+	width: 100px;
+	height: 30px;
 	background: #009261;
 	color: #FFF;
 	border: none;
 	outline: none;
 	cursor: pointer;
 	margin-left: 20px;
+	border-radius: 5px;
 }
 
 .top {
 	padding: 17px 0;
 	padding-left: 15px;
 	line-height: 30px;
+}
+/*时间选择框样式*/
+
+.inlineBlock {
+	display: inline-block;
+}
+
+.output {
+	float: right;
+	text-decoration: none;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	background-color: #007a51;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
 }
 
 /* 图表 */
@@ -93,8 +111,8 @@ h2.inner_title {
 	width: 100%;
 }
 
-#TJ table,
-#TJ table {
+
+#TJ .table_wrap table {
 	width: 100%;
 	font-size: 14px;
 	background: #FFF;
@@ -103,40 +121,22 @@ h2.inner_title {
 	border: 1px solid #EEEEEE;
 }
 
-#TJ thead,
-#TJ thead {
+#TJ .table_wrap thead {
 	color: #FFF;
 }
 
-#TJ thead tr th,
-#TJ thead tr th {
+
+#TJ .table_wrap thead tr th {
 	height: 30px;
 	background: #009361;
 	border: 1px solid #EEEEEE;
 }
 
-#TJ tbody tr td,
-#TJ tbody tr td {
+
+#TJ .table_wrap tbody tr td {
 	height: 30px;
 	border: 1px solid #EEEEEE;
 }
 
-.output {
-	float: right;
-	text-decoration: none;
-	width: 100px;
-	height: 30px;
-	text-align: center;
-	line-height: 30px;
-	background-color: #007a51;
-	border-radius: 5px;
-	color: #fff;
-	font-size: 16px;
-	cursor: pointer;
-}
 
-/*时间选择框样式*/
 
-.inlineBlock {
-	display: inline-block;
-}

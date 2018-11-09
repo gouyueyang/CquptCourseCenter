@@ -208,7 +208,7 @@ class Option extends React.Component {
         });
       }
     });
-    this.change_zjfzpc();    
+    // this.change_zjfzpc();    
 
     this._get_list();
 

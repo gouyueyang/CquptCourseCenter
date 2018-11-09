@@ -66,14 +66,15 @@ function ajax(datas){
 			if(meta1.result == 100 && meta2.result == 100){
 				if(isEditor){
 					Alert.open({
-						alertTip:'编辑成功！'
+						alertTip:'编辑成功！',
+						closeAlert:()=>{window.location.href = './pjzbgl.html';}
 					});
 				}else{
 					Alert.open({
-						alertTip:'添加成功！'
+						alertTip:'添加成功！',
+						closeAlert:()=>{window.location.href = './pjzbgl.html';}
 					});
 				}
-				window.location.href = './pjzbgl.html';
 			} else {
 				Alert.open({
 					alertTip:meta.msg
@@ -95,7 +96,8 @@ function ajax(datas){
 						// 	alert('实训课指标编辑成功!')
 						// }
 						Alert.open({
-							alertTip:'编辑成功！'
+							alertTip:'编辑成功！',
+							closeAlert:()=>{window.location.href = './pjzbgl.html';}
 						});
 					}else{
 						// if (courseType === 1) {
@@ -104,10 +106,11 @@ function ajax(datas){
 						// 	alert('实训课指标添加成功!')
 						// }
 						Alert.open({
-							alertTip:'添加成功！'
+							alertTip:'添加成功！',
+							closeAlert:()=>{window.location.href = './pjzbgl.html';}
 						});
 					}
-					window.location.href= './pjzbgl.html';
+					
 				} else {
 					Alert.open({
 						alertTip:meta.msg

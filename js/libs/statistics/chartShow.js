@@ -21,6 +21,11 @@ import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/toolbox';
 
 const ajax = require('../post_ajax.js');
+const Fanye = require('../turnPage.js');
+
+const _COUNT = 10;
+
+
 const SET = (key, value) => {
   sessionStorage.setItem("chart-" + key, value);
   return value;
@@ -232,34 +237,30 @@ class NewFilter extends React.Component {
   render() {
     return (<div className='filters'>
       <div className="top">
-
-
-
-        {/* <span>统计类别:</span>
-        <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
-          <option value="1">登陆次数</option>
-          <option value="2">操作次数</option>
-        </select> */}
-        <span>时间区间:</span>
-
-        <DateTime
-          className="inlineBlock"
-          dateFormat='YYYY-MM-DD'
-          timeFormat=''
-
-          defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
-          onChange={this.handleChange1}
-        ></DateTime>
-        <span>—</span>
-        <DateTime
-          className="inlineBlock"
-          dateFormat='YYYY-MM-DD'
-          timeFormat=''
-          defaultValue={moment(new Date()).format(this.format)}
-          onChange={this.handleChange2}
-        ></DateTime>
-
-        <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+        <div>
+          <span>时间区间: </span>
+          <DateTime
+            className="inlineBlock"
+            dateFormat='YYYY-MM-DD'
+            timeFormat=''
+            defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
+            onChange={this.handleChange1}
+          ></DateTime>
+          <span> — </span>
+          <DateTime
+            className="inlineBlock"
+            dateFormat='YYYY-MM-DD'
+            timeFormat=''
+            defaultValue={moment(new Date()).format(this.format)}
+            onChange={this.handleChange2}
+          ></DateTime>
+        </div>
+        <div>
+          <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+        </div>
+        <div>
+          <button id="showMore" onClick={() => { Creat_popup('showMore') }}>查看详细排名</button>
+        </div>
       </div>
     </div>);
   }
@@ -267,273 +268,7 @@ class NewFilter extends React.Component {
     this.showChart(1);
   }
 }
-// //筛选条件组件
-// class Filter extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.format = 'YYYY-MM-DD';  //显示日期格式
-//     var nowDate = new Date();
-//     var oneYearDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
-//     // var defaultStart = moment(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
-//     var defaultStart = moment(oneYearDate.format('YYYY-MM-DD 00:00:00');
-//     var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
 
-//     this.wrapId = this.props.wrapId;  //图表外层id
-//     this.chartTitle = this.props.chartTitle; //图表名称
-
-//     this.state = {
-//       kssj: defaultStart,   //开始时间
-//       jssj: defaultEnd,   //结束时间
-//       tjlb: '',   //统计类别
-//       type: this.props.type,   //筛选范围
-//       sstype: this.props.sstype,  //筛选对象
-//       lists: [],    //存储结果
-//       typeText: '',   //筛选范围文字
-//       sstypeText: ''  //筛选对象文字 
-//     };
-//     this.showChart = this.showChart.bind(this);
-//     this.callback = this.props.callback.bind(this);
-//     this.handleChange1 = this.handleChange1.bind(this);
-//     this.handleChange2 = this.handleChange2.bind(this);
-//   }
-
-//   //向后台发送请求
-//   showChart() {
-//     if (this.state.type == '1') {
-//       this.setState({
-//         typeText: '学院'
-//       });
-//     } else if (this.state.type == '2') {
-//       this.setState({
-//         typeText: '人'
-//       });
-//     }
-//     if (this.state.sstype == '1') {
-//       this.setState({
-//         sstypeText: '老师'
-//       });
-//     } else if (this.state.sstype == '2') {
-//       this.setState({
-//         sstypeText: '学生'
-//       });
-//     }
-
-//     var oDate1 = new Date(this.state.kssj);
-//     var oDate2 = new Date(this.state.jssj);
-//     if (oDate1.getTime() > oDate2.getTime()) {
-//       alert("开始时间应小于结束时间!");
-//     }
-
-
-//     //console.log(this.state);
-//     var Dates = {
-//       unifyCode: getCookie("userId"),
-//       kssj: this.state.kssj,
-//       jssj: this.state.jssj,
-//       tjlb: this.state.tjlb || '1',
-//       type: this.state.type,
-//       sstype: this.state.sstype,
-
-//     };
-
-//     ajax({
-//       url: courseCenter.host + "getStatisticalData",
-//       data: Dates,
-//       success: (gets) => {
-//         let datas = JSON.parse(gets);
-//         if (datas.meta.result === 100) {
-//           this.setState({
-//             lists: datas.data.rows
-//           });
-//         }
-//         //调用回调函数绘制图表
-//         if (this.callback) {
-//           this.callback(this.state.lists, this.wrapId, this.chartTitle);
-//         }
-//       }
-//     });
-//   }
-
-
-//   handleChange1(newDate) {
-//     var a = newDate._d;
-//     var date = moment(a).format('YYYY-MM-DD 00:00:00');
-//     return this.setState({ kssj: date });
-//   }
-
-//   handleChange2(newDate) {
-//     var a = newDate._d;
-//     var date = moment(a).format('YYYY-MM-DD 23:59:59');
-//     return this.setState({ jssj: date });
-//   }
-
-
-//   render() {
-//     return (<div className='filters'>
-//       <div className="top">
-
-
-
-//         <span>统计类别:</span>
-//         <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
-//           <option value="1">登陆次数</option>
-//           <option value="2">操作次数</option>
-//         </select>
-//         <span>时间区间:</span>
-
-//         <DateTime
-//           className="inlineBlock"
-//           dateFormat='YYYY-MM-DD'
-//           //timeFormat='00:00:00'
-
-//           defaultValue={moment(new Date("2017-01-01")).format(this.format)}
-//           onChange={this.handleChange1}
-//         ></DateTime>
-//         <span>—</span>
-//         <DateTime
-//           className="inlineBlock"
-//           dateFormat='YYYY-MM-DD'
-//           //timeFormat='00:00:00'  
-//           defaultValue={moment(new Date()).format(this.format)}
-//           onChange={this.handleChange2}
-//         ></DateTime>
-
-//         <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
-//       </div>
-//     </div>);
-//   }
-
-//   componentDidMount() {
-//     this.showChart(1);
-//   }
-// }
-
-// //筛选条件组件
-// class FilterLine extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.format = 'YYYY-MM';  //日期格式
-//     var nowDate = new Date();
-//     var oneMonthDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
-//     var defaultStart = moment(oneMonthDate).format(this.format);
-//     var defaultEnd = moment(nowDate).format(this.format);
-
-//     this.wrapId = this.props.wrapId;  //图表外层id
-//     this.chartTitle = this.props.chartTitle; //图表名称
-
-//     this.state = {
-//       kssj: defaultStart,   //开始时间
-//       jssj: defaultEnd,   //结束时间
-//       type: this.props.type,   //筛选范围
-//       lists: [],    //存储结果
-//       typeText: '',   //筛选范围文字
-//     };
-//     this.showChart = this.showChart.bind(this);
-//     this.callback = this.props.callback.bind(this);
-//     this.handleChange1 = this.handleChange1.bind(this);
-//     this.handleChange2 = this.handleChange2.bind(this);
-//   }
-
-//   //向后台发送请求
-//   showChart() {
-//     if (this.state.type == '1') {
-//       this.setState({
-//         typeText: '老师'
-//       });
-//     } else if (this.state.type == '2') {
-//       this.setState({
-//         typeText: '学生'
-//       });
-//     }
-
-
-//     var oDate1 = new Date(this.state.kssj);
-//     var oDate2 = new Date(this.state.jssj);
-//     if (oDate1.getTime() > oDate2.getTime()) {
-//       alert("开始时间应小于结束时间!");
-//     }
-
-
-//     //console.log(this.state);
-//     var Dates = {
-//       unifyCode: getCookie("userId"),
-//       kssj: this.state.kssj,
-//       jssj: this.state.jssj,
-//       type: this.state.type,
-//     };
-
-//     ajax({
-//       url: courseCenter.host + "getYfTjData",
-//       data: Dates,
-//       success: (gets) => {
-//         let datas = JSON.parse(gets);
-//         if (datas.meta.result === 100) {
-//           this.setState({
-//             lists: datas.data.rows
-//           });
-//         }
-//         // this.state.lists.forEach((val, index) => {
-//         //   if (val.djsl != 0) {   //有非0值时
-//         //     //调用回调函数绘制图表
-//         //     if (this.callback) {
-//         //       this.callback(this.state.lists, this.wrapId, this.chartTitle);
-//         //     }
-//         //   }else if(index == this.state.lists.length-1 && val.djsl ==0){
-//         //     doucument.getElementById(this.wrapId).lastElementChild.innerHTML = "查询数据均为0！请重新输出查询条件！";
-//         //   }
-//         // })
-//         //调用回调函数绘制图表
-//         if (this.callback) {
-//           this.callback(this.state.lists, this.wrapId, this.chartTitle);
-//         }
-//       }
-//     });
-//   }
-
-
-//   handleChange1(newDate) {
-//     var a = newDate._d;
-//     var date = moment(a).format('YYYY-MM');
-//     return this.setState({ kssj: date });
-//   }
-
-//   handleChange2(newDate) {
-//     var a = newDate._d;
-//     var date = moment(a).format('YYYY-MM');
-//     return this.setState({ jssj: date });
-//   }
-
-
-//   render() {
-//     return (<div className='filters'>
-//       <div className="top">
-
-//         <span>时间区间:</span>
-//         <DateTime
-//           className="inlineBlock"
-//           dateFormat='YYYY-MM'
-//           //timeFormat='HH:mm:ss'
-//           defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
-//           onChange={this.handleChange1}
-//         ></DateTime>
-//         <span>—</span>
-//         <DateTime
-//           className="inlineBlock"
-//           dateFormat='YYYY-MM'
-//           //timeFormat='HH:mm:ss'
-//           defaultValue={moment(new Date()).format(this.format)}
-//           onChange={this.handleChange2}
-//         ></DateTime>
-
-//         <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
-//       </div>
-//     </div>);
-//   }
-
-//   componentDidMount() {
-//     this.showChart(1);
-//   }
-// }
 
 class Item extends React.Component {
   constructor(props) {
@@ -653,9 +388,9 @@ class Item extends React.Component {
         text: this.chartTitle,
         x: 'center'
       },
-      grid:{
-        x:60,
-        y2:120
+      grid: {
+        left: 60,
+        bottom: 100
       },
       tooltip: {
         trigger: 'item',
@@ -699,7 +434,10 @@ class Item extends React.Component {
         type: 'category',
         axisLabel: {
           interval: 0,
-          rotate: 40
+          rotate: 40,
+          formatter: function (name) {
+            return echarts.format.truncateText(name, 100, '14px Microsoft Yahei', '…');
+          }
         }
       },
       yAxis: {
@@ -712,7 +450,7 @@ class Item extends React.Component {
         max: max,
         text: [max, min],
         // Map the amount column to color
-        dimension: 2,
+        dimension: 1,
         inRange: {
           color: ['#D7DA8B', '#E15457']
         }
@@ -725,7 +463,20 @@ class Item extends React.Component {
             x: '学院名称',
             // 将 "点击数量" 列映射到 Y 轴。
             y: '点击数量'
-          }
+          },
+          itemStyle: {
+            normal: {
+              label: {
+                show: true, //开启显示
+                position: 'top', //在上方显示
+                textStyle: { //数值样式
+                  color: 'black',
+                  fontSize: 14
+                }
+              }
+            }
+          },
+
         }
       ]
     };
@@ -800,7 +551,7 @@ class Item extends React.Component {
         left: 'center',
         min: min,
         max: max,
-        text: ['高', '低'],
+        text: [max, min],
         // Map the amount column to color
         dimension: 2,
         inRange: {
@@ -815,7 +566,19 @@ class Item extends React.Component {
             x: '点击数量',
             // 将 "teacherName" 列映射到 Y 轴。
             y: '姓名'
-          }
+          },
+          itemStyle: {
+            normal: {
+              label: {
+                show: true, //开启显示
+                position: 'right', //在上方显示
+                textStyle: { //数值样式
+                  color: 'black',
+                  fontSize: 14
+                }
+              }
+            }
+          },
         }
       ]
     };
@@ -933,8 +696,8 @@ class Item extends React.Component {
       },
       grid: {
         top: 120,
-        left:60,
-        right:60
+        left: 60,
+        right: 60
       },
       //控制缩放
       dataZoom: [
@@ -991,6 +754,316 @@ class Item extends React.Component {
   }
 }
 
+class PopupList extends React.Component {
+  constructor(props) {
+    super(props);
+    let newState = {};
+    for (let i in this.props.options) {
+      newState[i] = this.props.options[i];
+    }
+    newState.lists = [];
+    this.state = newState;
+  }
+
+  create_list() {
+    let tds = [];
+    this.state.lists.map((e, index) => {
+      tds.push(<tr key={index}>
+        <td>{(this.state.page - 1) * _COUNT + index + 1}</td>
+        <td>{e.xm}</td>
+        <td>{e.SFRZH}</td>
+        <td>{e.xymc}</td>
+        <td>{e.djsl}</td>
+      </tr>);
+    });
+    return (<tbody>{tds}</tbody>);
+  }
+
+  refresh(page, { ...sets }) {
+    // 未传第二个参数时sets为空对象{}
+    // 判断sets是否为空（是否只是翻页）
+    if (JSON.stringify(sets) !== "{}") {
+      this.state = sets;
+    }
+    console.log(this.state);
+    ajax({
+      url: courseCenter.host + "getMoreData",
+      data: {
+        unifyCode: getCookie("userId"),
+        kssj: this.state.kssj,
+        jssj: this.state.jssj,
+        tjlb: this.state.tjlb,
+        pxtype: this.state.pxtype,
+        sstype: this.state.sstype,
+        xm: this.state.xm,
+        xymc: this.state.xymc,
+        page: page,
+        count: _COUNT
+      },
+      success: (gets) => {
+        let datas = JSON.parse(gets);
+        this.setState({
+          lists: datas.data.rows,
+          page: page,
+          pages: datas.data.totalPages,
+          rows: datas.data.total
+        });
+      }
+    });
+  }
+
+  render() {
+    return (<div id="top10_tableWrap">
+      <div id="top10_table">
+        <table>
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>姓名</th>
+              <th>身份认证号</th>
+              <th>学院</th>
+              <th>点击次数</th>
+            </tr>
+          </thead>
+          {this.create_list()}
+        </table>
+      </div>
+      <Fanye This={this}
+        options={{
+          page: this.state.page || 1,
+          pages: this.state.pages || 1,
+          rows: this.state.rows || 0
+        }}
+        callback={this.refresh.bind(this)}
+      />
+    </div>);
+  }
+
+  componentDidMount() {
+    ajax({
+      url: courseCenter.host + "getMoreData",
+      data: {
+        unifyCode: getCookie("userId"),
+        kssj: this.props.options.kssj,
+        jssj: this.props.options.jssj,
+        tjlb: this.props.options.tjlb,
+        pxtype: this.props.options.pxtype,
+        sstype: this.props.options.sstype,
+        xm: this.props.options.xm,
+        xymc: this.props.options.xymc,
+        page: this.props.options.page,
+        count: _COUNT
+      },
+      success: (gets) => {
+        let datas = JSON.parse(gets);
+        let total = datas.data.total;
+        this.datas = datas.data.rows;
+        this.setState({
+          lists: datas.data.rows,
+          pages: datas.data.totalPages,
+          rows: total
+        });
+      }
+    });
+  }
+}
+class PopupBody extends React.Component {
+  constructor(props) {
+    super(props);
+    this.format = 'YYYY-MM-DD';  //显示日期格式
+    var nowDate = new Date();
+    var oneYearDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
+    var defaultStart = moment(oneYearDate).format('YYYY-MM-DD 00:00:00');
+    var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
+
+    this.state = {
+      kssj: defaultStart,
+      jssj: defaultEnd,
+      tjlb: 1,     //:统计类别（String）1登录次数，2：操作次数必填
+      pxtype: 'desc',  //desc 降序  asc:升序
+      sstype: 1,    //1:老师 2：学生必填
+      xm: '',      //姓名
+      xymc: '',    //学院名称
+
+      lists: [],    //存储结果
+      page: 1,
+      pages: 1,
+      rows: 0,
+    };
+    this.showChart = this.showChart.bind(this);
+    this.changeOutput = this.changeOutput.bind(this);
+    this.handleChange1 = this.handleChange1.bind(this);
+    this.handleChange2 = this.handleChange2.bind(this);
+  }
+
+  //向后台发送请求
+  showChart() {
+    this.changeOutput();
+    this.refs.list.refresh(1, this.state);
+  }
+
+  changeOutput() {
+    this.setState({
+      output: `unifyCode=${getCookie("userId")}&kssj=${this.state.kssj}&jssj=${this.state.jssj}&tjlb=${this.state.tjlb}&pxtype=${this.state.pxtype}&sstype=${this.state.sstype}&xm=${this.state.xm}&xymc=${this.state.xymc}`
+    });
+  }
+
+  handleChange1(newDate) {
+    var a = newDate._d;
+    var date = moment(a).format('YYYY-MM-DD 00:00:00');
+    return this.setState({ kssj: date });
+  }
+
+  handleChange2(newDate) {
+    var a = newDate._d;
+    var date = moment(a).format('YYYY-MM-DD 23:59:59');
+    return this.setState({ jssj: date });
+  }
+
+  render() {
+    return (
+      <div>
+        <div>
+          <div className='filters'>
+            <div className="top">
+              <div>
+                <span>统计类别:</span>
+                <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
+                  <option value="1">登陆次数</option>
+                  <option value="2">操作次数</option>
+                </select>
+              </div>
+              <div>
+                <span>时间区间: </span>
+                <DateTime
+                  className="inlineBlock"
+                  dateFormat='YYYY-MM-DD'
+                  timeFormat=''
+
+                  defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
+                  onChange={this.handleChange1}
+                ></DateTime>
+                <span> — </span>
+                <DateTime
+                  className="inlineBlock"
+                  dateFormat='YYYY-MM-DD'
+                  timeFormat=''
+                  defaultValue={moment(new Date()).format(this.format)}
+                  onChange={this.handleChange2}
+                ></DateTime>
+              </div>
+              <div>
+                <span>身份:</span>
+                <select name="'sstype" id="sstype" defaultValue="1" onChange={(eve) => { this.setState({ sstype: eve.target.value }); }}>
+                  <option value="1">教师</option>
+                  <option value="2">学生</option>
+                </select>
+              </div>
+              <div>
+                <span>排序类型:</span>
+                <select name="'pxtype" id="pxtype" defaultValue="desc" onChange={(eve) => { this.setState({ pxtype: eve.target.value }); }}>
+                  <option value="desc">降序</option>
+                  <option value="asc">升序</option>
+                </select>
+              </div>
+              <div>
+                <span>学院:</span>
+                <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
+                  <option value="">请选择学院</option>
+                </select>
+              </div>
+              <div>
+                <span>姓名:</span>
+                <input type="text" id="filter_name" placeholder="请输入姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
+              </div>
+              <div>
+                <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
+              </div>
+              <div>
+                <a className="output" href={courseCenter.host + "exportMoreData?" + this.state.output}>导出</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <PopupList ref="list" options={this.state} />
+      </div>
+    )
+
+  }
+
+  componentDidMount() {
+    this.showChart(1);
+    // 获取学院
+    ajax({
+      url: courseCenter.host + "getTjfxCollege",
+      data: {
+        unifyCode: getCookie("userId")
+      },
+      success: (gets) => {
+        let datas = JSON.parse(gets);
+        if (datas.meta.result == 100) {
+          datas.data.map((e, index) => {
+            this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
+          });
+        }
+      }
+    });
+  }
+}
+class Popup extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { type } = this.props;
+
+    switch (type) {
+      case 'showMore':
+        return (
+          <div id="popbody" ref="pb">
+            <PopupBody />
+            <div><button id="popup_back" ref={btn => this.back = btn}>关闭弹窗</button></div>
+          </div>
+        );
+        break;
+      default:
+        return (<div></div>);
+        break;
+    }
+  }
+
+  componentDidMount() {
+    // background click to cancel
+    // this.refs.pb.onclick = e => e.stopPropagation();
+
+    // back button click to cancel
+    this.back && (this.back.onclick = cancel_popup);
+    // OK button option
+
+  }
+}
+
+function Creat_popup(type, id) {
+  const popup = document.getElementById('popup');
+  const popup_datas = {
+    type: type,
+    id: id
+  };
+  ReactDOM.render(
+    <Popup {...popup_datas} />,
+    document.getElementById('popup')
+  );
+  // click to close popup
+  popup.style.display = "block";
+  // popup.onclick = cancel_popup;
+}
+
+function cancel_popup() {
+  let popup = document.getElementById('popup');
+  popup.style.display = "none";
+  ReactDOM.unmountComponentAtNode(popup);
+}
 
 var BluMUI_M = {
   // BluMUI_Filter: Filter,

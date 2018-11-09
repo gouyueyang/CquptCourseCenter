@@ -100,10 +100,6 @@ function addMaster(data) {
 					closeAlert: function () {}
 				  });
 				//刷新列表
-				BluMUI.result.app.inside.setState({
-					teaName: '',
-					college: '',
-				},console.log(this.state));
 				BluMUI.result.app.inside.refresh(1);
 			} else if (meta.result == 303) {
 				confirm(result.meta.msg);

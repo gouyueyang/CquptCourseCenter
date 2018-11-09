@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-var ajax=require('./post_ajax.js');
+var ajax=require('./../post_ajax.js');
 var Place=2;
 /*
  * 学习资源

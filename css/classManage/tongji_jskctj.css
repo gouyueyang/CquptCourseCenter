@@ -7,64 +7,92 @@
 html {
 	font-size: 13px;
 }
-body{
-	padding:10px auto;
+
+body {
+	padding: 10px auto;
 }
+
 /* title */
-h2.inner_title{
-    background-color: #007a51;
-    color:#fff;
-    line-height: 40px;
-    padding-left: 20px;
+h2.inner_title {
+	background-color: #007a51;
+	color: #fff;
+	line-height: 40px;
+	padding-left: 20px;
 }
+
 /* 条件筛选部分 */
 
 .top>span {
 	color: #333;
 	vertical-align: middle;
+	margin-right: 5px;
+	margin-left: 5px;
 }
-
-.top>select,
-.top>input {
-	display: inline-block;
-	padding-left: 3px;
-	margin: 0 20px 0 5px;
-}
-
-.top>select {
-	height: 20px;
+.top select {
+	height: 24px;
 	font-size: 12px;
 	outline: none;
 	vertical-align: middle;
 	border: 1px solid #009361;
 	color: #009361;
-	line-height: 20px;
+	line-height: 24px;
+	min-width: 140px;
+	padding-left: 3px;
 }
 
-.top>input[type='text'] {
-	height: 18px;
+.top input[type='text'] {
+	height: 22px;
 	width: 110px;
 	outline: none;
 	color: #009361;
 	vertical-align: middle;
 	border: 1px solid #009361;
-	line-height: 18px;
+	line-height: 22px;
+	min-width: 140px;
+	padding-left: 3px;
 }
 
 .top>#search {
-	width: 62px;
-	height: 25px;
+	width: 100px;
+	height: 30px;
 	background: #009261;
 	color: #FFF;
 	border: none;
 	outline: none;
 	cursor: pointer;
 	margin-left: 20px;
+	border-radius: 5px;
 }
-.top .output{
+.top #showMore {
+	width: 150px;
+	height: 30px;
+	background: #009261;
+	color: #FFF;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	cursor: pointer;
+	margin-left: 20px;
+	float: right;
+	margin-right: 20px;
+	border-radius: 2px;
+}
+
+.top {
+	padding: 17px 0;
+	padding-left: 15px;
+	line-height: 30px;
+}
+/*时间选择框样式*/
+
+.inlineBlock {
+	display: inline-block;
+}
+
+.output {
 	float: right;
 	text-decoration: none;
-	width:100px;
+	width: 100px;
 	height: 30px;
 	text-align: center;
 	line-height: 30px;
@@ -73,10 +101,6 @@ h2.inner_title{
 	color: #fff;
 	font-size: 16px;
 	cursor: pointer;
-}
-.top {
-	padding-left: 15px;
-	line-height: 30px;
 }
 
 /* 图表 */
@@ -88,42 +112,102 @@ h2.inner_title{
 }
 
 #course_tj_wrap>div {
-    width: 32%;
-    height: 600px;
+	width: 50%;
+	height: 600px;
 	display: inline-block;
 	margin-bottom: 20px;
-	box-shadow: 5px 14px 17px -10px rgba(120,120,120,.20);
+	box-shadow: 5px 14px 17px -10px rgba(120, 120, 120, .20);
 }
 
-#tea_course_wrap>div{
-	width:90%;
-	margin:20px auto;
+#tea_course_wrap>div {
+	width: 90%;
+	margin: 20px auto;
 }
-#tea_course_wrap table{
-	margin:20px auto;
-	width:100%;
+
+#tea_course_wrap table,
+#popup table {
+	margin: 20px auto;
+	width: 100%;
 	font-size: 14px;
 	background: #FFF;
 	table-layout: fixed;
 	text-align: center;
 	border-collapse: collapse;
-	border: 1px solid #EEEEEE;
+	border: 1px solid #eee;
 }
-#tea_course_wrap thead {
+
+#tea_course_wrap thead,
+#popup thead {
 	color: #FFF;
-  }
-  
-  #tea_course_wrap thead tr th {
+}
+
+#tea_course_wrap thead tr th,
+#popup thead tr th {
 	height: 30px;
 	background: #009361;
-	border: 1px solid #EEEEEE;
-  }
-  #tea_course_wrap tbody tr td {
-	height: 30px;
-	border: 1px solid #EEEEEE;
-  }
-/*时间选择框样式*/
+	border: 1px solid #eee;
+}
 
-.inlineBlock{
-	display: inline-block;
+#tea_course_wrap tbody tr td,
+#popup tbody tr td {
+	height: 30px;
+	border: 1px solid #eee;
+}
+
+
+
+/* 弹出层 */
+#popup {
+	width: 100%;
+	height: 100%;
+	background: rgba(151, 151, 151, 0.5);
+	z-index: 2;
+	display: none;
+	position: fixed;
+	top: 0;
+
+}
+
+#popbody {
+	width: 80%;
+	padding: 20px;
+	background: #FFF;
+	text-align: center;
+	margin: 60px auto;
+	overflow: hidden;
+}
+
+/* #popbody #msg {
+	width: 80%;
+	height: 160px;
+	padding: 80px 0;
+	margin: 0 auto;
+	box-sizing: border-box;
+	line-height: 25px;
+	font-size: 18px;
+  }
+  #popbody button {
+	width: 91px;
+	height: 31px;
+	outline: none;
+	cursor: pointer;
+	margin: 0 16px;
+	border: 1px solid #007A51;
+	line-height: 31px;
+	font-size: 14px;
+  }
+  #popbody #popup_OK {
+	color: #FFF;
+	background: #007A51;
+  }
+ */
+#popbody #popup_back {
+	color: #fff;
+	font-size: 20px;
+	background: #007A51;
+	width:100px;
+	height: 50px;
+	line-height: 50px;
+	
+	border-radius: 5px;
 }

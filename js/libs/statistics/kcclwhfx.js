@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+// import Alert from "../../util/alert.js";
 
 import DateTime from 'react-datetime';
 import moment from 'moment';
@@ -18,6 +18,8 @@ import 'echarts/lib/component/dataset';
 import 'echarts/lib/component/visualMap';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/toolbox';
+
+
 
 const ajax = require('../post_ajax.js');
 const Fanye = require('../turnPage.js');
@@ -62,24 +64,25 @@ class PieFilter extends React.Component {
         var oDate1 = new Date(this.state.kssj);
         var oDate2 = new Date(this.state.jssj);
         if (oDate1.getTime() > oDate2.getTime()) {
-            alert("开始时间应小于结束时间!");
+            alert("开始时间应小于结束时间！");
+            // Alert.open({
+            //     alertTip: "开始时间应小于结束时间！"
+            // });
+        } else {
+            //课程维护饼状图
+            var datas = {
+                unifyCode: getCookie("userId"),
+                kssj: this.state.kssj,
+                jssj: this.state.jssj,
+                type: this.props.type,   //wh:维护数据，sh：审核数据
+                txtype: 'tx',  //表现形式 tx:图形 tb:图表
+                page: 0,
+                count: _Count
+            };
+            //课程审核饼状图
+
+            this.funAjax('getKcclWhFxData', datas, this.callback, this.wrapId, this.chartTitle);
         }
-
-
-        //课程维护饼状图
-        var datas = {
-            unifyCode: getCookie("userId"),
-            kssj: this.state.kssj,
-            jssj: this.state.jssj,
-            type: this.props.type,   //wh:维护数据，sh：审核数据
-            txtype: 'tx',  //表现形式 tx:图形 tb:图表
-            page:0,
-            count:_Count
-        };
-        //课程审核饼状图
-
-        this.funAjax('getKcclWhFxData', datas, this.callback, this.wrapId, this.chartTitle);
-
     }
     funAjax(url, Datas, callback, wrapId, chartTitle) {
         ajax({
@@ -128,7 +131,7 @@ class PieFilter extends React.Component {
                     defaultValue={moment(new Date("2017-01-01")).format(this.format)}
                     onChange={this.handleChange1}
                 ></DateTime>
-                <span>—</span>
+                <span> — </span>
                 <DateTime
                     className="inlineBlock"
                     dateFormat='YYYY-MM-DD'
@@ -181,6 +184,7 @@ class TableFilter extends React.Component {
         this.handleChange2 = this.handleChange2.bind(this);
         // this.funAjax = this.funAjax.bind(this);
         this.changeOutput = this.changeOutput.bind(this);
+        this.key = this.key.bind(this);
     }
 
     changeOutput() {
@@ -191,16 +195,25 @@ class TableFilter extends React.Component {
     }
     //向后台发送请求
     showChart() {
-        this.changeOutput();
+
         var oDate1 = new Date(this.state.kssj);
         var oDate2 = new Date(this.state.jssj);
         if (oDate1.getTime() > oDate2.getTime()) {
-            alert("开始时间应小于结束时间!");
+            alert("开始时间应小于结束时间！");
+            // Alert.open({
+            //     alertTip: "开始时间应小于结束时间！"
+            // });
+        } else {
+            this.changeOutput();
+            this.refs.list.refresh(1, this.state);
         }
-        this.refs.list.refresh(1, this.state);
-
     }
 
+    key(e) {
+        if (e.kegCode == 13) {
+            this.showChart();
+        }
+    }
 
     handleChange1(newDate) {
         var a = newDate._d;
@@ -231,7 +244,7 @@ class TableFilter extends React.Component {
                             defaultValue={moment(new Date("2017-01-01")).format(this.format)}
                             onChange={this.handleChange1}
                         ></DateTime>
-                        <span>—</span>
+                        <span> — </span>
                         <DateTime
                             className="inlineBlock"
                             dateFormat='YYYY-MM-DD'
@@ -239,17 +252,22 @@ class TableFilter extends React.Component {
                             defaultValue={moment(new Date()).format(this.format)}
                             onChange={this.handleChange2}
                         ></DateTime>
-                        <span>学院:</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+
+                        {/* <span>学院:</span>
                         <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
                             <option value="">请选择学院</option>
-                        </select>
+                        </select> */}
+                        <span>所属单位:</span>
+                        <input type="text" placeholder="请输入所属单位" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }} onKeyDown={this.key} ></input>
+                        <br />
                         <span>教师姓名:</span>
-                        <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
+                        <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} onKeyDown={this.key} />
                         <button id="search" onClick={this.showChart.bind(this)}>查询</button>
                         <a className="output" href={courseCenter.host + "exportExcel?" + this.state.output}>导出</a>
                     </div>
                 </div>
-                <TableChart ref="list" options={this.state}/>
+                <TableChart ref="list" options={this.state} />
             </div>
 
         );
@@ -257,20 +275,20 @@ class TableFilter extends React.Component {
     componentDidMount() {
         this.showChart(1);
         // 获取学院
-        ajax({
-            url: courseCenter.host + "getTjfxCollege",
-            data: {
-                unifyCode: getCookie("userId")
-            },
-            success: (gets) => {
-                let datas = JSON.parse(gets);
-                if (datas.meta.result == 100) {
-                    datas.data.map((e, index) => {
-                        this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
-                    });
-                }
-            }
-        });
+        // ajax({
+        //     url: courseCenter.host + "getTjfxCollege",
+        //     data: {
+        //         unifyCode: getCookie("userId")
+        //     },
+        //     success: (gets) => {
+        //         let datas = JSON.parse(gets);
+        //         if (datas.meta.result == 100) {
+        //             datas.data.map((e, index) => {
+        //                 this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
+        //             });
+        //         }
+        //     }
+        // });
     }
 }
 
@@ -292,7 +310,7 @@ class PieChart extends React.Component {
         result.push(head);
         datas.forEach((val) => {
             let item = [];
-            item.push(val.KKXYMC);
+            item.push(val.xymc);
             item.push(val.djsl);
             result.push(item);
         });
@@ -349,13 +367,20 @@ class PieChart extends React.Component {
             series: [
                 {
                     type: 'pie',
-                    radius: 100,
+                    radius: 90,
                     center: ['50%', '50%'],
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
                             shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        },
+                        normal: {
+                            label: {
+                                show: true,
+                                formatter: '{c} ({d}%)'
+                            },
+                            labelLine: { show: true }
                         }
                     }
                 }
@@ -402,7 +427,7 @@ class TableChart extends React.Component {
         let lists = [];
         this.state.list.forEach((e, index) => {
             lists.push(<tr key={index}>
-                <td>{(this.state.page-1)*_Count+index + 1}</td>
+                <td>{(this.state.page - 1) * _Count + index + 1}</td>
                 <td>{e.xymc}</td>
                 <td>{e.xm}</td>
                 <td>{e.djsl}</td>
@@ -468,7 +493,7 @@ class TableChart extends React.Component {
                     }}
                     callback={this.refresh.bind(this)}
                 />
-                
+
             </div>
 
         )

@@ -340,17 +340,24 @@ button{
 	float: left;
 	height: 100%;
 	text-align: center;
+	cursor: pointer;
 }
 #body .ListWarp .master{
 	width:76px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	overflow: hidden;
 }
 #body .ListWarp  .college{
 	width:180px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	overflow: hidden;
 }
 #body .ListWarp   .course{
 	width:180px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	overflow: hidden;
 }
 #body .ListWarp  .opera{

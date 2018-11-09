@@ -9,9 +9,9 @@
   }
   .alert-context {
     background-color: #fff;
-    border-radius: 16px;
+    /* border-radius: 16px; */
     height: 200px;
-    width: 40%;
+    width: 457px;
     margin: 200px auto 0;
   }
   .alert-context .alert-content-detail {

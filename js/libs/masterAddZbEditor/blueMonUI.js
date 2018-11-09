@@ -72,7 +72,7 @@ class Items extends React.Component {
 			len = items.length,
 			result = [],
 			i;
-		for (i = 0; i < 　len; i++) {
+		for (i = 0; i < len; i++) {
 			result.push(
 				<ul key={i}>
 					<li className="project">{items[i].index}</li>
@@ -112,7 +112,7 @@ class ItemsX extends React.Component {
 		var len = items.length,
 			result = [],
 			i;
-		for (i = 0; i < 　len; i++) {
+		for (i = 0; i < len; i++) {
 			result.push(
 				<ul key={i}>
 					<li className="project">{items[i].index}</li>
@@ -162,16 +162,16 @@ class ByCourseItem extends React.Component {
 						fz: 0,
 						bzms: ''
 					},
-					{
-						index: '授课计划',
-						fz: 0,
-						bzms: ''
-					},
-					{
-						index: '教学团队',
-						fz: 0,
-						bzms: ''
-					},
+					// {
+					// 	index: '授课计划',
+					// 	fz: 0,
+					// 	bzms: ''
+					// },
+					// {
+					// 	index: '教学团队',
+					// 	fz: 0,
+					// 	bzms: ''
+					// },
 					{
 						index: '知识点体系',
 						fz: 0,
@@ -214,11 +214,13 @@ class ByCourseItem extends React.Component {
 						index: '实习计划',
 						fz: 0,
 						bzms: ''
-					}, {
-						index: '教学团队',
-						fz: 0,
-						bzms: ''
-					}]
+					}, 
+					// {
+					// 	index: '教学团队',
+					// 	fz: 0,
+					// 	bzms: ''
+					// }
+				]
 			],
 			select: 0
 		}
@@ -268,11 +270,11 @@ class ByCourseItem extends React.Component {
 			this.props.sure([llData, sjData]);
 		} else if (this.getTotal.call(this, 0) !== 100) {
 			Alert.open({
-				alertTip:'理论课指标总分不为100分！'
+				alertTip: '理论课指标总分不为100分！'
 			});
 		} else if (this.getTotal.call(this, 1) !== 100) {
 			Alert.open({
-				alertTip:'实训课指标总分不为100分！'
+				alertTip: '实训课指标总分不为100分！'
 			});
 		}
 	}
@@ -328,6 +330,11 @@ class ByCommon extends React.Component {
 			item = {},
 			items = this.state.items;
 		if (/\S{1,}/.test(this.projectInput.value)) {
+			items.forEach(e => { 
+				if (e.index == this.projectInput.value) { 
+					projectWarn = '项目添加重复'; 
+				} 
+			});
 			item.index = this.projectInput.value;
 		} else {
 			projectWarn = '项目未填写';
@@ -335,7 +342,7 @@ class ByCommon extends React.Component {
 		if (/\S{1,}/.test(this.textAreaInput.value)) {
 			item.bzms = this.textAreaInput.value;
 		} else {
-			descWarn = '评审未填写';
+			descWarn = '评审标准未填写';
 		}
 		if (!projectWarn && !descWarn) {
 			item.fz = this.state.curScore;
@@ -372,10 +379,12 @@ class ByCommon extends React.Component {
 			this.props.sure([data]);
 		} else {
 			Alert.open({
-				alertTip:'通用课指标总分不为100！'
+				alertTip: '通用课指标总分不为100！'
 			});
 		}
 	}
+
+	
 	render() {
 		var {
 			projectWarn,
@@ -395,7 +404,7 @@ class ByCommon extends React.Component {
 				<span className="warn"></span>
 				<div className="inputWarp">
 					<span className="title must">评审标准</span>
-					<textarea type="text" id="textArea" className="text" ref={(input) => { this.textAreaInput = input }} />
+					<textarea type="text" id="textArea" className="text" placeholder="最多不超过50个字" maxLength="50" ref={(input) => { this.textAreaInput = input }} />
 					<span className="add" onClick={this._add.bind(this)}>添加</span>
 				</div>
 				<span className="warn">{descWarn}</span>

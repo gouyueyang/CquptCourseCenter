@@ -5,45 +5,6 @@ body {
   padding-bottom: 1px;
   background: #F7F6F6;
 }
-
-/* 翻页条 */
-
-/*#fanye {
-  width: 100%;
-  height: 40px;
-  font-size: 13px;
-  line-height: 40px;
-  text-align: center;
-  margin: 23px auto;
-}
-#fanye>div {
-  width: 40px;
-  height: 40px;
-  background: #FFF;
-  display: inline-block;
-  cursor: pointer;
-}
-#fanye>ul {
-  display: inline-block;
-  background: #FFF;
-  list-style: none;
-}
-#fanye>ul>li {
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  word-spacing: 0;
-  cursor: pointer;
-}
-#fanye #fanye_pre {
-  border-radius: 5px 0 0 5px;
-}
-#fanye #fanye_next {
-  border-radius: 0 5px 5px 0;
-}*/
-
-
-
 /*--------------------------------------------------------------*/
 
 /*option*/
@@ -53,9 +14,9 @@ body {
   background: #FFF;
 }
 #kczystj_filter>select {
-  height: 20px;
+  height: 24px;
   margin-right: 30px;
-  font-size: 12px;
+  font-size: 14px;
   outline: none;
   vertical-align: middle;
   border: 1px solid #009361;
@@ -68,7 +29,7 @@ body {
   width: 160px;
 }
 #filter_name {
-  height: 18px;
+  height: 22px;
   width: 200px;
   outline: none;
   color: #009361;
@@ -90,15 +51,17 @@ body {
   color:#009361;
 }
 #btn {
-  width: 40px;
-  height: 20px;
+  width: 100px;
+  height: 30px;
   color: #FFF;
   cursor: pointer;
   margin-left: 54px;
-  line-height: 20px;
+  line-height: 28px;
   background: #009361;
   vertical-align: middle;
   border: 1px solid #009361;
+  border-radius: 5px;
+  font-size: 16px;
 }
 #kczystj_lists #kczystj_table {
   min-height: 570px;

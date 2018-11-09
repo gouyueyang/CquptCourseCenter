@@ -450,7 +450,7 @@ class EditorList extends React.Component {
 			result.push(
 				<ul className="List" key={i}>
 					<li><Radio select={selects[i]} index={i} callback={this.selectChange} /></li>
-					<li className="master">{items[i].masterName}</li>
+					<li className="master" title={items[i].masterName}>{items[i].masterName}</li>
 					<li className="college" title={items[i].dw}>{items[i].dw}</li>
 					<li className="course" title={items[i].course}>
 						{items[i].course}

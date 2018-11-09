@@ -423,7 +423,7 @@ class Form extends React.Component{
 			this.props.ajax(data, this.state.fileList);
 	}
 	_showDate(type){
-		if(this.props.edit !== 'none'){
+		// if(this.props.edit !== 'none'){
 			if(type == "startTime"){
 				var startTime = this.state.startTime,
 					endTime = this.state.endTime;
@@ -443,7 +443,7 @@ class Form extends React.Component{
 					endTime:endTime
 				});
 			}
-		}
+		// }
 	}
 	_sureDate(time,type){
 		var newState = this.state[type];
@@ -522,7 +522,7 @@ class Form extends React.Component{
 				<p className="formWarp-title" >{isEditor ? '编辑网评' : '发起网评' }</p>
 				<div className="inputWarp">
 					<span className="title titleM small-title-m">网评批次:</span>
-					<input  disabled={edit === 'none'?true:false} className="text" type="text" value={pc.value} onInput={this._input('pc')}/>
+					<input className="text" type="text" value={pc.value} onInput={this._input('pc')}/>
 					<span className="warn">{pc.warn}</span>
 				</div>
 				<div className="inputWarp">
@@ -532,24 +532,24 @@ class Form extends React.Component{
 				</div>
 				<div className="inputWarp" >
 					<span className="title">开始时间:</span>
-					<div className={edit === "none"?"text disabled":"text"} type="date" onInput={this._input('startTime')}>
+					<div className={edit === "none"?"text":"text"} type="date" onInput={this._input('startTime')}>
 						<span className="timeText">{startTime.value || '请选择日期'}</span>
 						<span className="dateIcon" onClick={this._showDate.bind(this,'startTime')}></span>
 						{
 							startTime.date&&
-							<DateInput disabled={edit === 'none'?true:false} name="startTime" callback = {this._sureDate.bind(this)}/>
+							<DateInput name="startTime" callback = {this._sureDate.bind(this)}/>
 						}
 					</div>
 					<span className="warn">{startTime.warn}</span>
 				</div>
 				<div className="inputWarp">
 					<span className="title" >结束时间:</span>
-					<div className={edit === "none"?"text disabled":"text"}  type="date"  onInput={this._input('endTime')} >
+					<div className={edit === "none"?"text":"text"}  type="date"  onInput={this._input('endTime')} >
 						<span className="timeText">{endTime.value || '请选择日期'}</span>
 						<span className="dateIcon" onClick={this._showDate.bind(this,'endTime')}></span>
 						{
 							endTime.date&&
-							<DateInput initHours="23" initFen="59" initSecond="59" disabled={edit === 'none'?true:false} name="endTime" callback = {this._sureDate.bind(this)}/>
+							<DateInput initHours="23" initFen="59" initSecond="59" name="endTime" callback = {this._sureDate.bind(this)}/>
 						}
 					</div>
 					<span className="warn">{endTime.warn}</span>
@@ -584,7 +584,7 @@ class Form extends React.Component{
 				{/*}*/}
 				<div className="inputWarp" style={{height:'126px'}}>
 					<span className="floatTitle">备注:</span>
-					<textarea disabled={edit === 'none'?true:false} className="textarea" onInput={this._input('bz')}/>
+					<textarea className="textarea" onInput={this._input('bz')}/>
 					<span className="warn">{bz.warn}</span>
 				</div>
 				<div className="inputWarp">

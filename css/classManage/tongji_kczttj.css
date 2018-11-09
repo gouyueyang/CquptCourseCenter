@@ -15,8 +15,8 @@ body {
   background: #FFF;
 }
 #kczttj_filter>select {
-  height: 20px;
-  font-size: 12px;
+  height: 24px;
+  font-size: 14px;
   outline: none;
   vertical-align: middle;
   border: 1px solid #009361;
@@ -26,15 +26,17 @@ body {
   width: 240px;
 }
 #btn {
-  width: 40px;
-  height: 20px;
+  width: 100px;
+  height: 30px;
   color: #FFF;
   cursor: pointer;
-  margin-left: 20px;
-  line-height: 20px;
+  margin-left: 54px;
+  line-height: 28px;
   background: #009361;
   vertical-align: middle;
   border: 1px solid #009361;
+  border-radius: 5px;
+  font-size: 16px;
 }
 #kczttj_lists #kczttj_table {
   min-height: 570px;

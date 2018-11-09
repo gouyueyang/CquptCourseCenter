@@ -89,9 +89,9 @@ function ajaxSumbit(data, fileList){
 				var meta = result.meta;
 				if(meta.result == 100){
 					Alert.open({
-						alertTip:'网评编辑成功！'
+						alertTip:'网评编辑成功！',
+						closeAlert:()=>{window.location.href = 'wpgl.html';}
 					});
-					window.location.href = 'wpgl.html';
 				}else{
 					Alert.open({
 						alertTip:meta.msg
@@ -107,9 +107,9 @@ function ajaxSumbit(data, fileList){
 				var meta = result.meta;
 				if(meta.result == 100){
 					Alert.open({
-						alertTip:'网评发起成功！'
+						alertTip:'网评发起成功！',
+						closeAlert:()=>{window.location.href = 'wpgl.html';}
 					});
-					window.location.href = 'wpgl.html';
 				}else{
 					Alert.open({
 						alertTip:meta.msg

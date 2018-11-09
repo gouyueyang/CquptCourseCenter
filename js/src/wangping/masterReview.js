@@ -10,7 +10,7 @@ require('es6-promise');
 var doc = document,
 	BluMUI = require('../../libs/masterReview/blueMonUI.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
-	userId = 'gyy2' || getCookie('userId'),// 专家ID
+	userId = getCookie('userId'),// 专家ID
 	iframe = window.frames['myiframe'],
 	iframeDom = doc.getElementById('myiframe'),
 	revewBody = doc.getElementById('revewBody'),
@@ -90,7 +90,7 @@ ajaxPading.init({
 function getNavURL(type, classId) {
 	switch (type) {
 		case '课程简介':
-			return '../classInfShow/kechengJianjie.html?classId=' + classId;
+			return '../classInfShow/courseJianjie.html?classId=' + classId;
 			break;
 		case '教学团队':
 			return '../classInfShow/teamShow.html?classId=' + classId;
@@ -119,7 +119,7 @@ function getNavURL(type, classId) {
 			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('知识体系');
 			break;
 		case '学习资源':
-			return '../classInfShow/ziYuan.html?classId=' + classId + '&moduleName=' + encodeURIComponent('视频');
+			return '../classInfShow/courseShow.html?classId=' + classId + '&moduleName=' + encodeURIComponent('视频');
 			break;
 
 	}
@@ -365,7 +365,8 @@ function renderResource() {
 		url: courseResCount,
 		data: {
 			unifyCode: userId,
-			courseNo: curClassId
+			courseNo: curClassId,
+			place:4
 		},
 
 		onSuccess: function (result) {
