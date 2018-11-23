@@ -5,8 +5,8 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-// var BluMUI = require('../../libs/wangping/masterSortMasterEditor.js'),
-var BluMUI = require('../../libs/masterSortMasterEditor/blueMonUI.js'),
+
+var BluMUI = require('../../libs/wangping/masterSortMasterEditor.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	doc = document,

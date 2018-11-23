@@ -57,7 +57,6 @@ export default class Fanye extends React.Component {
   fanye(p) {
     this.refs.tp.value = null;
     if (p <= 0 || p > this.props.options.pages) {
-      alert("输入页数不合格！");
       return;
     }
     this.props.callback(p);

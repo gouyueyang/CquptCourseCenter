@@ -6,7 +6,7 @@ require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 var doc = document,
-	BluMUI = require('../../libs/masterHistory/blueMonUI.js'),
+	BluMUI = require('../../libs/wangping/masterHistory.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	userId = getCookie('userId'),

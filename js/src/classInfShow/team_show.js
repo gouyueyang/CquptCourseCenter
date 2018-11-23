@@ -2,7 +2,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-let BluMUI = require('../../libs/team_show/blueMonUI');
+let BluMUI = require('../../libs/classInfShow/team_show');
 var ajax = require('../../libs/post_ajax');
 
 
@@ -23,8 +23,8 @@ let User={
 let Course={
   kcbh:''
 }
-User.id=getCookie('userId')
-Course.kcbh=parseHash(window.location.href).classId
+User.id=getCookie('userId');
+Course.kcbh=parseHash(window.location.href).classId;
 
 /*获取信息*/
 ajax({
@@ -45,8 +45,8 @@ ajax({
           teachers.push(e);
         }
       });
-      console.log('负责人',master)
-      console.log('教师',teachers)
+      // console.log('负责人',master);
+      // console.log('教师',teachers);
       BluMUI.create({
         id:'Msg',
         Js:datas.data.tdjs

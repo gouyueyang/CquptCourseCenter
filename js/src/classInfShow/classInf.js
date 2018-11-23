@@ -2,7 +2,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/classInf/blueMonUI.js'),
+var BluMUI = require('../../libs/classInfShow/classInf.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	classNameDom = document.getElementById('courseName'),
 	iframe = window.frames['content'],
@@ -23,9 +23,9 @@ var BluMUI = require('../../libs/classInf/blueMonUI.js'),
 		'考核方案': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考核方案'),
 		'导学方案': 'classInfModule.html?classId=' + classId + '&moduleName='+ encodeURIComponent('导学方案'),
 		'知识点体系': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('知识体系'),
-		'学习资源': 'courseShow.html?classId=' + classId + '&moduleName='+ encodeURIComponent('视频'),
-		'教学团队': 'team_show.html?classId=' + classId,
-		'课程简介': 'courseJianjie.html?classId=' + classId,
+		'学习资源': 'courseShow.html?classId=' + classId + '&moduleName='+ encodeURIComponent('视频')+'&place=2',
+		'教学团队': 'team_show.html?classId=' + classId+'&place=2',
+		'课程简介': 'courseJianjie.html?classId=' + classId+'&place=2',
 		'授课计划': 'classTeachPlan.html?classId=' + classId,
 		'实习计划': 'classTeachPlan.html?classId=' + classId
 	};

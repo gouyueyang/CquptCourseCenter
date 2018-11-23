@@ -2,7 +2,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/home/blueMonUI.js');
+var BluMUI = require('../../libs/home/home.js');
 BluMUI.create({
 	id:"Carouse",
 	extClass:"Carousel_test",

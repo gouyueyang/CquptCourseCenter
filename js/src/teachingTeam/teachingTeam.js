@@ -1,4 +1,4 @@
-let BluMUI = require('../../libs/teachingTeam/blueMonUI.js');
+let BluMUI = require('../../libs/teachingTeam/teachingTeam.js');
 let ajax = require('../../libs/post_ajax.js');
 
 // 需要获取用户id

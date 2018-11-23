@@ -21,6 +21,7 @@ module.exports = {
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
     // classReviewModule:'./js/src/classInfShow/classReviewModule.js',
+
     //网评
 
     // //专家库管理
@@ -37,13 +38,13 @@ module.exports = {
     // masterSortTeam: './js/src/wangping/masterSortTeam.js',
     // masterSortMasterEditor: './js/src/wangping/masterSortMasterEditor.js',
     // //网评管理
-    // wpgl: './js/src/wangping/wpgl.js',
+    wpgl: './js/src/wangping/wpgl.js',
     // masterPublishWp: './js/src/wangping/masterPublishWp.js',
     // wpgl_fenpei: './js/src/wangping/wpgl_fenpei.js',
     // wpgl_jieguo: './js/src/wangping/wpgl-jieguo.js',
     // //课程分组管理
     // kcfzgl: './js/src/wangping/kcfzgl.js',
-    // materCourseSort: './js/src/wangping/materCourseSort.js',
+    // masterCourseSort: './js/src/wangping/masterCourseSort.js',
 
     // masterReview: './js/src/wangping/masterReview.js',
     // masterHistory: './js/src/wangping/masterHistory.js',
@@ -55,9 +56,15 @@ module.exports = {
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',
     // tongJi_wpjgcx:'./js/src/tongJi/tongJi_wpjgcx.js',
     // tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js',
-    tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
-    tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
-    tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
+    // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
+    // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
+    // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
+
+    //课程管理
+    // courseManagement:'./js/src/courseManage/courseManagement.js',
+    // classManageEditor:'./js/src/courseManage/classManageEditor.js',
+    // classManageCheck:'./js/src/courseManage/classManageCheck.js',
+    // classManageSpotCheck:'./js/src/courseManage/classManageSpotCheck.js',
   },
   output: {
     // path:'./js/pages/home',
@@ -65,9 +72,11 @@ module.exports = {
     // path:'./js/pages/teachingTeam',
     // path:'./js/pages/masterLogin',
     // path:'./js/pages/mySet',
-    // path:'./js/pages/classInfShow',
-    // path: './js/pages/wangping/',
-    path:'./js/pages/statistics/',      //统计
+    // path:'./js/pages/classInfShow',      //课程信息展示
+    path: './js/pages/wangping/',
+    // path:'./js/pages/statistics/',      //统计
+    // path:'./js/pages/courseManage',        //课程管理
+
     filename: "[name].bundle.js",
     publicPath: 'http://localhost:8080/pages'
   },

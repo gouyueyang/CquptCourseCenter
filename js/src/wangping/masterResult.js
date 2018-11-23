@@ -7,7 +7,7 @@ require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 var doc = document,
-	 BluMUI = require('../../libs/masterResult/blueMonUI.js'),
+	 BluMUI = require('../../libs/wangping/masterResult.js'),
 	 ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	 iframe = window.frames['myiframe'],
 	 hash = parseHash(window.location.href),

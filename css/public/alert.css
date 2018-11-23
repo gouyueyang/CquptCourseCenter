@@ -17,9 +17,10 @@
   .alert-context .alert-content-detail {
     text-align: center;
     color: #333;
-    font-size: 24px;
-    height: 150px;
-    line-height: 150px;
+    font-size: 22px;
+    height: 120px;
+    padding:15px 20px;
+    line-height: 60px;
   }
   .alert-context .comfirm {
     border-top: 1PX solid #eee;

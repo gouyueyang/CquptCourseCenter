@@ -26,7 +26,7 @@ h2.inner_title {
 	color: #333;
 	vertical-align: middle;
 	margin-right: 5px;
-	margin-left: 5px;
+	margin-left: 10px;
 }
 .top select {
 	height: 24px;
@@ -55,8 +55,9 @@ h2.inner_title {
 .top>#search {
 	width: 100px;
 	height: 30px;
-	background: #009261;
+	background: #009361;
 	color: #FFF;
+	font-size: 16px;
 	border: none;
 	outline: none;
 	cursor: pointer;
@@ -66,10 +67,10 @@ h2.inner_title {
 .top #showMore {
 	width: 150px;
 	height: 30px;
-	background: #009261;
+	background: #009361;
 	color: #FFF;
+	font-size: 16px;
 	border: none;
-	border-radius: 5px;
 	outline: none;
 	cursor: pointer;
 	margin-left: 20px;
@@ -79,9 +80,10 @@ h2.inner_title {
 }
 
 .top {
-	padding: 17px 0;
+	padding: 10px 0;
 	padding-left: 15px;
 	line-height: 30px;
+	font-size: 16px;
 }
 /*时间选择框样式*/
 
@@ -96,7 +98,7 @@ h2.inner_title {
 	height: 30px;
 	text-align: center;
 	line-height: 30px;
-	background-color: #007a51;
+	background-color: #009361;
 	border-radius: 5px;
 	color: #fff;
 	font-size: 16px;

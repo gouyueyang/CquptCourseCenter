@@ -8,7 +8,7 @@ require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 var doc = document,
-	BluMUI = require('../../libs/masterReview/blueMonUI.js'),
+	BluMUI = require('../../libs/wangping/masterReview.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	userId = getCookie('userId'),// 专家ID
 	iframe = window.frames['myiframe'],
@@ -90,36 +90,36 @@ ajaxPading.init({
 function getNavURL(type, classId) {
 	switch (type) {
 		case '课程简介':
-			return '../classInfShow/courseJianjie.html?classId=' + classId;
+			return '../classInfShow/courseJianjie.html?classId=' + classId+'&place=2';
 			break;
 		case '教学团队':
-			return '../classInfShow/teamShow.html?classId=' + classId;
+			return '../classInfShow/teamShow.html?classId=' + classId+'&place=2';
 			break;
 		case '电子教案':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案')+'&place=4';
 			break;
 		case '考试大纲':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考试大纲');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考试大纲')+'&place=2';
 			break;
 		case '考核方案':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考核方案');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考核方案')+'&place=2';
 		case '教学大纲':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('教学大纲');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('教学大纲')+'&place=2';
 			break;
 		case '导学方案':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('导学方案');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('导学方案')+'&place=2';
 			break;
 		case '授课计划':
-			return '../classInfShow/classMasterModule.html?classId=' + classId;
+			return '../classInfShow/classMasterModule.html?classId=' + classId+'&place=2';
 			break;
 		case '实习计划':
-			return '../classInfShow/classMasterModule.html?classId=' + classId;
+			return '../classInfShow/classMasterModule.html?classId=' + classId+'&place=2';
 			break;
 		case '知识点体系':
-			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('知识体系');
+			return '../classInfShow/classMasterModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('知识体系')+'&place=2';
 			break;
 		case '学习资源':
-			return '../classInfShow/courseShow.html?classId=' + classId + '&moduleName=' + encodeURIComponent('视频');
+			return '../classInfShow/courseShow.html?classId=' + classId + '&moduleName=' + encodeURIComponent('视频')+'&place=2';
 			break;
 
 	}

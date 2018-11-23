@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 
-import DateTime from 'react-datetime';
+// import DateTime from 'react-datetime';
 import moment from 'moment';
 // 引入 echarts 主模块。
 import * as echarts from 'echarts/lib/echarts';
@@ -22,6 +22,7 @@ import 'echarts/lib/component/toolbox';
 
 const ajax = require('../post_ajax.js');
 const Fanye = require('../turnPage.js');
+const DateInput = require('../../util/datebox.js');
 
 const _COUNT = 10;
 
@@ -41,8 +42,8 @@ class NewFilter extends React.Component {
     this.monthFormat = 'YYYY-MM';
     var nowDate = new Date();
     var oneYearDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
-    var defaultStart = moment(oneYearDate).format('YYYY-MM-DD 00:00:00');
-    var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
+    var defaultStart = moment(oneYearDate).format(DateFormat.startTimeFormat);
+    var defaultEnd = moment(nowDate).format(DateFormat.endTimeFormat);
 
     this.wrapId = this.props.wrapId;  //图表外层id
     this.chartTitle = this.props.chartTitle; //图表名称
@@ -55,6 +56,8 @@ class NewFilter extends React.Component {
       type: this.props.type,   //筛选范围
       sstype: this.props.sstype,  //筛选对象
       lists: [],    //存储结果
+      startDatebox: false,   //时间选择框显示控制
+      endDateBox: false,
     };
     this.showChart = this.showChart.bind(this);
     this.handleChange1 = this.handleChange1.bind(this);
@@ -67,6 +70,7 @@ class NewFilter extends React.Component {
     var oDate2 = new Date(this.state.jssj);
     if (oDate1.getTime() > oDate2.getTime()) {
       alert("开始时间应小于结束时间!");
+      return;
     }
 
 
@@ -110,8 +114,8 @@ class NewFilter extends React.Component {
       unifyCode: getCookie("userId"),
       kssj: moment(this.state.kssj).format('YYYY-MM'),
       jssj: moment(this.state.jssj).format('YYYY-MM'),
-      tjlb: '1',
-      type: '1',
+      tjlb: '1',         //统计类别 1 登陆，2操作
+      type: '1',         //1 老师  2 学生
     };
     var teaLine2 = {
       unifyCode: getCookie("userId"),
@@ -160,14 +164,14 @@ class NewFilter extends React.Component {
       kssj: moment(this.state.kssj).format('YYYY-MM'),
       jssj: moment(this.state.jssj).format('YYYY-MM'),
       tjlb: '1',
-      type: '1',
+      type: '2',
     };
     var stuLine2 = {
       unifyCode: getCookie("userId"),
       kssj: moment(this.state.kssj).format('YYYY-MM'),
       jssj: moment(this.state.jssj).format('YYYY-MM'),
       tjlb: '2',
-      type: '1',
+      type: '2',
     };
 
 
@@ -223,13 +227,13 @@ class NewFilter extends React.Component {
 
   handleChange1(newDate) {
     var a = newDate._d;
-    var date = moment(a).format('YYYY-MM-DD 00:00:00');
+    var date = moment(a).format(DateFormat.startTimeFormat);
     return this.setState({ kssj: date });
   }
 
   handleChange2(newDate) {
     var a = newDate._d;
-    var date = moment(a).format('YYYY-MM-DD 23:59:59');
+    var date = moment(a).format(DateFormat.endTimeFormat);
     return this.setState({ jssj: date });
   }
 
@@ -239,27 +243,50 @@ class NewFilter extends React.Component {
       <div className="top">
         <div>
           <span>时间区间: </span>
-          <DateTime
+          {/* <DateTime
             className="inlineBlock"
             dateFormat='YYYY-MM-DD'
             timeFormat=''
             defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
             onChange={this.handleChange1}
-          ></DateTime>
+          ></DateTime> */}
+          <div className="text" type="date">
+            <span className="timeText">{moment(this.state.kssj).format(this.format) || moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}</span>
+            <span className="dateIcon" onClick={() => this.setState({ startDatebox: !this.state.startDatebox, endDatebox: false })}></span>
+            {
+              this.state.startDatebox &&
+              <DateInput time={new Date(moment(this.state.kssj).format(DateFormat.startTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, startDatebox: false },this.showChart)} />
+            }
+          </div>
           <span> — </span>
-          <DateTime
+          {/* <DateTime
             className="inlineBlock"
             dateFormat='YYYY-MM-DD'
             timeFormat=''
             defaultValue={moment(new Date()).format(this.format)}
             onChange={this.handleChange2}
-          ></DateTime>
+          ></DateTime> */}
+          <div className="text" type="date">
+            <span className="timeText">{moment(this.state.jssj).format(this.format) || moment(new Date()).format(this.format)}</span>
+            <span className="dateIcon" onClick={() => this.setState({ endDatebox: !this.state.endDatebox, startDatebox: false })}></span>
+            {
+              this.state.endDatebox &&
+              <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, endDatebox: false },this.showChart)} />
+            }
+          </div>
         </div>
         <div>
           <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
         </div>
         <div>
-          <button id="showMore" onClick={() => { Creat_popup('showMore') }}>查看详细排名</button>
+          {
+            this.wrapId.indexOf("tea_pie_chart1") > -1 &&
+            <button id="showMore" onClick={() => { Creat_popup('showMore', '', "tea") }}>查看教师详细排名</button>
+          }
+          {
+            this.wrapId.indexOf("stu_pie_chart1") > -1 &&
+            <button id="showMore" onClick={() => { Creat_popup('showMore', '', "stu") }}>查看学生详细排名</button>
+          }
         </div>
       </div>
     </div>);
@@ -654,7 +681,6 @@ class Item extends React.Component {
             readOnly: true,
             optionToContent: function (opt) {
               var datas = result;
-              console.log(datas);
               var tableDom = document.createElement("table");
               tableDom.style.cssText = "width:100%;border:1px solid #ccc;border-collapse: collapse;text-align:center";
               var len1 = datas.length;
@@ -728,7 +754,7 @@ class Item extends React.Component {
 
   draw() {
     let chartDom = document.getElementById(this.wrapId);
-    // let chartDom = React.createElement("div",{style:"width:600px;height:400px;"});
+    // let chartDom = React.createElement("div",{style: "width:600px;height:400px;"});
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(chartDom);
     myChart.showLoading({ text: '正在努力的读取数据中...' });
@@ -785,7 +811,6 @@ class PopupList extends React.Component {
     if (JSON.stringify(sets) !== "{}") {
       this.state = sets;
     }
-    console.log(this.state);
     ajax({
       url: courseCenter.host + "getMoreData",
       data: {
@@ -794,7 +819,7 @@ class PopupList extends React.Component {
         jssj: this.state.jssj,
         tjlb: this.state.tjlb,
         pxtype: this.state.pxtype,
-        sstype: this.state.sstype,
+        sstype: this.state.sstype == 'tea' ? 1 : 2,
         xm: this.state.xm,
         xymc: this.state.xymc,
         page: page,
@@ -820,8 +845,16 @@ class PopupList extends React.Component {
             <tr>
               <th>序号</th>
               <th>姓名</th>
+
               <th>身份认证号</th>
-              <th>学院</th>
+              {
+                this.state.sstype == 'tea' &&
+                <th>单位</th>
+              }
+              {
+                this.state.sstype == 'stu' &&
+                <th>学院</th>
+              }
               <th>点击次数</th>
             </tr>
           </thead>
@@ -848,7 +881,7 @@ class PopupList extends React.Component {
         jssj: this.props.options.jssj,
         tjlb: this.props.options.tjlb,
         pxtype: this.props.options.pxtype,
-        sstype: this.props.options.sstype,
+        sstype: this.props.options.sstype == 'tea' ? 1 : 2,
         xm: this.props.options.xm,
         xymc: this.props.options.xymc,
         page: this.props.options.page,
@@ -867,6 +900,7 @@ class PopupList extends React.Component {
     });
   }
 }
+
 class PopupBody extends React.Component {
   constructor(props) {
     super(props);
@@ -881,9 +915,11 @@ class PopupBody extends React.Component {
       jssj: defaultEnd,
       tjlb: 1,     //:统计类别（String）1登录次数，2：操作次数必填
       pxtype: 'desc',  //desc 降序  asc:升序
-      sstype: 1,    //1:老师 2：学生必填
+      sstype: this.props.sstype,    //1:老师 2：学生必填
       xm: '',      //姓名
       xymc: '',    //学院名称
+      startDatebox: false,
+      endDatebox: false,
 
       lists: [],    //存储结果
       page: 1,
@@ -894,12 +930,28 @@ class PopupBody extends React.Component {
     this.changeOutput = this.changeOutput.bind(this);
     this.handleChange1 = this.handleChange1.bind(this);
     this.handleChange2 = this.handleChange2.bind(this);
+    this.key = this.key.bind(this);
   }
 
   //向后台发送请求
   showChart() {
-    this.changeOutput();
-    this.refs.list.refresh(1, this.state);
+    var oDate1 = new Date(this.state.kssj);
+    var oDate2 = new Date(this.state.jssj);
+    if (oDate1.getTime() > oDate2.getTime()) {
+      alert("开始时间应小于结束时间！");
+      // Alert.open({
+      //     alertTip: "开始时间应小于结束时间！"
+      // });
+    } else {
+      this.changeOutput();
+      this.refs.list.refresh(1, this.state);
+    }
+  }
+
+  key(e) {
+    if (e.keyCode == 13) {
+      this.showChart();
+    }
   }
 
   changeOutput() {
@@ -928,14 +980,31 @@ class PopupBody extends React.Component {
             <div className="top">
               <div>
                 <span>统计类别:</span>
-                <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }); }}>
+                <select name="tjlb" id="tjlb" defaultValue='1' onChange={(eve) => { this.setState({ tjlb: eve.target.value }, this.showChart); }}>
                   <option value="1">登陆次数</option>
                   <option value="2">操作次数</option>
                 </select>
               </div>
               <div>
                 <span>时间区间: </span>
-                <DateTime
+                <div className="text" type="date">
+                  <span className="timeText">{moment(this.state.kssj).format(this.format) || moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}</span>
+                  <span className="dateIcon" onClick={() => this.setState({ startDatebox: !this.state.startDatebox, endDatebox: false })}></span>
+                  {
+                    this.state.startDatebox &&
+                    <DateInput time={new Date(moment(this.state.kssj).format(DateFormat.startTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, startDatebox: false }, this.showChart)} />
+                  }
+                </div>
+                <span> — </span>
+                <div className="text" type="date">
+                  <span className="timeText">{moment(this.state.jssj).format(this.format) || moment(new Date()).format(this.format)}</span>
+                  <span className="dateIcon" onClick={() => this.setState({ endDatebox: !this.state.endDatebox, startDatebox: false })}></span>
+                  {
+                    this.state.endDatebox &&
+                    <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, endDatebox: false }, this.showChart)} />
+                  }
+                </div>
+                {/* <DateTime
                   className="inlineBlock"
                   dateFormat='YYYY-MM-DD'
                   timeFormat=''
@@ -951,35 +1020,44 @@ class PopupBody extends React.Component {
                   defaultValue={moment(new Date()).format(this.format)}
                   onChange={this.handleChange2}
                 ></DateTime>
-              </div>
-              <div>
+              </div> */}
+                {/* <div>
                 <span>身份:</span>
                 <select name="'sstype" id="sstype" defaultValue="1" onChange={(eve) => { this.setState({ sstype: eve.target.value }); }}>
                   <option value="1">教师</option>
                   <option value="2">学生</option>
-                </select>
+                </select>*/}
               </div>
               <div>
                 <span>排序类型:</span>
-                <select name="'pxtype" id="pxtype" defaultValue="desc" onChange={(eve) => { this.setState({ pxtype: eve.target.value }); }}>
+                <select name="'pxtype" id="pxtype" defaultValue="desc" onChange={(eve) => { this.setState({ pxtype: eve.target.value }, this.showChart); }}>
                   <option value="desc">降序</option>
                   <option value="asc">升序</option>
                 </select>
               </div>
-              <div>
-                <span>学院:</span>
-                <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
-                  <option value="">请选择学院</option>
-                </select>
-              </div>
+              {
+                this.props.sstype == 'tea' &&
+                <div>
+                  <span>单位:</span>
+                  <input type="text" id="filter_dw" placeholder="请输入单位名称" ref="dwName" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }} onKeyDown={this.key} />
+                </div>
+              }
+              {
+                this.props.sstype == 'stu' &&
+                <div>
+                  <span>学院:</span>
+                  <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }, this.showChart) }}>
+                    <option value="">请选择学院</option>
+                  </select>
+                </div>
+              }
+
               <div>
                 <span>姓名:</span>
-                <input type="text" id="filter_name" placeholder="请输入姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} />
+                <input type="text" id="filter_name" placeholder="请输入姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} onKeyDown={this.key} />
               </div>
               <div>
                 <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
-              </div>
-              <div>
                 <a className="output" href={courseCenter.host + "exportMoreData?" + this.state.output}>导出</a>
               </div>
             </div>
@@ -994,20 +1072,22 @@ class PopupBody extends React.Component {
   componentDidMount() {
     this.showChart(1);
     // 获取学院
-    ajax({
-      url: courseCenter.host + "getTjfxCollege",
-      data: {
-        unifyCode: getCookie("userId")
-      },
-      success: (gets) => {
-        let datas = JSON.parse(gets);
-        if (datas.meta.result == 100) {
-          datas.data.map((e, index) => {
-            this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
-          });
+    if (this.props.sstype == 'stu') {
+      ajax({
+        url: courseCenter.host + "selectXsXymc",
+        data: {
+          unifyCode: getCookie("userId")
+        },
+        success: (gets) => {
+          let datas = JSON.parse(gets);
+          if (datas.meta.result == 100) {
+            datas.data.map((e, index) => {
+              this.refs.college.innerHTML += `<option value=${e.xymc}>${e.xymc}</option>`;
+            });
+          }
         }
-      }
-    });
+      });
+    }
   }
 }
 class Popup extends React.Component {
@@ -1016,14 +1096,14 @@ class Popup extends React.Component {
   }
 
   render() {
-    const { type } = this.props;
+    const { type, sstype } = this.props;
 
     switch (type) {
       case 'showMore':
         return (
-          <div id="popbody" ref="pb">
-            <PopupBody />
-            <div><button id="popup_back" ref={btn => this.back = btn}>关闭弹窗</button></div>
+          <div id="popbody" ref="pb" className = {sstype == 'tea'?'teaPopup':'stuPopup'}>
+            <PopupBody sstype={sstype}/>
+            <div><button id="popup_back" ref={btn => this.back = btn}>关闭</button></div>
           </div>
         );
         break;
@@ -1044,11 +1124,12 @@ class Popup extends React.Component {
   }
 }
 
-function Creat_popup(type, id) {
+function Creat_popup(type, id, sstype) {
   const popup = document.getElementById('popup');
   const popup_datas = {
     type: type,
-    id: id
+    id: id,
+    sstype: sstype
   };
   ReactDOM.render(
     <Popup {...popup_datas} />,

@@ -23,6 +23,8 @@ import 'echarts/lib/component/toolbox';
 
 const ajax = require('../post_ajax.js');
 const Fanye = require('../turnPage.js');
+const DateInput = require('../../util/datebox.js');
+
 const _Count = 15;
 const SET = (key, value) => {
     sessionStorage.setItem("chart-" + key, value);
@@ -38,8 +40,8 @@ class PieFilter extends React.Component {
         this.format = 'YYYY-MM-DD';  //显示日期格式
         this.monthFormat = 'YYYY-MM';
         var nowDate = new Date();
-        //var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
-        var defaultStart = moment(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
+        var oneYearDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
+        var defaultStart = moment(oneYearDate).format('YYYY-MM-DD 00:00:00');
         var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
 
         this.wrapId = this.props.wrapId;  //图表外层id
@@ -53,6 +55,9 @@ class PieFilter extends React.Component {
             xm: this.props.xm || '',    //姓名
             xymc: this.props.xymc || '',  //学院名称
             lists: [],    //存储结果
+
+            startDatebox: false,
+            endDatebox: false,
         };
         this.showChart = this.showChart.bind(this);
         this.handleChange1 = this.handleChange1.bind(this);
@@ -122,13 +127,29 @@ class PieFilter extends React.Component {
             <div className="top">
 
                 <span>时间区间:</span>
-
-                <DateTime
+                <div className="text" type="date">
+                    <span className="timeText">{moment(this.state.kssj).format(this.format) || moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}</span>
+                    <span className="dateIcon" onClick={() => this.setState({ startDatebox: !this.state.startDatebox, endDatebox: false })}></span>
+                    {
+                        this.state.startDatebox &&
+                        <DateInput time={new Date(moment(this.state.kssj).format(DateFormat.startTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, startDatebox: false }, this.showChart)} />
+                    }
+                </div>
+                <span> — </span>
+                <div className="text" type="date">
+                    <span className="timeText">{moment(this.state.jssj).format(this.format) || moment(new Date()).format(this.format)}</span>
+                    <span className="dateIcon" onClick={() => this.setState({ endDatebox: !this.state.endDatebox, startDatebox: false })}></span>
+                    {
+                        this.state.endDatebox &&
+                        <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, endDatebox: false }, this.showChart)} />
+                    }
+                </div>
+                {/* <DateTime
                     className="inlineBlock"
                     dateFormat='YYYY-MM-DD'
                     timeFormat=''
 
-                    defaultValue={moment(new Date("2017-01-01")).format(this.format)}
+                    defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
                     onChange={this.handleChange1}
                 ></DateTime>
                 <span> — </span>
@@ -138,7 +159,7 @@ class PieFilter extends React.Component {
                     timeFormat=''
                     defaultValue={moment(new Date()).format(this.format)}
                     onChange={this.handleChange2}
-                ></DateTime>
+                ></DateTime> */}
 
                 <button id="search" onClick={this.showChart.bind(this, 1)}>查询</button>
             </div>
@@ -156,8 +177,8 @@ class TableFilter extends React.Component {
         this.format = 'YYYY-MM-DD';  //显示日期格式
         this.monthFormat = 'YYYY-MM';
         var nowDate = new Date();
-        //var oneMonthDate = new Date(nowDate - 30 * 24 * 3600 * 1000);
-        var defaultStart = moment(new Date('2017-01-01')).format('YYYY-MM-DD 00:00:00');
+        var oneYearDate = new Date(nowDate - 365 * 24 * 3600 * 1000);
+        var defaultStart = moment(oneYearDate).format('YYYY-MM-DD 00:00:00');
         var defaultEnd = moment(nowDate).format('YYYY-MM-DD 23:59:59');
 
         this.wrapId = this.props.wrapId;  //图表外层id
@@ -176,7 +197,9 @@ class TableFilter extends React.Component {
             pages: 1,
             rows: 0,
             count: _Count,
-            output: `unifyCode=${getCookie("userId")}`
+            output: `unifyCode=${getCookie("userId")}`,
+            startDatebox: false,
+            endDatebox: false,
         };
 
         this.showChart = this.showChart.bind(this);
@@ -195,7 +218,6 @@ class TableFilter extends React.Component {
     }
     //向后台发送请求
     showChart() {
-
         var oDate1 = new Date(this.state.kssj);
         var oDate2 = new Date(this.state.jssj);
         if (oDate1.getTime() > oDate2.getTime()) {
@@ -210,7 +232,7 @@ class TableFilter extends React.Component {
     }
 
     key(e) {
-        if (e.kegCode == 13) {
+        if (e.keyCode == 13) {
             this.showChart();
         }
     }
@@ -235,13 +257,29 @@ class TableFilter extends React.Component {
                     <div className="top">
 
                         <span>时间区间:</span>
-
-                        <DateTime
+                        <div className="text" type="date">
+                            <span className="timeText">{moment(this.state.kssj).format(this.format) || moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}</span>
+                            <span className="dateIcon" onClick={() => this.setState({ startDatebox: !this.state.startDatebox, endDatebox: false })}></span>
+                            {
+                                this.state.startDatebox &&
+                                <DateInput time={new Date(moment(this.state.kssj).format(DateFormat.startTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, startDatebox: false },this.showChart)} />
+                            }
+                        </div>
+                        <span> — </span>
+                        <div className="text" type="date">
+                            <span className="timeText">{moment(this.state.jssj).format(this.format) || moment(new Date()).format(this.format)}</span>
+                            <span className="dateIcon" onClick={() => this.setState({ endDatebox: !this.state.endDatebox, startDatebox: false })}></span>
+                            {
+                                this.state.endDatebox &&
+                                <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, endDatebox: false },this.showChart)} />
+                            }
+                        </div>
+                        {/* <DateTime
                             className="inlineBlock"
                             dateFormat='YYYY-MM-DD'
                             timeFormat=''
 
-                            defaultValue={moment(new Date("2017-01-01")).format(this.format)}
+                            defaultValue={moment(new Date() - 365 * 24 * 3600 * 1000).format(this.format)}
                             onChange={this.handleChange1}
                         ></DateTime>
                         <span> — </span>
@@ -251,8 +289,7 @@ class TableFilter extends React.Component {
                             timeFormat=''
                             defaultValue={moment(new Date()).format(this.format)}
                             onChange={this.handleChange2}
-                        ></DateTime>
-                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        ></DateTime> */}
 
                         {/* <span>学院:</span>
                         <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
@@ -477,7 +514,7 @@ class TableChart extends React.Component {
                         <thead>
                             <tr>
                                 <th>序号</th>
-                                <th>学院</th>
+                                <th>所属单位</th>
                                 <th>姓名</th>
                                 <th>操作次数</th>
                             </tr>

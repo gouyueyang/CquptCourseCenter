@@ -4,12 +4,13 @@ require('console-polyfill');
 require('es6-promise');
 
 // 电子教案、教学大纲、
-var BluMUI = require('../../libs/classReviewModule/blueMonUI'),
+var BluMUI = require('../../libs/classInfShow/classReviewModule'),
 	ajaxExpanding = require('../../libs/ajaxExpand.mini.min'),
 	hash = parseHash(window.location.href),
 	contentRight = document.getElementById('content_right'),
 	classId = hash.classId,
 	moduleName = hash.moduleName,
+	Place = hash.place || 2,
 	downloadName, // 下载文件名字
 	fileName,
 	type = {
@@ -60,26 +61,18 @@ function initPage() {
 				data = {
 					unifyCode: unifyCode,
 					courseNo: classId,
-					place: 2
+					place: Place
 				};
 				url = queryJXDG;
-			} else if (moduleName == '电子教案') {
+			} else{
 				data = {
 					unifyCode: unifyCode,
 					courseNo: classId,
 					type: type[moduleName],
-					place: 4
+					place: Place
 				};
 				url = queryAttachment;
-			} else {
-				data = {
-					unifyCode: unifyCode,
-					courseNo: classId,
-					type: type[moduleName],
-					place: 2
-				};
-				url = queryAttachment;
-			}
+			} 
 			break;
 	}
 	ajaxExpanding.send({

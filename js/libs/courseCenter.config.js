@@ -3,11 +3,21 @@ var courseCenter = {
 	// host:'http://localhost:8000'
 	// //172.22.114.135
 	host: 'http://172.20.2.139/'
-}
+	// host:'http://cc.cqupt.edu.cn/'
+};
+//日期格式
+const DateFormat = {
+	yearFormat: 'YYYY',
+	monthFormat: "YYYY-MM",
+	dayFormat: "YYYY-MM-DD",
+	timeFormat: "YYYY-MM-DD hh:ff:ss",
+	startTimeFormat: "YYYY-MM-DD 00:00:00",
+	endTimeFormat: "YYYY-MM-DD 23:59:59"
+};
 function parseHash(URL) {
 	var hash = decodeURI(URL).split('?')[1],
-	//split('?')方法将字符串以"?"开割形成一个字符串数组
-	//然后再通过索引[1]取出所得数组中的第二个元素的值
+		//split('?')方法将字符串以"?"开割形成一个字符串数组
+		//然后再通过索引[1]取出所得数组中的第二个元素的值
 		result = {};
 	if (hash) {
 		var hashArry = hash.split('&'),
@@ -37,7 +47,7 @@ function getCookie(c_name) {
 			return decodeURI(document.cookie.substring(c_start, c_end))
 		}
 	}
-	console.log(c_name == 'userId');
+	// console.log(c_name == 'userId');
 	if (c_name == 'userName') {
 		return "游客";
 	}

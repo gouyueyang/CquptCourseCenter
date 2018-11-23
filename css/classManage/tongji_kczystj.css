@@ -12,6 +12,7 @@ body {
   padding: 10px 30px;
   line-height: 20px;
   background: #FFF;
+	font-size: 16px;
 }
 #kczystj_filter>select {
   height: 24px;
@@ -123,7 +124,7 @@ body {
   height: 30px;
   text-align: center;
   line-height: 30px;
-  background-color: #007a51;
+  background-color: #009361;
   border-radius: 5px;
   color: #fff;
   font-size: 16px;

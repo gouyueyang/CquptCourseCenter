@@ -25,13 +25,26 @@ class Filter extends React.Component {
     });
   }
 
+  search() {
+    this.changeOutput();
+    this.refs.list.refresh(1, {
+      college: this.refs.college.value,
+    });
+  }
+
+  key(e) {
+    if (e.keyCode == 13) {
+      this.search();
+    }
+  }
+
   render() {
     return (<div id="kczttj">
       <div id="kczttj_filter">
-        <select name="college" id="filter_college" ref="college" onChange={(e)=>{this.setState({college:e.target.value})}}>
+        <select name="college" id="filter_college" ref="college" onChange={(e) => { this.setState({ college: e.target.value },this.search) }}>
           <option value="">请选择学院</option>
         </select>
-        <input type="button" id="btn" ref="btn" value="搜索" />
+        <input type="button" id="btn" ref="btn" value="搜索" onClick= {this.search}/>
         <a className="output" href={courseCenter.host + "exportKcZtExcel?" + this.state.output}>导出</a>
       </div>
       <Lists ref="list" options={this.state} />
@@ -55,13 +68,7 @@ class Filter extends React.Component {
       }
     });
 
-    // 单击搜索按钮的事件
-    this.refs.btn.onclick = (e) => {
-      this.changeOutput();
-      this.refs.list.refresh(1, {
-        college: this.refs.college.value,
-      });
-    }
+
   }
 }
 
@@ -78,6 +85,7 @@ class Lists extends React.Component {
 
   create_list() {
     let tds = [];
+    this.state.list &&
     this.state.list.map((e, index) => {
       tds.push(<tr key={index} className={index == 9 ? "noborder" : null}>
         <td className="lefttd"><div></div></td>

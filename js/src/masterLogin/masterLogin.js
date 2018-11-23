@@ -7,7 +7,10 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/masterLogin/blueMonUI.js'),
+
+import Alert from "../../util/alert.js";
+
+var BluMUI = require('../../libs/masterLogin/masterLogin.js'),
 	 ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	 host = courseCenter.host,
 	classListZJ = host + 'classListZJ';
@@ -29,12 +32,16 @@ function login(data) {
 			if(meta.result == 100){
 				window.location.href = '../classList.jsp';
 			}else{
-				alert(meta.msg);
+				Alert.open({
+					alertTip:meta.msg
+				});
+				BluMUI.result.login._changeIdentifyImg();
 			}
 		}
 	},'login')
 }
 BluMUI.create({
+	id:'login',
 	ajax:login,
 	host:host
 },'Login',document.getElementById('Login'));

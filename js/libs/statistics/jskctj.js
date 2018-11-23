@@ -135,14 +135,17 @@ class KclbFilter extends React.Component {
                                 <option value="fzr">负责人</option>
                                 <option value="rkjs">任课教师</option>
                             </select>
-                            <span>所属单位:</span>
-                            <input type="text" placeholder="请输入所属单位" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }} onKeyDown={this.key} ></input>
+                            <span>教师所属单位:</span>
+                            <input type="text" placeholder="请输入教师所属单位" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }} onKeyDown={this.key} ></input>
                             {/* <span>学院:</span>
                             <select name="college" id="filter_college" ref="college" onChange={(eve) => { this.setState({ xymc: eve.target.value }) }}>
                                 <option value="">请选择学院</option>
                             </select> */}
                             <span>开课单位:</span>
-                            <input type="text" placeholder="请输入开课单位" onChange={(eve) => { this.setState({ kkxymc: eve.target.value }) }} onKeyDown={this.key} ></input>
+                            <select name="kkdw" id="filter_kkdw" ref={e=>this.kkdw = e} onChange={(eve) => { this.setState({ kkxymc: eve.target.value }, this.showChart) }}>
+                                <option value="">请选择开课单位</option>
+                            </select>
+                            {/* <input type="text" placeholder="请输入开课单位" onChange={(eve) => { this.setState({ kkxymc: eve.target.value }) }} onKeyDown={this.key} ></input> */}
                             <span>教师姓名:</span>
                             <input type="text" id="filter_name" placeholder="请输入教师姓名" ref="name" onChange={(eve) => { this.setState({ xm: eve.target.value }) }} onKeyDown={this.key} />
 
@@ -160,21 +163,21 @@ class KclbFilter extends React.Component {
 
     componentDidMount() {
         this.showChart(1);
-        // 获取学院
-        // ajax({
-        //     url: courseCenter.host + "getTjfxCollege",
-        //     data: {
-        //         unifyCode: getCookie("userId")
-        //     },
-        //     success: (gets) => {
-        //         let datas = JSON.parse(gets);
-        //         if (datas.meta.result == 100) {
-        //             datas.data.map((e, index) => {
-        //                 this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
-        //             });
-        //         }
-        //     }
-        // });
+        // 获取开课单位
+        ajax({
+            url: courseCenter.host + "selectKkxymc",
+            data: {
+                unifyCode: getCookie("userId")
+            },
+            success: (gets) => {
+                let datas = JSON.parse(gets);
+                if (datas.meta.result == 100) {
+                    datas.data.map((e, index) => {
+                        this.kkdw.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
+                    });
+                }
+            }
+        });
     }
 }
 
@@ -833,7 +836,7 @@ class PopupBody extends React.Component {
 
     key(e) {
         if (e.keyCode == 13) {
-            this.refs.list.refresh(1, this.state);
+            this.getData();
         }
     }
 
@@ -912,7 +915,7 @@ class Popup extends React.Component {
                 return (
                     <div id="popbody" ref="pb">
                         <PopupBody />
-                        <div><button id="popup_back" ref={btn => this.back = btn}>关闭弹窗</button></div>
+                        <div><button id="popup_back" ref={btn => this.back = btn}>关闭</button></div>
                     </div>
                 );
                 break;

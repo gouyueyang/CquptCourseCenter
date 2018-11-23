@@ -246,7 +246,7 @@ class Lists extends React.Component {
         <td>{e.fzpc}</td>
         <td>{e.zbpc}</td>
         <td>{e.zjfzpc}</td>
-        <td>{e.kssj+"-"+e.jssj}</td>
+        <td>{e.kssj+"至"+e.jssj}</td>
         <td>{<div>
           <span className="green_btn" onClick={this.option.bind(this,"fenpei", e.id, e.wppc)}>分配</span>
           <span className="green_btn" onClick={this.option.bind(this,"jieguo", e.id, e.wppc)}>结果</span>

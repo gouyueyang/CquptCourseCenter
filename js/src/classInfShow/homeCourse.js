@@ -2,7 +2,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/homeCourse/blueMonUI.js');
+var BluMUI = require('../../libs/classInfShow/homeCourse.js');
 var ajax = require('../../libs/post_ajax');
 
 

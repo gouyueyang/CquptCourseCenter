@@ -26,6 +26,7 @@ button{
 	position: relative;
 	width:1550px ;
 	height:100%;
+	margin:0 auto;
 }
 
 /*------结构部分--------------------------------------------------------
@@ -322,9 +323,12 @@ button{
 	float: left;
 	height: 100%;
 	text-align: center;
+	cursor: pointer;
 }
 #body .ListWarp .courseName{
 	width:150px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	overflow: hidden;
 }
 #body .ListWarp  .courseId{
@@ -381,4 +385,13 @@ button{
 	height:30px;
 	border: 1px solid #007A51;
 	outline: none;
+}
+
+select#filter_college,select#filter_department{
+	width: 158px;
+	height: 22px;
+	float:left;
+	margin:0 10px;
+	border:1px solid #999;
+	color:#999;
 }

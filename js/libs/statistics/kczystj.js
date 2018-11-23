@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var _COUNT=10;
-var ajax=require('../post_ajax.js');
-const Fanye=require('../turnPage.js');
+var _COUNT = 10;
+var ajax = require('../post_ajax.js');
+const Fanye = require('../turnPage.js');
 
 
 // 筛选条件
@@ -15,16 +15,38 @@ class Filter extends React.Component {
       department: "",
       name: "",
       page: 1,
-      pages :1,
+      pages: 1,
       rows: 1,
-      output:`unifyCode=${getCookie("userId")}`
+      output: `unifyCode=${getCookie("userId")}`
     };
     this.changeOutput = this.changeOutput.bind(this);
+    this.search = this.search.bind(this);
+    this.key = this.key.bind(this);
   }
 
-  changeOutput(){
+  search() {
     this.setState({
-      output:`unifyCode=${getCookie("userId")}&college=${this.state.college}&courseDepartment=${this.state.department}&courseName=${this.state.name}`
+      college: this.refs.college.value,
+      department: this.refs.department.value,
+      name: this.refs.name.value
+    },this.changeOutput);
+    
+    this.refs.list.refresh(1, {
+      college: this.refs.college.value,
+      department: this.refs.department.value,
+      name: this.refs.name.value
+    });
+  }
+
+  key(e){
+    if(e.keyCode == 13){
+      this.search();
+    }
+  }
+
+  changeOutput() {
+    this.setState({
+      output: `unifyCode=${getCookie("userId")}&college=${this.state.college}&courseDepartment=${this.state.department}&courseName=${this.state.name}`
     });
   }
   render() {
@@ -33,15 +55,15 @@ class Filter extends React.Component {
         <select name="college" id="filter_college" ref="college">
           <option value="">请选择学院</option>
         </select>
-        <select name="department" id="filter_department" ref="department">
+        <select name="department" id="filter_department" ref="department" onChange = {this.search}>
           <option value="">请选择系部中心</option>
         </select>
-        <input type="text" id="filter_name" placeholder="请输入课程名称" ref="name"/>
-        <input type="button" id="btn" ref="btn" value="搜索"/>
-        
-        <a className="output" href={courseCenter.host + "exportKcZysExcel?" +this.state.output}>导出</a>
+        <input type="text" id="filter_name" placeholder="请输入课程名称" ref="name" onKeyDown={this.key} />
+        <input type="button" id="btn" ref="btn" value="搜索" onClick={this.search} />
+
+        <a className="output" href={courseCenter.host + "exportKcZysExcel?" + this.state.output}>导出</a>
       </div>
-      <Lists  ref="list" options={this.state} />
+      <Lists ref="list" options={this.state} />
     </div>);
   }
 
@@ -52,10 +74,10 @@ class Filter extends React.Component {
       data: {
         unifyCode: getCookie("userId")
       },
-      success: (gets)=>{
+      success: (gets) => {
         let datas = JSON.parse(gets);
-        if(datas.meta.result==100) {
-          datas.data.map((e,index)=>{
+        if (datas.meta.result == 100) {
+          datas.data.map((e, index) => {
             this.refs.college.innerHTML += `<option value=${e.kkxymc}>${e.kkxymc}</option>`;
           });
         }
@@ -63,57 +85,44 @@ class Filter extends React.Component {
     });
 
     // 选定学院后获取专业并填充
-    this.refs.college.onchange=(e)=>{
+    this.refs.college.onchange = (e) => {
       this.refs.department.innerHTML = "<option value=''>请选择系部中心</option>";
+      this.search();
+      this.refs.college.value &&
       ajax({
         url: courseCenter.host + "getCourseDepartment",
         data: {
           unifyCode: getCookie("userId"),
           college: this.refs.college.value
         },
-        success: (gets)=>{
+        success: (gets) => {
           let datas = JSON.parse(gets);
-          if(datas.meta.result==100) {
-            datas.data.map((e,index)=>{
+          if (datas.meta.result == 100) {
+            datas.data.map((e, index) => {
               this.refs.department.innerHTML += `<option value=${e.jysmc}>${e.jysmc}</option>`;
             });
           }
         }
       });
     }
-
-    // 单击搜索按钮的事件
-    this.refs.btn.onclick=(e)=>{
-      this.setState({
-        college: this.refs.college.value,
-        department: this.refs.department.value,
-        name: this.refs.name.value
-      });
-      this.changeOutput();
-      this.refs.list.refresh(1,{
-        college: this.refs.college.value,
-        department: this.refs.department.value,
-        name: this.refs.name.value
-      });
-    }
   }
 }
-
 class Lists extends React.Component {
   constructor(props) {
     super(props);
-    let newState={};
-    for(let i in this.props.options) {
-      newState[i]=this.props.options[i];
+    let newState = {};
+    for (let i in this.props.options) {
+      newState[i] = this.props.options[i];
     }
-    newState.list=[];
-    this.state=newState;
+    newState.list = [];
+    this.state = newState;
   }
 
   create_list() {
-    let tds=[];
-    this.state.list.map((e,index)=>{
-      tds.push(<tr key={index} className={index==9?"noborder":null}>
+    let tds = [];
+    this.state.list &&
+    this.state.list.map((e, index) => {
+      tds.push(<tr key={index} className={index == 9 ? "noborder" : null}>
         <td className="lefttd"><div></div></td>
         <td>{e.kkxymc}</td>
         <td>{e.jysmc}</td>
@@ -132,23 +141,23 @@ class Lists extends React.Component {
     return (<tbody>{tds}</tbody>);
   }
 
-  refresh(page, {...sets}) {
+  refresh(page, { ...sets }) {
     // 未传第二个参数时sets为空对象{}
     // 判断sets是否为空（是否只是翻页）
-    if(JSON.stringify(sets)!=="{}") {
-      this.state=sets;
+    if (JSON.stringify(sets) !== "{}") {
+      this.state = sets;
     }
     ajax({
       url: courseCenter.host + "getKczyList",
       data: {
         unifyCode: getCookie("userId"),
-        college: sets.college||this.state.college,
-        courseDepartment: sets.department||this.state.department,
-        courseName: sets.name||this.state.name,
+        college: sets.college || this.state.college,
+        courseDepartment: sets.department || this.state.department,
+        courseName: sets.name || this.state.name,
         page: page,
         count: _COUNT
       },
-      success: (gets)=>{
+      success: (gets) => {
         let datas = JSON.parse(gets);
         this.setState({
           list: datas.data.KczyList,
@@ -161,7 +170,7 @@ class Lists extends React.Component {
   }
 
   render() {
-    return(<div id="kczystj_lists">
+    return (<div id="kczystj_lists">
       <div id="kczystj_table">
         <table>
           <thead>
@@ -189,12 +198,12 @@ class Lists extends React.Component {
         </table>
       </div>
       <Fanye This={this}
-          options={{
-          page: this.state.page||1,
-          pages: this.state.pages||1,
+        options={{
+          page: this.state.page || 1,
+          pages: this.state.pages || 1,
           rows: this.state.rows
         }}
-        callback={this.refresh.bind(this)} 
+        callback={this.refresh.bind(this)}
       />
     </div>);
   }
@@ -210,7 +219,7 @@ class Lists extends React.Component {
         page: this.props.options.page,
         count: _COUNT
       },
-      success: (gets)=>{
+      success: (gets) => {
         let datas = JSON.parse(gets);
         this.datas = datas.data.KczyList;
         this.setState({
@@ -226,8 +235,8 @@ class Lists extends React.Component {
     // 获取该frame的id
     // var frameId = window.frameElement && window.frameElement.id || '';
     // 设置该frame的高度自适应
-    if(window.frameElement) {
-      window.frameElement.height=document.body.offsetHeight;
+    if (window.frameElement) {
+      window.frameElement.height = document.body.offsetHeight;
     }
     // function setIframeHeight(iframe) {
     // if (iframe) {
@@ -250,11 +259,11 @@ var BluMUI_M = {
 
 var BluMUI = {
   result: {},
-  menues:[],
-  menue_names:{},
+  menues: [],
+  menue_names: {},
   create: function (data, type, elem) {
     var props = data, Blu = BluMUI_M[type];
-    this.result[props.id] = ReactDOM.render(<Blu {...props}/>, elem);    
+    this.result[props.id] = ReactDOM.render(<Blu {...props} />, elem);
   }
 };
 

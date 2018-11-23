@@ -4,7 +4,7 @@ require('console-polyfill');
 require('es6-promise');
 
 // 电子教案、教学大纲、
-var BluMUI = require('../../libs/classInfModule/blueMonUI'),
+var BluMUI = require('../../libs/classInfShow/classInfModule.js'),
 	ajaxExpanding = require('../../libs/ajaxExpand.mini.min'),
 	hash = parseHash(window.location.href),
 	contentRight = document.getElementById('content_right'),

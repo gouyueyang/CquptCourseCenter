@@ -4,7 +4,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/masterSortTeam/blueMonUI.js'),
+var BluMUI = require('../../libs/wangping/masterSortTeam.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	host = courseCenter.host,
 	doc = document,
@@ -256,7 +256,9 @@ function renderSelectedList() {
 				var that = BluMUI.result.deleteList;
 				that.setState({ items: items, selected: false, selects: selects });
 			} else {
-				(meta.msgalert);
+				Alert.open({
+					alertTip: meta.msg
+				});
 			}
 		}
 	}, 'getZjfzList');

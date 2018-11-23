@@ -54,12 +54,13 @@ h2.inner_title {
 .top>#search {
 	width: 100px;
 	height: 30px;
-	background: #009261;
+	background: #009361;
 	color: #FFF;
+	font-size: 16px;
 	border: none;
 	outline: none;
 	cursor: pointer;
-	margin-left: 20px;
+	margin-left: 200px;
 	border-radius: 5px;
 }
 
@@ -67,21 +68,51 @@ h2.inner_title {
 	padding: 17px 0;
 	padding-left: 15px;
 	line-height: 30px;
+	font-size: 16px;
 }
 /*时间选择框样式*/
 
-.inlineBlock {
+/* .inlineBlock {
 	display: inline-block;
+} */
+
+/* 时间框 */
+.top .text {
+	width: 125px;
+	height: 22px;
+	border: 1px solid #999;
+	display: inline-block;
+	padding-left: 18px;
+	font-size: 14px;
+	color: #333;
+	line-height: 24px;
 }
 
+.top .text .timeText {
+	line-height: 24px;
+}
+
+.top .text .dateIcon {
+	background-image: url("../../imgs/systemManage/date.png");
+	background-repeat: no-repeat;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	cursor: pointer;
+	float: right;
+	margin-top: 1px;
+	margin-right: 4px;
+}
+/* 导出 */
 .output {
 	float: right;
 	text-decoration: none;
 	width: 100px;
 	height: 30px;
+	margin-right: 70px;
 	text-align: center;
 	line-height: 30px;
-	background-color: #007a51;
+	background-color: #009361;
 	border-radius: 5px;
 	color: #fff;
 	font-size: 16px;

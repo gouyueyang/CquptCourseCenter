@@ -37,7 +37,6 @@
 	background: #fff;
 	overflow: hidden;
 	width: 720px;
-	height: 900px;
 	margin-left: 20px;
 	margin-top: 30px;
 }
@@ -66,7 +65,7 @@
 	height:21px;
 	border: 1px solid #007A51;
 	margin-left: 30px;
-	width: 80px;
+	width: 100px;
 	text-align: center;
 	margin-top: 82px;
 	cursor: pointer;
@@ -127,7 +126,7 @@
 }
 .zbEditor .editorBody .items-body{
 	border-top: none;
-	height: 481px;
+	/* height: 420px; */
 	overflow: auto;
 }
 .zbEditor .editorBody ul{
@@ -227,6 +226,11 @@
 	margin: auto;
 	background: #fff;
 	margin-top: 25px;
+	margin-bottom: 25px;
+}
+.zbEditor .editorBody p.savetip {
+	text-align: center;
+	color:red;
 }
 .zbEditor .editorBody .btnWarp button{
 	width:90px;
@@ -245,7 +249,8 @@
 	color: #007a51;
 }
 .zbEditor #common{
-	height:423px;
+	min-height:200px;
+	max-height: 423px;
 }
 .zbEditor #commonInputScore{
 	margin-top: 0;

@@ -59,9 +59,10 @@ class Option extends React.Component {
       case 'in':
         inputs = <div id="option_input">
           <span>所属学院：</span>
-          <select id="xueyuan" ref="xueyuan">
+          <input type="text" ref="xueyuan" onKeyDown={this.key}/>
+          {/* <select id="xueyuan" ref="xueyuan">
             <option value="">{"请选择"}</option>
-          </select>
+          </select> */}
           <span>教师姓名：</span>
           <input type="text" ref="jsxm" onKeyDown={this.key} />
         </div>
@@ -91,31 +92,31 @@ class Option extends React.Component {
       this.search_handler();
     }
   }
-  insert_xueyuan() {
-    ajax({
-      url: courseCenter.host + 'getCollege',
-      data: {
-        unifyCode: getCookie("userId")
-      },
-      success: (gets) => {
-        let datas = JSON.parse(gets);
-        let options = "<option value=''>请选择</option>";
+  // insert_xueyuan() {
+  //   ajax({
+  //     url: courseCenter.host + 'getCollege',
+  //     data: {
+  //       unifyCode: getCookie("userId")
+  //     },
+  //     success: (gets) => {
+  //       let datas = JSON.parse(gets);
+  //       let options = "<option value=''>请选择</option>";
 
-        datas.data.map(e => {
-          options += `<option value=${e.kkxymc} ${e.kkxymc == GET('ssxy') ? "selected" : ''}>${e.kkxymc}</option>`;
-        });
-        this.refs.xueyuan.innerHTML = options;
-        this.refs.xueyuan.onchange = () => {
-          this.search_handler()
-        }
-      }
-    });
-  }
+  //       datas.data.map(e => {
+  //         options += `<option value=${e.kkxymc} ${e.kkxymc == GET('ssxy') ? "selected" : ''}>${e.kkxymc}</option>`;
+  //       });
+  //       this.refs.xueyuan.innerHTML = options;
+  //       this.refs.xueyuan.onchange = () => {
+  //         this.search_handler()
+  //       }
+  //     }
+  //   });
+  // }
 
   change_master_state(state) {
-    if (state === 'in') {
-      this.insert_xueyuan();
-    }
+    // if (state === 'in') {
+    //   this.insert_xueyuan();
+    // }
     if (state === this.state.master) {
       return;
     }
@@ -298,9 +299,9 @@ class Option extends React.Component {
     this.set_default();
     let pop = document.getElementById('popup');
     // first mount insert college list
-    if (this.state.master === 'in') {
-      this.insert_xueyuan();
-    }
+    // if (this.state.master === 'in') {
+    //   this.insert_xueyuan();
+    // }
 
     // add master
     this.add.onclick = () => {

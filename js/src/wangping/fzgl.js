@@ -248,7 +248,7 @@ class Popup extends React.Component {
     // background click to cancel
     this.refs.pb.onclick=e=>e.stopPropagation();
     // back button click to cancel
-    this.refs.back.onclick=cancel_popup;
+    this.back.onclick=cancel_popup;
     // OK button option
     let dat={};
 

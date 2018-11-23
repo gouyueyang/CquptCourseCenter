@@ -1,4 +1,4 @@
-var BluMUI = require('../../libs/wpztcx/blueMonUI.js');
+var BluMUI = require('../../libs/statistics/wpztcx.js');
 // var ajax = require('../libs/post_ajax.js');
 
 // 

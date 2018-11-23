@@ -1,7 +1,7 @@
-var BluMUI = require('../../libs/courseShow/blueMonUI');
+var BluMUI = require('../../libs/classInfShow/courseShow');
 var ajax=require('../../libs/post_ajax.js');
-var Place=2;
 
+let Place = parseHash(window.location.href).place || 2;
 let prop=parseHash(window.location.href).module||'a';
 let num=['a','b','c','d','e']
 let config={
@@ -11,8 +11,8 @@ let config={
 let data={};
 let url='';
 
-config.user_id=getCookie('userId')
-config.course_id=parseHash(window.location.href).classId
+config.user_id=getCookie('userId');
+config.course_id=parseHash(window.location.href).classId;
 BluMUI.result.config=config;
 
 if(prop=='f') {

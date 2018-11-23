@@ -2,7 +2,7 @@ require('es5-shim');
 require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
-var BluMUI = require('../../libs/mySET/blueMonUI.js'),
+var BluMUI = require('../../libs/mySET/mySET.js'),
 	 ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	 doc = document,
 	 userId =  getCookie('userId'),
