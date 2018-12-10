@@ -141,7 +141,7 @@ class PieFilter extends React.Component {
                     <span className="dateIcon" onClick={() => this.setState({ endDatebox: !this.state.endDatebox, startDatebox: false })}></span>
                     {
                         this.state.endDatebox &&
-                        <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, endDatebox: false }, this.showChart)} />
+                        <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ jssj: time, endDatebox: false }, this.showChart)} />
                     }
                 </div>
                 {/* <DateTime
@@ -271,7 +271,7 @@ class TableFilter extends React.Component {
                             <span className="dateIcon" onClick={() => this.setState({ endDatebox: !this.state.endDatebox, startDatebox: false })}></span>
                             {
                                 this.state.endDatebox &&
-                                <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ kssj: time, endDatebox: false },this.showChart)} />
+                                <DateInput time={new Date(moment(this.state.jssj).format(DateFormat.endTimeFormat))} isUpdateTime={{ h: false, f: false, s: false }} callback={(time) => this.setState({ jssj: time, endDatebox: false },this.showChart)} />
                             }
                         </div>
                         {/* <DateTime

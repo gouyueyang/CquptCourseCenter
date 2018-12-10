@@ -38,7 +38,7 @@ module.exports = {
     // masterSortTeam: './js/src/wangping/masterSortTeam.js',
     // masterSortMasterEditor: './js/src/wangping/masterSortMasterEditor.js',
     // //网评管理
-    wpgl: './js/src/wangping/wpgl.js',
+    // wpgl: './js/src/wangping/wpgl.js',
     // masterPublishWp: './js/src/wangping/masterPublishWp.js',
     // wpgl_fenpei: './js/src/wangping/wpgl_fenpei.js',
     // wpgl_jieguo: './js/src/wangping/wpgl-jieguo.js',
@@ -56,8 +56,8 @@ module.exports = {
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',
     // tongJi_wpjgcx:'./js/src/tongJi/tongJi_wpjgcx.js',
     // tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js',
-    // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
-    // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
+    tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
+    tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
     // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
 
     //课程管理
@@ -73,8 +73,8 @@ module.exports = {
     // path:'./js/pages/masterLogin',
     // path:'./js/pages/mySet',
     // path:'./js/pages/classInfShow',      //课程信息展示
-    path: './js/pages/wangping/',
-    // path:'./js/pages/statistics/',      //统计
+    // path: './js/pages/wangping/',
+    path:'./js/pages/statistics/',      //统计
     // path:'./js/pages/courseManage',        //课程管理
 
     filename: "[name].bundle.js",

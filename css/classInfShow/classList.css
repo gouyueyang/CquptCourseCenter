@@ -67,7 +67,7 @@ iframe{
 	height: 48px;
 }
 .BluMUI_UserLoginState li{
-	cursor: default;
+	cursor: pointer;
 	float: right;
 	margin-left: 24px;
 }
@@ -273,6 +273,7 @@ iframe{
 	background: url('../../imgs/public/userList.png') no-repeat 72px 12px;
 	padding-right: 5px;
 	border-right: 1px solid #007A51;
+	cursor: pointer;
 }
 .BluMUI_SimpleDrop .selectArea{
 	z-index: 99;
@@ -293,7 +294,7 @@ iframe{
 	height: 20px;
 	line-height: 20px;
 	color: #666;
-	cursor: default;
+	cursor: pointer;
 }
 .BluMUI_SimpleDrop .selectArea li:hover{
 	color: #007A51;

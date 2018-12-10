@@ -123,6 +123,7 @@ a{
 
 #menu li{
 	float:left;
+	cursor: pointer;
 }
 
 #menu a{

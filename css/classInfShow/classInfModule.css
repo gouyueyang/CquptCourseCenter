@@ -211,6 +211,8 @@ img{
 	display: inline-block;
 	height: 100%;
 	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 	word-break: break-all;
 }
 #content_right{

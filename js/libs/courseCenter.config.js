@@ -56,9 +56,9 @@ function getCookie(c_name) {
 		//0102295
 		//0102387
 		//0102295
-		return "0102215";
+		return "用户";
 	} else if (c_name == 'masterId') {
-		return "0102215";
+		return "管理员";
 	} else {
 		return '';
 	}
