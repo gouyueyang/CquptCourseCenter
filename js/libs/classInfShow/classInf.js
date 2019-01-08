@@ -10,33 +10,35 @@ class BluMUI_NavListPercent extends React.Component {
 		this._onClick = this._onClick.bind(this);
 	}
 	_onClick(index) {
-		var that = this;
-		return function () {
-			that.setState(//这里是修改state，修改了index原来的值 
-				{
-					index: index
-				}
-			);
-			that.props.callback(that.state.items[index]);
-		}
+		this.setState({
+			index: index
+		});
+		this.props.callback(this.state.items[index]);
+		// var that = this;
+		// return function () {
+		// 	that.setState(//这里是修改state，修改了index原来的值 
+		// 		{
+		// 			index: index
+		// 		}
+		// 	);
+		// 	that.props.callback(that.state.items[index]);
+		// }
 	}
 	_createLi() {//导航栏的li标签部分显示
 		var result = [],
 			i,
 			len;//个数
+		console.log(this.state.index);
 		for (i = 0, len = this.state.items.length; i < len; i++) {
 			result.push(
 				<li key={i}
 					//点击之后调用上面的函数，改变下面部分显示的东西
-					onClick={this._onClick(i)}
+					onClick={this._onClick.bind(this, i)}
 					data-key={i}
 					style={{ width: 100 / len + '%' }}
 				>
 					<a>{this.state.items[i]}</a>
-					{
-						this.state.index == i &&
-						<span className="selected"></span>
-					}
+					<span className={this.state.index == i ? "selected" : ""}></span>
 				</li>
 			);
 		}

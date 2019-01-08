@@ -1,27 +1,33 @@
 // 登录判断与处理
 function loginCheck(loginData) {
   var status = [100, 101, 102, 303];
-  if (!Array.indexOf) {  
-    Array.prototype.indexOf = function (obj) {  
-      for (var i = 0; i < this.length; i++) {  
-        if (this[i] == obj) {  
-          return i;  
+  if (!Array.indexOf) {
+    Array.prototype.indexOf = function (obj) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] == obj) {
+          return i;
         }
       }
-      return -1;  
-    }  
+      return -1;
+    }
   }
-  if(status.indexOf(loginData.meta.result)===-1) { 
+  if (status.indexOf(loginData.meta.result) === -1) {
     alert(loginData.meta.msg);
   }
-  if(loginData.meta.result==303) {
-    confirm(loginData.meta.msg);
-    window.location.href="https://ids.cqupt.edu.cn/authserver/login?service="+courseCenter.host+"classList";
+  if (loginData.meta.result == 303) {
+    if (confirmFlag) {
+      let result = confirm(loginData.meta.msg);
+      if (result) {
+        window.top.location.href="https://ids.cqupt.edu.cn/authserver/login?service="+courseCenter.host+"classList";
+        confirmFlag = !confirmFlag;
+      }
+    }
+    
   }
 }
 
 // 封装ajax(BluMUI.result.Title.props.ajaxing)
-var post_ajax=function(options) {
+var post_ajax = function (options) {
   options = options || {};
   // options.dataType = "json";
 
@@ -33,11 +39,11 @@ var post_ajax=function(options) {
   }
 
   //数据处理
-  var arr=[];
-  for(var name in options.data) {
-      arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(options.data[name]));
+  var arr = [];
+  for (var name in options.data) {
+    arr.push(encodeURIComponent(name) + "=" + encodeURIComponent(options.data[name]));
   }
-  var params=arr.join("&");
+  var params = arr.join("&");
 
 
   //连接 和 发送 - 第二步
@@ -47,7 +53,7 @@ var post_ajax=function(options) {
   xhr.send(params);
 
   //接收 - 第三步
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       var status = xhr.status;
       if (status >= 200 && status < 300) {

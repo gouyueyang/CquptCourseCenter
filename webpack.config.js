@@ -14,13 +14,14 @@ module.exports = {
 
     //课程信息展示
     // classInf:'./js/src/classInfShow/classInf.js',
+    // classInfReview:'./js/src/classInfShow/classInfReview.js',      //预览
     // homeCourse:'./js/src/classInfShow/homeCourse.js',
     // classInfModule:'./js/src/classInfShow/classInfModule.js',
     // courseShow:'./js/src/classInfShow/courseShow.js',
     // team_show:'./js/src/classInfShow/team_show.js',     //??
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
-    // classReviewModule:'./js/src/classInfShow/classReviewModule.js',
+    // classReviewModule:'./js/src/classInfShow/classReviewModule.js',    //审核
 
     //网评
 
@@ -57,7 +58,7 @@ module.exports = {
     // tongJi_wpjgcx:'./js/src/tongJi/tongJi_wpjgcx.js',
     // tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js',
     tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
-    tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
+    // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
     // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
 
     //课程管理

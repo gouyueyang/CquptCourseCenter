@@ -14,6 +14,8 @@ const DateFormat = {
 	startTimeFormat: "YYYY-MM-DD 00:00:00",
 	endTimeFormat: "YYYY-MM-DD 23:59:59"
 };
+    
+let confirmFlag = true;      //登陆超时弹框标志，防止多次弹框，为true时表示可以弹框
 function parseHash(URL) {
 	var hash = decodeURI(URL).split('?')[1],
 		//split('?')方法将字符串以"?"开割形成一个字符串数组
@@ -33,7 +35,7 @@ function parseHash(URL) {
 	}
 	return result;
 }
-
+// document.cookie.setMaxAge(20);
 // 获取cookie
 function getCookie(c_name) {
 	var c_start,
@@ -52,11 +54,7 @@ function getCookie(c_name) {
 		return "游客";
 	}
 	if (c_name == 'userId') {
-		//0102549
-		//0102295
-		//0102387
-		//0102295
-		return "用户";
+		return 1;
 	} else if (c_name == 'masterId') {
 		return "管理员";
 	} else {

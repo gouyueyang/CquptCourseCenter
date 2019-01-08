@@ -112,12 +112,12 @@ function handleInit(result, moduleName) {
 							ableDownload:list[i].ableDownload
 						});
 					}
-					BluMUI.create({
-						id: 'fileList',
-						extClass: '',
-						items: items,
-						index: 0
-					}, 'List', document.getElementById('content_left'));
+					// BluMUI.create({
+					// 	id: 'fileList',
+					// 	extClass: '',
+					// 	items: items,
+					// 	index: 0
+					// }, 'List', document.getElementById('content_left'));
 				} else if (len == 1) {
 					contentRight.id = 'content_right_noNav';
 				}

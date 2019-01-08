@@ -9,7 +9,7 @@ class BluMUI_UserLoginState extends React.Component {
 			userListShow: false,
 			right: this.props.right,
 			isLogin: this.props.isLogin,
-			showClass:""
+			showClass: ""
 		};
 		this._onClick = this._onClick.bind(this);
 		this._show = this._show.bind(this);
@@ -82,7 +82,7 @@ class BluMUI_UserLoginState extends React.Component {
 	_show() {
 		this.setState((prevState, props) => ({
 			userListShow: !prevState.userListShow,
-			showClass:!prevState.userListShow ?"user-inf-opened" :" ",
+			showClass: !prevState.userListShow ? "user-inf-opened" : " ",
 		}));
 	}
 	_noShow(text) {
@@ -200,10 +200,10 @@ class BluMUI_SimpleDrop extends React.Component {
 						selectedValue: value
 					}
 				));
-			if (that.callback){
+			if (that.callback) {
 				that.callback(value);
 			}
-				
+
 		}
 	}
 	render() {
@@ -233,7 +233,7 @@ class BluMUI_Sch extends React.Component {
 	constructor(props) {
 		super(props);//为了得到父类的对象，否则this就不能用
 		this.state = {
-			type:this.props.type,
+			type: this.props.type,
 			value: ''
 		};
 		//下面的两个都是方法，bind只是为了让后面的方法本身能够执行
@@ -241,6 +241,7 @@ class BluMUI_Sch extends React.Component {
 		this.handlerChange = this.handlerChange.bind(this);
 		this.handlerSearch = this.handlerSearch.bind(this);
 		this.callback = this.callback.bind(this);
+		this.key = this.key.bind(this);
 	}
 
 	handlerChange(e) {
@@ -249,12 +250,18 @@ class BluMUI_Sch extends React.Component {
 	}
 
 	handlerSearch() {
-		this.props.search(this.state.value,this.state.type);
+		this.props.search(this.state.value, this.state.type);
 	}
-	
-	callback(e){
+
+	key(e){
+		if(e.keyCode == 13){
+			this.handlerSearch();
+		}
+	}
+
+	callback(e) {
 		this.setState({
-			type:e
+			type: e
 		})
 	}
 
@@ -274,7 +281,7 @@ class BluMUI_Sch extends React.Component {
 					callback={this.callback.bind(this)}
 				></BluMUI_SimpleDrop>
 				<div className="searchArea">
-					<input defaultValue={this.state.value} onChange={this.handlerChange}></input>
+					<input defaultValue={this.state.value} onChange={this.handlerChange} onKeyDown={this.key}></input>
 					<button onClick={this.handlerSearch}>{btn}</button>
 				</div>
 			</div>)
@@ -317,11 +324,11 @@ class BluMUI_DropList extends React.Component {
 					items={this.props.items}
 					selected={this._selectDom}
 					curstyle={{}} /> */}
-				<DropList_first callBack = {this.props.callBack}
+				<DropList_first callBack={this.props.callBack}
 					curClass="BluMuI_DropList"
-					items = {this.props.items}
+					items={this.props.items}
 					selected={this._selectDom}
-					curstyle={{}}/>
+					curstyle={{}} />
 
 			</div>
 		);
@@ -329,7 +336,7 @@ class BluMUI_DropList extends React.Component {
 }
 //第一层导航
 class DropList_first extends React.Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.handlerClick = this.handlerClick.bind(this);
 		this.selectedDom = [];
@@ -363,7 +370,7 @@ class DropList_first extends React.Component {
 			var result = that.state.selects,
 				i,
 				len;
-				
+
 			for (i = 0, len = that.state.selects.length; i < len; i++) {
 				if (that.state.selects[index] == 0) {
 					if (index == i) {
@@ -395,14 +402,14 @@ class DropList_first extends React.Component {
 		var items = this.props.items,
 			callBack = this.props.callBack,
 			curClass = this.props.curClass;
-			
+
 		var result = this.props.items.map(//map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
-			(value, index) =>(
+			(value, index) => (
 				<ul key={index}
 					className={this.props.curClass + '-' + index}>
-					
-						<li>
-					
+
+					<li>
+
 						<div onClick={this.handlerClick(index, this.state.selectedClass[index][1], "item_warp " + items[index].nameStyle)}
 							data-key={index}
 							ref={(selectedDom) => (this.selectedDom[index] = selectedDom)}
@@ -452,8 +459,8 @@ class DropList_first extends React.Component {
 							/>}
 					</li>
 				</ul>
-				));
-				
+			));
+
 		return (
 
 			<div style={this.props.curstyle} className="warp"> {result}</div>//不知道是不是这里改display的问题
@@ -464,7 +471,7 @@ class DropList_first extends React.Component {
 
 //第二层导航
 class DropList_second extends React.Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.onMouseOver = this.onMouseOver.bind(this);
 		this.onMouseOut = this.onMouseOut.bind(this);
@@ -525,9 +532,9 @@ class DropList_second extends React.Component {
 		}
 	}
 
-	onMouseOut(index, selectClass, noselectClass){
+	onMouseOut(index, selectClass, noselectClass) {
 		var that = this;
-		return function(){
+		return function () {
 			var result = that.state.selects,
 				i,
 				len;
@@ -547,15 +554,15 @@ class DropList_second extends React.Component {
 		var items = this.props.items,
 			callBack = this.props.callBack,
 			curClass = this.props.curClass;
-			
+
 		var result = this.props.items.map(//map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
-			(value, index) =>(
+			(value, index) => (
 				<ul key={index}
 					className={this.props.curClass + '-' + index}>
-					
-						<li onMouseOver={this.onMouseOver(index, this.state.selectedClass[index][1], "item_warp " + items[index].nameStyle).bind(index)}
-							onMouseOut={this.onMouseOut(index, this.state.selectedClass[index][1], "item_warp " + items[index].nameStyle).bind(index)}>
-					
+
+					<li onMouseOver={this.onMouseOver(index, this.state.selectedClass[index][1], "item_warp " + items[index].nameStyle).bind(index)}
+						onMouseOut={this.onMouseOut(index, this.state.selectedClass[index][1], "item_warp " + items[index].nameStyle).bind(index)}>
+
 						<div
 							data-key={index}
 							ref={(selectedDom) => (this.selectedDom[index] = selectedDom)}
@@ -605,8 +612,8 @@ class DropList_second extends React.Component {
 							/>}
 					</li>
 				</ul>
-				));
-				
+			));
+
 		return (
 
 			<div style={this.props.curstyle} className="warp"> {result}</div>//不知道是不是这里改display的问题
@@ -617,7 +624,7 @@ class DropList_second extends React.Component {
 
 //第三层导航
 class DropList_third extends React.Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.handlerClick = this.handlerClick.bind(this);
 		this.onMouseOver = this.onMouseOver.bind(this);
@@ -652,7 +659,7 @@ class DropList_third extends React.Component {
 			var result = that.state.selects,
 				i,
 				len;
-				
+
 			for (i = 0, len = that.state.selects.length; i < len; i++) {
 				if (that.state.selects[index] == 0) {
 					if (index == i) {
@@ -713,12 +720,12 @@ class DropList_third extends React.Component {
 			callBack = this.props.callBack,
 			curClass = this.props.curClass;
 		var result = this.props.items.map(//map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
-			(value, index) =>(
+			(value, index) => (
 				<ul key={index}
 					className={this.props.curClass + '-' + index}>
-					
-						<li>
-					
+
+					<li>
+
 						<div onClick={this.handlerClick(index, this.state.selectedClass[index][1], "item_warp " + items[index].nameStyle)}
 							data-key={index}
 							ref={(selectedDom) => (this.selectedDom[index] = selectedDom)}
@@ -726,7 +733,7 @@ class DropList_third extends React.Component {
 								"item_warp " +
 								//  这里就是firstIitem和item-2
 								//items[index].nameStyle +
-								' item-3' 
+								' item-3'
 								//   "item-"+[index+1]+' '+
 								//这是item-1-selected，就是选择成功的地方，比如鼠标悬停或者点击的地方
 								//this.state.selectedClass[index][this.state.selects[index]]
@@ -740,8 +747,8 @@ class DropList_third extends React.Component {
 						</div>
 					</li>
 				</ul>
-				));
-				
+			));
+
 		return (
 
 			<div style={this.props.curstyle} className="warp"> {result}</div>//不知道是不是这里改display的问题
@@ -774,7 +781,7 @@ class BluMUI_NavList extends React.Component {
 	_createLi() {
 		var result = [];
 		for (let i = 0, len = this.state.items.length; i < len; i++) {
-			if(len ==1){
+			if (len == 1) {
 				result.push(
 					<li key={i}
 						className={this.state.index == i ? 'selected' : ''}/*这里是点击事件，是否选中*/
@@ -783,20 +790,20 @@ class BluMUI_NavList extends React.Component {
 						<a></a>
 					</li>
 				);
-			}else if(len == 2){
+			} else if (len == 2) {
 				//设置li标签className
 				var isSelected = this.state.index == i ? 'selected' : '';
 				var iconClassName = this.state.items[i];
 				result.push(
 					<li key={i}
-						className={ iconClassName+ " " +isSelected }/*这里是点击事件，是否选中*/
+						className={iconClassName + " " + isSelected}/*这里是点击事件，是否选中*/
 						onClick={this._onClick(i)}/*点击之后触发事件*/
 						data-key={i}>{this.state.items[i]}
 						<a></a>
 					</li>
 				);
 			}
-			
+
 		}
 		return result;
 	}
@@ -810,20 +817,20 @@ class BluMUI_NavList extends React.Component {
 }
 //显示拓扑图的组件
 class BluMUI_TopPic extends React.Component {
-	constructor (props){
+	constructor(props) {
 		super(props);
 		this.topUrl = this.props.topURL;
 		this.card = this.props.zyh;
-		this.url = this.topUrl+this.card+".jpg";
+		this.url = this.topUrl + this.card + ".jpg";
 	}
-	_handleClick(){
-		window.open(this.url,this.card+".jpg");
+	_handleClick() {
+		window.open(this.url, this.card + ".jpg");
 	}
-	render(){
-		return(
+	render() {
+		return (
 			<div className="BluMUI_TopPic">
 				<img src={this.url}
-					onClick={()=>{this._handleClick()}}/>
+					onClick={() => { this._handleClick() }} />
 			</div>
 		)
 	}
@@ -844,67 +851,67 @@ class BluMUI_ClassInfBox extends React.Component {
 			result.push(
 				<div className="item" key={i}>
 					<div className="content_warp">
-						<a href={"./classInfShow/classInf.html?classId="+items[i].classId} target={"_blank"}>
+						<a href={"./classInfShow/classInf.html?classId=" + items[i].classId} target={"_blank"}>
 							<div className="img">
-								<img src={items[i].img}/>
+								<img src={items[i].img} />
 								<p className="data">
 									<span>学分:{items[i].score}</span>
 									<span className="stuTime">学时:{items[i].stuTime}</span>
 								</p>
 							</div>
 						</a>
-						<a href={"./classInfShow/classInf.html?classId="+items[i].classId} target={"_blank"}>
+						<a href={"./classInfShow/classInf.html?classId=" + items[i].classId} target={"_blank"}>
 							<span className="title">{items[i].title}</span>
 						</a>
 						<p className="college">
 							{items[i].teamName}
 						</p>
 						<BlueMUI_Review id={'review' + i}
-						num = {5}
-						starNum={items[i].starNum}
-						enable={false}>
-					    </BlueMUI_Review>
-						
-						 
+							num={5}
+							starNum={items[i].starNum}
+							enable={false}>
+						</BlueMUI_Review>
+
+
 					</div>
 				</div>
-			/* <div className="item" key={i}>
-				<div className="content_warp">
-					<img src={items[i].img}></img>
-					<div className="body">
-						<span className="title">
-							{items[i].title}
-						</span>
-						<div>
-							<p className="content">
-								{'课程简介:' + items[i].desc}
-							</p> 
-							<p className="data">
-								<span>{'学分:' + items[i].score}</span>
-								<span>{'学时:' + items[i].stuTime}</span>
-								<span>{'(理论' + items[i].theory + '+实验' + items[i].exp + ')'}</span>
-							</p>
-							<p className="major">{'适用院系/专业:' + items[i].major}</p>
+				/* <div className="item" key={i}>
+					<div className="content_warp">
+						<img src={items[i].img}></img>
+						<div className="body">
+							<span className="title">
+								{items[i].title}
+							</span>
+							<div>
+								<p className="content">
+									{'课程简介:' + items[i].desc}
+								</p> 
+								<p className="data">
+									<span>{'学分:' + items[i].score}</span>
+									<span>{'学时:' + items[i].stuTime}</span>
+									<span>{'(理论' + items[i].theory + '+实验' + items[i].exp + ')'}</span>
+								</p>
+								<p className="major">{'适用院系/专业:' + items[i].major}</p>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className="review_warp">
-					<span className="reviewName">
-						教学团队评价
-								</span>
-					<BlueMUI_Review id={'review' + i}
-						extClass="review"
-						name=""
-						num={items[i].num}
-						starNum={items[i].starNum}
-						enable={false}
-					>
-					</BlueMUI_Review>
-					<span className="reviewName1">
-						(课程评价)
-								</span>
-				</div>
-			</div> */
+					<div className="review_warp">
+						<span className="reviewName">
+							教学团队评价
+									</span>
+						<BlueMUI_Review id={'review' + i}
+							extClass="review"
+							name=""
+							num={items[i].num}
+							starNum={items[i].starNum}
+							enable={false}
+						>
+						</BlueMUI_Review>
+						<span className="reviewName1">
+							(课程评价)
+									</span>
+					</div>
+				</div> */
 			);
 		}
 		return result;
@@ -921,29 +928,29 @@ class BluMUI_ClassInfBox extends React.Component {
 
 //评分打星
 class BlueMUI_Review extends React.Component {
-	constructor(props){
+	constructor(props) {
 		super(props);
 		this.state = {
-			num : this.props.num,
-			starNum : 5
+			num: this.props.num,
+			starNum: 5
 		};
 		this._createBox = this._createBox.bind(this);
 	}
-	_createBox(){
+	_createBox() {
 		let result = [];
 		let num = this.state.num;
 		let starNum = this.state.starNum;
-		for(let i = 0,len = num;i<len;i++){
-			if(i<starNum){
+		for (let i = 0, len = num; i < len; i++) {
+			if (i < starNum) {
 				result.push(<span className="star onstar" key={i}></span>);
-			}else{
+			} else {
 				result.push(<span className="star nostar" key={i}></span>);
 			}
 		};
 		return result;
 	}
-	render(){
-		return(
+	render() {
+		return (
 			<div id={this.props.id} className={"BlueMUI_Review review"}>
 				<span className={name}></span>
 				{this._createBox()}
@@ -975,7 +982,7 @@ class BluMUI_PT_LI extends React.Component {
 		}
 		for (var i = start; i <= showNum + start - 1; i++) {
 			items.push(
-				<li onClick={this.handlerChange} 
+				<li onClick={this.handlerChange}
 					key={i}
 					data-index={i}
 					className={i == index ? "cur" : ""}>
@@ -1004,11 +1011,11 @@ class BluMUI_PT extends React.Component {
 		this.handlerChange = this.handlerChange.bind(this);
 	}
 	handlerNext(e) {
-		var newIndex = this.state.index+1 >= this.state.sum ? this.state.sum : this.state.index+1;
+		var newIndex = this.state.index + 1 >= this.state.sum ? this.state.sum : this.state.index + 1;
 		this.handlerChange(newIndex);
 	}
 	handlerLast(e) {
-		var newIndex = this.state.index-1 <1 ? 1 : this.state.index-1;
+		var newIndex = this.state.index - 1 < 1 ? 1 : this.state.index - 1;
 		this.handlerChange(newIndex);
 	}
 	handlerTop(e) {
@@ -1031,7 +1038,7 @@ class BluMUI_PT extends React.Component {
 		this.setState({
 			index: value,
 			start: start,
-			inputValue:value
+			inputValue: value
 		});
 		this.props.change(value);
 	}
@@ -1063,10 +1070,10 @@ class BluMUI_PT extends React.Component {
 		return (
 			<div className="BluMUI_PT" >
 				{
-					this.state.sum >1 &&
+					this.state.sum > 1 &&
 					<span className="allNum">{'共' + this.state.total + '条记录'}</span>
 				}
-				
+
 				{
 					this.state.sum > 1 &&
 					<button id="topPage" className="toTop" onClick={this.handlerTop}>
@@ -1080,7 +1087,7 @@ class BluMUI_PT extends React.Component {
 				{this.state.sum > 1 &&
 					<div className="inputWarp">
 						<input type="text"
-							defaultValue={this.state.inputValue}
+							value={this.state.inputValue}
 							onInput={this._input.bind(this)}
 							onKeyPress={this._keyPress.bind(this)}
 						/>
@@ -1102,7 +1109,7 @@ var BluMUI_M = {
 	ClassInfBox: BluMUI_ClassInfBox,
 	PT: BluMUI_PT,
 	Sch: BluMUI_Sch,
-	TopPic:BluMUI_TopPic,
+	TopPic: BluMUI_TopPic,
 };
 var BluMUI = {
 	result: {},

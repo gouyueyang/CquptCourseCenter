@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-class BluMUI_List extends React.Component{
+class BluMUI_List extends  React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
 			items: this.props.items,
-			index1: this.props.index
+			index: this.props.index
 		}
 		this._onClick = this._onClick.bind(this);
 	}
@@ -20,9 +20,9 @@ class BluMUI_List extends React.Component{
 			return(
 				function () {
 					that.setState({
-						index1: index
+						index: index
 					})
-					item.callback(index,value,item);
+					item.callback(index,value);
 				}
 			);
 	}
@@ -34,10 +34,12 @@ class BluMUI_List extends React.Component{
 		for(i=0,len=items.length;i<len;i++){
 			result.push(
 				<li key={i}
-					 className={this.state.index1==i?'selected selected-index'+i:'index'+i}
+					 className={this.state.index==i?'selected index'+i:'index'+i}
 					 onClick={this._onClick(i,items[i])}
-					 data-key={i}>
-					<a href={items[i].url} title={items[i].name.length>16?items[i].name:''}>
+					 data-key={i}
+					 style = {{width:100/len + '%'}}
+				>
+					<a href={items[i].url}>
 						{items[i].name}
 					</a>
 				</li>
@@ -104,21 +106,15 @@ class BluMUI_DropList_box extends React.Component{
 				}
 				else {
 					if(index==i){
-						if( that.props.items[index].items.length > 0){
-							result.splice(index,1,0);
-						}else{
-							result.splice(index,1,1);
-						}
-
+						result.splice(index, 1, 0);
 					}else{
 						result.splice(i,1,0);
 					}
 				}
 			}
-			if(that.props.items[index].items.length === 0 && that.props.items[index].isCalled  ){
-				that.selectedDom[index].className = selectClass + ' ' +  noselectClass;
+			if(that.props.items[index].items.length == 0 ){
 				that.props.selected(that.selectedDom[index],selectClass,noselectClass);
-				that.props.callBack(that.props.items[index].name,that.props.items[index].file,that.props.items[index].ableDownload);
+				that.props.callBack(that.props.items[index].name,that.props.items[index].value,that.props.items[index].belong);
 			}
 			that.setState({
 				selects:result
@@ -129,37 +125,29 @@ class BluMUI_DropList_box extends React.Component{
 	render(){
 		var items=this.props.items,
 			callBack=this.props.callBack,
-			getInitDom = this.props.getInitDom,
 			curClass=this.props.curClass;
 		var result=this.props.items.map(
-			(value,index)=>{
-				return (<ul key={index}
-								className={this.props.curClass+'-'+index}>
+			(value,index)=>
+				<ul key={index}
+					 className={this.props.curClass+'-'+index}>
 					<li>
 						<div onClick={this.handlerClick(index,this.state.selectedClass[index][1],"item_warp "+items[index].nameStyle)}
 							  data-key={index}
-							  id = {this.props.curClass+'-'+index}
-							  ref = {(selectedDom)=>{
-								  this.selectedDom[index] = selectedDom;
-								  if(this.state.selects[index] && items[index].items.length === 0){
-									  getInitDom(selectedDom,this.state.selectedClass[index][1],"item_warp "+items[index].nameStyle);
-								  }
-							  }}
-							  className={items[index].items.length>=0?
+							  ref = {(selectedDom)=>(this.selectedDom[index] = selectedDom)}
+							  className={
 								  "item_warp "+
 								  items[index].nameStyle+
 								  ' '+
-								  this.state.selectedClass[index][this.state.selects[index]]:''
+								  this.state.selectedClass[index][this.state.selects[index]]
 							  }
 						>
 								<span  data-key={index}
 										 className="leftLogo"
 										 style={this.state.leftLogo[index][this.state.selects[index]]}>
+									{items[index].card}
 								</span>
 							<span data-key={index}
-									className="name"
-									title = {items[index].title||''}
-							>
+									className="name">
 									{items[index].name}
 								</span>
 							<span data-key={index}
@@ -174,12 +162,13 @@ class BluMUI_DropList_box extends React.Component{
 							curClass={curClass+'-'+index}
 							curstyle={this.state.style[this.state.selects[index]]}
 							items={items[index].items}
-							getInitDom = {this.props.getInitDom}
 						/>}
 					</li>
-				</ul>)});
+				</ul>);
 		return (
+
 			<div style={this.props.curstyle} className="warp"> {result}</div>
+
 		);
 	}
 }
@@ -193,19 +182,13 @@ class BluMUI_DropList extends React.Component{
 			}
 		}
 		this._selectDom = this._selectDom.bind(this);
-		this._getInitDom = this._getInitDom.bind(this);
-	}
-	_getInitDom(initDom,selectClass,noselectClass){
-		if(this.state.selectDom.ref == null ) {
-			this.state.selectDom.ref = initDom;
-			this.state.selectDom.noSelectClass = noselectClass;
-		}
 	}
 	_selectDom(selectDom,selectClass,noselectClass){
-		if(this.state.selectDom.ref!=null && this.state.selectDom.ref!==selectDom){
+		if(this.state.selectDom.ref!=null ){
 			this.state.selectDom.ref.className = this.state.selectDom.noSelectClass;
 			this.state.selectDom.ref= selectDom;
 			this.state.selectDom.noSelectClass = noselectClass;
+			this.state.selectDom.ref.className = noselectClass+' '+selectClass;
 		}
 		else{
 			this.state.selectDom.ref= selectDom;
@@ -223,7 +206,6 @@ class BluMUI_DropList extends React.Component{
 											 curClass="BluMUI_DropList"
 											 items={this.props.items}
 											 selected={this._selectDom}
-											 getInitDom = {this._getInitDom}
 											 curstyle={{}}/>
 
 			</div>
@@ -252,25 +234,10 @@ class BluMUI_downLoad extends React.Component{
 		);
 	}
 }
-class BluMUI_PdfViewer extends React.Component{
-	constructor(props){
-		super(props);
-	}
-	componentDidMount(){
-		window.frames['pdf'].location.href = 'pdfViewer.html?file=' + this.props.pdfURL;
-	}
-	render(){
-		return(
-			<iframe name="pdf">
-			</iframe>
-		)
-	}
-}
 var BluMUI_M={
 	List:BluMUI_List,
-	DropList:BluMUI_DropList,
-	DownLoad:BluMUI_downLoad,
-	PdfViewer:BluMUI_PdfViewer
+	DropList:BluMUI_DropList,//下拉列表
+	DownLoad:BluMUI_downLoad//下载
 }
 var BluMUI={
 	result:{},

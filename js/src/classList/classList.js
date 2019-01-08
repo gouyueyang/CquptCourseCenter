@@ -428,7 +428,7 @@ var changeMoulde=function (value) {
 			window.location.href = './courseMaster/login.html';
 			break;
 		case '登录':
-			window.location.href = 'https://ids.cqupt.edu.cn/authserver/login?service=' + host + 'classList';
+			window.location.href = host;
 			break;
 		case '默认课程':// userList
 			window.location.reload();
