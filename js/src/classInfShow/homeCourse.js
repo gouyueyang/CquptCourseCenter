@@ -184,6 +184,9 @@ function set_more() {
       eve.preventDefault();
     };
   });
+  document.getElementById("TeacherTeam_more").onclick=()=>{
+    window.location.href=`team_show.html?classId=${Course.kcbh}`;
+  }
 }
 
 document.getElementById('more_info').onclick=function(e) {

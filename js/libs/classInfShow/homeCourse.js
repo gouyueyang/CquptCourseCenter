@@ -98,19 +98,19 @@ class BlueMUI_Review extends React.Component {
     var i,
       len,
       starList = [];
-    for (i = 0, len = this.props.num; i <len; i++) {
-      starList.push( <span className = { this.state.choiced[i] == 1 ? 'star onstar' : 'star nostar' }
-        key = { i }
-        data-key = { i }
-        onClick = { this.props.enable ? this._clickStar : function() {} }> </span>
+    for (i = 0, len = this.props.num; i < len; i++) {
+      starList.push(<span className={this.state.choiced[i] == 1 ? 'star onstar' : 'star nostar'}
+        key={i}
+        data-key={i}
+        onClick={this.props.enable ? this._clickStar : function () { }}> </span>
       );
     }
     return starList;
   }
   render() {
-    return ( <div id = { this.props.id }
-      className = { 'BlueMUI_Review ' + this.props.extClass }>
-      <span className = 'name'> { this.props.name } </span> { this._createStar() } </div>
+    return (<div id={this.props.id}
+      className={'BlueMUI_Review ' + this.props.extClass}>
+      <span className='name'> {this.props.name} </span> {this._createStar()} </div>
     );
   }
 }
@@ -122,20 +122,26 @@ class BlueMUI_Teachers extends React.Component {
     super(props);
   }
 
+  
   render() {
-    let teachers=[];
-    let teacher=[];
+    let teachers = [];
+    let teacher = [];
     let warnings;
     let fuzeren;
     this.props.teachers.map(e => {
       if (e.jslx == '负责人') {
-        fuzeren = 
+        fuzeren =
           <div key={e.xm} className="teachers">
             <img src="../../imgs/team_show/teacher_l.png" />
             <div className="down">
-              <span>{ e.xm }</span>
-              <br/>
+              <span>{e.xm}</span>
+              <br />
               <span>负责人</span>
+              {e.dz?
+                <p>
+                  <a href={e.dz} target="_blank" style={{color:'#ff9b29',fontSize:"14px" }} title="点击跳转教师个人主页">教师个人主页</a>
+                </p>:""
+              }
             </div>
           </div>
       } else {
@@ -143,34 +149,39 @@ class BlueMUI_Teachers extends React.Component {
           <div key={e.xm} className="teachers">
             <img src="../../imgs/team_show/teacher_l.png" />
             <div className="down">
-              <span>{ e.xm }</span>
-              <br/>
-              <span>{ e.xymc }</span>
+              <span>{e.xm}</span>
+              <br />
+              <span>{e.xymc}</span>
+              {e.dz?
+                <p>
+                  <a href={e.dz} target="_blank" style={{color:'#ff9b29',fontSize:"14px" }} title="点击跳转教师个人主页">教师个人主页</a>
+                </p>:""
+              }
             </div>
           </div>
         );
       }
     });
-    if(fuzeren) {
-      if(teachers.length>2) {
-        teacher[0]=teachers[0];
-        teacher[1]=teachers[1];
+    if (fuzeren) {
+      if (teachers.length > 2) {
+        teacher[0] = teachers[0];
+        teacher[1] = teachers[1];
       } else {
-        teacher=teachers;
+        teacher = teachers;
       }
     } else {
-      if(teachers.length>3) {
-        teacher[0]=teachers[0];
-        teacher[1]=teachers[1];
-        teacher[2]=teachers[2];
+      if (teachers.length > 3) {
+        teacher[0] = teachers[0];
+        teacher[1] = teachers[1];
+        teacher[2] = teachers[2];
       } else {
-        teacher=teachers;
+        teacher = teachers;
       }
     }
-    if(this.props.teachers.length==0) {
-      warnings=<p>该课程没有任课教师</p>;
+    if (this.props.teachers.length == 0) {
+      warnings = <p>该课程没有任课教师</p>;
     } else {
-      warnings=null;
+      warnings = null;
     }
     return (
       <div id="course-teachers">
@@ -191,11 +202,11 @@ class BlueMUI_ShowAll extends React.Component {
   }
 
   render() {
-    let items=[];
-    this.props.xueyuan.data.map(e=>{
-      let listitem=[];
-      e.zy.map(m=>{
-        listitem.push(<li key={m.zyh}>{'-'+m.zymc}</li>);
+    let items = [];
+    this.props.xueyuan.data.map(e => {
+      let listitem = [];
+      e.zy.map(m => {
+        listitem.push(<li key={m.zyh}>{'-' + m.zymc}</li>);
       })
       items.push(
         <li key={e.xyh}>
@@ -214,16 +225,16 @@ class BlueMUI_ShowAll extends React.Component {
 
 var BluMUI_M = {
   Review: BlueMUI_Review,
-  Resources:BlueMUI_Resources,
+  Resources: BlueMUI_Resources,
   Show_all: BlueMUI_ShowAll,
   Show_teacher: BlueMUI_Teachers,
 }
 var BluMUI = {
   result: {},
-  create: function(data, type, elem) {
+  create: function (data, type, elem) {
     var props = data,
       Blu = BluMUI_M[type];
-    this.result[props.id] = ReactDOM.render( <Blu {...props } />,
+    this.result[props.id] = ReactDOM.render(<Blu {...props} />,
       elem
     );
   }

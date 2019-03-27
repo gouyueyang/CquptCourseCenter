@@ -56,6 +56,7 @@ if(session.getAttribute("uid") != null) {
 	 <meta http-equiv="x-ua-compatible" content="ie=edge"/>
 	<title>课程中心-课程列表</title>
 	<link rel="stylesheet" type="text/css" href="../css/classInfShow/classList.css">
+	<script src="../compatibility/jquery.js"></script>
 </head>
 <body>
 	<div id="header" class="warp">

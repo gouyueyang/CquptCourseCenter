@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+const htmlPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     //登陆界面：
@@ -15,10 +16,10 @@ module.exports = {
     //课程信息展示
     // classInf:'./js/src/classInfShow/classInf.js',
     // classInfReview:'./js/src/classInfShow/classInfReview.js',      //预览
-    // homeCourse:'./js/src/classInfShow/homeCourse.js',
+    homeCourse:'./js/src/classInfShow/homeCourse.js',
     // classInfModule:'./js/src/classInfShow/classInfModule.js',
     // courseShow:'./js/src/classInfShow/courseShow.js',
-    // team_show:'./js/src/classInfShow/team_show.js',     //??
+    team_show:'./js/src/classInfShow/team_show.js',     //??
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
     // classReviewModule:'./js/src/classInfShow/classReviewModule.js',    //审核
@@ -57,7 +58,7 @@ module.exports = {
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',
     // tongJi_wpjgcx:'./js/src/tongJi/tongJi_wpjgcx.js',
     // tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js',
-    tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
+    // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
     // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
     // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
 
@@ -73,9 +74,9 @@ module.exports = {
     // path:'./js/pages/teachingTeam',
     // path:'./js/pages/masterLogin',
     // path:'./js/pages/mySet',
-    // path:'./js/pages/classInfShow',      //课程信息展示
+    path:'./js/pages/classInfShow',      //课程信息展示
     // path: './js/pages/wangping/',
-    path:'./js/pages/statistics/',      //统计
+    // path:'./js/pages/statistics/',      //统计
     // path:'./js/pages/courseManage',        //课程管理
 
     filename: "[name].bundle.js",
@@ -93,6 +94,11 @@ module.exports = {
         comments: false
       }
     }),
+    // new htmlPlugin({
+    //   hash:true,
+    //   cache:true,
+    //   template:'./pages/classList.html'
+    // })
   ],
 
   module: {

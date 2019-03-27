@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="./compatibility.css">
+	<script src="./jquery.js"></script>
+	<script type="text/javascript" src="./browser.js"></script>
+</head>
+
+<body>
+<div id="notIeSupportBrowser" class="not-ie-support-browser browser-btn-hide">
+	<div class="ie-not-support">
+		<img src="./img/IE.png" width="1000">
+		<a href="javascript:void(0);" class="brower-ie-still-visit stillVisitPage"></a>
+		<span class="btn-win">
+				<!--<a href="http://ehall.cqupt.edu.cn/new/portal/install/Chrome_50.0.2661.102_Setup.exe" class="dw-btn fl btnHideFlag dw-btn-left" data-i18n="downloadChromeBrowser">
+					<span></span>
+				</a>-->
+			</span>
+		<span class="btn-win">
+				<!--<a href="http://ehall.cqupt.edu.cn/new/portal/install/360cse_8.7.0.306.exe" class="dw-btn exp-dw-btn fr btnHideFlag dw-btn-right" data-i18n="download360SpeedBrowser">
+					<span></span>
+				</a>-->
+			</span>
+		<span class="btn-xp browser-btn-hide">
+				<!--<a href="http://ehall.cqupt.edu.cn/new/portal/install/49.0.2623.112_chrome_installer.exe" class="dw-btn fl btnHideFlag dw-btn-left" data-i18n="downloadChromeBrowser">
+					<span></span>
+				</a>-->
+			</span>
+		<span class="btn-xp browser-btn-hide">
+				<<!--a href="http://ehall.cqupt.edu.cn/new/portal/install/360cse_8.5.0.142.exe" class="dw-btn exp-dw-btn fr btnHideFlag dw-btn-right" data-i18n="download360SpeedBrowser">
+					<span></span>
+				</a>-->
+			</span>
+
+	</div>
+
+</div>
+<div class="not-support-browser" id="norSupportBrowser">
+	<div class="browser-pic-show ">
+			<span class="browser-pic-group browser-pic-group-margin-left">
+				<img src="./img/Group.png">
+				<span class="browser-title" data-i18n="doesNotSupportBrowser">不兼容当前版本浏览器</span>
+			</span>
+		<div class="browser-pic-bitmap browser-btn-hide">
+				<span class="browser-pic-arrow">
+					<img src="./img/arrow.png">
+				</span>
+			<span class="browser-pic-mode ">
+					<img src="./img/Bitmap.png" width="150" height="160">
+					<span class="browser-title" data-i18n="doesNotSupportBrowser">请使用浏览器极速模式访问</span>
+				</span>
+		</div>
+	</div>
+	<!--<span class="brower-go">
+			<a href="javascript:void(0);" id="animateBtn">我使用的是360浏览器（点击这里）</a>
+		</span>-->
+	<div class="download-browser" id="downloadBrowser">
+		<a href="https://www.google.cn/intl/zh-CN/chrome/" class="dw-btn fl btnHideFlag btn-win" data-i18n="downloadChromeBrowser" style="margin-left: 22px;">
+			<img src="./img/chrome.png" style="margin-top: -3px;margin-left: -1px;" width="26" height="26">
+			<span style="padding-left: 4px;">推荐使用新版Chrome浏览器</span>
+		</a>
+		<a href="http://www.firefox.com.cn/download/" class="dw-btn exp-dw-btn fr btnHideFlag btn-win" data-i18n="downloadFireFoxBrowser" style="margin-right: 19px;">
+			<img src="./img/Firefox.png" style="margin-top: -3px;" width="26" height="26">
+			<span>推荐使用新版Firefox浏览器</span>
+		</a>
+		<a href="https://browser.360.cn/ee/" class="dw-btn exp-dw-btn fl btnHideFlag btn-win" data-i18n="download360SpeedBrowser" style="margin-left: 22px;">
+			<img src="./img/360.png" style="margin-top: -3px;" width="26" height="26">
+			<span>推荐使用新版360极速浏览器</span>
+		</a>
+		
+
+		<a href="https://www.google.cn/intl/zh-CN/chrome/" class="dw-btn fl btnHideFlag btn-xp browser-btn-hide" data-i18n="downloadChromeBrowser" style="margin-left: 22px;">
+			<img src="./img/chrome.png" style="margin-top: -3px;margin-left: -1px;" width="26" height="26">
+			<span style="padding-left: 4px;">推荐使用新版Chrome浏览器</span>
+		</a>
+		<a href="http://www.firefox.com.cn/download/" class="dw-btn exp-dw-btn fr btnHideFlag btn-xp browser-btn-hide" data-i18n="downloadFireFoxBrowser" style="margin-right: 19px;">
+			<img src="./img/Firefox.png" style="margin-top: -3px;" width="26" height="26">
+			<span>推荐使用新版Firefox浏览器</span>
+		</a>
+		<a href="https://browser.360.cn/ee/" class="dw-btn exp-dw-btn fl btnHideFlag btn-xp browser-btn-hide" data-i18n="download360SpeedBrowser" style="margin-left: 22px;">
+			<img src="./img/360.png" style="margin-top: -3px;" width="26" height="26">
+			<span>推荐使用新版360极速浏览器</span>
+		</a>
+		
+	</div>
+	<!--<div class="brower-still-visit">
+		使用不兼容的浏览器可能会出现乱码、页面加载错误、无法访问等问题，您是否<a herf="javascript:void(0);" class="visit stillVisitPage">仍要访问</a>
+	</div>-->
+	<div class="browser-desc-title">
+		<div class="browser-title-1">
+			<span> 使用不兼容的浏览器可能会出现乱码、页面加载错误、无法访问等问题。</span>
+		</div>
+		<div class="browser-title-1">
+			课程中心不支持IE内核的浏览器，推荐使用
+			<span class="text-bold">Chrome内核(版本50以上)</span>
+			和
+			<span class="text-bold">FireFox内核(版本50以上)</span>
+			的浏览器
+		</div>
+		<!--<div class="browser-title-2">您电脑的操作系统为：
+			<img src="./img/w7.png" class="browser-pic-center" width="14" height="14">
+			<span class="browser-title-size">Windows 7&nbsp;&nbsp;&nbsp;&nbsp;您当前使用的浏览器为：</span>
+			<img src="./img/browser.png" class="browser-pic-center" width="14" height="14">
+			<span class="browser-title-size">Firefox</span>
+		</div>-->
+		<!--<div class="browser-title-3">
+			<span>*360浏览器极速模式使用Chrome内核，兼容模式使用IE内核</span>
+		</div>-->
+	</div>
+	<!--<div class="browser-list-btn openFlag">
+		<img src="./img/browser-note.png">
+		<a href="javascript:void(0);">点击收起浏览器兼容列表</a>
+	</div>-->
+
+	<div class="brower-list-box" id="browserListBox">
+		<!-- 	<div class="browser-list-line"></div> -->
+		<!--<div class="browser-list-data">
+			<iframe src="./img/browser_list.htm" marginheight="0" marginwidth="0" scrolling="no" width="1000" height="450" frameborder="0"></iframe>
+		</div>-->
+	</div>
+</div>
+</body></html>

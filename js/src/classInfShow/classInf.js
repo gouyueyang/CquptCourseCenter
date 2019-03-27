@@ -6,28 +6,31 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	classNameDom = document.getElementById('courseName'),
 	iframe = window.frames['content'],
-	hash = parseHash(window.location.href),
+	// hash = parseHash(window.location.href),
 	items = [],
 	courseType,
    unifyCode = getCookie('userId'),
-	classId = hash.classId || '',
+	// classId = hash.classId || '',
+	classId = window.location.href.split("/").pop(),
+	
 	userName = getCookie('userName'),
 	host = courseCenter.host,
 	getMenu =  host + 'getMenu',
 	getCourseStatus = host +  'getCourseStatus',
+	urlPrefix = '/CquptCourseCenter/pages/classInfShow/',
 	moduleURL = {
-		'课程首页': 'home.html?classId=' + classId + '&moduleName='+ encodeURIComponent('课程首页'),
-		'电子教案': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案'),
-		'考试大纲': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考试大纲'),
-		'教学大纲': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('教学大纲'),
-		'考核方案': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考核方案'),
-		'导学方案': 'classInfModule.html?classId=' + classId + '&moduleName='+ encodeURIComponent('导学方案'),
-		'知识点体系': 'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('知识体系'),
-		'学习资源': 'courseShow.html?classId=' + classId + '&moduleName='+ encodeURIComponent('视频')+'&place=2',
-		'教学团队': 'team_show.html?classId=' + classId+'&place=2',
-		'课程简介': 'courseJianjie.html?classId=' + classId+'&place=2',
-		'授课计划': 'classTeachPlan.html?classId=' + classId,
-		'实习计划': 'classTeachPlan.html?classId=' + classId
+		'课程首页': urlPrefix+'home.html?classId=' + classId + '&moduleName='+ encodeURIComponent('课程首页'),
+		'电子教案': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案'),
+		'考试大纲': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考试大纲'),
+		'教学大纲': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('教学大纲'),
+		'考核方案': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('考核方案'),
+		'导学方案': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName='+ encodeURIComponent('导学方案'),
+		'知识点体系': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('知识体系'),
+		'学习资源': urlPrefix+'courseShow.html?classId=' + classId + '&moduleName='+ encodeURIComponent('视频')+'&place=2',
+		'教学团队': urlPrefix+'team_show.html?classId=' + classId+'&place=2',
+		'课程简介': urlPrefix+'courseJianjie.html?classId=' + classId+'&place=2',
+		'授课计划': urlPrefix+'classTeachPlan.html?classId=' + classId,
+		'实习计划': urlPrefix+'classTeachPlan.html?classId=' + classId
 	};
 //添加load事件，addEventListener为添加事件
 //当页面完全加载的时候就会触发
@@ -64,7 +67,7 @@ ajaxPading.init({
 	dataType:'json'
 });
 if(classId == ''){
-	window.location.href = 'error3.html';
+	window.location.href = '/CquptCourseCenter/pages/classInfShow/error3.html';
 }else{
 	ajaxPading.send({
 		data:{
@@ -86,7 +89,7 @@ if(classId == ''){
 				classNameDom.innerHTML = data.courseName;
 				initNav();
 			}else{
-				window.location.href = 'error3.html';
+				window.location.href = '/CquptCourseCenter/pages/classInfShow/error3.html';
 			}
 		}
 	},'getClassName');
