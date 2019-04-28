@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<title>举报页面</title>
+	<link rel="stylesheet" href="../../css/topic/report.css">
+</head>
+
+<body>
+
+	<div id="top">
+		<h1>话题举报</h1>
+		<p id="title">填写举报信息</p>
+	</div>
+	<div id="reportTypeBox">
+		<p class="title2"><span>*</span>请选择投诉举报类型</p>
+		<ul>
+			<li><input type="radio" name="reportType" value="低俗色情">低俗色情</li>
+			<li><input type="radio" name="reportType" value="垃圾广告">垃圾广告</li>
+			<li><input type="radio" name="reportType" value="内容低俗无意义">内容低俗无意义</li>
+			<li><input type="radio" name="reportType" value="辱骂攻击">辱骂攻击</li>
+			<li><input type="radio" name="reportType" value="其他违法信息">其他违法信息</li>
+			<li><input type="radio" name="reportType" value="暴露我的隐私">暴露我的隐私</li>
+			<li><input type="radio" name="reportType" value="内容里有关我的不实描述">内容里有关我的不实描述</li>
+		</ul>
+		<p id="tip" class="title2">话题内容是与课程不相关的广告，影响我的浏览</p>
+	</div>
+	<div>
+		<p class="title2">请填写举报理由</p>
+		<div>
+			<textarea id="reportReason" placeholder="描述理由请不要超过100字" ></textarea>
+		</div>
+	</div>
+	<div>
+		<p class="title2">请核实举报的内容</p>
+		<div id="checkBox">
+			<div id="checkName">举报对象名字</div>
+			<div id="checkContent">
+				<p>（话题）***************</p>
+				<p>（话题内容）*******************</p>
+			</div>
+			<div id="checkTime">2019-04-09 12:30</div>
+		</div>
+	</div>
+	<div>
+		<button>提交</button>
+	</div>
+
+
+</body>
+
+</html>

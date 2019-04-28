@@ -112,13 +112,14 @@ class KclbFilter extends React.Component {
 
     key(e) {
         if (e.keyCode == 13) {
+            this.changeOutput();
             this.refs.list.refresh(1, this.state);
         }
     }
 
     changeOutput() {
         this.setState({
-            output: `unifyCode=${getCookie("userId")}&lx=drkc&type=${this.state.lx}&xm=${this.state.xm}&xymc=${this.state.xymc}`
+            output: `unifyCode=${getCookie("userId")}&lx=drkc&type=${this.state.lx}&xm=${this.state.xm}&xymc=${this.state.xymc}&kkxymc=${this.state.kkxymc}`
         });
     }
 

@@ -1003,7 +1003,8 @@ class BluMUI_PT extends React.Component {
 		this.state = {
 			index: this.props.index,
 			start: this.props.start,
-			total: this.props.total
+			total: this.props.total,
+			sum:this.props.sum
 		};
 		this.handlerNext = this.handlerNext.bind(this);
 		this.handlerLast = this.handlerLast.bind(this);

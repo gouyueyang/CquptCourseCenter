@@ -79,7 +79,25 @@ ajax({
         }
       }
     })
+    //学生、老师各自的访问量
+    ajax({
+      url:courseCenter.host+'getFwlData',
+      data:{
+        'unifyCode':User.id,
+        'kcbh':Course.kcbh
+      },
+      success:function(response) {
+        var datas=JSON.parse(response);
 
+        if("lsFwl" in datas.data) {
+          document.getElementById('visited_ls').innerText='老师访问量:'+datas.data.lsFwl[0].djsl;
+        }
+
+        if("xsFwl" in datas.data) {
+          document.getElementById('visited_xs').innerText='学生访问量:'+datas.data.xsFwl[0].djsl;
+        }
+      }
+    })
 		var baseInfos=['kcmc','kcbh','xf','xs','kcjs','kclx'];
 
 		baseInfos.map(e=>{
@@ -126,8 +144,9 @@ ajax({
         document.getElementById('Resources')
       );
       set_more();
+      
     }
-
+    
 		/**
 		 * 在这进行星星打分///
 		 */
@@ -184,10 +203,14 @@ function set_more() {
       eve.preventDefault();
     };
   });
+  
+}
+function set_tea_more(){
   document.getElementById("TeacherTeam_more").onclick=()=>{
     window.location.href=`team_show.html?classId=${Course.kcbh}`;
   }
 }
+set_tea_more();
 
 document.getElementById('more_info').onclick=function(e) {
   window.location.href='courseJianjie.html?toModuleName=课程简介&classId='+Course.kcbh;

@@ -169,8 +169,10 @@
 	padding-top: 25px;
 }
 
-#visited {
+.floatRight {
 	float: right;
+	margin-left:100px;
+	color:#999;
 }
 
 /*右侧板块的第二个板块*/
@@ -324,4 +326,9 @@
 #kcjs {
 	overflow: hidden;
 	height: 7.8em;
+}
+
+
+#course-teachers p {
+    padding-left: 30px;
 }

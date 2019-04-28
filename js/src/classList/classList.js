@@ -529,6 +529,7 @@ ajaxPading.send({
 	onSuccess:function (value) {
 		var data=JSON.parse(value).data;
 		parseClassInf(data.courseList);
+		
 		BluMUI.create({
 			index:1,// 数字,必选,当前页
 			showNum:9,
@@ -562,6 +563,7 @@ ajaxPading.send({
 			change:getPageInf,// 函数，必选，页数变化时的触发事件,value为点击的页数
 			inputValue:1
 		},'PT',document.getElementById('turnPage'));
+		
 	}
 },'getListInf');
 
