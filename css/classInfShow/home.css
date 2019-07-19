@@ -332,3 +332,47 @@
 #course-teachers p {
     padding-left: 30px;
 }
+
+/* 话题讨论 */
+#r5 .content_title {
+	margin-right: 30px;
+}
+#r5 .content_title .topic_more {
+	float:right;
+	cursor:pointer
+}
+#r5 .content_title .topic_more a{
+	color:#007a51;
+}
+
+
+#r5 .topic_content {
+	padding: 20px;
+}
+#r5 .topic_content .content_item {
+	margin: 10px;
+	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
+	padding: 10px 20px;
+	box-sizing: border-box;
+}
+#r5 .topic_content .content_item .item_info{
+}
+#r5 .topic_content .content_item .item_info span{
+	margin-right: 20px;
+}
+#r5 .topic_content .content_item .item_info .info_message{
+	float: left;
+}
+#r5 .topic_content .content_item .item_info .info_likeAcom{
+	float: right;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+.clearfix:after {
+	display: block;
+	clear: both;
+	content: "";
+}

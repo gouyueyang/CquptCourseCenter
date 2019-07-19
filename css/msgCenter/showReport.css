@@ -1,0 +1,309 @@
+@import url('../public/turnPage.css');
+
+* {
+	font-family: "Microsoft Yahei UI" ! important;
+	padding: 0;
+	margin: 0;
+}
+
+ul {
+	list-style: none;
+}
+
+img {
+	border: none;
+}
+
+.wrap_center {
+	/*限制宽度*/
+	width: 1180px;
+	margin: auto;
+	position: relative;
+	height: inherit;
+}
+
+
+#head {
+	min-width: 1180px;
+	height: 123px;
+	background-color: #f7f7f7;
+	color: #000;
+	font-size: 30px;
+}
+
+#body {
+	min-height: 860px;
+	min-width: 1180px;
+	background-color: #f7f7f7;
+}
+
+#footer {
+	height: 71px;
+	background-color: #007a51;
+	text-align: center;
+}
+
+a {
+	text-decoration: none;
+}
+
+/*课程中心标志栏，设置校徽图片的格式，用float设置课程中心标志和课程名称*/
+#head #head_photo {
+	width: 296px;
+	height: 71px;
+	float: left;
+	margin-top: 28px;
+
+}
+
+
+#head #head_photo img {
+	width: 100%;
+	height: 100%;
+}
+
+#head #logo {
+	text-decoration: none;
+	color: #007a51;
+	float: left;
+	margin-left: 42px;
+	margin-top: 50px;
+	position: static;
+}
+
+#head p {
+	position: absolute;
+	right: 0;
+	top: 50px;
+}
+
+#head span {
+	float: left;
+}
+
+
+/*搜索框的样式*/
+.content_search {
+	float: right;
+	margin-right: 10px;
+	width: 290px;
+	font-size: 0;
+}
+
+.content_search select {
+	float: left;
+	font-size: 13px;
+	width: 88px;
+	height: 25px;
+}
+
+.content_search .search {
+	float: left;
+	position: relative;
+	font-size: 13px;
+	width: 198px;
+}
+
+.content_search .search input {
+	float: left;
+	padding: 0;
+	height: 23px;
+}
+
+.content_search .search span {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 60px;
+	height: 25px;
+	background: #007a51;
+	text-align: center;
+	line-height: 25px;
+	margin: 0;
+	color: white;
+}
+
+#report {
+	background: white;
+	padding: 30px 10px;
+}
+
+#report .report_title {
+	margin-bottom: 30px;
+}
+
+#report .report_title .title_left {
+	float: left;
+}
+
+#report .report_title .title_left>span {
+	margin-right: 30px;
+}
+
+#report .report_title .title_left span {
+	font-size: 13px;
+}
+
+#report .report_title .title_left .title {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+#report .report_list .list_item {
+	padding: 10px 50px 10px 10px;
+	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
+	margin-bottom: 15px;
+	font-size: 14px;
+}
+
+#report .report_list .list_item .item_content .content_left {
+	float: left;
+	margin: 5px 0;
+	font-weight: 700;
+	font-size: 18px;
+}
+
+#report .report_list .list_item .item_content .content_left>span {
+	margin: 0;
+}
+
+#report .report_list .list_item .item_content .content_time {
+	float: right;
+	height: 100%;
+}
+
+#report .report_list .list_item .item_msg {
+	margin: 5px 0;
+}
+
+#report .report_list .list_item .item_msg .msg_left {
+	float: left;
+}
+
+#report .report_list .list_item .item_msg .msg_left .left_type {
+	margin: 10px 0 20px 0;
+}
+
+#report .report_list .list_item .item_msg .msg_left .left_type span {
+	padding: 2px 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+#report .report_list .list_item .item_msg .msg_left .left_reason>div {
+	float: left;
+}
+
+#report .report_list .list_item .item_msg .msg_left .left_reason .reason_detail {
+	width: 700px;
+}
+
+#report .report_list .list_item .item_msg .msg_func {
+	float: right;
+}
+
+#report .report_list .list_item .item_msg .msg_func {
+	float: right;
+}
+
+#report .report_list .list_item .item_msg .msg_func>div , .msg_func>div a {
+	margin: 10px 0;
+	color: #007a51;
+	cursor: pointer;
+}
+
+#report .report_list .list_item .item_bottom {
+	margin: 10px 0;
+}
+
+#report .report_list .list_item .item_bottom>span {
+	color: #007a51;
+}
+
+/*table*/
+#center_table {
+	width: 1160px;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+#center_table thead {
+	color: #FFF;
+	background: #009361;
+}
+
+#center_table tr {
+	padding: 0 45px;
+}
+
+#center_table label {
+	top: 2px;
+}
+
+#center_table thead th {
+	font-size: 16px;
+	height: 40px;
+}
+
+#center_table td:first-child {
+	border-radius: 2px 0 0 2px;
+	border-bottom: none;
+}
+
+#center_table td:last-child {
+	border-radius: 0 2px 2px 0;
+	border-bottom: none;
+}
+
+#center_table tr:last-child td {
+	border-bottom: none;
+}
+
+#center_table tbody tr {
+	height: 50px;
+	background: #FFF;
+}
+#center_table tbody tr td {
+	height: 52px;
+	font-size: 14px;
+	border-bottom: 1px solid #EEE;
+}
+
+#center_table tbody td span {
+	color: #666;
+	cursor: default;
+	display: block;
+}
+
+#center_table tbody td span.op_on {
+	color: #ff9b29;
+	cursor: pointer;
+}
+#center_table tbody td span.op_on a{
+	color:#ff9b29;
+}
+
+#center_table tbody tr.list_line {
+	background: transparent;
+	height: 7px;
+}
+
+
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+
+/*页脚的字体定位样式*/
+#footer .copyRight {
+	font-size: 16px;
+	color: #ffffff;
+	height: 71px;
+	line-height: 71px;
+}

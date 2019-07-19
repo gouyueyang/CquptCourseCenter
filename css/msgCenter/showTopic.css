@@ -1,0 +1,482 @@
+@import url('../public/turnPage.css');
+
+body{
+	margin:0px;
+}
+/*搜索框的样式*/
+#topicInfo a {
+	text-decoration: none;
+}
+#topicInfo li{
+	list-style: none;
+}
+.content_search {
+	float: right;
+	margin-right: 10px;
+	width: 290px;
+	font-size: 0;
+}
+
+.content_search select {
+	float: left;
+	font-size: 13px;
+	width: 88px;
+	height: 25px;
+}
+
+.content_search .search {
+	float: left;
+	position: relative;
+	font-size: 13px;
+	width: 198px;
+}
+
+.content_search .search input {
+	float: left;
+	padding: 0;
+	height: 23px;
+	border:1px solid rgb(169,169,169);
+	width:137px;
+}
+.content_search .search span {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 60px;
+	height: 25px;
+	background: #02CC88;
+	text-align: center;
+	line-height: 25px;
+	margin: 0;
+	color: white;
+}
+#topicInfo {
+	background: #f7f7f7;
+	padding: 24px 0;
+}
+
+#topicInfo .info_teachers {
+	float: left;
+	margin: 0px 40px 0 0;
+	width:191px;
+	background-color: #fff;
+}
+
+#topicInfo .info_teachers ul {
+	padding: 0;
+	margin: 0;
+}
+
+
+#topicInfo .info_teachers ul li{
+	height: 56px;
+	font-size: 16px;
+	text-align: center;
+	line-height: 53px;
+	cursor: pointer;
+	color:#333;
+}
+
+#topicInfo .info_teachers ul li.active {
+	background: #007a51;
+	color: white;
+}
+
+#topicInfo .info_content {
+	float: right;
+	width: 900px;
+	margin-top: 0px;
+	padding:10px 5px; 
+}
+
+#topicInfo .info_content .content_ban {
+	margin-bottom: 10px;
+}
+
+#topicInfo .info_content .content_ban .ban_item {
+	float: left;
+	font-size: 16px;
+	width: 200px;
+	height: 37px;
+	line-height: 37px;
+	text-align: center;
+	margin-right: 23px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
+
+#topicInfo .info_content .content_method {
+
+}
+
+#topicInfo .info_content .content_method > span, #topicInfo .info_content .content_method > a {
+	float: left;
+	margin-right: 20px;
+	font-size: 13px;
+	height: 19px;
+	line-height: 19px;
+}
+
+
+#topicInfo .info_content .content_topic h3 {
+	font-size: 18px;
+}
+#topicInfo .info_content .content_topic{
+	font-size: 14px;
+	margin:10px 0;
+}
+
+#topicInfo .info_content .content_topic .topic_item{
+	padding: 10px 24px 10px 30px;
+	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
+	margin-top: 20px;
+}
+#topicInfo .info_content .content_topic .topic_item .item_bottom{
+	margin-bottom: 10px;
+}
+
+#topicInfo .info_content .content_topic .topic_item .item_bottom .bottom_authCon{
+	float: left;
+}
+#topicInfo .info_content .content_topic .topic_item .item_bottom .bottom_authCon span {
+	margin-right: 30px;
+	cursor: pointer;
+}
+#topicInfo .info_content .content_topic .topic_item .item_bottom .bottom_inform{
+	float: right;
+}
+#topicInfo .info_content .content_topic .topic_item .item_bottom .bottom_inform a {
+	margin-right: 30px;
+	color:#007a51;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info{
+	background: #f2f2f2;
+	padding:15px 20px;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one{
+	margin: 8px 0;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one .one_msg{
+	float: left;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one .one_msg > span{
+	margin: 0;
+}
+
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one .one_func{
+	float: right;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one .one_func a{
+	margin-right: 10px;
+	color:#000;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one .one_func a.color{
+	color:#007a51;
+}
+
+#topicInfo .info_content .content_topic .topic_item .item_info .info_commit {
+	margin-bottom: 20px;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_commit textarea{
+	width: 100%;
+	padding: 8px;
+	font-size: 13px;
+	resize: none;
+	box-sizing: border-box;
+}
+#topicInfo .info_content .content_topic .topic_item .item_info .info_commit button{
+	float: right;
+	width: 65px;
+	height: 28px;
+	background: #009966;
+	text-align: center;
+	line-height: 28px;
+	color: white;
+	margin-right: 5px;
+	border-radius: 5px;
+}
+#sendMsg {
+	width: 96%;
+	margin: 0 auto;
+	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
+	padding: 10px 20px;
+	margin-bottom: 300px;
+	background-color:#fff;
+}
+#sendMsg .msg_bottom {
+	margin-top: 30px;
+}
+#sendMsg .topicName {
+	width: 100%;
+	height: 30px;
+	padding: 5px;
+	margin-bottom: 30px;
+}
+
+#sendMsg .msg_bottom > button {
+	width: 140px;
+	height: 40px;
+	background: #02cc88;
+	text-align: center;
+	line-height: 40px;
+	margin-right: 15px;
+	border-radius: 7px;
+}
+#sendMsg div[role=textbox] {
+	height: 300px;
+}
+#watch_rep {
+	background: white;
+	padding: 30px 10px;
+}
+#watch_rep .rep_top >  .top_reply > span {
+	font-size: 24px;
+	font-weight: 700;
+	margin-right: 20px;
+	padding-bottom: 5px;
+}
+#watch_rep .rep_top > .top_reply span.active {
+	border-bottom: 5px solid #009966;
+}
+#watch_rep .rep_list {
+	padding: 20px 10px;
+	margin: 20px 0;
+}
+#watch_rep .rep_list .list_item {
+	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
+	padding: 20px 10px;
+	margin-bottom: 15px;
+}
+
+#watch_rep .rep_list .list_item .item_main .main_content {
+	float: left;
+	font-size: 18px;
+	font-weight: 700;
+	margin-bottom: 15px;
+}
+
+#watch_rep .rep_list .list_item .item_main .main_content span {
+	margin: 0;
+}
+
+#watch_rep .rep_list .list_item .item_main .main_time {
+	float: right;
+	font-size: 14px;
+}
+#watch_rep .rep_list .list_item .item_topic {
+	font-size: 14px;
+}
+#watch_rep .rep_list .list_item .item_topic .topic_msg {
+	float: left;
+}
+
+#watch_rep .rep_list .list_item .item_topic .topic_replay {
+	float: right;
+	color: blue;
+}
+
+#report {
+	background: white;
+	padding: 30px 10px;
+}
+#report .report_title {
+	margin-bottom: 30px;
+}
+
+#report .report_title .title_left {
+	float: left;
+}
+
+#report .report_title .title_left > span {
+	margin-right: 30px;
+}
+
+#report .report_title .title_left span{
+	font-size: 13px;
+}
+
+#report .report_title .title_left .title{
+	font-size: 24px;
+	font-weight: 700;
+}
+
+#report .report_list .list_item {
+	padding: 10px 50px 10px 10px;
+	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
+	margin-bottom: 15px;
+	font-size: 14px;
+}
+
+#report .report_list .list_item .item_content .content_left{
+	float: left;
+	margin: 5px 0;
+	font-weight: 700;
+	font-size: 18px;
+}
+
+#report .report_list .list_item .item_content .content_left > span{
+	margin: 0;
+}
+
+#report .report_list .list_item .item_content .content_time{
+	float: right;
+	height: 100%;
+}
+
+#report .report_list .list_item .item_msg {
+	margin: 5px 0;
+}
+
+#report .report_list .list_item .item_msg .msg_left{
+	 float: left;
+ }
+
+#report .report_list .list_item .item_msg .msg_left .left_type {
+	margin: 10px 0 20px 0;
+}
+
+#report .report_list .list_item .item_msg .msg_left .left_type span{
+	padding: 2px 5px;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+#report .report_list .list_item .item_msg .msg_left .left_reason > div{
+	float: left;
+}
+#report .report_list .list_item .item_msg .msg_left .left_reason .reason_detail{
+	width: 700px;
+}
+
+#report .report_list .list_item .item_msg .msg_func{
+	 float: right;
+ }
+
+#report .report_list .list_item .item_msg .msg_func{
+	 float: right;
+ }
+#report .report_list .list_item .item_msg .msg_func > div{
+	margin: 10px 0;
+	color: blue;
+	cursor: pointer;
+}
+#report .report_list .list_item .item_bottom {
+	margin: 10px 0;
+}
+#report .report_list .list_item .item_bottom > span{
+	color: blue;
+}
+
+#topic_report {
+	background: white;
+	/*width: 828px;*/
+	padding: 10px 10px;
+	font-size: 13px;
+}
+#topic_report .report_title{
+	margin: 20px 0;
+}
+
+#topic_report .report_title > div{
+	font-size: 20px;
+	font-weight: 400;
+	color: #007a51;
+	padding: 5px;
+	width: 196px;
+}
+#topic_report .report_msg .msg_desc {
+	padding: 10px 20px;
+}
+#topic_report .report_msg .msg_desc .desc_type {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+#topic_report .report_msg .msg_desc .desc_type span{
+	color: red;
+}
+#topic_report .report_msg .msg_desc .desc_choose {
+	width: 634px;
+}
+#topic_report .report_msg .msg_desc .desc_choose > span {
+	display: inline-block;
+	margin: 0 40px 20px 0;
+}
+
+#topic_report .report_msg .msg_desc p{
+	color: rgb(121, 121, 121);
+}
+#topic_report .report_reason > div {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+#topic_report .report_reason {
+	margin-bottom: 10px;
+}
+#topic_report .report_reason textarea{
+	width: 689px;
+	height: 162px;
+	resize: none;
+	padding: 10px;
+	border:1px solid #ccc;
+}
+#topic_report .report_confirm {
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 689px;
+	margin-bottom: 20px;
+}
+#topic_report .report_confirm > div {
+	margin: 10px 0;
+}
+#topic_report .report_submit {
+	text-align: center;
+}
+
+#topic_report .report_submit button {
+	width: 140px;
+	height: 40px;
+	margin:0 100px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 18px;
+	color: white;
+	background: #169BD5;
+	border-radius: 5px;
+	border:1px solid #666;
+}
+
+#topic_report .report_submit button.close{
+	color: #169BD5;
+	background: white;
+}
+
+
+.clearfix:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.clearfix {
+	*zoom: 1;
+}
+
+a.color{
+	color:#007a51;
+}
+.color{
+	color:#007a51;
+}
+
+/* 举报信息 */
+#reportBox{
+	display: none;
+	position:fixed;
+	top:0;
+	width:100%;
+	height: 100%;
+	background-color: rgba(211,211,211,0.5);
+}
+#reportWrap{
+	width:800px;
+	margin:0px auto;
+}

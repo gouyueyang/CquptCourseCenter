@@ -2,8 +2,8 @@ var courseCenter = {
 	//http://172.22.114.135:6535/
 	// host:'http://localhost:8000'
 	// //172.22.114.135
-	// host: 'http://172.20.2.139/'
-	host:'http://cc.cqupt.edu.cn/'
+	host: 'http://172.20.2.139/'
+	// host:'http://cc.cqupt.edu.cn/'
 };
 //日期格式
 var DateFormat = {
@@ -14,7 +14,7 @@ var DateFormat = {
 	startTimeFormat: "YYYY-MM-DD 00:00:00",
 	endTimeFormat: "YYYY-MM-DD 23:59:59"
 };
-    
+
 var confirmFlag = true;      //登陆超时弹框标志，防止多次弹框，为true时表示可以弹框
 function parseHash(URL) {
 	var hash = decodeURI(URL).split('?')[1],
@@ -54,7 +54,7 @@ function getCookie(c_name) {
 		return "游客";
 	}
 	if (c_name == 'userId') {
-		return 1;
+		return "1";
 	} else if (c_name == 'masterId') {
 		return "管理员";
 	} else {
@@ -196,7 +196,7 @@ $(function(){
         if(!(isFF ||isOpera||isSafari||isChrome||isEdge||isUcBrowser)){
             browserTypeFlag= "未知浏览器";
         }
-        
+
         if (!!window.ActiveXObject || "ActiveXObject" in window) {
 
             // if (OsObject.indexOf("MSIE") > 0) {
@@ -205,29 +205,29 @@ $(function(){
             //     if (parseInt(versionNum) >= 9) {
             //         flag = false;
             //     }
-            // } else 
+            // } else
             // if (OsObject.toLowerCase().indexOf("trident") > -1 && OsObject.indexOf("rv") > -1) {
             //     flag = false;
             // }
             flag = true;
         }
-        
+
         if(!flag){
             support_flag = filterNavigatorNoSupport(OsObject);
         }
-        
+
         if(!flag && !support_flag){
             //浏览器支持，跳转到平台的url.
             // goIndex();
             return;
         }else{
             window.location.href=courseCenter.host+'CquptCourseCenter/compatibility/browerTips.html';
-            
+
         }
 
-       
 
-        
+
+
     }
 
     function goIndex(){
@@ -265,7 +265,7 @@ $(function(){
         return false;
     }
 
-    
 
-    
+
+
 });

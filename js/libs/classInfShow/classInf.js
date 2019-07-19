@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 class BluMUI_NavListPercent extends React.Component {
 	constructor(props) {
-		super(props);//被extends的如果要用this方法必须先super() 
+		super(props);//被extends的如果要用this方法必须先super()
 		this.state = {//这里是初始化state
 			items: this.props.items,
 			index: this.props.index
@@ -16,7 +16,7 @@ class BluMUI_NavListPercent extends React.Component {
 		this.props.callback(this.state.items[index]);
 		// var that = this;
 		// return function () {
-		// 	that.setState(//这里是修改state，修改了index原来的值 
+		// 	that.setState(//这里是修改state，修改了index原来的值
 		// 		{
 		// 			index: index
 		// 		}
@@ -59,9 +59,11 @@ class BluMUI_NavListPercent extends React.Component {
 		)
 	}
 }
+
 var BluMUI_M = {
 	List: BluMUI_NavListPercent
 }
+
 var BluMUI = {
 	result: {},
 	create: function (data, type, elem, callback) {

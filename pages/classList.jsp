@@ -4,6 +4,8 @@
 <%@ page import="java.net.*" %>
 
 <%
+System.out.println("获取的userID============================="+session.getAttribute("uid"));
+System.out.println("获取的userName============================="+session.getAttribute("userName"));
 if(session.getAttribute("uid") != null) {
 
 	String uid = session.getAttribute("uid").toString();//
@@ -15,6 +17,7 @@ if(session.getAttribute("uid") != null) {
 	// 设置cookie过期时间为24小时。
 	unifyCode.setMaxAge(60 * 60 * 1);
 	userName.setMaxAge(60 * 60 * 1);
+	
 	// 在响应头部添加cookie
 	response.addCookie(unifyCode);
 	response.addCookie(userName);

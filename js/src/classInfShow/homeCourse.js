@@ -13,8 +13,9 @@ let User={
 let Course={
   kcbh:''
 }
-User.id=getCookie('userId')
-Course.kcbh=parseHash(window.location.href).classId
+User.id=getCookie('userId');
+// User.id = '0100826';  //测试数据
+Course.kcbh=parseHash(window.location.href).classId || (window.location.href = 'error1.html');
 
 //显示全部（适用专业）
 function showMore(){
@@ -144,9 +145,9 @@ ajax({
         document.getElementById('Resources')
       );
       set_more();
-      
+
     }
-    
+
 		/**
 		 * 在这进行星星打分///
 		 */
@@ -164,6 +165,28 @@ ajax({
     //   'Review',
     //   document.getElementById('evaluation3')
     // );
+	}
+});
+
+// 获取话题
+ajax({
+	url:courseCenter.host+'getHotTopic',
+	data: {
+		'unifyCode': User.id,
+    'kcbh': Course.kcbh,
+    'count':3
+	},
+	success: function (response) {
+		let result =JSON.parse(response);
+    let {meta, data} = result;
+		if (meta.result === 100 && data.htNum > 0) {
+			// 话题讨论组件
+			BluMUI.create({
+        id: 'TopicDis',
+        kcbh:Course.kcbh,
+				data
+			}, 'TopicDis', document.getElementById('r5'));
+		}
 	}
 });
 
@@ -203,7 +226,7 @@ function set_more() {
       eve.preventDefault();
     };
   });
-  
+
 }
 function set_tea_more(){
   document.getElementById("TeacherTeam_more").onclick=()=>{
@@ -216,6 +239,9 @@ document.getElementById('more_info').onclick=function(e) {
   window.location.href='courseJianjie.html?toModuleName=课程简介&classId='+Course.kcbh;
   e.preventDefault();
 }
+// document.querySelector('#r5 .content_title .topic_more').onclick = function() {
+// 	window.location.href=`topicDis.html?classId=${Course.kcbh}`;
+// }
 
 document.getElementById('button').onclick=function(e) {
   let v1=document.getElementById('value1').value;

@@ -6,18 +6,19 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	classNameDom = document.getElementById('courseName'),
 	iframe = window.frames['content'],
-	// hash = parseHash(window.location.href),
+	hash = parseHash(window.location.href),
 	items = [],
 	courseType,
    unifyCode = getCookie('userId'),
-	// classId = hash.classId || '',
-	classId = window.location.href.split("/").pop(),
-	
+	// classId = hash.classId || 'A1040040',  //测试使用（因为精简URL地址导致的）
+	classId = window.location.href.split("/").pop(),    //部署到服务器上的时候用
+
 	userName = getCookie('userName'),
 	host = courseCenter.host,
 	getMenu =  host + 'getMenu',
 	getCourseStatus = host +  'getCourseStatus',
-	urlPrefix = '/CquptCourseCenter/pages/classInfShow/',
+	urlPrefix = '/CquptCourseCenter/pages/classInfShow/',   //部署到服务器上的时候用
+	// urlPrefix = '../../../pages/classInfShow/',    //测试使用
 	moduleURL = {
 		'课程首页': urlPrefix+'home.html?classId=' + classId + '&moduleName='+ encodeURIComponent('课程首页'),
 		'电子教案': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案'),
@@ -30,8 +31,10 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 		'教学团队': urlPrefix+'team_show.html?classId=' + classId+'&place=2',
 		'课程简介': urlPrefix+'courseJianjie.html?classId=' + classId+'&place=2',
 		'授课计划': urlPrefix+'classTeachPlan.html?classId=' + classId,
-		'实习计划': urlPrefix+'classTeachPlan.html?classId=' + classId
+		'实习计划': urlPrefix+'classTeachPlan.html?classId=' + classId,
+		'话题讨论': urlPrefix + 'topicDis.html?classId=' + classId
 	};
+
 //添加load事件，addEventListener为添加事件
 //当页面完全加载的时候就会触发
 document.getElementById('myIframe').addEventListener('load',function () {
@@ -49,7 +52,7 @@ document.getElementById('myIframe').addEventListener('load',function () {
 			}
 		}
 		that.setState({
-			index:index
+			index:index // 保存当期tab
 		})
 	}
 });
@@ -66,13 +69,14 @@ ajaxPading.init({
 	type:'post',
 	dataType:'json'
 });
+
 if(classId == ''){
 	window.location.href = '/CquptCourseCenter/pages/classInfShow/error3.html';
 }else{
 	ajaxPading.send({
 		data:{
-			courseNo:classId,
-			unifyCode:unifyCode
+			courseNo:classId, // 课程编号
+			unifyCode:unifyCode // 标示用户
 		},
 		url:getCourseStatus,
 		onSuccess:function (result) {
@@ -87,7 +91,7 @@ if(classId == ''){
 				if(type === 2)
 					courseType = 3;
 				classNameDom.innerHTML = data.courseName;
-				initNav();
+				initNav(unifyCode);
 			}else{
 				window.location.href = '/CquptCourseCenter/pages/classInfShow/error3.html';
 			}
@@ -96,7 +100,7 @@ if(classId == ''){
 }
 
 
-function initNav(){
+function initNav(unifyCode){
 	ajaxPading.send({
 		url:getMenu,
 		data:{
@@ -113,11 +117,13 @@ function initNav(){
 			}
 			BluMUI.create({
 				id:'contentNav',
-				items:items,
+				items:items, // 后端返回tabList
 				index:0,
 				callback: changeMoudule
 			},'List',document.getElementById('class_nav'));
 			iframe.location.href = moduleURL[data[0].cdmc];
+			// iframe.location.href = host + moduleURL[data[0].cdmc];
+			console.log('href' + moduleURL[data[0].cdmc]);
 			selfAdaptionFrame('myIframe');
 		}
 	},'getModule');
@@ -130,8 +136,8 @@ if(classId == null ){
 
 
 function changeMoudule (value) {
-	// console.log(value);
 	iframe.location.href = moduleURL[value];
+	console.log('切换tab', moduleURL[value]);
 }
 
 

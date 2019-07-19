@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="renderer" content="webkit|ie-stand">
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta http-equiv="content-type" content="text/html;charset:UTF-8" />
+	<title>查看举报</title>
+	<link rel="stylesheet" type="text/css" href="../../css/msgCenter/showReport.css" />
+	<link rel="stylesheet" href="../../css/public/alert.css">
+</head>
+
+<body>
+	<div id="head">
+		<div class="wrap_center">
+			<div id="head_photo">
+				<a href="/CquptCourseCenter/pages/classList.html">
+					<!--<img src="/CquptCourseCenter/imgs/public/logo.png" />-->
+					<img src="http://cc.cqupt.edu.cn/CquptCourseCenter/imgs/public/logo.png" />
+				</a>
+			</div>
+			<p id="logo">课程中心</p>
+			<p id="courseName"></p>
+		</div>
+	</div>
+	<div id="body">
+		<div class="wrap_center">
+			<div id="reportDis">
+				<!-- <div id="report">
+					<div class="report_title clearfix">
+						<div class="title_left">
+							<span class='title'>举报管理</span>
+							<span><input type="checkbox" />话题举报</span>
+							<span><input type="checkbox" />回复举报</span>
+							<span><input type="checkbox" />话题操作记录</span>
+							<span><input type="checkbox" />回复操作举报</span>
+						</div>
+						<div class="content_search">
+							<select value='htmc'>
+								<option value='htmc'>话题名称</option>
+								<option value='zzxm'>作者名称</option>
+							</select>
+							<div class="search">
+								<input type="text" />
+								<span>搜索</span>
+							</div>
+						</div>
+					</div>
+					<div class="report_list">
+						<table id="center_table">
+							<thead>
+								<tr>
+									<th width="20px"></th>
+									<th>举报id</th>
+									<th>话题名称</th>
+									<th>话题内容</th>
+									<th>举报类型</th>
+									<th>举报理由</th>
+									<th>举报时间</th>
+									<th>处理结果</th>
+									<th>处理人</th>
+									<th>处理时间</th>
+									<th>操作</th>
+									<th width="20px"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td width="20px"></td>
+									<td>1</td>
+									<td>话题名称</td>
+									<td>话题内容</td>
+									<td>垃圾广告</td>
+									<td>举报理由</td>
+									<td>举报时间</td>
+									<td>处理结果</td>
+									<td>处理人</td>
+									<td>处理时间</td>
+									<td>
+										<span class="op_on">恢复班内可见</span>
+										<span class="op_on">查看</span>
+									</td>
+									<td width="20px"></td>
+								</tr>
+								<tr>
+									<td width="20px"></td>
+									<td>1</td>
+									<td>话题名称</td>
+									<td>话题内容</td>
+									<td>垃圾广告</td>
+									<td>举报理由</td>
+									<td>举报时间</td>
+									<td>处理结果</td>
+									<td>处理人</td>
+									<td>处理时间</td>
+									<td>
+										<span class="op_on">恢复班内可见</span>
+										<span class="op_on">查看</span>
+									</td>
+									<td width="20px"></td>
+								</tr>
+								<tr>
+									<td width="20px"></td>
+									<td>1</td>
+									<td>话题名称</td>
+									<td>话题内容</td>
+									<td>垃圾广告</td>
+									<td>举报理由</td>
+									<td>举报时间</td>
+									<td>处理结果</td>
+									<td>处理人</td>
+									<td>处理时间</td>
+									<td>
+										<span class="op_on">恢复班内可见</span>
+										<span class="op_on">查看</span>
+									</td>
+									<td width="20px"></td>
+								</tr>
+								<tr>
+									<td width="20px"></td>
+									<td>1</td>
+									<td>话题名称</td>
+									<td>话题内容</td>
+									<td>垃圾广告</td>
+									<td>举报理由</td>
+									<td>举报时间</td>
+									<td>处理结果</td>
+									<td>处理人</td>
+									<td>处理时间</td>
+									<td>
+										<span class="op_on">恢复班内可见</span>
+										<span class="op_on">查看</span>
+									</td>
+									<td width="20px"></td>
+								</tr>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div> -->
+
+				<!-- <div id="report">
+					<div class="report_title clearfix">
+						<div class="title_left">
+							<span class='title'>举报管理</span>
+							<span><input type="checkbox" />话题举报</span>
+							<span><input type="checkbox" />回复举报</span>
+							<span><input type="checkbox" />话题操作记录</span>
+							<span><input type="checkbox" />回复操作举报</span>
+						</div>
+						<div class="content_search">
+							<select value='htmc'>
+								<option value='htmc'>话题名称</option>
+								<option value='zzxm'>作者名称</option>
+							</select>
+							<div class="search">
+								<input type="text" />
+								<span>搜索</span>
+							</div>
+						</div>
+					</div>
+					<div class="report_list">
+						<div class="list_item">
+							<div class="item_content clearfix">
+								<div class="content_left">
+									<span>同学A</span>回复<span>同学B</span><span>回复的内容回复的内容回复的内容</span>
+								</div>
+								<div class="content_time">
+									2019-04-10 13:30
+								</div>
+							</div>
+							<div class="item_msg clearfix">
+								<div class="msg_left">
+									<div class="left_type">
+										举报类型：<span>垃圾广告</span>
+									</div>
+									<div class="left_reason">
+										<div>举报理由：</div>
+										<div class='reason_detail'>
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+											这是举报内容
+										</div>
+									</div>
+								</div>
+								<div class="msg_func">
+									<div>查看</div>
+									<div>删除</div>
+									<div>忽略</div>
+								</div>
+							</div>
+							<div class="item_bottom">
+								<span>话题名称</span> >
+								<span>课程名称</span> >
+								<span>教学班老师名字</span> >
+								教学班
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+			</div>
+		</div>
+	</div>
+
+	<div id="footer" class="warp">
+		<div class="warp_center">
+			<span class="copyRight">
+				版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+			</span>
+		</div>
+	</div>
+
+	<script src="../../js/libs/react.min.js"></script>
+	<script src="../../compatibility/jquery.js"></script>
+	<script src="../../js/libs/courseCenter.config.js"></script>
+	<script src="../../js/pages/msgCenter/showReport.bundle.js"></script>
+</body>
+
+</html>

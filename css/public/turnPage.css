@@ -9,6 +9,7 @@
   .fanye ul {
     margin: 0 5px;
     display: inline-block;
+    padding: 0;
   }
   .fanye li {
     color: #666;

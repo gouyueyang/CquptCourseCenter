@@ -1,7 +1,10 @@
 var webpack = require('webpack');
-const htmlPlugin = require('html-webpack-plugin');
+var path = require('path');
+const htmlPulgin = require('html-webpack-plugin');
+var UglifyJsPlugin=require('uglifyjs-webpack-plugin');
 module.exports = {
-  entry: {
+	mode: "development",
+	entry: {
     //登陆界面：
     // home:'./js/src/home/home.js',
     //首页列表：
@@ -19,11 +22,16 @@ module.exports = {
     // homeCourse:'./js/src/classInfShow/homeCourse.js',
     // classInfModule:'./js/src/classInfShow/classInfModule.js',
     // courseShow:'./js/src/classInfShow/courseShow.js',
-    // team_show:'./js/src/classInfShow/team_show.js',     //??
+		// team_show:'./js/src/classInfShow/team_show.js',     //??
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
     // classReviewModule:'./js/src/classInfShow/classReviewModule.js',    //审核
+    topicDis: './js/src/classInfShow/topicDis.js', // 话题讨论
 
+    //消息中心
+    // showReply:'./js/src/msgCenter/showReply.js',    //查看回复
+    // showReport:'./js/src/msgCenter/showReport.js',   //查看举报
+    // showTopic:'./js/src/msgCenter/showTopic.js',        //回复和查看详情是展示话题信息
     //网评
 
     // //专家库管理
@@ -60,7 +68,7 @@ module.exports = {
     // tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js',
     // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
     // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
-    tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',
+    // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',  ld
 
     //课程管理
     // courseManagement:'./js/src/courseManage/courseManagement.js',
@@ -68,31 +76,36 @@ module.exports = {
     // classManageCheck:'./js/src/courseManage/classManageCheck.js',
     // classManageSpotCheck:'./js/src/courseManage/classManageSpotCheck.js',
   },
-  output: {
+  	output: {
     // path:'./js/pages/home',
-    // path:'./js/pages/classList',
+    // path:'/js/pages/classList',
+    // path: path.resolve(__dirname, 'js/pages/classList'), // 必须使用绝对路径
     // path:'./js/pages/teachingTeam',
     // path:'./js/pages/masterLogin',
     // path:'./js/pages/mySet',
-    // path:'./js/pages/classInfShow',      //课程信息展示
-    // path: './js/pages/wangping/',
-    path:'./js/pages/statistics/',      //统计
+    path:path.resolve(__dirname, 'js/pages/classInfShow'),      //课程信息展示
+    // path:path.resolve(__dirname,'js/pages/msgCenter'),     
+		// path: './js/pages/wangping/',
+    // path:'./js/pages/statistics/',      //统计 ld
     // path:'./js/pages/courseManage',        //课程管理
 
     filename: "[name].bundle.js",
     publicPath: 'http://localhost:8080/pages'
   },
 
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {//去除console
-        warnings: false,
-        drop_debugger: true,
-        drop_console: false
-      },
-      output: {//解决文件过大的问题
-        comments: false
-      }
+	plugins: [
+    // new webpack.optimize.UglifyJsPlugin({
+		new UglifyJsPlugin({
+			uglifyOptions: {
+				compress: {//去除console
+					warnings: false,
+					drop_debugger: true,
+					drop_console: false
+				},
+				output: {//解决文件过大的问题
+					comments: false
+				}
+			}
     }),
     // new htmlPlugin({
     //   hash:true,
@@ -100,39 +113,76 @@ module.exports = {
     //   template:'./pages/classList.html'
     // })
   ],
-
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: ['babel-loader'],
-
-        // query:{
-        //   presets:['es2015','react'],
-        //   plugins: [
-        //    ["import", {libraryName: "antd", style: "css"}] //按需加载
-        //   ]
-        // },
-      },
-      {
-        test: /\.less$/,
-        use: [
-          require.resolve('style-loader'),
-          {
-            loader: require.resolve('css-loader')
-          },
-          {
-            loader: require.resolve('less-loader'), // compiles Less to CSS 
-          },
-        ],
-      },
-    ],
-    postLoaders: [
-      {
-        test: /\.js$/,
-        loaders: ['es3ify-loader'],
-      },
-    ],
-  },
+	// optimization: {
+	// 	minimizer: [
+	// 		new UglifyJsPlugin({
+	// 			test: /\.js(\?.*)?$/i,
+	// 			uglifyOptions: {
+	// 				compress: {//去除console
+	// 					warnings: false,
+	// 					drop_debugger: true,
+	// 					drop_console: false
+	// 				},
+	// 				output: {//解决文件过大的问题
+	// 					comments: false
+	// 				}
+	// 			}
+	// 		})
+	// 	]
+	// },
+  // 	module: {
+		// loaders: [
+  //     {
+  //       test: /\.js$/,
+  //       exclude: /node_modules/,
+  //       loaders: ['babel-loader'],
+  //
+  //       // query:{
+  //       //   presets:['es2015','react'],
+  //       //   plugins: [
+  //       //    ["import", {libraryName: "antd", style: "css"}] //按需加载
+  //       //   ]
+  //       // },
+  //     },
+  //     {
+  //       test: /\.less$/,
+  //       use: [
+  //         require.resolve('style-loader'),
+  //         {
+  //           loader: require.resolve('css-loader')
+  //         },
+  //         {
+  //           loader: require.resolve('less-loader'), // compiles Less to CSS
+  //         },
+  //       ],
+  //     },
+  //   ],
+  //   	postLoaders: [
+  //     {
+  //       test: /\.js$/,
+  //       loaders: ['es3ify-loader'],
+  //     },
+  //   ],
+  // }
+	module: {
+		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loaders: ['babel-loader']
+			},
+			{
+				test: /\.less$/,
+				use: [
+				        require.resolve('style-loader'),
+				        {
+				          loader: require.resolve('css-loader')
+				        },
+				        {
+				          loader: require.resolve('less-loader'), // compiles Less to CSS
+				        },
+				      ]
+			}
+		],
+	}
 };

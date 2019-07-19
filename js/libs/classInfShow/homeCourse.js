@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import moment from 'moment';
 
 // 课程资源模板
 class BlueMUI_Resources extends React.Component {
@@ -7,7 +8,8 @@ class BlueMUI_Resources extends React.Component {
     super(props);
   }
   render() {
-    return (<div id="r2">
+    return (
+    	<div id="r2">
       <p className="content_title">课程资源</p>
       <div id="r2_content">
         <ul>
@@ -41,6 +43,7 @@ class BlueMUI_Resources extends React.Component {
   }
 }
 
+// 课程综合评价
 class BlueMUI_Review extends React.Component {
   constructor(props) {
     super(props);
@@ -122,7 +125,7 @@ class BlueMUI_Teachers extends React.Component {
     super(props);
   }
 
-  
+
   render() {
     let teachers = [];
     let teacher = [];
@@ -194,7 +197,7 @@ class BlueMUI_Teachers extends React.Component {
 }
 
 
-//全部显示
+//显示全部学院
 class BlueMUI_ShowAll extends React.Component {
 
   constructor(props) {
@@ -223,12 +226,59 @@ class BlueMUI_ShowAll extends React.Component {
   }
 }
 
+// 话题讨论
+class BlueMUI_TopicDis extends React.Component{
+
+	render() {
+    let htList = [];
+		if (this.props.data) {
+			htList = this.props.data.hotHtList;
+    }
+    let kcbh = this.props.kcbh;
+    let address = `./topicDis.html?classId=${kcbh}`;
+		return (
+			<div>
+				{/*<p className='content_title'>话题讨论*/}
+					{/*<span className='topic_more' onClick={this._goTopic}>更多>></span>*/}
+				{/*</p>*/}
+        <p className='content_title'>话题讨论
+				  <span className='topic_more'><a href={address}>更多>></a></span>
+			  </p>
+				<div className="topic_content">
+					{
+						htList.map((item, index) => {
+							return (
+								<div className="content_item" key={item.htid}>
+									<h3>{item.htbt}</h3>
+									<div className="item_info clearfix">
+										<div className="info_message">
+											<span>{item.zzxm}</span>
+											<span>{moment(parseInt(item.fbsj)).format('YYYY-MM-DD')}</span>
+											<span>{item.jxbbh}班</span>
+										</div>
+										<div className="info_likeAcom">
+											<span>评论({item.hfs})</span>
+											{/* <span>点赞数{item.dzs}</span> */}
+										</div>
+									</div>
+								</div>
+							)
+						})
+					}
+				</div>
+			</div>
+		)
+	}
+}
+
 var BluMUI_M = {
   Review: BlueMUI_Review,
   Resources: BlueMUI_Resources,
   Show_all: BlueMUI_ShowAll,
   Show_teacher: BlueMUI_Teachers,
+	TopicDis: BlueMUI_TopicDis
 }
+
 var BluMUI = {
   result: {},
   create: function (data, type, elem) {
@@ -239,4 +289,5 @@ var BluMUI = {
     );
   }
 };
+
 export default BluMUI;
