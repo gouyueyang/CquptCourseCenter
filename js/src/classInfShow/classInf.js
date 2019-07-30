@@ -5,7 +5,8 @@ require('es6-promise');
 var BluMUI = require('../../libs/classInfShow/classInf.js'),
 	ajaxPading = require('../../libs/ajaxExpand.mini.min'),
 	classNameDom = document.getElementById('courseName'),
-	iframe = window.frames['content'],
+	// iframe = window.frames['content'],
+	iframe = document.getElementById('myIframe'),
 	hash = parseHash(window.location.href),
 	items = [],
 	courseType,
@@ -17,8 +18,8 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 	host = courseCenter.host,
 	getMenu =  host + 'getMenu',
 	getCourseStatus = host +  'getCourseStatus',
-	urlPrefix = '/CquptCourseCenter/pages/classInfShow/',   //部署到服务器上的时候用
-	// urlPrefix = '../../../pages/classInfShow/',    //测试使用
+	urlPrefix = host + 'CquptCourseCenter/pages/classInfShow/',   //部署到服务器上的时候用
+	// urlPrefix = 'localhost:8080/pages/classInfShow/',    //测试使用
 	moduleURL = {
 		'课程首页': urlPrefix+'home.html?classId=' + classId + '&moduleName='+ encodeURIComponent('课程首页'),
 		'电子教案': urlPrefix+'classInfModule.html?classId=' + classId + '&moduleName=' + encodeURIComponent('电子教案'),
@@ -38,7 +39,8 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 //添加load事件，addEventListener为添加事件
 //当页面完全加载的时候就会触发
 document.getElementById('myIframe').addEventListener('load',function () {
-	var toModuleName = parseHash(iframe.location.href).moduleName || null;
+	// var toModuleName = parseHash(iframe.location.href).moduleName || null;
+	var toModuleName = parseHash(iframe.src).moduleName || null;
 	if(toModuleName){
 		var that = BluMUI.result.contentNav,
 			items = that.props.items,
@@ -121,7 +123,8 @@ function initNav(unifyCode){
 				index:0,
 				callback: changeMoudule
 			},'List',document.getElementById('class_nav'));
-			iframe.location.href = moduleURL[data[0].cdmc];
+			iframe.src = moduleURL[data[0].cdmc];
+			// iframe.location.href = moduleURL[data[0].cdmc];
 			// iframe.location.href = host + moduleURL[data[0].cdmc];
 			console.log('href' + moduleURL[data[0].cdmc]);
 			selfAdaptionFrame('myIframe');
@@ -136,7 +139,8 @@ if(classId == null ){
 
 
 function changeMoudule (value) {
-	iframe.location.href = moduleURL[value];
+	// iframe.location.href = moduleURL[value];
+	iframe.src = moduleURL[value];
 	console.log('切换tab', moduleURL[value]);
 }
 

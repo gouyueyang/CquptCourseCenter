@@ -557,13 +557,22 @@ class BluMUI_TopicDis extends React.Component {
                       alertTip: "成功发送回复！",
                       closeAlert: function () {}
                     });
+                    let {htList} = this.state.topicMsg;
+                    for(let i in htList){
+                        if(htList[i].htid == htid){
+                            htList[i].hfs += 1;
+                            break;
+                        }
+                    };
+                    
                     this.setState({
+                        topicMsg:{...this.state.topicMsg,htList},
                         sendReplyInfo: {
                             "zhzhf": 1,
                             "fjd": -1,
                             "hfnr":""
                         }
-                    });
+                    },console.log(this.state));
                     document.getElementById(`reply_${htid}`).value = "";
                 }
             }).then(() => {
@@ -974,20 +983,33 @@ class BluMUI_TopicReport extends React.Component {
 
     _commitReport = () => {
         let { htid } = this.props.htInfo;
-        let  hfid  = this.props.hfInfo ? this.props.hfInfo.hfid : null;
+        let  hfid  = this.props.hfInfo ? this.props.hfInfo.hfid : -1;
         let { jblx, jbly } = this.state;
-        this.props.commitReportFun({ htid, hfid, jblx, jbly }).then(result => {
+        if(jblx==""){
             Alert.open({
-              alertTip: "提交举报成功！",
+              alertTip: "请选择举报类型！",
               closeAlert: function () {}
             });
-        }).catch(e => {
-            if (e === 101) {
-                window.location.href = 'error1.html';
-            } else {
-                window.location.href = 'error2.html';
-            }
-        });
+        }else if(jbly == ""){
+            Alert.open({
+              alertTip: "请选择举报理由！",
+              closeAlert: function () {}
+            });
+        }else{
+            this.props.commitReportFun({ htid, hfid, jblx, jbly }).then(result => {
+                Alert.open({
+                  alertTip: "提交举报成功！",
+                  closeAlert: function () {}
+                });
+            }).catch(e => {
+                if (e === 101) {
+                    window.location.href = 'error1.html';
+                } else {
+                    window.location.href = 'error2.html';
+                }
+            });
+        }
+        
     }
 
     _closeReport = ()=>{
@@ -1012,7 +1034,7 @@ class BluMUI_TopicReport extends React.Component {
                         {
                             reportTypeList.map((item,index)=>{
                                 return(
-                                    <span key={index}><input type="checkbox" value={item.xlxnr} checked={jblx === item.xlxnr} onChange={event => { this._changeState("jblx", event);this.setState({'xlxjj':item.xlxjj}) }} />{item.xlxnr}</span>
+                                    <span key={index}><input id={`checkbox_${item.id}`} type="checkbox" value={item.xlxnr} checked={jblx === item.xlxnr} onChange={event => { this._changeState("jblx", event);this.setState({'xlxjj':item.xlxjj}) }} /><label htmlFor={`checkbox_${item.id}`}></label>{item.xlxnr}</span>
                                 )
                             })
                          }

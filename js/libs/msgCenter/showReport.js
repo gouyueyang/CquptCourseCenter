@@ -86,7 +86,7 @@ class BluMUI_ShowReport extends React.Component {
 
                                         {item.clzt == 2 ?
                                             <div className="msg_func">
-                                                <div><a href="./showTopic.html" target="_blank">查看</a></div>
+                                                <div><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></div>
                                                 {ssdx == 'htjb' ?
                                                     <div>
                                                         <div onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除" } }) }}>删除</div>
@@ -101,7 +101,7 @@ class BluMUI_ShowReport extends React.Component {
                                                 }
                                             </div> :
                                             <div className="msg_func">
-                                                <div><a href="./showTopic.html" target="_blank">查看</a></div>
+                                                <div><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></div>
                                                 {ssdx == 'htczjl' ?
                                                     <div onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '恢复班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见" } }) }}>恢复班内可见</div> :
                                                     <div onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '恢复', dx: 'hf', info: { hfid: item.hfid, cz: "恢复" } }) }}>恢复</div>}
@@ -159,7 +159,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>恢复班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '公开', dx: 'ht', info: { htid: item.htid, cz: "公开", kcbh: item.kcbh } }) }}>公开</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
                                                 {
@@ -168,7 +168,7 @@ class BluMUI_ShowReport extends React.Component {
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>设置班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '公开', dx: 'ht', info: { htid: item.htid, cz: "公开", kcbh: item.kcbh } }) }}>公开</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
                                                 {
@@ -177,7 +177,7 @@ class BluMUI_ShowReport extends React.Component {
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>设置班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '公开', dx: 'ht', info: { htid: item.htid, cz: "公开", kcbh: item.kcbh } }) }}>公开</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
                                                 {
@@ -185,7 +185,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '公开', dx: 'ht', info: { htid: item.htid, cz: "公开", kcbh: item.kcbh } }) }}>公开</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
                                                 {
@@ -193,7 +193,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>设置班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
 
@@ -248,14 +248,14 @@ class BluMUI_ShowReport extends React.Component {
                                                     item.cljg == 1 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '恢复', dx: 'hf', info: { hfid: item.hfid, cz: "恢复", kcbh: item.kcbh } }) }}>恢复</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
                                                 {
                                                     item.cljg == 2 || item.cljg == 3 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'hf', info: { hfid: item.hfid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
-                                                        <span className="op_on"><a href="./showTopic.html" target="_blank">查看</a></span>
+                                                        <span className="op_on"><a href={`./showTopic.html?kcbh=${item.kcbh}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
 

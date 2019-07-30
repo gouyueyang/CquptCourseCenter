@@ -5,30 +5,31 @@ require('es6-promise');
 
 var BluMUI = require('../../libs/msgCenter/showReply');
 var ajax = require('../../libs/post_ajax');
+import Alert from "../../util/alert.js";
 var hash = parseHash(window.location.href);
 
 //查询数据的变量
-// let User={
-// 	id:''
-// };
-// let Course={
-// 	kcbh:''
-// };
-// User.id=getCookie('userId');
-// Course.kcbh=parseHash(window.location.href).classId;
+let User={
+	id:''
+};
+let Course={
+	kcbh:''
+};
+User.id=getCookie('userId');
+Course.kcbh=parseHash(window.location.href).classId;
 
 /*模拟数据*/
-let stuArr = [{sfrzh:'1648589',xm:'王鸿'}, {sfrzh:'1648691',xm:'刘涛'}, {sfrzh:'1648949',xm:'周松'}, {sfrzh:'1648540',xm:'黄发祥'}, {sfrzh:'1653498',xm:'贺洪建'}, {sfrzh:'0100826',xm:'纪良浩'}];
-let rand = Math.floor(Math.random() * stuArr.length);
-let User = {
-	// id:'0100826'
-	id: stuArr[rand].sfrzh
+// let stuArr = [{sfrzh:'1648589',xm:'王鸿'}, {sfrzh:'1648691',xm:'刘涛'}, {sfrzh:'1648949',xm:'周松'}, {sfrzh:'1648540',xm:'黄发祥'}, {sfrzh:'1653498',xm:'贺洪建'}, {sfrzh:'0100826',xm:'纪良浩'}];
+// let rand = Math.floor(Math.random() * stuArr.length);
+// let User = {
+// 	// id:'0100826'
+// 	id: stuArr[rand].sfrzh
 
-};
-alert(stuArr[rand].xm);
-let Course = {
-	kcbh: 'A1040040'
-};
+// };
+// alert(stuArr[rand].xm);
+// let Course = {
+// 	kcbh: 'A1040040'
+// };
 
 
 //回复列表初次渲染

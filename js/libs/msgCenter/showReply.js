@@ -61,7 +61,7 @@ class BluMUI_WatchReply extends React.Component {
                             <div className="list_item" key={item.hfid}>
                                 <div className="item_main clearfix">
                                     <div className="main_content">
-                                        <span>{item.zzxm}</span>回复 <span>{item.hfdxxm}</span>:<span>{item.hfnr}</span>
+                                        <span>{item.zzxm}</span> 回复 <span>{item.hfdxxm}</span>:<span>{item.hfnr}</span>
                                     </div>
                                     <div className="main_time">{moment(parseInt(item.hfsj)).format('YYYY-MM-DD hh:mm:ss')}</div>
                                 </div>
@@ -70,7 +70,7 @@ class BluMUI_WatchReply extends React.Component {
                                         <a href="">{item.htbt}</a> > <a href="">{item.kcmc}</a>
                                     </div>
                                     <div className="topic_replay">
-                                        <span>回复</span>
+                                        <a href={`./showTopic.html?htid=${item.htid}&hfid=${item.hfid}`} target="_blank">回复</a>
                                     </div>
                                 </div>
                             </div>

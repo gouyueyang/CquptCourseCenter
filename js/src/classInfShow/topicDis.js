@@ -23,10 +23,10 @@ Course.kcbh=parseHash(window.location.href).classId;
 // let User = {
 // 	// id:'0100826'
 // 	// id:'1'
-// 	id: stuArr[rand].sfrzh
+// 	// id: stuArr[rand].sfrzh
 // 	// id:'0102387'
+// 	id:'7800003'
 // };
-// // alert(stuArr[rand].xm);
 // let Course = {
 // 	kcbh: 'A1040040'
 // };
