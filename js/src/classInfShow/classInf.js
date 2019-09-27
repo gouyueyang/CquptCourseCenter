@@ -36,6 +36,7 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 		'话题讨论': urlPrefix + 'topicDis.html?classId=' + classId
 	};
 
+
 //添加load事件，addEventListener为添加事件
 //当页面完全加载的时候就会触发
 document.getElementById('myIframe').addEventListener('load',function () {
@@ -141,16 +142,18 @@ if(classId == null ){
 function changeMoudule (value) {
 	// iframe.location.href = moduleURL[value];
 	iframe.src = moduleURL[value];
+	selfAdaptionFrame('myIframe');
 	console.log('切换tab', moduleURL[value]);
 }
 
 
 
 
+
 function selfAdaptionFrame(id) {
 	var iframe = document.getElementById(id);
-	// console.log(iframe);
 	var height;
+	
 	iframe.onload = function () {
 		setTimeout(function () {
 			try {
@@ -160,7 +163,8 @@ function selfAdaptionFrame(id) {
 				height = iframe.contentDocument.documentElement.offsetHeight;
 			} catch (e) {};
 			iframe.height = height;
-		}, 100);
+			console.log(iframe.height);
+		}, 2000);
 	};
 	window.onresize = function () {
 		try {
@@ -172,3 +176,4 @@ function selfAdaptionFrame(id) {
 		iframe.height = height;
 	};
 }
+

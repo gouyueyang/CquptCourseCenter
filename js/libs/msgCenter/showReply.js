@@ -39,8 +39,6 @@ class BluMUI_WatchReply extends React.Component {
     }
     render() {
         let {page,sstype,sstj,ssdx} = this.state;
-        console.log("渲染时：");
-        console.log(this.state);
         let {total,totalPages,hfList:replyList} = this.state.replyMsg;
         let options = {pages: totalPages, page, rows: total };
         return (
@@ -56,18 +54,21 @@ class BluMUI_WatchReply extends React.Component {
                                 changeType={event => this._changeState('sstype', event)} />
                 </div>
                 <div className="rep_list">
-                    {replyList.map((item,index)=>{
+                    {replyList.length > 0 ?
+                    replyList.map((item,index)=>{
                         return(
                             <div className="list_item" key={item.hfid}>
                                 <div className="item_main clearfix">
                                     <div className="main_content">
-                                        <span>{item.zzxm}</span> 回复 <span>{item.hfdxxm}</span>:<span>{item.hfnr}</span>
+                                        <span>{item.zzxm}</span> 回复 <span>{item.hfdxxm}</span>:<span dangerouslySetInnerHTML={{ __html: item.hfnr }}></span>
                                     </div>
-                                    <div className="main_time">{moment(parseInt(item.hfsj)).format('YYYY-MM-DD hh:mm:ss')}</div>
+                                    <div className="main_time">{moment(parseInt(item.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</div>
                                 </div>
                                 <div className="item_topic clearfix">
                                     <div className="topic_msg">
-                                        <a href="">{item.htbt}</a> > <a href="">{item.kcmc}</a>
+                                    <a href={`${courseCenter.host+item.kcbh}`}>{item.kcmc}</a>
+                                        >
+                                        <a href={`./showTopic.html?htid=${item.htid}`}>{item.htbt}</a>  
                                     </div>
                                     <div className="topic_replay">
                                         <a href={`./showTopic.html?htid=${item.htid}&hfid=${item.hfid}`} target="_blank">回复</a>
@@ -76,9 +77,13 @@ class BluMUI_WatchReply extends React.Component {
                             </div>
                         )
                         
-                    })}
+                    }):(<div id="errorWrap">
+                            <img id="errorPic" src="../../imgs/public/error.png" alt="错误或者无数据"/>
+                            <span id="errorMsg">暂无回复数据</span>
+                        </div>)
+                    }
                 </div>
-                <Fanye options={options} callback={() => { this._searchReply }} />
+                {totalPages>0 && <Fanye options={options} callback={this._searchReply } />}
                 
             </div>
         )

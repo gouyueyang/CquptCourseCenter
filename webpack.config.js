@@ -22,16 +22,16 @@ module.exports = {
     // homeCourse:'./js/src/classInfShow/homeCourse.js',
     // classInfModule:'./js/src/classInfShow/classInfModule.js',
     // courseShow:'./js/src/classInfShow/courseShow.js',
-		// team_show:'./js/src/classInfShow/team_show.js',     //??
+		// team_show:'./js/src/classInfShow/team_show.js',     
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
     // classReviewModule:'./js/src/classInfShow/classReviewModule.js',    //审核
     // topicDis: './js/src/classInfShow/topicDis.js', // 话题讨论
 
     //消息中心
-    // showReply:'./js/src/msgCenter/showReply.js',    //查看回复
-    // showReport:'./js/src/msgCenter/showReport.js',   //查看举报
-    showTopic:'./js/src/msgCenter/showTopic.js',        //回复和查看详情是展示话题信息
+    showReply:'./js/src/msgCenter/showReply.js',    //查看回复
+    showReport:'./js/src/msgCenter/showReport.js',   //查看举报
+    // showTopic:'./js/src/msgCenter/showTopic.js',        //回复和查看详情是展示话题信息
     //网评
 
     // //专家库管理
@@ -78,7 +78,6 @@ module.exports = {
   },
   	output: {
     // path:'./js/pages/home',
-    // path:'/js/pages/classList',
     // path: path.resolve(__dirname, 'js/pages/classList'), // 必须使用绝对路径
     // path:'./js/pages/teachingTeam',
     // path:'./js/pages/masterLogin',

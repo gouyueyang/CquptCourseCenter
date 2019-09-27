@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="UTF-8" />
 	<meta name="renderer" content="webkit|ie-stand">
-	<meta http-equiv="x-ua-compatible" content="ie=edge"/>
-	<meta http-equiv="content-type" content="text/html;charset:UTF-8"/>
+	<meta http-equiv="x-ua-compatible" content="ie=edge" />
+	<meta http-equiv="content-type" content="text/html;charset:UTF-8" />
 	<title>课程中心-课程展示</title>
 	<link rel="stylesheet" type="text/css" href="/CquptCourseCenter/css/classInfShow/classInf.css" />
+	<link rel="stylesheet" type="text/css" href="/CquptCourseCenter/css/public/alert.css">
 </head>
+
 <body>
 
 
@@ -19,7 +22,7 @@
 					<img src="http://cc.cqupt.edu.cn/CquptCourseCenter/imgs/public/logo.png" />
 				</a>
 			</div>
-			<p id="logo">课程中心</p>
+			<p id="logo"><a href="../classList.jsp">课程中心</a></p>
 			<p id="courseName"></p>
 		</div>
 	</div>
@@ -41,20 +44,35 @@
 
 	<div id="footer" class="warp">
 		<div class="warp_center">
-				<span class="copyRight">
-					版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
-				</span>
+			<span class="copyRight">
+				版权所有 重庆邮电大学 地址：重庆市南岸区崇文路2号 邮编：400065
+			</span>
 		</div>
 	</div>
-	<!-- <script src="/CquptCourseCenter/js/libs/react.min.js"></script>
-	<script src="/CquptCourseCenter/compatibility/jquery.js"></script>
-  <script src="/CquptCourseCenter/js/libs/courseCenter.config.js"></script> -->
-	<!-- <script src="../../js/pages/classInf.js"></script> -->
-	<!-- <script src="/CquptCourseCenter/js/pages/classInfShow/classInf.bundle.js"></script> -->
+	<div id="infoBar">
+		<ul>
+			<li><a href="CquptCourseCenter/pages/msgCenter/showReply.html" target="_blank">查看回复</a></li>
+			<li><a href="CquptCourseCenter/pages/msgCenter/showReport.html" target="_blank">查看举报</a></li>
+		</ul>
+	</div>
 
-	<script src="/js/libs/react.min.js"></script>
+	<div id="reportBox">	
+		<div id="reportWrap"></div>
+	</div>
+		
+	<div id="popup"></div>
+
+	<script src="/CquptCourseCenter/js/libs/react.min.js"></script>
+	<script src="/CquptCourseCenter/compatibility/jquery.js"></script>
+	<script src="/CquptCourseCenter/js/libs/courseCenter.config.js"></script>
+	<!-- <script src="../../js/pages/classInf.js"></script> -->
+	<script src="/CquptCourseCenter/js/pages/classInfShow/classInf.bundle.js"></script>
+
+	<!-- <script src="/js/libs/react.min.js"></script>
 	<script src="/compatibility/jquery.js"></script>
   <script src="/js/libs/courseCenter.config.js"></script>
-  <script src="/js/pages/classInfShow/classInf.bundle.js"></script>
+  <script src="/js/pages/classInfShow/classInf.bundle.js"></script> -->
+
 </body>
+
 </html>

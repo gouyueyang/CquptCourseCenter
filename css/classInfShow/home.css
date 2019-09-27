@@ -171,7 +171,7 @@
 
 .floatRight {
 	float: right;
-	margin-left:100px;
+	margin-left:80px;
 	color:#999;
 }
 
@@ -336,23 +336,36 @@
 /* 话题讨论 */
 #r5 .content_title {
 	margin-right: 30px;
+	margin-bottom:0px;
 }
 #r5 .content_title .topic_more {
 	float:right;
 	cursor:pointer
 }
-#r5 .content_title .topic_more a{
+#r5 h3{
+	margin-top: 0px;
+	margin-bottom: 10px;
+	font-weight: normal;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow:hidden
+}
+#r5 .content_title a{
+	color:#999;
+	font-size: 14px;
+}
+#r5 a{
 	color:#007a51;
 }
 
 
 #r5 .topic_content {
-	padding: 20px;
+	padding: 0px 20px 20px 20px;
 }
 #r5 .topic_content .content_item {
-	margin: 10px;
+	margin-bottom: 10px;
 	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
-	padding: 10px 20px;
+	padding: 10px 20px 10px 10px;
 	box-sizing: border-box;
 }
 #r5 .topic_content .content_item .item_info{

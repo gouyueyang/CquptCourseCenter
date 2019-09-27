@@ -23,10 +23,10 @@ class Alert extends Component{
   }
   // 关闭弹框
   confirm = () => {
+    this.state.closeAlert();
     this.setState({
       alertStatus:false
     })
-    this.state.closeAlert();
   }
   open =(options)=>{
     options = options || {};
@@ -64,11 +64,11 @@ class Alert extends Component{
   }
 }
  
-let div = document.createElement('div');
+let div = window.top.document.createElement('div');
 let props = {
    
 };
-document.body.appendChild(div);
+window.top.document.body.appendChild(div);
  
 let Box = ReactDOM.render(React.createElement(
   Alert,

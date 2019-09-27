@@ -851,8 +851,8 @@ class BluMUI_ClassInfBox extends React.Component {
 			result.push(
 				<div className="item" key={i}>
 					<div className="content_warp">
-						 <a href={"./classInfShow/classInf.html?classId=" + items[i].classId} target={"_blank"}>
-						{/*<a href={courseCenter.host+items[i].classId} target={"_blank"}>*/}
+						 {/* <a href={"./classInfShow/classInf.html?classId=" + items[i].classId} target={"_blank"}> */}
+						<a href={courseCenter.host+items[i].classId} target={"_blank"}>
 							<div className="img">
 								<img src={items[i].img} />
 								<p className="data">

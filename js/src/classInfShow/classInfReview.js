@@ -133,6 +133,7 @@ if(classId == null ){
 
 function changeMoudule (index,value) {
 	iframe.location.href = moduleURL[value];
+	selfAdaptionFrame('myIframe');
 }
 
 

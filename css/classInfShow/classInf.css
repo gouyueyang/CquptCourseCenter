@@ -192,7 +192,9 @@ a{
 	margin-top:50px;
 	position: static;
 }
-
+#head #logo a{
+	color: #007a51;
+}
 #head p{
 	position: absolute;
 	right: 0;
@@ -261,4 +263,221 @@ a{
 	color: #ffffff;
 	height:71px;
 	line-height: 71px;
+}
+
+/* 右侧浮动栏 */
+#infoBar{
+	position:fixed;
+	right: 0;
+	top:50%;
+	margin-top: -50px;
+	width:50px;
+	height: 100px;
+	background-color: #fff;
+	border:1px solid #f7f7f7;
+}
+#infoBar ul li{
+	float:left;
+	width:50px;
+	height: 50px;
+	box-sizing: border-box;
+	font-size: 16px;
+	border-bottom:1px solid #f7f7f7;
+	padding:5px;
+	box-shadow: 0 2px 8px rgba(38,66,56,.2);
+}
+#infoBar ul li a{
+	color:#007a51;
+}
+
+/* 举报信息 */
+#reportBox {
+	display: none;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(211, 211, 211, 0.5);
+	z-index:1;
+}
+
+#reportWrap {
+	width: 800px;
+	margin: 100px auto;
+}
+
+#topic_report {
+	background: white;
+	/*width: 828px;*/
+	padding: 10px 10px;
+	font-size: 13px;
+}
+
+#topic_report .report_title {
+	margin: 20px 0;
+}
+
+#topic_report .report_title>div {
+	font-size: 20px;
+	font-weight: 400;
+	color: #007a51;
+	padding: 5px;
+	width: 196px;
+}
+
+#topic_report .report_msg .msg_desc {
+	padding: 10px 20px;
+}
+
+#topic_report .report_msg .msg_desc .desc_type {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+#topic_report .report_msg .msg_desc .desc_type span {
+	color: red;
+}
+
+#topic_report .report_msg .msg_desc .desc_choose {
+	width: 634px;
+}
+
+#topic_report .report_msg .msg_desc .desc_choose>span {
+	display: inline-block;
+	margin: 0 40px 20px 0;
+}
+
+#topic_report .report_msg .msg_desc p {
+	color: rgb(121, 121, 121);
+}
+
+#topic_report .report_reason>div {
+	font-size: 16px;
+	margin-bottom: 10px;
+}
+
+#topic_report .report_reason {
+	margin-bottom: 10px;
+}
+
+#topic_report .report_reason textarea {
+	width: 689px;
+	height: 162px;
+	resize: none;
+	padding: 10px;
+	border: 1px solid #ccc;
+}
+
+#topic_report .report_confirm {
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 689px;
+	margin-bottom: 20px;
+}
+
+#topic_report .report_confirm>div {
+	margin: 10px 0;
+}
+
+#topic_report .report_submit {
+	text-align: center;
+}
+
+#topic_report .report_submit button {
+	width: 140px;
+	height: 40px;
+	margin: 0 100px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 18px;
+	color: white;
+	background: #007a51;
+	border-radius: 5px;
+	border: 1px solid #666;
+}
+
+#topic_report .report_submit button.close {
+	color: #007a51;
+	background: white;
+}
+
+
+
+/*======================================*/
+
+
+#popup {
+	width: 100%;
+	height: 100%;
+	background: rgba(151,151,151,0.5);
+	z-index: 2;
+	display: none;
+	position: fixed;
+	top: 0;
+  
+  }
+  #popbody {
+	width: 457px;
+	min-height: 250px;
+	max-height: 457px;
+	padding-bottom: 20px;
+	background: #FFF;
+	text-align: center;
+	margin: 200px auto;
+	overflow: auto;
+  }
+  #popbody #msg {
+	width: 80%;
+	height: 160px;
+	padding: 80px 0;
+	margin: 0 auto;
+	box-sizing: border-box;
+	line-height: 25px;
+	font-size: 18px;
+  }
+  #popbody button {
+	width: 91px;
+	height: 31px;
+	outline: none;
+	cursor: pointer;
+	margin: 0 16px;
+	border: 1px solid #007A51;
+	line-height: 31px;
+	font-size: 14px;
+	bottom: 20px;
+  }
+  #popbody #popup_OK {
+	color: #FFF;
+	background: #007A51;
+  }
+  #popbody #popup_back {
+	color: #007A51;
+	background: #FFF;
+  }
+  #popbody .warning {
+	width: 80%;
+	margin: 0 auto 20px;
+	color: red;
+  }
+  #popbody #zjs {
+	width: 80%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 30px auto 0 auto;
+  }
+  #popbody #zjs .zj {
+	display: inline-block;
+	width: 80px;
+	margin: 8px 15px;
+	text-align: center;
+	border:1px solid #007A51;
+	/*text-align: left;*/
+	/*line-height: 30px;*/
+  }
+
+
+  
+.fanye {
+	padding: 10px 0;
 }

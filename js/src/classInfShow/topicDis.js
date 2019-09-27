@@ -104,40 +104,41 @@ if (hash.modelName === 'reply') {
 				openTopic:false,    //公开话题
 			};
 		};
-		alert(userType);
+		// alert(userType);
 
 		getTeacherList().then(retTeacherList => {
 			teacherList = retTeacherList;
-			getClassListFun(teacherList.jsList[0].SFRZH).then(retClassList => {
+			getClassListFun(teacherList.jsList[0].sfrzh).then(retClassList => {
 				classList = retClassList;
 				switch(userType){
-					case '游客':jsSfrzh = teacherList.jsList[0].SFRZH;break;
-					case '学生':classList.jxb ? ssfw = "班内" :ssfw = "公开";jsSfrzh = classList.jxb[0].SFRZH;break;
+					case '游客':jsSfrzh = teacherList.jsList[0].sfrzh;break;
+					case '学生':classList.jxb && classList.jxb.length!=0 ? ssfw = "班内" :ssfw = "公开";ssfw == "班内" ? jsSfrzh = classList.jxb[0].SFRZH : jsSfrzh = teacherList.jsList[0].sfrzh;break;
 					case '管理员':
-					case '其他教师':
-					case '督导':jsSfrzh = teacherList.jsList[0].SFRZH;break;
+					case '其他教师':jsSfrzh = teacherList.jsList[0].sfrzh;break;
+					// case '督导':jsSfrzh = teacherList.jsList[0].sfrzh;break;
+					case '督导':classList.jxb && classList.jxb.length!=0 ? jsSfrzh=classList.jxb[0].SFRZh : jsSfrzh=teacherList.jsList[0].sfrzh;break;
 					case '任课教师':jsSfrzh = User.id;break;
 					case '课程负责人':
-						jsSfrzh = teacherList.jsList.filter(item=>item.SFRZH == User.id).length ==0?teacherList.jsList[0].SFRZH : User.id;break;
+						jsSfrzh = teacherList.jsList.filter(item=>item.sfrzh == User.id).length ==0?teacherList.jsList[0].sfrzh : User.id;break;
 					default :break;
 				}
 				
-				// jsSfrzh = classList.jxb ?  : (classList.allJxbList.filter(item=>item.SFRZH == User.id)!=[]?User.id:teacherList.jsList[0].SFRZH);
+				// jsSfrzh = classList.jxb ?  : (classList.allJxbList.filter(item=>item.SFRZH == User.id)!=[]?User.id:teacherList.jsList[0].sfrzh);
 				getClassListFun(jsSfrzh).then(retClassList => {
 					classList = retClassList;
-					getTopicListFun({ jxbh: classList.jxb ? classList.jxb[0].JXB : classList.allJxbList[0].JXB, pxtype: 'sjjx',  sstype: 'htmc',ssfw:ssfw, sstj: '', page: 1, count: 5 }).then(retTopicList => {
+					getTopicListFun({ jxbh: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : classList.allJxbList[0].JXB, pxtype: 'sjjx',  sstype: 'htmc',ssfw:ssfw, sstj: '', page: 1, count: 5 }).then(retTopicList => {
 						topicList = retTopicList;
 						BluMUI.create({
 							id: 'topicDis',
 							userId: User.id,
 							userType,   //用户身份类型
 							qx,    //用户权限
-							userBan: classList.jxb ? classList.jxb[0].JXB : '',//学生用户所在班级
+							userBan: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : '',//学生用户所在班级
 							teacherList,
 							classList,
 							topicList,
-							teacherSelected: classList.jxb ? classList.jxb[0].SFRZH : jsSfrzh,
-							banSelected: classList.jxb ? classList.jxb[0].JXB : classList.allJxbList[0].JXB,//选择班级
+							teacherSelected: classList.jxb && classList.jxb[0] ? classList.jxb[0].SFRZH : jsSfrzh,
+							banSelected: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : classList.allJxbList[0].JXB,//选择班级
 							getClassListFun, // 获取教学班列表
 							getTopicListFun, //获取教学班话题列表
 							getTopicFun, //根据话题id获取话题（回复页面点击回复或管理查看时进行的查询）
@@ -153,6 +154,17 @@ if (hash.modelName === 'reply') {
 							commitReportFun, // 提交举报信息
 							creatReportBox, //创建举报页面
 						}, 'TopicDis', document.getElementById('topicDis'));
+					}).then(()=>{
+						var iframe = window.parent.document.getElementById('myIframe');
+						var height;
+		
+						try {
+							height = iframe.contentWindow.document.documentElement.offsetHeight;
+						} catch (e) {};
+						try {
+							height = iframe.contentDocument.documentElement.offsetHeight;
+						} catch (e) {};
+						iframe.height = height;
 					})
 				})
 				
@@ -348,9 +360,9 @@ function publishTopicFun({ jxbbh, htbt, htnr, sfyxhf, dqzt }) {
 			success(response) {
 				let result = JSON.parse(response);
 				if (result.meta.result === 100) {
-					resolve(true);
+					resolve(result.meta);
 				} else {
-					reject(result.meta.result)
+					reject(result.meta);
 				}
 			}
 		});
@@ -498,7 +510,7 @@ function reportOperateFun({ jbid, cz }) {
 }
 
 function creatReportBox({ htInfo, hfInfo }) {
-	document.getElementById("reportBox").style.display = "block";
+	window.parent.document.getElementById("reportBox").style.display = "block";
 	getReportTypeFun().then(result=>{
 		let reportTypeList = result;
 		BluMUI.create({ 
@@ -507,7 +519,7 @@ function creatReportBox({ htInfo, hfInfo }) {
 			hfInfo, 
 			commitReportFun,
 			reportTypeList,//举报类型列表
-		 }, "TopicReport", document.getElementById("reportWrap"));
+		 }, "TopicReport", window.parent.document.getElementById("reportWrap"));
 	}).catch(e => {
 		if (e === 101) {
 			window.location.href = 'error1.html';
@@ -560,3 +572,4 @@ function getReportTypeFun() {
 		})
 	})
 }
+

@@ -6,6 +6,7 @@ import Fanye from '../turnPage';
 import moment from 'moment';
 import Alert from "../../util/alert.js";
 
+
 class Search extends React.Component {
     render() {
         const { sstype, changeContent, changeType, search } = this.props;
@@ -42,36 +43,63 @@ class SendTopic extends React.Component {
         return (
             <div id="sendMsg">
                 <h3>发起新话题</h3>
-                <input type="text" id="htmc" placeholder='输入话题名称' onChange={event => this._changeState('htbt', event)} className='topicName' />
+                <input type="text" id="htmc" placeholder='请输入话题名称（50字内）' maxLength="50" onChange={event => this._changeState('htbt', event)} className='topicName' />
                 <textarea name="content" id='editor'>
                 </textarea>
                 {
                     (userType == "任课教师" || userType =="课程负责人" || userType == "督导" || userType == "管理员") &&
                         <div>
+                            <div>
+                                <span><span className="mustWrite">*</span>您要发布到哪些班集？请勾选：</span>
+                            </div>
+                            <div>
                             {
                                 banList.map((item, index) => {
-                                    return (
-                                        <div key={item.JXB} className="public_classItem">
-                                            <input type="checkbox" id={`checkbox_${item.JXB}`}
-                                                checked={this.state.checkBan[item.JXB] ? this.state.checkBan[item.JXB] : false}
-                                                onChange={event => this._toggleBan(item.JXB)} />
-                                                <label htmlFor={`checkbox_${item.JXB}`}></label>
-                                                <span>{item.JXB}班</span>
-                                        </div>
-                                    )
+                                    {/* if(item.SFJZTL==0){ */}
+                                        return (
+                                            <div key={item.JXB} className="public_classItem">
+                                                <input type="checkbox" id={`checkbox_${item.JXB}`}
+                                                    checked={this.state.checkBan[item.JXB] ? this.state.checkBan[item.JXB] : false}
+                                                    onChange={event => this._toggleBan(item.JXB)} />
+                                                    <label htmlFor={`checkbox_${item.JXB}`}></label>
+                                                    <span>{item.JXB}班</span>
+                                            </div>
+                                        )
+                                    {/* }else if(item.SFJZTL==1){
+                                        return (
+                                            <div key={item.JXB} className="public_classItem">
+                                                <input type="checkbox" id={`checkbox_${item.JXB}`}
+                                                    checked={false}
+                                                    onChange={()=>{return false;}} />
+                                                    <span style={{color:'#ccc'}} title="请先解除该班级禁止发表话题状态！">{item.JXB}班</span>
+                                            </div>
+                                        )
+                                    } */}
+                                    
                                 })
                             }
+                            </div>
+                            
                         </div>
                 }
                 {
                     userType == '学生' &&
-                        <div className="public_classItem">
-                            <input type="checkbox" id={`checkbox_${this.props.userBan}`}
-                                checked={this.state.checkBan[this.props.userBan] ? this.state.checkBan[this.props.userBan] : false}
-                                onChange={()=>{return false;}} />
-                                <label htmlFor={`checkbox_${this.props.userBan}`}></label>
-                                <span>{this.props.userBan}班</span>
+                    <div>
+                        <div>
+                            <span><span className="mustWrite">*</span>您要发布到哪些班集？请勾选：</span>
                         </div>
+                        <div>
+                            <div className="public_classItem">
+                                <input type="checkbox" id={`checkbox_${this.props.userBan}`}
+                                    checked={this.state.checkBan[this.props.userBan] ? this.state.checkBan[this.props.userBan] : false}
+                                    onChange={()=>{return false;}} />
+                                    <label htmlFor={`checkbox_${this.props.userBan}`}></label>
+                                    <span>{this.props.userBan}班</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                        
                 }
 
                 <div className='msg_bottom'>
@@ -100,9 +128,34 @@ class SendTopic extends React.Component {
     }
     componentDidMount() {
         ClassicEditor
-            .create(document.querySelector('#editor'))
+            .create(document.querySelector('#editor'),{
+                language : 'zh-cn',
+                toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
+                // toolbar: ['heading', '|', 'bold', 'italic','TextColor','BGColor','Styles','Format','Font','FontSize','Subscript','Superscript','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','|', 'Undo','Redo'],
+                
+            })
             .then(newEditor => {
                 this.editor = newEditor;
+                let maxlength = 100;
+                this.editor.on('key',function(event){
+                    var oldhtml = this.editor.document.getBody().getHtml();
+                    var description = oldhtml.replace(/<.*?>/ig,"");
+                    var etop = $("#cke_1_top");
+                    var _slen = maxlength-description.length;
+                    var canwrite = $("<label id='canwrite'>还可以输入200字</label>");
+                    if(etop.find("#canwrite").length<1){
+                        canwrite.css({border:'1px #f1f1f1 solid','line-height':'28px',color:'#999'});
+                        etop.prepend(canwrite);
+                    }
+                    var _label = etop.find("#canwrite");
+                    if(description.length>maxlength){
+                        //alert("最多可以输入"+maxlength+"个文字，您已达到最大字数限制");
+                        this.editor.setData(oldhtml);
+                        _label.html("还可以输入0字");
+                    }else{
+                        _label.html("还可以输入"+_slen+"字");
+                    }
+                });
             })
             .catch(err => {
                 console.error(err.stack);
@@ -116,6 +169,7 @@ class SendTopic extends React.Component {
         let val = event.target.checked ? 2 :1;
         this.setState({dqzt:val});
     }
+    
     _sendMsg = () => {
         const { htbt, sfyxhf, dqzt, checkBan } = this.state;
         const htnr = this.editor.getData();
@@ -142,6 +196,7 @@ class BluMUI_TopicDis extends React.Component {
             teacherSelected: this.props.teacherSelected, // 选择的老师
             banSelected: this.props.banSelected, // 选择的班级
             allJxbList: this.props.classList.allJxbList, // 教学班编号数组
+            teaJxbList:this.props.classList.allJxbList,//教师账号对应的教学班（为了更新发表话题选择班级而设置）
             topicMsg: this.props.topicList, // topic的数据，不只是数组
             isBanPublishTopic: this.props.topicList.isBanPublishTopic || false,//是否禁止发表话题
             expendReplys: {}, // ;标记展开的话题回复
@@ -175,12 +230,11 @@ class BluMUI_TopicDis extends React.Component {
     // }
 
     render() {
-        let { teacherSelected, banSelected, allJxbList, expendReplys, pxtype, sstype, page, allReplyList, allReplyConfig, isBanPublishTopic } = this.state;
-        console.log(allJxbList);
+        let { teacherSelected, banSelected, allJxbList,teaJxbList, expendReplys, pxtype, sstype, page, allReplyList, allReplyConfig, isBanPublishTopic } = this.state;
 
-        let { jsList } = this.props.teacherList;
+
+        let { jsList,wkkJsList } = this.props.teacherList;
         let { userType,userBan,qx,userId } = this.props;
-        let banList = this.props.classList.allJxbList;//登陆教师的班级列表
         let { total, totalPages, htList } = this.state.topicMsg; // 话题总的数量，总页数， 话题列表
         let options = { pages: totalPages, page, rows: total };
         let {hfnr} = this.state.sendReplyInfo;
@@ -192,11 +246,23 @@ class BluMUI_TopicDis extends React.Component {
                             {
                                 jsList.map((item, index) => {
                                     return (
-                                        <li className={teacherSelected === item.SFRZH ? 'active' : ''}
-                                            key={item.SFRZH}
-                                            onClick={() => this._changeTeacher(item.SFRZH)}>{item.XM}</li>
+                                        <li className={teacherSelected === item.sfrzh ? 'active' : ''}
+                                            key={`kc_${item.sfrzh}`}
+                                            onClick={() => this._changeTeacher(item.sfrzh,true)}>{item.xm}</li>
                                     )
-                                })
+                                })   
+                            }
+                        </ul>
+                        <ul>
+                            {
+                                wkkJsList.map((item, index) => {
+                                    return (
+                                        <li className='wkkJs'
+                                            key={`wkc_${item.sfrzh}`}
+                                            title="该教师本学期未开课"
+                                           >{item.xm}</li>
+                                    )
+                                })   
                             }
                         </ul>
                     </div>
@@ -234,7 +300,7 @@ class BluMUI_TopicDis extends React.Component {
                                 <span>热门排序</span>
 							</span>
                             {
-                                userId == teacherSelected ?
+                                (userType == "管理员" || userType == "课程负责人" || userType == "督导") || userId == teacherSelected ?
                                 <span>
                                 <input id="checkbox_banPublicTopic" type="checkbox" checked={isBanPublishTopic ? true : false} onClick={this._stopSendMsg.bind(this)} />
                                 <label htmlFor="checkbox_banPublicTopic"></label>
@@ -257,66 +323,122 @@ class BluMUI_TopicDis extends React.Component {
                                 htList.map((item, index) => {
                                     return (
                                         <div className="topic_item" key={item.htid}>
-                                            <h3>{item.htbt}</h3>
-                                            <div dangerouslySetInnerHTML={{ __html: item.htnr }}></div>
+                                            <h3><a href={`../msgCenter/showTopic.html?htid=${item.htid}`} target="_blank">{item.htbt}</a></h3>
+                                            <div className="htnr_box" dangerouslySetInnerHTML={{ __html: item.htnr }}></div>
                                             <div className="item_bottom clearfix">
                                                 <div className="bottom_authCon">
                                                     <span>{item.zzxm}</span>
-                                                    <span>{moment(parseInt(item.fbsj)).format('YYYY-MM-DD hh:mm:ss')}</span>
+                                                    <span>{moment(parseInt(item.fbsj)).format('YYYY-MM-DD HH:mm:ss')}</span>
                                                     {/* <span onClick={() => this._topicOperate({ htid: item.id, cz: "点赞" })}>赞({item.dzs})</span> */}
-                                                    <span className='color' onClick={() => {this._toggleReply(item.htid);this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"zhzhf": 1, "fjd": -1 } }); }}>{expendReplys[item.htid] ? '收起回复' : `回复(${item.hfs})`}</span>
+                                                    <span className='color' onClick={() => {this._toggleReply(item.htid);this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }); }}>{expendReplys[item.htid] ? '收起回复' : `回复(${item.hfs})`}</span>
                                                 </div>
                                                 <div className="bottom_inform">
                                                     {/* {console.log("登陆id:" + userId)}
                                                     {console.log("话题举报权限:" + (userId != item.jssfrzh))}
                                                     {console.log("话题禁止回复权限:" + (userId == item.jssfrzh))}
                                                     {console.log("话题删除权限:" + (userId == item.zzsfrzh || userId == item.jssfrzh))} */}
-                                                    {userType != '游客' && (userId != item.jssfrzh ? <a href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item }) }}>举报</a> : '')}
+                                                    {userType != '游客' && (userId != item.jssfrzh ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item }) }}>举报</a> : '')}
+                                                    {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh)) ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: item.htid, cz: '删除' }) }}>删除</a> : ''}
                                                     {qx.openTopic && item.dqzt ==1 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.jssfrzh) ?
                                                         (item.dqzt == 1 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '公开' })}>公开话题</a>):null}
 
                                                     {qx.openTopic && item.dqzt ==2 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.jssfrzh) ?
                                                         (item.dqzt == 2 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '设置班内可见' })}>取消公开</a>):null}
                                                     {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh) ? (item.sfyxhf ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
-                                                    {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh)) ? <a href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: item.htid, cz: '删除' }) }}>删除</a> : ''}
-                                                    {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid)); document.getElementById(`reply_${item.htid}`).value = `回复: `}}>回复</a> : null)}
+                                                    
+                                                    {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid)); }}>回复</a> : null)}
                                                 </div>
                                             </div>
                                             {
                                                 expendReplys[item.htid] && allReplyList[item.htid] ?
                                                     <div className="item_info">
                                                         {
-                                                            allReplyList[item.htid].hfList.map((repItem, index) => <div className="info_one clearfix" key={index}>
-                                                                {
+                                                            allReplyList[item.htid].hfList.map((repItem, index) => 
+                                                            <div className="info_one clearfix" key={index}>
+                                                            {
                                                                     repItem.fjd == -1 &&
                                                                     <div className="one_msg">
-                                                                        <span>{repItem.zzxm} 回复: </span>
-                                                                        <span>{repItem.hfnr}</span>
+                                                                        <span>
+                                                                            {repItem.zzxm}
+                                                                            {repItem.zzsfrzh == topicInfo.zzsfrzh ? <span className="tip">题主</span>:null}
+                                                                            {repItem.zzsf ==1 && <span className="tip">教师</span>}
+                                                                        </span>
+                                                                        
                                                                     </div>
                                                                 }
                                                                 {
                                                                     repItem.fjd != -1 &&
                                                                     <div className="one_msg">
-                                                                        <span>{repItem.zzxm}</span>
-                                                                        <span>{repItem.hfnr}</span>
+                                                                        <span>
+                                                                            {repItem.zzxm}
+                                                                            {repItem.zzsfrzh == topicInfo.zzsfrzh ? <span className="tip">题主</span>:null}
+                                                                            {repItem.zzsf ==1 && <span className="tip">教师</span>}
+                                                                        </span>
+                                                                        
                                                                     </div>
                                                                 }
+                                                                {/* <div className="one_msg">
+                                                                    <span>
+                                                                        {repItem.zzxm}
+                                                                        {repItem.zzsfrzh == topicInfo.zzsfrzh ? <span className="tip">题主</span>:null}
+                                                                        {repItem.zzsf ==1 && <span className="tip">教师</span>}
+                                                                    </span>
+						                	                    </div> */}
                                                                 <div className="one_func">
-
-                                                                    {qx.addReport && (userId != item.jssfrzh ? <a className='color' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item, hfInfo: repItem }) }}>举报</a> : null)}
-                                                                    {/* <a href="javascript:void(0)" onClick={() => { this._replyOperate(repItem.hfid, "点赞", item.htid) }}>赞({repItem.dzs})</a> */}
-                                                                    {(userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
-                                                                    <a href="#">{moment(parseInt(repItem.hfsj)).format('YYYY-MM-DD hh:mm:ss')}</a>
-                                                                    {qx.addReply && <a className='color' href="javascript:void(0);" onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "zhzhf": 2, "fjd": repItem.hfid } }, console.log(this.state)) }}>回复</a>}
+                                                            
+                                                                    <a href="javascript:void(0);">{moment(parseInt(repItem.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</a>
+                                                                    {qx.addReply && <a className='color' href="javascript:void(0);" 
+                                                                    onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "hfdxxm":repItem.zzxm,"zhzhf": 2, "fjd": repItem.hfid } }, console.log(this.state)) }}>回复</a>}
+                                                                    {(userType == "管理员" || userType == "课程负责人" || userType == "督导"||userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
+                                                                    {qx.addReport && (userId != item.jssfrzh ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item, hfInfo: repItem }) }}>举报</a> : null)}
+						                	                    </div>
+                                                                <div className="one_content clearfix">
+                                                                    <span> 回复 </span>
+                                                                    <span>{repItem.hfdxxm}{repItem.hfdxsfrzh == topicInfo.zzsfrzh ? <span className="tip">题主</span>:null}{repItem.hfdxsf ==1 && <span className="tip">教师</span>} : </span>
+                                                                
+                                                                    <div dangerouslySetInnerHTML={{ __html: repItem.hfnr }}></div>
                                                                 </div>
-                                                            </div>
+                                                            </div> 
+                                                            //  <div className="info_one clearfix" key={index}>
+                                                            //    {
+                                                            //        repItem.fjd == -1 &&
+                                                            //        <div className="one_msg">
+                                                            //            <span>{repItem.zzxm}</span>
+                                                            //            <span> 回复 </span>
+                                                            //            <span>{repItem.hfdxxm} : </span>
+                                                            //            <div dangerouslySetInnerHTML={{ __html: repItem.hfnr }}></div>
+                                                            //        </div>
+                                                            //    }
+                                                            //    {
+                                                            //        repItem.fjd != -1 &&
+                                                            //        <div className="one_msg">
+                                                            //            <span>{repItem.zzxm}</span>
+                                                            //            <span> 回复 </span>
+                                                            //            <span>{repItem.hfdxxm} : </span>
+                                                            //            <span dangerouslySetInnerHTML={{ __html: repItem.hfnr}}></span>
+                                                            //        </div>
+                                                            //    }
+                                                            //    <div className="one_func">
+//
+                                                            //        {qx.addReport && (userId != item.jssfrzh ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item, hfInfo: repItem }) }}>举报</a> : null)}
+                                                            //        /* <a href="javascript:void(0)" onClick={() => { this._replyOperate(repItem.hfid, "点赞", item.htid) }}>赞({repItem.dzs})</a> */
+                                                            //        {(userType == "管理员" || userType == "课程负责人" || userType == "督导"||userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
+                                                            //        <a href="#">{moment(parseInt(repItem.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</a>
+                                                            //        {qx.addReply && <a className='color' href="javascript:void(0);" onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "hfdxxm":repItem.zzxm,"zhzhf": 2, "fjd": repItem.hfid } }, console.log(this.state)) }}>回复</a>}
+                                                            //    </div>
+                                                            //</div>  
                                                             )
                                                         }
                                                         {
+                                                            
+                                                            allReplyList[item.htid].total- allReplyList[item.htid].hfList.length > 0 &&
+                                                            <div className="searchMore" onClick={()=>{this._searchReply(item.htid,allReplyConfig[item.htid].page+1)}}>更多{allReplyList[item.htid].total- allReplyList[item.htid].hfList.length}条回复</div>
+                                                        }
+                                                        {/* {
                                                             allReplyList[item.htid].total >1 &&
                                                             <Fanye This={this} options={{ pages: allReplyList[item.htid].totalPages, page: allReplyConfig[item.htid].page, rows: allReplyList[item.htid].total }}
                                                             callback={this._searchReply.bind(this, item.htid)} />
-                                                        }
+                                                        } */}
                                                         {
                                                             qx.addReply &&
                                                             (item.sfyxhf ?
@@ -340,13 +462,13 @@ class BluMUI_TopicDis extends React.Component {
                             <Fanye This={this} options={options} callback={this._searchTopic} />
                         }
                         {
-                            (userType == "管理员" || userType == "督导" || userType == "课程负责人") && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={allJxbList} userType={userType} userBan={userBan}/>)
+                            (userType == "管理员" || userType == "督导" || userType == "课程负责人") && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={allJxbList} userType={userType} userBan={userBan}/>
                         }
                         {
-                            userType == "任课教师" && userId == teacherSelected && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={banList} userType={userType} userBan={userBan}/>)
+                            userType == "任课教师" && userId == teacherSelected && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan}/>
                         }
                         {
-                            userType == "学生" && userBan == banSelected && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={banList} userType={userType} userBan={userBan}/>)
+                            userType == "学生" && userBan == banSelected && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan}/>)
                         }
                          
                         
@@ -358,7 +480,7 @@ class BluMUI_TopicDis extends React.Component {
         )
     }
     // 选择老师
-    _changeTeacher = (SFRZH) => {
+    _changeTeacher = (SFRZH,falg) => {
         this.props.getClassListFun(SFRZH).then(data => {
             let { allJxbList } = data;
             this.setState({
@@ -367,6 +489,14 @@ class BluMUI_TopicDis extends React.Component {
                 banSelected:allJxbList[0].JXB
             },this._searchTopic);
         });
+        this.sendTopic.setState({
+            htbt: "", // 话题标题
+            sfyxhf: true, //  是否允许回复
+            dqzt: 1, // 当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
+            checkBan: this.sendTopic.props.userBan? {[this.sendTopic.props.userBan]:true} : {}
+        });
+        document.querySelector('#htmc').value = '';
+        this.sendTopic.editor.setData("");
     };
     // 选择班级
     _changeBan = (JXB) => {
@@ -376,21 +506,41 @@ class BluMUI_TopicDis extends React.Component {
             allReplyConfig: {},
             allReplyList: {}
         }, this._searchTopic);
-
+        
     };
     //搜索回复
     _searchReply = (htid, page = 1) => {
         let { htList } = this.state.topicMsg;
         let count = 5; // 默认五个回复数
+        console.log(1);
         this.props.getReplyListFun({ htid, page, count }).then(retReplyList => {
+            for(let i in htList){
+                if(htList[i].htid == htid){
+                    htList[i].hfs = retReplyList.total;
+                    break;
+                }
+            };
+            if(this.state.allReplyList[htid]){
+                let hfList = this.state.allReplyList[htid].hfList;
+                let newHfList = retReplyList.hfList;
+            
+                for(var i = 0;i<newHfList.length;i++){
+                    if (!hfList.find(item=>item.hfid == newHfList[i].hfid)) {
+                        hfList.push(newHfList[i]);
+                    }
+                }
+                retReplyList.hfList = hfList;
+            }
             this.setState({
+                topicMsg:{...this.state.topicMsg,htList},
                 allReplyConfig: { ...this.state.allReplyConfig, [htid]: { page, count } },
-                allReplyList: { ...this.state.allReplyList, [htid]: retReplyList },
+                allReplyList: { ...this.state.allReplyList, [htid]: retReplyList},
             })
         })
     }
     // 搜索话题
-    _searchTopic = ({page = 1}={}) => {
+    _searchTopic = (page = 1) => {
+        page = page || 1;
         let {userType,userBan,userId} = this.props;
         let { pxtype, sstype, sstj, count, banSelected,teacherSelected } = this.state;
         let ssfw;//搜索范围：公开、班内
@@ -411,22 +561,78 @@ class BluMUI_TopicDis extends React.Component {
         }else {
             ssfw = '公开'
         }
-        this.props.getTopicListFun({ jxbh: banSelected, pxtype, ssfw, sstype, sstj, page, count }).then(retTopicList => {
-            this.setState({
-                topicMsg: retTopicList,
-                page: page,
-                expendReplys: {},
-                allReplyConfig: {},
-                allReplyList: {}
-            });
+        if(userType== '课程负责人' || userType=="管理员"||userType == "督导"){
+            this.props.getTopicListFun({ jxbh: banSelected, pxtype, ssfw, sstype, sstj, page, count }).then(resTopicList => {
+                this.setState({
+                    topicMsg: resTopicList,
+                    isBanPublishTopic:resTopicList.isBanPublishTopic,
+                    page: page,
+                    expendReplys: {},
+                    allReplyConfig: {},
+                    allReplyList: {}
+                });
 
-        }).catch(e => {
-            if (e === 101) {
-                window.location.href = 'error1.html'
-            } else {
-                window.location.href = 'error2.html'
-            }
-        });
+            }).then(this.props.getClassListFun(teacherSelected).then(classList=>{
+                this.setState({
+                    allJxbList:classList.allJxbList
+                })
+            })).then(()=>{
+                var iframe = window.parent.document.getElementById('myIframe');
+	            var height;
+
+	            try {
+	            	height = iframe.contentWindow.document.documentElement.offsetHeight;
+	            } catch (e) {};
+	            try {
+	            	height = iframe.contentDocument.documentElement.offsetHeight;
+	            } catch (e) {};
+		        iframe.height = height;
+            })
+            .catch(e => {
+                console.log(e);
+                {/* if (e === 101) {
+                    window.location.href = 'error1.html'
+                } else {
+                    window.location.href = 'error2.html'
+                } */}
+            });
+        }else{
+            this.props.getTopicListFun({ jxbh: banSelected, pxtype, ssfw, sstype, sstj, page, count }).then(resTopicList => {
+                this.setState({
+                    topicMsg: resTopicList,
+                    isBanPublishTopic:resTopicList.isBanPublishTopic,
+                    page: page,
+                    expendReplys: {},
+                    allReplyConfig: {},
+                    allReplyList: {}
+                });
+
+            }).then(this.props.getClassListFun(teacherSelected).then(classList=>{
+                this.setState({
+                    teaJxbList:classList.allJxbList
+                })
+            })).then(()=>{
+                var iframe = window.parent.document.getElementById('myIframe');
+	            var height;
+
+	            try {
+	            	height = iframe.contentWindow.document.documentElement.offsetHeight;
+	            } catch (e) {};
+	            try {
+	            	height = iframe.contentDocument.documentElement.offsetHeight;
+	            } catch (e) {};
+		        iframe.height = height;
+            })
+            .catch(e => {
+                console.log(e);
+                {/* if (e === 101) {
+                    window.location.href = 'error1.html'
+                } else {
+                    window.location.href = 'error2.html'
+                } */}
+            });
+        }
+        
     };
     // 改变排序
     _changeState = (name, event) => {
@@ -445,7 +651,7 @@ class BluMUI_TopicDis extends React.Component {
 
     // 禁止发送话题
     _stopSendMsg = (event) => {
-        let { banSelected } = this.state;
+        let { banSelected,teacherSelected } = this.state;
         if (event.target.checked) {
             this.props.banPublishTopicFun({ jxbh: banSelected, zt: '禁止' }).then(result => {
                 if (result) {
@@ -454,7 +660,7 @@ class BluMUI_TopicDis extends React.Component {
                         isBanPublishTopic: true
                     });
                     Alert.open({
-                      alertTip: "成功禁止发表话题！",
+                      alertTip: "成功禁止该班学生发表话题！",
                       closeAlert: function () {}
                     });
 
@@ -473,8 +679,27 @@ class BluMUI_TopicDis extends React.Component {
                       alertTip: "成功解除禁止发表话题",
                       closeAlert: function () {}
                     });
+                    let newAllJxbList = this.state.allJxbList;
+                    let newTeaJxbList = this.state.teaJxbList;
+                    
+                    for(let i = 0;i<newAllJxbList.length;i++){
+                        if(newAllJxbList[i].JXB == banSelected){
+                            newAllJxbList[i].SFJZTL = 0;
+                            break;
+                        }
+                    }
+                    for(let i = 0;i<newTeaJxbList.length;i++){
+                        if(newTeaJxbList[i].JXB == banSelected){
+                            newTeaJxbList[i].SFJZTL = 0;
+                            break;
+                        }
+                    }
+
                     this.setState({
-                        isBanPublishTopic: false
+                        isBanPublishTopic: false,
+                        allJxbList: newAllJxbList,
+                        teaJxbList:newTeaJxbList,
+
                     })
                 }
             }).catch(e => {
@@ -513,25 +738,39 @@ class BluMUI_TopicDis extends React.Component {
               closeAlert: function () {}
             });
         }else{
+            let flag = true;
             for (const [jxb, statu] of Object.entries(checkBan)) {
                 if (statu) {
                     this.props.publishTopicFun({ jxbbh: jxb, htbt, htnr, sfyxhf, dqzt }).then(result => {
-                        if (result) {
+                        if (result.result===100) {
                             this._searchTopic();
                             document.querySelector('#htmc').value = '';
+                            Alert.open({
+                              alertTip: `${jxb}班成功发送话题`,
+                              closeAlert: function () {}
+                            });
                         }
-                    }).catch(e => {
+                    },result=>{
+                        flag = false;
                         Alert.open({
-                          alertTip: "发送话题出错！",
+                          alertTip:`${jxb}班发表话题出错`,
                           closeAlert: function () {}
                         });
+                        this.setState({
+                            isBanPublishTopic:true
+                        })
+                    }).catch(e => {
+                        console.log(e);
                     })
                 }
             }
-            Alert.open({
-              alertTip: "成功发送话题",
-              closeAlert: function () {}
-            });
+            {/* if(flag){
+                 Alert.open({
+                  alertTip: "成功发送话题",
+                  closeAlert: function () {}
+                });
+            } */}
+           
             this.sendTopic.setState({
                 htbt: "", // 话题标题
                 sfyxhf: true, //  是否允许回复
@@ -544,7 +783,12 @@ class BluMUI_TopicDis extends React.Component {
 
     //发送回复 
     _sendReply = (data) => {
-        let { htid, hfnr, hfdxsfrzh, zhzhf, fjd } = data;
+        let { htid, hfnr, hfdxsfrzh, hfdxxm, zhzhf, fjd } = data;
+        let str = `回复 ${hfdxxm}: `;
+        if(hfnr.includes(str)){
+            let strLen = str.length;
+            hfnr = hfnr.substr(strLen);
+        }
         if(hfnr==''){
             Alert.open({
               alertTip: "请输入回复内容！",
@@ -557,16 +801,9 @@ class BluMUI_TopicDis extends React.Component {
                       alertTip: "成功发送回复！",
                       closeAlert: function () {}
                     });
-                    let {htList} = this.state.topicMsg;
-                    for(let i in htList){
-                        if(htList[i].htid == htid){
-                            htList[i].hfs += 1;
-                            break;
-                        }
-                    };
+                    
                     
                     this.setState({
-                        topicMsg:{...this.state.topicMsg,htList},
                         sendReplyInfo: {
                             "zhzhf": 1,
                             "fjd": -1,
@@ -591,25 +828,16 @@ class BluMUI_TopicDis extends React.Component {
     //话题操作
     _topicOperate = (data) => {
         let { htid, cz } = data;
+        let callback = this.props.topicOperateFun;
+        let searchCallback = this._searchTopic;
+        let data1 = data;
+        let data2 = '';
+        
         switch (cz) {
             case "删除":
+                Creat_popup({type:"deleteTopic",callback,data1,searchCallback,data2});
                 console.log("删除话题", htid, cz);
-                this.props.topicOperateFun({ htid, cz }).then(result => {
-                    if (result) {
-                        Alert.open({
-                          alertTip: "成功删除话题！",
-                          closeAlert: function () {}
-                        });
-                    }
-                }).then(() => {
-                    this._searchTopic();
-                }).catch(e => {
-                    if (e === 101) {
-                        window.location.href = 'error1.html'
-                    } else if (e === 102) {
-                        window.location.href = 'error2.html'
-                    }
-                });
+                
                 break;
             case "禁止回复":
                 console.log("禁止回复", htid, cz);
@@ -725,25 +953,15 @@ class BluMUI_TopicDis extends React.Component {
     }
     //回复操作
     _replyOperate = (hfid, cz, htid) => {
+        let callback = this.props.replyOperateFun;
+        let data1 = {hfid,cz};
+        let searchCallback = this._searchReply;
+        let data2 = htid;
         switch (cz) {
             case "删除":
+                Creat_popup({type:"deleteReply",callback,data1,searchCallback,data2});
                 console.log("删除回复:" + hfid);
-                this.props.replyOperateFun({ hfid, cz }).then(result => {
-                    if (result) {
-                        Alert.open({
-                      alertTip: "成功删除回复！",
-                      closeAlert: function () {}
-                    });
-                    }
-                }).then(() => {
-                    this._searchReply(htid);
-                }).catch(e => {
-                    if (e === 101) {
-                        window.location.href = 'error1.html'
-                    } else if (e === 102) {
-                        window.location.href = 'error2.html'
-                    }
-                })
+                
                 break;
             case "点赞":
                 console.log("点赞:" + hfid);
@@ -773,195 +991,8 @@ class BluMUI_TopicDis extends React.Component {
     }
 }
 
-{/* class BluMUI_WatchReply extends React.Component {
-    constructor(props){
-        super(props);
-    }
-    render() {
-        let options = { pages: 5, page: 3, rows: 30 };
-        return (
-            <div id='watch_rep'>
-                <div className="rep_top">
-                    <div className="top_reply">
-                        <span className='active'>回复我的</span>
-                        <span>我回复的</span>
-                    </div>
-                    <Search />
-                </div>
-                <div className="rep_list">
-                    <div className="list_item">
-                        <div className="item_main clearfix">
-                            <div className="main_content">
-                                <span>同学A</span>回复 <span>老师B</span>：<span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="main_time">2019-04-10 13:30</div>
-                        </div>
-                        <div className="item_topic clearfix">
-                            <div className="topic_msg">
-                                回复我的话题：“TCP与UDP传输协议的区别和用法”> <span>通讯技术概论</span>
-                            </div>
-                            <div className="topic_replay">
-                                <span>回复</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list_item">
-                        <div className="item_main clearfix">
-                            <div className="main_content">
-                                <span>同学A</span>回复 <span>老师B</span>：<span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="main_time">2019-04-10 13:30</div>
-                        </div>
-                        <div className="item_topic clearfix">
-                            <div className="topic_msg">
-                                回复我的话题：“TCP与UDP传输协议的区别和用法”> <span>通讯技术概论</span>
-                            </div>
-                            <div className="topic_replay">
-                                <span>回复</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list_item">
-                        <div className="item_main clearfix">
-                            <div className="main_content">
-                                <span>同学A</span>回复 <span>老师B</span>：<span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="main_time">2019-04-10 13:30</div>
-                        </div>
-                        <div className="item_topic clearfix">
-                            <div className="topic_msg">
-                                回复我的话题：“TCP与UDP传输协议的区别和用法”> <span>通讯技术概论</span>
-                            </div>
-                            <div className="topic_replay">
-                                <span>回复</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list_item">
-                        <div className="item_main clearfix">
-                            <div className="main_content">
-                                <span>同学A</span>回复 <span>老师B</span>：<span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="main_time">2019-04-10 13:30</div>
-                        </div>
-                        <div className="item_topic clearfix">
-                            <div className="topic_msg">
-                                回复我的话题：“TCP与UDP传输协议的区别和用法”> <span>通讯技术概论</span>
-                            </div>
-                            <div className="topic_replay">
-                                <span>回复</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list_item">
-                        <div className="item_main clearfix">
-                            <div className="main_content">
-                                <span>同学A</span>回复 <span>老师B</span>：<span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="main_time">2019-04-10 13:30</div>
-                        </div>
-                        <div className="item_topic clearfix">
-                            <div className="topic_msg">
-                                回复我的话题：“TCP与UDP传输协议的区别和用法”> <span>通讯技术概论</span>
-                            </div>
-                            <div className="topic_replay">
-                                <span>回复</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="list_item">
-                        <div className="item_main clearfix">
-                            <div className="main_content">
-                                <span>同学A</span>回复 <span>老师B</span>：<span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="main_time">2019-04-10 13:30</div>
-                        </div>
-                        <div className="item_topic clearfix">
-                            <div className="topic_msg">
-                                回复我的话题：“TCP与UDP传输协议的区别和用法”> <span>通讯技术概论</span>
-                            </div>
-                            <div className="topic_replay">
-                                <span>回复</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <Fanye options={options} callback={() => { console.log('fanye') }} />
-                <SendTopic />
-            </div>
-        )
-    }
-} */}
 
-class BluMUI_ReportMan extends React.Component {
-    render() {
-        return (
-            <div id="report">
-                <div className="report_title clearfix">
-                    <div className="title_left">
-                        <span className='title'>举报管理</span>
-                        <span><input type="checkbox" />话题举报</span>
-                        <span><input type="checkbox" />回复举报</span>
-                        <span><input type="checkbox" />话题操作记录</span>
-                        <span><input type="checkbox" />回复操作举报</span>
-                    </div>
-                    <Search />
-                </div>
-                <div className="report_list">
-                    <div className="list_item">
-                        <div className="item_content clearfix">
-                            <div className="content_left">
-                                <span>同学A</span>回复<span>同学B</span><span>回复的内容回复的内容回复的内容</span>
-                            </div>
-                            <div className="content_time">
-                                2019-04-10 13:30
-							</div>
-                        </div>
-                        <div className="item_msg clearfix">
-                            <div className="msg_left">
-                                <div className="left_type">
-                                    举报类型：<span>垃圾广告</span>
-                                </div>
-                                <div className="left_reason">
-                                    <div>举报理由：</div>
-                                    <div className='reason_detail'>
-                                        这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-										这是举报内容
-									</div>
-                                </div>
-                            </div>
-                            <div className="msg_func">
-                                <div>查看</div>
-                                <div>删除</div>
-                                <div>忽略</div>
-                            </div>
-                        </div>
-                        <div className="item_bottom">
-                            <span>话题名称</span> >
-							<span>课程名称</span> >
-							<span>教学班老师名字</span> >
-							教学班
-						</div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
+
 
 class BluMUI_TopicReport extends React.Component {
     constructor(props) {
@@ -992,14 +1023,14 @@ class BluMUI_TopicReport extends React.Component {
             });
         }else if(jbly == ""){
             Alert.open({
-              alertTip: "请选择举报理由！",
+              alertTip: "请填写举报理由！",
               closeAlert: function () {}
             });
         }else{
             this.props.commitReportFun({ htid, hfid, jblx, jbly }).then(result => {
                 Alert.open({
                   alertTip: "提交举报成功！",
-                  closeAlert: function () {}
+                  closeAlert: this._closeReport
                 });
             }).catch(e => {
                 if (e === 101) {
@@ -1013,7 +1044,13 @@ class BluMUI_TopicReport extends React.Component {
     }
 
     _closeReport = ()=>{
-        document.getElementById("reportBox").style.display = "none";
+        this.setState({
+            jblx: '',
+            jbly: '',
+            xlxjj:''
+        });
+        window.parent.document.getElementById("report_text").value="";
+        window.parent.document.getElementById("reportBox").style.display = "none";
     }
 
     render() {
@@ -1042,7 +1079,7 @@ class BluMUI_TopicReport extends React.Component {
                         <p>{xlxjj}</p>
                         <div className='report_reason'>
                             <div>请填写举报理由：</div>
-                            <textarea cols="30" rows="10" placeholder='描述理由请不要超过100字' maxLength='100' onInput={event => { this._changeState("jbly", event) }}></textarea>
+                            <textarea cols="30" rows="10" id="report_text" placeholder='描述理由请不要超过100字' maxLength='100' onInput={event => { this._changeState("jbly", event) }}></textarea>
                         </div>
 
                         
@@ -1057,13 +1094,13 @@ class BluMUI_TopicReport extends React.Component {
                     {hfInfo ?
                             <div className='report_confirm'>
                                 <div>{hfInfo.zzxm}</div>
-                                <div>{hfInfo.hfnr}</div>
-                                <div>{moment(parseInt(hfInfo.hfsj)).format('YYYY-MM-DD hh:mm:ss')}</div>
+                                <div dangerouslySetInnerHTML={{ __html: hfInfo.hfnr }}></div>
+                                <div>{moment(parseInt(hfInfo.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</div>
                             </div> :
                             <div className='report_confirm'>
                                 <div>{htInfo.zzxm}</div>
                                 <div>{htInfo.htbt}</div>
-                                <div>{moment(parseInt(htInfo.fbsj)).format('YYYY-MM-DD hh:mm:ss')}</div>
+                                <div>{moment(parseInt(htInfo.fbsj)).format('YYYY-MM-DD HH:mm:ss')}</div>
                             </div>
                         }
                     </div>
@@ -1077,9 +1114,144 @@ class BluMUI_TopicReport extends React.Component {
     }
 }
 
+class Popup extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {type}=this.props;
+    const MAP={
+      "deleteTopic": "删除话题",
+      "deleteReply":"删除回复"
+    };
+
+    switch(type) {
+      case 'deleteTopic':
+      case 'deleteReply':
+        return(
+          <div id="popbody" ref='pb'>
+            <div id="msg">
+              <p>{`确定要${MAP[type]}?`}</p>
+            </div>
+            {/* <div className="warning">将会删除该专家分组批次下所有分组项及专家的分组，请谨慎操作。</div> */}
+            <div id="popup_option">
+              <button id="popup_OK" ref={btn=>this.OK=btn}>确定</button>
+              <button id="popup_back" ref={btn=>this.back=btn}>取消</button>
+            </div>
+          </div>
+        );
+        break;
+      
+      case 'show':
+        return(
+          <div id="popbody" ref="pb">
+            {/* <div id="zjs">{id.map((zj,index)=><span key={index} className="zj">{zj}</span>)}</div> */}
+            <div id="popup_back"><button ref={btn=>this.back=btn}>关闭</button></div>
+          </div>
+        );
+        break;
+      default: 
+        return(<div></div>);
+        break;
+    }
+  }
+
+  componentDidMount() {
+
+    let {type,data1} = this.props;
+
+    if(this.refs.pb) this.refs.pb.onclick=e=>e.stopPropagation();
+
+
+    // back button click to cancel
+    this.back&&(this.back.onclick=cancel_popup);
+    // OK button option
+    this.OK&&(this.OK.onclick=()=>{
+        switch(type){
+            case 'deleteTopic':
+                this.props.callback(data1).then(result => {
+                    if (result) {
+                        Alert.open({
+                          alertTip: "成功删除话题！",
+                          closeAlert: function () {}
+                        });
+                        
+                    }
+                    
+                }).then(() => {
+                    cancel_popup();
+                    this.props.searchCallback(this.props.data2);
+                }).catch(e => {
+                    if (e === 101) {
+                        window.location.href = 'error1.html'
+                    } else if (e === 102) {
+                        window.location.href = 'error2.html'
+                    }
+                });
+                break;
+            case 'deleteReply':
+                this.props.callback(data1).then(result => {
+                    if (result) {
+                        Alert.open({
+                            alertTip: "成功删除回复！",
+                            closeAlert: function () {}
+                        });
+                        
+                        {/* let {htList} = BluMUI.result.topicDis.state.topicMsg;
+                        for(let i in htList){
+                            if(htList[i].htid == this.props.data2){
+                                htList[i].hfs -= 1;
+                                break;
+                            }
+                        }; */}
+                    }
+                }).then(() => {
+                    cancel_popup();
+                    this.props.searchCallback(this.props.data2);
+                }).catch(e => {
+                    if (e === 101) {
+                        window.location.href = 'error1.html'
+                    } else if (e === 102) {
+                        window.location.href = 'error2.html'
+                    }
+                })
+                break;
+            default:break;
+        }
+        
+     
+    });
+  }
+}
+
+function Creat_popup({type,callback,data1,searchCallback,data2}) {
+  const popup=window.parent.document.getElementById('popup');
+  const popup_datas={
+    type,
+    callback,
+    data1,
+    searchCallback,
+    data2
+  };
+  ReactDOM.render(
+    <Popup {...popup_datas}/>,
+    window.parent.document.getElementById('popup')
+  );
+  // click to close popup
+  popup.style.display="block";
+  popup.onclick=cancel_popup;
+}
+
+function cancel_popup() {
+  let popup=window.parent.document.getElementById('popup');
+
+  popup.style.display="none";
+  ReactDOM.unmountComponentAtNode(popup);
+}
+
 var BluMUI_M = {
     TopicDis: BluMUI_TopicDis,
-    ReportMan: BluMUI_ReportMan,
     TopicReport: BluMUI_TopicReport
 };
 

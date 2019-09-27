@@ -99,6 +99,12 @@ if(session.getAttribute("uid") != null) {
 		</div>
 	</div>
 	<iframe></iframe>
+	<!-- <div id="infoBar">
+		<ul>
+			<li><a href="msgCenter/showReply.html" target="_blank">查看回复</a></li>
+			<li><a href="msgCenter/showReport.html" target="_blank">查看举报</a></li>
+		</ul>
+	</div> -->
 	<script src="../js/libs/react.min.js"></script>
 	<script src="../js/libs/courseCenter.config.js"></script>
 	<!-- <script src="../js/pages/classList.js"></script> -->

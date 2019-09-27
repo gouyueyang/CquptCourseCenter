@@ -233,7 +233,7 @@ class BlueMUI_TopicDis extends React.Component{
     let htList = [];
 		if (this.props.data) {
 			htList = this.props.data.hotHtList;
-    }
+    };
     let kcbh = this.props.kcbh;
     let address = `./topicDis.html?classId=${kcbh}`;
 		return (
@@ -242,14 +242,14 @@ class BlueMUI_TopicDis extends React.Component{
 					{/*<span className='topic_more' onClick={this._goTopic}>更多>></span>*/}
 				{/*</p>*/}
         <p className='content_title'>话题讨论
-				  <span className='topic_more'><a href={address}>更多>></a></span>
+				  <span className='topic_more'><a href={address}>更多》</a></span>
 			  </p>
 				<div className="topic_content">
 					{
 						htList.map((item, index) => {
 							return (
 								<div className="content_item" key={item.htid}>
-									<h3>{item.htbt}</h3>
+									<h3><a href={`../msgCenter/showTopic.html?htid=${item.htid}`} target="_blank">{item.htbt}</a></h3>
 									<div className="item_info clearfix">
 										<div className="info_message">
 											<span>{item.zzxm}</span>

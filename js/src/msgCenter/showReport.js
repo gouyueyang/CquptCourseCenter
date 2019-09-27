@@ -22,7 +22,8 @@ Course.kcbh=parseHash(window.location.href).classId;
 // let rand = Math.floor(Math.random() * stuArr.length);
 // let User = {
 // 	// id:'0100826'
-// 	id: stuArr[rand].sfrzh
+// 	// id: stuArr[rand].sfrzh
+// 	id:'7800003'
 
 // };
 // alert(stuArr[rand].xm);
@@ -31,13 +32,53 @@ Course.kcbh=parseHash(window.location.href).classId;
 // };
 
 //举报列表初次渲染
-let reportMsg = null;
 
+let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
+
+	if(User.id == 1){
+		infoBar.style.display = "none";
+	}else {
+		infoBar.style.display = "block";
+	}
+
+
+let reportMsg = null;
+let userType = null;
+
+getJs().then(data=>{
+	userType = data.js || "游客";
+	if(userType == "游客"){
+		window.localtion.href = `https://ids.cqupt.edu.cn/authserver/login?service=${courseCenter.host}classList`
+	};
+	searchReportInfoFun({sstype:'htmc',sstj:'',ssdx:'htjb',page:1,count:10}).then(retReportList=>{
+		reportMsg = retReportList;
+		BluMUI.create({
+			id:"reportDis",
+			userId:User.id,
+			userType,
+			reportMsg,
+			searchReportInfoFun,
+			reportOperateFun,
+			topicOperateFun,
+			replyOperateFun
+		},'ShowReport',document.getElementById("reportDis"));
+	}).catch(e => {
+		console.log(e);
+		// if (e === 101) {
+		//     window.location.href = './../classInfShow/error1.html';
+		// } else {
+		//     window.location.href = './../classInfShow/error2.html';
+		// }
+	});
+}).catch(e => {
+	console.log(e);
+})
 searchReportInfoFun({sstype:'htmc',sstj:'',ssdx:'htjb',page:1,count:10}).then(retReportList=>{
     reportMsg = retReportList;
     BluMUI.create({
         id:"reportDis",
-        userId:User.id,
+		userId:User.id,
+		userType,
         reportMsg,
         searchReportInfoFun,
 		reportOperateFun,
@@ -53,7 +94,7 @@ searchReportInfoFun({sstype:'htmc',sstj:'',ssdx:'htjb',page:1,count:10}).then(re
     // }
 });
 
-function searchReportInfoFun({sstype, sstj, ssdx, page, count}) {
+function searchReportInfoFun({sstype, sstj, ssdx, jbr="",bjbr="", page, count}) {
 	return new Promise((resolve, reject) => {
 		ajax({
 			url: courseCenter.host+'searchReportInfo',
@@ -62,6 +103,8 @@ function searchReportInfoFun({sstype, sstj, ssdx, page, count}) {
 				sstype, //搜索方式（htmc：话题名称；kcmc：课程名称）
 				sstj,  //搜索条件
 				ssdx, //搜索对象（htjb:话题举报；hfjb:回复举报；htczjl:话题操作记录；hfczjl:回复操作记录）
+				jbr,  //举报人
+				bjbr,  //被举报人
 				page, //int页码,
 				count, //int每页显示数目
 			},
@@ -75,6 +118,28 @@ function searchReportInfoFun({sstype, sstj, ssdx, page, count}) {
 			}
 		});
 	});
+}
+
+function getJs(){
+	return new Promise((resolve,reject) => {
+		let data = null;
+		ajax({
+			url: courseCenter.host + 'getJs',
+			data: {
+				unifyCode: User.id,
+				kcbh:Course.kcbh
+			},
+			success(response) {
+				let result = JSON.parse(response);
+				let { meta, data } = result;
+				if (meta.result === 100) {
+					resolve(data);
+				} else {
+					reject(meta.result);
+				}
+			}
+		});
+	})
 }
 
 function topicOperateFun({htid, cz,kcbh}) {

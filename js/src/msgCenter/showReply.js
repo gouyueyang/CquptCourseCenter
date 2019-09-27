@@ -23,14 +23,21 @@ Course.kcbh=parseHash(window.location.href).classId;
 // let rand = Math.floor(Math.random() * stuArr.length);
 // let User = {
 // 	// id:'0100826'
-// 	id: stuArr[rand].sfrzh
-
+// 	// id: stuArr[rand].sfrzh
+// 	id:7800003
 // };
-// alert(stuArr[rand].xm);
+// // alert(stuArr[rand].xm);
 // let Course = {
 // 	kcbh: 'A1040040'
 // };
 
+let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
+
+	if(User.id == 1){
+		infoBar.style.display = "none";
+	}else {
+		infoBar.style.display = "block";
+	}
 
 //回复列表初次渲染
 let replyMsg = null;

@@ -23,6 +23,13 @@ var BluMUI = require('../../libs/classList/classList'),
 	getSelectKcURL= host + 'selectKc',
 	getVisit = host + 'classListVisit',
 	getAllKcByZyhURL= host + 'getAllKcByZyh';// 通过专业号获取课程信息
+	// let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
+
+	// if(unifyCode == 1){
+	// 	infoBar.style.display = "none";
+	// }else {
+	// 	infoBar.style.display = "block";
+	// }
 // 搜索
 var searchAjax=function (value,type) {
 	ajaxPading.send({

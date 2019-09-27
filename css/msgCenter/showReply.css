@@ -44,6 +44,7 @@ img{
 
 a{
 	text-decoration:none;
+	color:#007a51;
 }
 
 /*课程中心标志栏，设置校徽图片的格式，用float设置课程中心标志和课程名称*/
@@ -68,6 +69,7 @@ a{
 	margin-left: 42px;
 	margin-top:50px;
 	position: static;
+	cursor: pointer;
 }
 
 #head p{
@@ -112,11 +114,12 @@ a{
 	right: 0;
 	width: 60px;
 	height: 25px;
-	background: #02CC88;
+	background: #007a51;
 	text-align: center;
 	line-height: 25px;
 	margin: 0;
 	color: white;
+	cursor: pointer;
 }
 
 #watch_rep {
@@ -128,6 +131,7 @@ a{
 	font-weight: 700;
 	margin-right: 20px;
 	padding-bottom: 5px;
+	cursor: pointer;
 }
 #watch_rep .rep_top > .top_reply span.active {
 	border-bottom: 5px solid #009966;
@@ -136,6 +140,19 @@ a{
 	padding: 20px 10px;
 	margin: 20px 0;
 }
+#watch_rep .rep_list #errorWrap{
+	height:400px;
+}
+#watch_rep .rep_list #errorPic{
+	width:150px;
+	margin:100px auto 10px auto;
+	display: block;
+}
+#watch_rep .rep_list #errorMsg{
+	display: block;
+	text-align: center;
+}
+
 #watch_rep .rep_list .list_item {
 	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
 	padding: 20px 10px;
@@ -184,4 +201,43 @@ a{
 	color: #ffffff;
 	height:71px;
 	line-height: 71px;
+}
+
+/* 右侧浮动栏 */
+#infoBar{
+	display:none;
+	position:fixed;
+	right: 0;
+	top:50%;
+	margin-top: -50px;
+	width:50px;
+	height: 100px;
+	background-color: #fff;
+	border:1px solid #f7f7f7;
+}
+#infoBar ul li{
+	float:left;
+	width:50px;
+	height: 50px;
+	box-sizing: border-box;
+	font-size: 16px;
+	border-bottom:1px solid #f7f7f7;
+	padding:5px;
+	box-shadow: 0 2px 8px rgba(38,66,56,.2);
+}
+#infoBar ul li a{
+	color:#007a51;
+}
+
+/* 补充表格边框 */
+.list_item table{
+	border-collapse: collapse;
+	border-spacing: 0;
+	border:1px double #b3b3b3;
+	word-break: break-word;
+}
+.list_item table th,.list_item table td{
+	min-width:2em;
+	padding:.4em;
+	border:1px solid #d9d9d9;
 }
