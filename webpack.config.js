@@ -26,11 +26,11 @@ module.exports = {
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
     // classReviewModule:'./js/src/classInfShow/classReviewModule.js',    //审核
-    // topicDis: './js/src/classInfShow/topicDis.js', // 话题讨论
+    topicDis: './js/src/classInfShow/topicDis.js', // 话题讨论
 
     //消息中心
-    showReply:'./js/src/msgCenter/showReply.js',    //查看回复
-    showReport:'./js/src/msgCenter/showReport.js',   //查看举报
+    // showReply:'./js/src/msgCenter/showReply.js',    //查看回复
+    // showReport:'./js/src/msgCenter/showReport.js',   //查看举报
     // showTopic:'./js/src/msgCenter/showTopic.js',        //回复和查看详情是展示话题信息
     //网评
 
@@ -82,8 +82,8 @@ module.exports = {
     // path:'./js/pages/teachingTeam',
     // path:'./js/pages/masterLogin',
     // path:'./js/pages/mySet',
-    // path:path.resolve(__dirname, 'js/pages/classInfShow'),      //课程信息展示
-    path:path.resolve(__dirname,'js/pages/msgCenter'),     
+    path:path.resolve(__dirname, 'js/pages/classInfShow'),      //课程信息展示
+    // path:path.resolve(__dirname,'js/pages/msgCenter'),     
 		// path: './js/pages/wangping/',
     // path:'./js/pages/statistics/',      //统计 ld
     // path:'./js/pages/courseManage',        //课程管理
@@ -171,7 +171,7 @@ module.exports = {
 				loaders: ['babel-loader']
 			},
 			{
-				test: /\.less$/,
+				test: /\.(less|css)$/,
 				use: [
 				        require.resolve('style-loader'),
 				        {
@@ -181,7 +181,11 @@ module.exports = {
 				          loader: require.resolve('less-loader'), // compiles Less to CSS
 				        },
 				      ]
-			}
+      },
+      {
+        test: /\.svg/,
+        use: ['file-loader']
+      }
 		],
 	}
 };

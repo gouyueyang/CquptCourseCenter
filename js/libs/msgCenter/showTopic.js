@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import CKEditor from '@ckeditor/ckeditor5-react';
+
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+// import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 // import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/simpleuploadadapter';
 import Fanye from '../turnPage';
 import moment from 'moment';
@@ -22,6 +28,7 @@ class BluMUI_TopicDis extends React.Component {
             count: 5, // 默认展示10条回复
             allReplyConfig: {}, // 所有子回复列表的配置选项
             allReplyList: {}, // 所有的子回复列表
+            zhfSelect:-1,//主回复选择，保证只有一个回复框显示
             sendReplyInfo: {
                 "htid":this.props.topicInfo.htid,
                 "hfdxsfrzh":this.props.topicInfo.zzsfrzh,
@@ -36,7 +43,7 @@ class BluMUI_TopicDis extends React.Component {
     
 
     render() {
-        let {hfid,htzt,page, count,isBanReply} = this.state;
+        let {hfid,htzt,page, count,isBanReply,zhfSelect} = this.state;
 
         let { kcbh,topicInfo,pageInfo,userId,qx,userType } = this.props;
         let topHfid = pageInfo.hfid;//定位回复id
@@ -77,6 +84,8 @@ class BluMUI_TopicDis extends React.Component {
                                 return(
                                     <BluMUI_ReplyItem key={item.hfid} ref={`replyItem_${item.hfid}`} topicInfo={topicInfo} topHfid={topHfid} replyInfo={item} userId={userId} qx={qx} userType={userType} getDetailReplyListFun={this.props.getDetailReplyListFun}
                                         creatReportBox={this.props.creatReportBox} replyOperate={this._replyOperate} publishReplyFun={this.props.publishReplyFun}
+                                        changeZhfSelect={this._changeZhfSelect}
+                                        zhfSelect = {zhfSelect}
                                     ></BluMUI_ReplyItem>
                                 )
                             })
@@ -89,10 +98,8 @@ class BluMUI_TopicDis extends React.Component {
                     }
 					<div id="sendMsg">
 						<h4>发表回复</h4>
-						<textarea name="content" id="editor">
-                        
+						<textarea name="content" id="editor" placeholder="请登录后回复，并且回复不得超过500字！">
 						</textarea>
-                        <div id="word-count"></div>
 						<div className="msg_bottom">
 							<button onClick={this._sendReply}>发   表</button>
 						</div>
@@ -107,11 +114,12 @@ class BluMUI_TopicDis extends React.Component {
             .create(document.querySelector('#editor'),{
                 language : 'zh-cn',
                 toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
-                
+                // plugins: [ WordCount, Paragraph, Bold, Italic ],
+                // toolbar: [ 'bold', 'italic' ]
             })
             .then(newEditor => {
                 this.editor = newEditor;
-                
+               
             })
             .catch(err => {
                 console.error(err.stack);
@@ -163,6 +171,11 @@ class BluMUI_TopicDis extends React.Component {
         })
     }
 
+    _changeZhfSelect = (hfid) => {
+        this.setState({
+            zhfSelect:hfid
+        })
+    }
    
     // 改变排序
     _changeState = (name, event) => {
@@ -184,6 +197,12 @@ class BluMUI_TopicDis extends React.Component {
               alertTip: "请输入回复内容！",
               closeAlert: function () {}
             });
+        }else if(hfnr.length>500){
+            Alert.open({
+                alertTip: "回复内容不得超过500字！",
+                closeAlert: function () {}
+              });
+              this.editor.setData(hfnr.substr(0,499));
         }else{
             this.props.publishReplyFun({ htid, hfnr, hfdxsfrzh, zhzhf, fjd }).then(result => {
                 if (result) {
@@ -439,7 +458,16 @@ class BluMUI_ReplyItem extends React.Component {
                       alertTip: "成功发送回复！",
                       closeAlert: function () {}
                     });
-                    
+                    this.setState({
+                        sendReplyInfo: {
+                            "zhzhf": 1,
+                            "fjd": this.props.replyInfo.hfid,
+                            "htid":this.props.topicInfo.htid,
+                            "hfnr":"",
+                            "hfdxxm":"",
+                            "hfdxsfrzh":this.props.replyInfo.zzsfrzh
+                        }  //发送回复的信息
+                    })
                     document.getElementById(`reply_${replyInfo.hfid}`).value = "";
                     this._searchReply(this.state.page);
                 }
@@ -482,7 +510,7 @@ class BluMUI_ReplyItem extends React.Component {
     }
 
     render(){
-        let {replyInfo,topicInfo,topHfid,qx,userType,userId} = this.props;
+        let {replyInfo,topicInfo,topHfid,qx,userType,userId,zhfSelect} = this.props;
         let {page,count,showReplyBox,showSecondReplyList,total,hfList} = this.state;
         
         
@@ -508,7 +536,7 @@ class BluMUI_ReplyItem extends React.Component {
                                 {moment(parseInt(replyInfo.hfsj)).format('YYYY-MM-DD HH:mm:ss')}
 							</span>
                             <span>
-                                {qx.addReply && <a className='color' href="javascript:void(0);" onClick={() => { this.setState({ showReplyBox:true,sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": replyInfo.zzsfrzh, "zhzhf": 2, "fjd": replyInfo.hfid ,"hfdxxm":replyInfo.zzxm} }) }}>回复</a>}
+                                {qx.addReply && <a className='color' href="javascript:void(0);" onClick={() => {this.props.changeZhfSelect(replyInfo.hfid); this.setState({ showReplyBox:true,sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": replyInfo.zzsfrzh, "zhzhf": 2, "fjd": replyInfo.hfid ,"hfdxxm":replyInfo.zzxm} }) }}>回复</a>}
                             </span>
                             <span>
                                 {(userType == "管理员" || userType == "督导" || userType == "课程负责人" || userId == topicInfo.zzsfrzh || userId == replyInfo.zzsfrzh || userId == topicInfo.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this.props.replyOperate(replyInfo.hfid, "删除主回复", replyInfo.htid) }}>删除</a> : null}
@@ -541,6 +569,7 @@ class BluMUI_ReplyItem extends React.Component {
                                                 <a href="javascript:void(0);">{moment(parseInt(item.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</a>
                                                 {qx.addReply && <a className='color' href="javascript:void(0);" 
                                                 onClick={() => {
+                                                    this.props.changeZhfSelect(replyInfo.hfid);
                                                     this.setState({ showReplyBox:true,sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh, "zhzhf": 2, "fjd": item.hfid ,"hfdxxm":item.zzxm} });
                                                     document.getElementById(`reply_${replyInfo.hfid}`).value = `回复 ${item.zzxm}: `;  
                                                 }}>回复</a>}
@@ -566,7 +595,7 @@ class BluMUI_ReplyItem extends React.Component {
 						   
                             {
                                 /* qx.addReply && */
-                                topicInfo.sfyxhf ?
+                                topicInfo.sfyxhf &&  replyInfo.hfid == zhfSelect?
                                     <div className={showReplyBox?"info_commit show":"info_commit"}>
                                         <textarea rows="2" id={`reply_${replyInfo.hfid}`} placeholder='请输入回复内容' autoFocus onInput={(e) => { this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfnr": e.target.value } }) }}></textarea>
                                         <div><button onClick={() => { this._sendReply(this.state.sendReplyInfo) }}>发表</button></div>
@@ -614,16 +643,11 @@ class BluMUI_TopicReport extends React.Component {
               alertTip: "请选择举报类型！",
               closeAlert: function () {}
             });
-        }else if(jbly == ""){
-            Alert.open({
-              alertTip: "请填写举报理由！",
-              closeAlert: function () {}
-            });
         }else{
             this.props.commitReportFun({ htid, hfid, jblx, jbly }).then(result => {
                 Alert.open({
                   alertTip: "提交举报成功！",
-                  closeAlert: function () {}
+                  closeAlert: this._closeReport
                 });
             }).catch(e => {
                 if (e === 101) {

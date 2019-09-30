@@ -313,7 +313,9 @@ class BluMUI_ShowReport extends React.Component {
                 </div>:(<div className="report_list">
                             <div id="errorWrap">
                                 <img id="errorPic" src="../../imgs/public/error.png" alt="错误或者无数据"/>
-                                <span id="errorMsg">暂无回复数据</span>
+                                {ssdx == 'htjb' && <span id="errorMsg">暂无待处理的话题举报数据</span>}
+                                {ssdx == 'hfjb' && <span id="errorMsg">暂无待处理的回复举报数据</span>}
+                                {(ssdx == 'htczjl' || ssdx == 'hfczjl') && <span id="errorMsg">暂无数据</span>}
                             </div>
                         </div>)
                     ):(<div className="report_list">

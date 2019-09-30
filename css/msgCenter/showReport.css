@@ -326,7 +326,6 @@ a {
 #center_table>tbody>tr>td>div,#center_table>tbody>tr>td>div>p{
 	height:50px;
 	overflow:hidden;
-	display:inline-block;
 	white-space: nowrap;
    	text-overflow: ellipsis;
 	width: 90%;

@@ -44,7 +44,7 @@ class SendTopic extends React.Component {
             <div id="sendMsg">
                 <h3>发起新话题</h3>
                 <input type="text" id="htmc" placeholder='请输入话题名称（50字内）' maxLength="50" onChange={event => this._changeState('htbt', event)} className='topicName' />
-                <textarea name="content" id='editor'>
+                <textarea name="content" id='editor' maxLength="10" placeholder="请输入话题内容（不超过1万字）">
                 </textarea>
                 {
                     (userType == "任课教师" || userType =="课程负责人" || userType == "督导" || userType == "管理员") &&
@@ -132,12 +132,13 @@ class SendTopic extends React.Component {
                 language : 'zh-cn',
                 toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
                 // toolbar: ['heading', '|', 'bold', 'italic','TextColor','BGColor','Styles','Format','Font','FontSize','Subscript','Superscript','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','|', 'Undo','Redo'],
-                
+                maxlength:10
             })
             .then(newEditor => {
                 this.editor = newEditor;
                 let maxlength = 100;
-                this.editor.on('key',function(event){
+                newEditor.on('key',function(event){
+                    console.log(event.target.value);
                     var oldhtml = this.editor.document.getBody().getHtml();
                     var description = oldhtml.replace(/<.*?>/ig,"");
                     var etop = $("#cke_1_top");
@@ -173,7 +174,16 @@ class SendTopic extends React.Component {
     _sendMsg = () => {
         const { htbt, sfyxhf, dqzt, checkBan } = this.state;
         const htnr = this.editor.getData();
-        this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan });
+        if(htnr.length>10000){
+            Alert.open({
+                alertTip: "话题内容不得超过1万字！",
+                closeAlert: function () {}
+              });
+            this.editor.setData(htnr.substr(0,9999));
+            }else{
+                this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan });
+            }
+        
         // this.setState({
         //     htbt: document.querySelector('#htmc').value, // 话题标题
         //     sfyxhf: true, //  是否允许回复
@@ -208,6 +218,8 @@ class BluMUI_TopicDis extends React.Component {
             count: 5, // 默认申请5个话题
             allReplyConfig: {}, // 所有回复列表的配置选项
             allReplyList: {}, // 所有的回复列表
+            htSelected:-1,//回复框标志符，确保页面只存在一个回复框
+            htSelectedZzsfrzh:'',//话题
             sendReplyInfo: {
                 "zhzhf": 1,
                 "fjd": -1,
@@ -215,22 +227,10 @@ class BluMUI_TopicDis extends React.Component {
             }  //发送回复的信息
         }
     }
-    // componentDidMount() {
-    //     let { htList } = this.state.topicMsg;
-    //     htList.forEach(item => {
-    //         let page = 0;
-    //         let count = 5; // 默认五个回复数
-    //         this.props.getReplyListFun({ htid: item.htid, page, count }).then(retReplyList => {
-    //             this.setState({
-    //                 allReplyConfig: { ...this.state.allReplyConfig, [item.htid]: { page, count } },
-    //                 allReplyList: { ...this.state.allReplyList, [item.htid]: retReplyList },
-    //             })
-    //         })
-    //     });
-    // }
+    
 
     render() {
-        let { teacherSelected, banSelected, allJxbList,teaJxbList, expendReplys, pxtype, sstype, page, allReplyList, allReplyConfig, isBanPublishTopic } = this.state;
+        let { teacherSelected, banSelected, allJxbList,teaJxbList, expendReplys, pxtype, sstype, page, allReplyList, allReplyConfig, isBanPublishTopic,htSelected } = this.state;
 
 
         let { jsList,wkkJsList } = this.props.teacherList;
@@ -330,13 +330,10 @@ class BluMUI_TopicDis extends React.Component {
                                                     <span>{item.zzxm}</span>
                                                     <span>{moment(parseInt(item.fbsj)).format('YYYY-MM-DD HH:mm:ss')}</span>
                                                     {/* <span onClick={() => this._topicOperate({ htid: item.id, cz: "点赞" })}>赞({item.dzs})</span> */}
-                                                    <span className='color' onClick={() => {this._toggleReply(item.htid);this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }); }}>{expendReplys[item.htid] ? '收起回复' : `回复(${item.hfs})`}</span>
+                                                    <span className='color' onClick={() => {this._toggleReply(item.htid);this.setState({ htSelected:item.htid,htSelectedZzsfrzh:item.zzsfrzh,sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }); }}>{expendReplys[item.htid] ? '收起回复' : `回复(${item.hfs})`}</span>
                                                 </div>
                                                 <div className="bottom_inform">
-                                                    {/* {console.log("登陆id:" + userId)}
-                                                    {console.log("话题举报权限:" + (userId != item.jssfrzh))}
-                                                    {console.log("话题禁止回复权限:" + (userId == item.jssfrzh))}
-                                                    {console.log("话题删除权限:" + (userId == item.zzsfrzh || userId == item.jssfrzh))} */}
+                                                    
                                                     {userType != '游客' && (userId != item.jssfrzh ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item }) }}>举报</a> : '')}
                                                     {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh)) ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: item.htid, cz: '删除' }) }}>删除</a> : ''}
                                                     {qx.openTopic && item.dqzt ==1 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.jssfrzh) ?
@@ -346,7 +343,7 @@ class BluMUI_TopicDis extends React.Component {
                                                         (item.dqzt == 2 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '设置班内可见' })}>取消公开</a>):null}
                                                     {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh) ? (item.sfyxhf ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
                                                     
-                                                    {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid)); }}>回复</a> : null)}
+                                                    {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ htSelected:item.htid,htSelectedZzsfrzh:item.zzsfrzh,expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid,this.state.allReplyConfig[item.htid].page)); }}>回复</a> : null)}
                                                 </div>
                                             </div>
                                             {
@@ -360,7 +357,7 @@ class BluMUI_TopicDis extends React.Component {
                                                                     <div className="one_msg">
                                                                         <span>
                                                                             {repItem.zzxm}
-                                                                            {repItem.zzsfrzh == topicInfo.zzsfrzh ? <span className="tip">题主</span>:null}
+                                                                            {repItem.zzsfrzh == item.zzsfrzh ? <span className="tip">题主</span>:null}
                                                                             {repItem.zzsf ==1 && <span className="tip">教师</span>}
                                                                         </span>
                                                                         
@@ -371,7 +368,7 @@ class BluMUI_TopicDis extends React.Component {
                                                                     <div className="one_msg">
                                                                         <span>
                                                                             {repItem.zzxm}
-                                                                            {repItem.zzsfrzh == topicInfo.zzsfrzh ? <span className="tip">题主</span>:null}
+                                                                            {repItem.zzsfrzh == item.zzsfrzh ? <span className="tip">题主</span>:null}
                                                                             {repItem.zzsf ==1 && <span className="tip">教师</span>}
                                                                         </span>
                                                                         
@@ -399,34 +396,7 @@ class BluMUI_TopicDis extends React.Component {
                                                                     <div dangerouslySetInnerHTML={{ __html: repItem.hfnr }}></div>
                                                                 </div>
                                                             </div> 
-                                                            //  <div className="info_one clearfix" key={index}>
-                                                            //    {
-                                                            //        repItem.fjd == -1 &&
-                                                            //        <div className="one_msg">
-                                                            //            <span>{repItem.zzxm}</span>
-                                                            //            <span> 回复 </span>
-                                                            //            <span>{repItem.hfdxxm} : </span>
-                                                            //            <div dangerouslySetInnerHTML={{ __html: repItem.hfnr }}></div>
-                                                            //        </div>
-                                                            //    }
-                                                            //    {
-                                                            //        repItem.fjd != -1 &&
-                                                            //        <div className="one_msg">
-                                                            //            <span>{repItem.zzxm}</span>
-                                                            //            <span> 回复 </span>
-                                                            //            <span>{repItem.hfdxxm} : </span>
-                                                            //            <span dangerouslySetInnerHTML={{ __html: repItem.hfnr}}></span>
-                                                            //        </div>
-                                                            //    }
-                                                            //    <div className="one_func">
-//
-                                                            //        {qx.addReport && (userId != item.jssfrzh ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item, hfInfo: repItem }) }}>举报</a> : null)}
-                                                            //        /* <a href="javascript:void(0)" onClick={() => { this._replyOperate(repItem.hfid, "点赞", item.htid) }}>赞({repItem.dzs})</a> */
-                                                            //        {(userType == "管理员" || userType == "课程负责人" || userType == "督导"||userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
-                                                            //        <a href="#">{moment(parseInt(repItem.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</a>
-                                                            //        {qx.addReply && <a className='color' href="javascript:void(0);" onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "hfdxxm":repItem.zzxm,"zhzhf": 2, "fjd": repItem.hfid } }, console.log(this.state)) }}>回复</a>}
-                                                            //    </div>
-                                                            //</div>  
+                                                              
                                                             )
                                                         }
                                                         {
@@ -434,13 +404,9 @@ class BluMUI_TopicDis extends React.Component {
                                                             allReplyList[item.htid].total- allReplyList[item.htid].hfList.length > 0 &&
                                                             <div className="searchMore" onClick={()=>{this._searchReply(item.htid,allReplyConfig[item.htid].page+1)}}>更多{allReplyList[item.htid].total- allReplyList[item.htid].hfList.length}条回复</div>
                                                         }
-                                                        {/* {
-                                                            allReplyList[item.htid].total >1 &&
-                                                            <Fanye This={this} options={{ pages: allReplyList[item.htid].totalPages, page: allReplyConfig[item.htid].page, rows: allReplyList[item.htid].total }}
-                                                            callback={this._searchReply.bind(this, item.htid)} />
-                                                        } */}
+                                                        
                                                         {
-                                                            qx.addReply &&
+                                                            qx.addReply && htSelected == item.htid &&
                                                             (item.sfyxhf ?
                                                                 <div className="info_commit">
                                                                     <textarea rows="2" id={`reply_${item.htid}`} placeholder='请输入回复内容' autoFocus onFocus={() => { this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "htid": item.htid } }) }} onInput={(e) => { this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfnr": e.target.value } }) }}></textarea>
@@ -512,7 +478,7 @@ class BluMUI_TopicDis extends React.Component {
     _searchReply = (htid, page = 1) => {
         let { htList } = this.state.topicMsg;
         let count = 5; // 默认五个回复数
-        console.log(1);
+      
         this.props.getReplyListFun({ htid, page, count }).then(retReplyList => {
             for(let i in htList){
                 if(htList[i].htid == htid){
@@ -533,9 +499,20 @@ class BluMUI_TopicDis extends React.Component {
             }
             this.setState({
                 topicMsg:{...this.state.topicMsg,htList},
-                allReplyConfig: { ...this.state.allReplyConfig, [htid]: { page, count } },
+                allReplyConfig: { ...this.state.allReplyConfig, [htid]: {page, count } },
                 allReplyList: { ...this.state.allReplyList, [htid]: retReplyList},
             })
+        }).then(()=>{
+            var iframe = window.parent.document.getElementById('myIframe');
+            var height;
+
+            try {
+                height = iframe.contentWindow.document.documentElement.offsetHeight;
+            } catch (e) {};
+            try {
+                height = iframe.contentDocument.documentElement.offsetHeight;
+            } catch (e) {};
+            iframe.height = height;
         })
     }
     // 搜索话题
@@ -646,7 +623,7 @@ class BluMUI_TopicDis extends React.Component {
         let status = !this.state.expendReplys[htid];
         this.setState({
             expendReplys: { ...this.state.expendReplys, [htid]: status }
-        }, this._searchReply(htid, 1))
+        }, this._searchReply(htid, this.state.allReplyConfig[htid]?this.state.allReplyConfig[htid].page : 1))
     };
 
     // 禁止发送话题
@@ -746,7 +723,7 @@ class BluMUI_TopicDis extends React.Component {
                             this._searchTopic();
                             document.querySelector('#htmc').value = '';
                             Alert.open({
-                              alertTip: `${jxb}班成功发送话题`,
+                              alertTip: `成功发送话题`,
                               closeAlert: function () {}
                             });
                         }
@@ -807,13 +784,14 @@ class BluMUI_TopicDis extends React.Component {
                         sendReplyInfo: {
                             "zhzhf": 1,
                             "fjd": -1,
-                            "hfnr":""
+                            "hfnr":"",
+                            "hfdxsfrzh":this.state.htSelectedZzsfrzh
                         }
-                    },console.log(this.state));
+                    });
                     document.getElementById(`reply_${htid}`).value = "";
                 }
             }).then(() => {
-                this._searchReply(htid);
+                this._searchReply(htid,this.state.allReplyConfig[htid].page);
             }).catch(e => {
                 if (e === 101) {
                     window.location.href = 'error1.html'
@@ -956,7 +934,8 @@ class BluMUI_TopicDis extends React.Component {
         let callback = this.props.replyOperateFun;
         let data1 = {hfid,cz};
         let searchCallback = this._searchReply;
-        let data2 = htid;
+        let page = this.state.allReplyConfig[htid].page;
+        let data2 = {htid,page};
         switch (cz) {
             case "删除":
                 Creat_popup({type:"deleteReply",callback,data1,searchCallback,data2});
@@ -973,7 +952,7 @@ class BluMUI_TopicDis extends React.Component {
                         });
                     }
                 }).then(() => {
-                    this._searchReply(htid);
+                    this._searchReply(htid,page);
                 }).catch(e => {
                     if (e === 101) {
                         window.location.href = 'error1.html'
@@ -1021,11 +1000,6 @@ class BluMUI_TopicReport extends React.Component {
               alertTip: "请选择举报类型！",
               closeAlert: function () {}
             });
-        }else if(jbly == ""){
-            Alert.open({
-              alertTip: "请填写举报理由！",
-              closeAlert: function () {}
-            });
         }else{
             this.props.commitReportFun({ htid, hfid, jblx, jbly }).then(result => {
                 Alert.open({
@@ -1065,7 +1039,7 @@ class BluMUI_TopicReport extends React.Component {
                     <div className='msg_desc'>
                         <div className='desc_type'>
                             <span>*</span>
-                            请选择投诉的类型：
+                            请选择举报的类型：
 						</div>
                         <div className="desc_choose">
                         {
@@ -1151,6 +1125,19 @@ class Popup extends React.Component {
           </div>
         );
         break;
+
+        case 'showCompleteTalk':
+            return(
+                <div id="popbody" ref = "pb">
+                    <div id="msg">
+                        
+                    </div>
+                    <div id="popup_option">
+                      <button id="popup_OK" ref={btn=>this.OK=btn}>确定</button>
+                      <button id="popup_back" ref={btn=>this.back=btn}>取消</button>
+                    </div>
+                </div>
+            )
       default: 
         return(<div></div>);
         break;
