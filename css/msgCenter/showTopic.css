@@ -415,6 +415,8 @@ a {
 
 #topic_report .report_confirm>div {
 	margin: 10px 0;
+	max-height:52px;
+	overflow: hidden;
 }
 
 #topic_report .report_submit {

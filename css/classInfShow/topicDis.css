@@ -7,6 +7,10 @@ body {
 a {
 	color:#000;
 }
+/* 提示文字颜色 */
+span.tip_color{
+	color:#999;
+}
 #topicDis{
 	width:1180px;
 	margin:0 auto;

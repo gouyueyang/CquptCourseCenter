@@ -91,7 +91,12 @@ class BluMUI_ShowReport extends React.Component {
 
                                         {item.clzt == 2 ?
                                             <div className="msg_func">
-                                                <div><a href={`./showTopic.html?htid=${item.htid}`} target="_blank">查看</a></div>
+                                                {ssdx == 'htjb' ?
+                                                    <div><a href={`./showTopic.html?htid=${item.htid}`} target="_blank">查看</a></div>
+                                                    :
+                                                    <div><a href={`./showTopic.html?htid=${item.htid}&hfid=${item.hfid}`} target="_blank">查看</a></div>
+                                                }
+                                                
                                                 {userType != "学生" &&
                                                 (ssdx == 'htjb' ?
                                                     <div>

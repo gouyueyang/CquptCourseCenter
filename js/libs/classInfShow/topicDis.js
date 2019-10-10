@@ -50,7 +50,7 @@ class SendTopic extends React.Component {
                     (userType == "任课教师" || userType =="课程负责人" || userType == "督导" || userType == "管理员") &&
                         <div>
                             <div>
-                                <span><span className="mustWrite">*</span>您要发布到哪些班集？请勾选：</span>
+                                <span className="mustWrite">*</span><span className="tip_color">您要发布到哪些班集？请勾选：</span>
                             </div>
                             <div>
                             {
@@ -86,7 +86,7 @@ class SendTopic extends React.Component {
                     userType == '学生' &&
                     <div>
                         <div>
-                            <span><span className="mustWrite">*</span>您要发布到哪些班集？请勾选：</span>
+                            <span className="mustWrite">*</span><span className="tip_color">您要发布到哪些班集？请勾选：</span>
                         </div>
                         <div>
                             <div className="public_classItem">
@@ -109,7 +109,7 @@ class SendTopic extends React.Component {
                         <div className="otherSet">
                             <input type = "checkbox" id="checkbox_gk" checked={dqzt!=1} onChange={event => this._changeDqzt(event)}></input>
                             <label htmlFor="checkbox_gk"></label>
-                            <span>公开(默认状态为班内可见)</span>
+                            <span>公开<span className="tip_color">(默认状态为班内可见)</span></span>
                         </div>
                     }
                     <div className="otherSet">
@@ -118,7 +118,7 @@ class SendTopic extends React.Component {
                             checked={!sfyxhf}
                             onChange={event => this._changeState('sfyxhf', event)} />
                         <label htmlFor="checkbox_sfyxhf"></label>
-                        <span>禁止回复(本班级任课教师可取消此状态)</span>
+                        <span>禁止回复<span className="tip_color">(本班级任课教师可取消此状态)</span></span>
                     </div>
                     
                     
@@ -343,7 +343,7 @@ class BluMUI_TopicDis extends React.Component {
                                                         (item.dqzt == 2 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '设置班内可见' })}>取消公开</a>):null}
                                                     {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh) ? (item.sfyxhf ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
                                                     
-                                                    {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ htSelected:item.htid,htSelectedZzsfrzh:item.zzsfrzh,expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid,this.state.allReplyConfig[item.htid].page)); }}>回复</a> : null)}
+                                                    {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ htSelected:item.htid,htSelectedZzsfrzh:item.zzsfrzh,expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid)); }}>回复</a> : null)}
                                                 </div>
                                             </div>
                                             {
