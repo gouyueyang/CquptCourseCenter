@@ -751,3 +751,145 @@ a.color {
   div.info_one:hover a.hidden{
 	  display: inline;
   }
+
+/* AssessmentScheme */
+.warn{
+	display: inline-block;
+	margin-left: 22px;
+	color:#999999;
+	font-size: 12px;
+}
+#AssessmentScheme button{
+	width: 62px;
+	height: 22px;
+	color: #ffffff;
+	border-radius: 3px;
+	border:none;
+}
+.activeBtn{
+	background-color: #39a4ff;
+}
+.noActiveBtn{
+	background-color: #999;
+}
+
+.fileList{
+	width: 328px;
+}
+
+.BluMUI_List .index0{
+	padding-left: 28px;
+	background: url("../../imgs/classManageCheck/AssessSchemeLogo.png") no-repeat 0 7px;
+}
+.BluMUI_List a{
+	cursor: pointer;
+	font-size: 14px;
+	height: 21px;
+	line-height: 21px;
+	display: block;
+}
+.BluMUI_List .index1 a,
+.BluMUI_List .index2 a
+{
+	color:#099d6b;
+}
+.BluMUI_List .index1,
+.BluMUI_List .index2{
+	float: right;
+}
+.BluMUI_List .index2{
+	margin-right: 15px;
+}
+.BluMUI_List .index0{
+	width:222px;
+	overflow: hidden;
+}
+.BluMUI_List .index0 a{
+	color: #39a4ff;
+	margin-left: 0;
+	display: block;
+
+}
+.BluMUI_List{
+	width: 328px;
+	overflow: hidden;
+}
+.BluMUI_List li{
+	float: left;
+	list-style: none;
+}
+.fileInput input{
+	border: none;
+	position: absolute;
+	font-size:124px;
+	opacity:0;
+	filter:alpha(opacity=0);
+}
+.BluMUI_FileUp{
+	float: left;
+}
+.BluMUI_FileUp .fileInput span{
+	position: absolute;
+	width: 100%;
+	display: block;
+	text-align: center;
+	color: #666666;
+	line-height: 20px;
+	height: 20px;
+	font-size: 12px;
+	font-size: 12px;
+}
+.BluMUI_FileUp  .fileInput{
+	position: relative;
+	width:80px;
+	height:20px;
+	border: 1px solid #000;
+	color:#000;
+	background-color: #eeeeee;
+	overflow: hidden;
+	display: inline-block;
+	float: left;
+}
+.BluMUI_FileUp .fileArea{
+	margin-left: 55px;
+	float: left;
+	margin-top: 1px;
+}
+.activeBtn{
+	background-color: #39a4ff;
+}
+#AssessmentScheme .itemNameM{
+	display: inline-block;
+	float: left;
+	font-size: 16px;
+	color:#333333;
+	/* background: url("../../imgs/classManageCheck/itemNameLogo.png") no-repeat 0 3px; */
+}
+
+#AssessmentScheme #khfa{
+	margin-top: 10px;
+	height: 28px;
+}
+#AssessmentScheme .uploadWarn{
+	color: #999;
+	font-size: 12px;
+	margin-left: 20px;
+}
+#AssessmentScheme .fileArea{
+	margin-left: 14px;
+}
+#AssessmentScheme .BluMUI_FileUp button{
+	margin-left: 20px;
+}
+
+#AssessmentScheme button{
+	margin-left: 20px;
+}
+#AssessmentScheme #isDown{
+	margin-top: 30px;
+	height: 28px;
+}
+
+#downloadIframe{
+	display: none;
+}

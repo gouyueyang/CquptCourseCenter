@@ -17,6 +17,19 @@ class BluMUI_TopicDis extends React.Component {
     constructor(props) {
         super(props);
         
+        let fjList = this.props.fjList.list;
+        let items = [];
+        for(let i = 0;i<fjList.length;i++){
+            console.log(i);
+            let fileName = fjList[i].fileName,
+            originName = fjList[i].originName;
+            items.push([
+				{ value: originName },
+				{ value: '删除', fileName: fileName, callback: this.props.deleteFile },
+				{ value: '下载', downloadName: originName, fileName: fileName, callback: this.props.downloadFile }
+            ]);
+        }
+        fjList = items;
         this.state = {
             isBanReply:this.props.topicInfo.sfyxhf,
             htzt:this.props.topicInfo.dqzt,//话题状态
@@ -35,21 +48,24 @@ class BluMUI_TopicDis extends React.Component {
                 "zhzhf": 1,
                 "fjd": -1,
                 "hfnr":""
-            }  //发送回复的信息
+            },  //发送回复的信息
+            fjList:fjList
         }
+        // this._setFjList(this.props.fjList);
     }
 
     
     
 
     render() {
-        let {hfid,htzt,page, count,isBanReply,zhfSelect} = this.state;
-
-        let { kcbh,topicInfo,pageInfo,userId,qx,userType } = this.props;
+        let {hfid,htzt,page, count,isBanReply,zhfSelect,fjList} = this.state;
+        let { kcbh,topicInfo,pageInfo,userId,qx,userType,getTopicFj } = this.props;
         let topHfid = pageInfo.hfid;//定位回复id
         let { total, totalPages, hfList } = this.state.hfMsg; // 话题总的数量，总页数， 话题列表
         let options = { pages: totalPages, page, rows: total };
         let {hfnr} = this.state.sendReplyInfo;
+
+        
         return (
             <div id="topicDis">
 				<div id="topicInfo">
@@ -57,6 +73,13 @@ class BluMUI_TopicDis extends React.Component {
 					<div id="topic_Info">
 							<div className="topic_htnr" dangerouslySetInnerHTML={{ __html: topicInfo.htnr }}>
 							</div>
+                            <div className="fjList">
+                                {
+                                    fjList.map((item,index)=>{
+                                        return(<BluMUI_List id='' key={index} listIndex={index} item={item} userType={userType}></BluMUI_List>)
+                                    })
+                                }
+                            </div>
 							<div className="topic_bottom clearfix">
 
 								<div className="bottom_authCon">
@@ -125,9 +148,27 @@ class BluMUI_TopicDis extends React.Component {
                 console.error(err.stack);
             });
         let topHfid = this.props.pageInfo.hfid;
+        
         // document.querySelector(`#${topHfid}`) && 
         window.location.hash = `#topHfid`;
     }
+
+    _setFjList=(fjList)=>{
+        let items = [];
+        for(let i = 0;i<fjList.length;i++){
+            let fileName = fjList[i].fileName,
+            originName = fjList[i].originName;
+            items.push([
+				{ value: originName },
+				{ value: '删除', fileName: fileName, callback: this.props.deleteFile },
+				{ value: '下载', downloadName: originName, fileName: fileName, callback: this.props.downloadFile }
+			])
+        }
+        this.setState({
+            fjList:items
+        })
+    }
+
     //搜索回复
     _searchReply = ( page = 1) => {
         let { htid } = this.props.topicInfo;
@@ -393,6 +434,110 @@ class BluMUI_TopicDis extends React.Component {
     _showReportBox({ htInfo, hfInfo } = {}) {
         this.props.creatReportBox({htInfo,hfInfo});
     }
+}
+
+
+// 文件列表
+class BluMUI_List extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			index: this.props.index
+		}
+		this._onClick = this._onClick.bind(this);
+	}
+	_onClick(index, item) {
+		var that = this;
+		if (item.callback)
+			return (
+				function () {
+					that.setState({
+						index: index
+					})
+					item.callback( that.props.listIndex,index, that,that.props.item);
+				}
+			);
+	}
+	_createLi() {
+		var result = [],
+			i,
+			len,
+            item = this.props.item,
+            userType = this.props.userType;
+            console.log(item);
+		for (i = 0, len = item.length; i < len; i++) {
+            if(i==0){
+                result.push(
+                    <li key={i}
+                        className={this.state.index == i ? 'selected index' + i : 'index' + i}
+                        data-key={i}>
+                        {
+                            item[i].url
+                            &&
+                            <a title={item[i].value}
+                                href={item[i].url}
+                                target="_blank"
+                                onClick={this._onClick(i, item[i])}
+                            >{item[i].value}</a>
+                            ||
+                            <a title={item[i].value}
+                                onClick={this._onClick(i, item[i])}
+                            >{item[i].value}</a>
+                        }
+                    </li>
+                );
+            }else if(userType!="游客"&&i==1){
+                result.push(
+                    <li key={i}
+                        className={this.state.index == i ? 'selected index' + i : 'index' + i}
+                        data-key={i}>
+                        {
+                            item[i].url
+                            &&
+                            <a title={item[i].value}
+                                href={item[i].url}
+                                target="_blank"
+                                onClick={this._onClick(i, item[i])}
+                            >{item[i].value}</a>
+                            ||
+                            <a title={item[i].value}
+                                onClick={this._onClick(i, item[i])}
+                            >{item[i].value}</a>
+                        }
+                    </li>
+                );
+            }else if((userType == "管理员" ||userType == "督导"||userType == "任课教师" || userType == "课程负责人")&&i==2){
+                result.push(
+                    <li key={i}
+                        className={this.state.index == i ? 'selected index' + i : 'index' + i}
+                        data-key={i}>
+                        {
+                            item[i].url
+                            &&
+                            <a title={item[i].value}
+                                href={item[i].url}
+                                target="_blank"
+                                onClick={this._onClick(i, item[i])}
+                            >{item[i].value}</a>
+                            ||
+                            <a title={item[i].value}
+                                onClick={this._onClick(i, item[i])}
+                            >{item[i].value}</a>
+                        }
+                    </li>
+                );
+            }
+			
+		}
+		return result;
+	}
+	render() {
+		return (
+			<ul id={this.props.id} className={"BluMUI_List " + this.props.extClass}>
+				{this._createLi()}
+			</ul>
+		)
+	}
 }
 
 class BluMUI_ReplyItem extends React.Component {

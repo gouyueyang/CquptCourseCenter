@@ -3,10 +3,20 @@ require('es5-shim/es5-sham');
 require('console-polyfill');
 require('es6-promise');
 
-var BluMUI = require('../../libs/classInfShow/topicDis');
-var ajax = require('../../libs/post_ajax');
-var hash = parseHash(window.location.href);
+import Alert from "../../util/alert.js";
 
+var BluMUI = require('../../libs/classInfShow/topicDis');
+var ajaxPading = require('../../libs/ajaxExpand.mini.min');
+var ajax = require('../../libs/post_ajax');
+var hash = parseHash(window.location.href),
+	host = courseCenter.host,
+	downURL = host + 'fileDownLoad',// 下载链接
+	deleteAttachment = host + 'deleteAttachment',
+	loginURL = 'https://ids.cqupt.edu.cn/authserver/login?service=' + host + 'classList',
+	doc = document;
+var fjList = [];
+
+var insertAttachment = host + 'insertTopicAttachment';
 //查询数据的变量
 let User={
 	id:''
@@ -153,6 +163,9 @@ if (hash.modelName === 'reply') {
 							reportOperateFun, // 举报操作
 							commitReportFun, // 提交举报信息
 							creatReportBox, //创建举报页面
+							handleSaveAjax,
+							deleteFile,
+							saveAjax
 						}, 'TopicDis', document.getElementById('topicDis'));
 					}).then(()=>{
 						var iframe = window.parent.document.getElementById('myIframe');
@@ -343,7 +356,7 @@ function getTopicFun({ jxbh, htid }) {
 	})
 }
 
-function publishTopicFun({ jxbbh, htbt, htnr, sfyxhf, dqzt }) {
+function publishTopicFun({ jxbbh, htbt, htnr, sfyxhf, dqzt,fjList }) {
 	return new Promise((resolve, reject) => {
 		ajax({
 			url: courseCenter.host + 'publishTopic',
@@ -354,8 +367,8 @@ function publishTopicFun({ jxbbh, htbt, htnr, sfyxhf, dqzt }) {
 				htbt, //话题标题
 				htnr,//话题内容
 				sfyxhf,//是否允许回复
-				dqzt   //当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
-
+				dqzt,   //当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
+				fjList:fjList.join(",")
 			},
 			success(response) {
 				let result = JSON.parse(response);
@@ -573,3 +586,209 @@ function getReportTypeFun() {
 	})
 }
 
+// ajax返回数据基本处理
+
+var handleData = function (result) {
+	return JSON.parse(result);
+}
+
+
+// 初始化ajax对象
+
+ajaxPading.init({
+	type: 'post',
+	dataType: 'form',
+	handleData: handleData,
+	name: 'saveAjax',
+	async: true
+});
+
+// 单独上传文件的ajax
+
+ajaxPading.init({
+	type: 'post',
+	dataType: 'form',
+	name: 'file',
+	handleData: handleData,
+	async: true
+});
+
+// 删除文件的ajax
+ajaxPading.init({
+	type: 'post',
+	dataType: 'form',
+	handleData: handleData,
+	name: 'delete',
+	async: true
+});
+
+var handleSaveAjax = function (flag, result,  postData, that) {
+	var data = result.data,
+		meta = result.meta;
+	if (flag == 1) {
+		if (meta.result == 100) {
+			var items;
+			items = that.state.items;
+			doc.getElementById('file').value = '';
+			doc.getElementById('warn_file').innerHTML = '上传文件成功！';
+
+			var fileName = data[0].fileName,
+				originName = data[0].originName;
+			var	fjid = data[0].id;
+			fjList = [...fjList,fjid];
+			
+			items.push([
+				{ value: originName },
+				{ value: '删除', fileName: fileName, callback: deleteFile },
+				{ value: '下载', downloadName: originName, fileName: fileName, callback: downloadFile }
+			]);
+			BluMUI.result.topicDis.sendTopic.setState({
+				fjList:fjList,
+				fjxxList:items
+			})
+			// that.setState({
+			// 	items: items,
+			// 	fileName: fileName,
+			// 	// isUpload: true,
+			// 	isDown: false
+			// });
+
+			// BluMUI.result.topicDis.sendTopic.setState({
+			// 	fjList:[...BluMUI.result.topicDis.sendTopic.state.fjList,fjid]
+			// },console.log(BluMUI.result.topicDis.sendTopic.state))
+			
+
+			
+		} else if (meta.result == 303) {
+			confirm(result.meta.msg);
+			window.location.href = loginURL;
+		}
+		else {
+			// that.setState({
+			// 	isUpload: true
+			// });
+			document.getElementById('warn_file').innerHTML = '上传文件失败';
+		}
+	} else {
+		
+		// that.setState({
+		// 	isUpload: true
+		// });
+		document.getElementById('warn_file').innerHTML = '上传文件失败';
+
+	}
+}
+
+// ajax Save
+var saveAjax = function (data,that) {
+	var fail = null,
+		success = null,
+		check = null,
+		start = null,
+		url = insertAttachment;
+	data.unifyCode = {
+		value: User.id
+	}
+	data.courseNo = {
+		value: Course.kcbh
+	}
+
+			
+			data.type = {
+				value: 8   //表示文件是话题讨论相关的文件
+			};
+			// start = function () {
+			// 	that.setState({
+			// 		isUpload: true
+			// 	});
+			// }
+			success = function (result) {
+				handleSaveAjax(1, result, data, that);
+			};
+			fail = function (result) {
+				handleSaveAjax(0, result, data, that);
+			};
+			check = function (checkInfs) {
+				var errorInf = checkInfs[0].errorInf || '',
+					type = checkInfs[0].type,
+					isCheck = checkInfs[0].isCheck;
+				if (!isCheck)
+					document.getElementById('warn_' + type).innerHTML = errorInf;
+				else
+					document.getElementById('warn_' + type).innerHTML = '正在上传文件...';
+			};
+			
+	
+	ajaxPading.send({
+		data: data,
+		url: url,
+		onFail: fail,
+		onSuccess: success,
+		onCheck: check,
+		onStart: start
+	}, 'saveAjax', that);
+}
+
+
+
+// delete File
+var deleteFile = function (listIndex,index,items) {
+	var data = {
+			unifyCode: {
+				value: User.id
+			},
+			courseNo: {
+				value: Course.kcbh
+			},
+			fileName: {
+				value: items[index].fileName
+			}
+		};
+	
+		
+	var url = deleteAttachment;
+	data.type = {
+		value: 8
+	};
+			
+	
+
+			ajaxPading.send({
+				data: data,
+				url: url,
+				onSuccess: function (result) {
+					if (result.meta.result == 100) {
+						let fjList = BluMUI.result.topicDis.sendTopic.state.fjList;
+						let fjxxList = BluMUI.result.topicDis.sendTopic.state.fjxxList;
+						fjList.splice(listIndex,1);
+						fjxxList.splice(listIndex,1);
+						BluMUI.result.topicDis.sendTopic.setState({
+							fjList:fjList,
+							fjxxList:fjxxList
+						})
+						
+					} else if (result.meta.result == 303) {
+						confirm(result.meta.msg);
+						window.location.href = loginURL;
+					}
+					else {
+						Alert.open({
+							alertTip: result.meta.msg,
+							closeAlert: function () { }
+						});
+					}
+				},
+				onFail: function () {
+				}
+			}, 'delete');
+
+};
+
+// download File
+
+var downloadFile = function (listIndex,index, items) {
+	var fileName = items[index].fileName,
+		downloadName = items[index].downloadName,
+		downLoadIframes = window.frames['downLoad'];
+	downLoadIframes.location.href = downURL + '?name=' + encodeURIComponent(downloadName) + '&oName=' + encodeURIComponent(fileName) + '&unifyCode=' + User.id;
+}

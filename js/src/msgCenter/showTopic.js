@@ -4,8 +4,16 @@ require('console-polyfill');
 require('es6-promise');
 
 var BluMUI = require('../../libs/msgCenter/showTopic');
+var ajaxPading = require('../../libs/ajaxExpand.mini.min');
 var ajax = require('../../libs/post_ajax');
 var hash = parseHash(window.location.href);
+
+var host = courseCenter.host,
+	downURL = host + 'fileDownLoad',// 下载链接
+	deleteAttachment = host + 'deleteAttachment',
+	loginURL = 'https://ids.cqupt.edu.cn/authserver/login?service=' + host + 'classList',
+	doc = document,
+	fjList = [];
 
 //查询数据的变量
 let User = {
@@ -60,6 +68,8 @@ let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
 	let htid = pageInfo.htid;
 	let hfid = pageInfo.hfid;
 	let hfMsg = {};
+
+	
 
 	getTopic().then(topicInfo=>{
 		
@@ -117,17 +127,54 @@ let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
 					openTopic:false,    //公开话题
 				};
 			};
-			if(hfid != ""){
-				getReplyPageNum({htid,hfid}).then(res=>{
-					let hfCount = res.count;
-					page = Math.round(hfCount/count) + 1;
-					pageInfo.hfid = res.hfid;
-				}).then(()=>{
+			getTopicFj().then(res=>{
+				if(res.list){
+					fjList = res;
+				}else{
+					fjList = {list:[]}
+				}
+				if(hfid != ""){
+					getReplyPageNum({htid,hfid}).then(res=>{
+						let hfCount = res.count;
+						page = Math.round(hfCount/count) + 1;
+						pageInfo.hfid = res.hfid;
+						
+					}).then(()=>{
+						getDetailReplyListFun({htid,fjd,page,count}).then(res=>{
+							hfMsg = res;
+							BluMUI.create({
+								id:'topic',
+								userId:User.id,
+								userType,
+								kcbh:Course.kcbh,
+								hfMsg,
+								htid:pageInfo.htid,
+								hfid:pageInfo.hfid,
+								topicInfo,
+								pageInfo,
+								qx,
+								fjList,
+								getDetailReplyListFun, // 获取话题回复列表
+								publishReplyFun, // 发表回复
+								topicOperateFun, // 话题操作
+								replyOperateFun, // 回复操作
+								reportOperateFun, // 举报操作
+								commitReportFun, // 提交举报信息
+								creatReportBox, //创建举报页面
+								getTopicFj,//获取话题附件
+								deleteFile,
+								downloadFile
+							}, 'TopicDis', document.getElementById('topicDis'));
+						});
+					});
+				}else{
 					getDetailReplyListFun({htid,fjd,page,count}).then(res=>{
+						
 						hfMsg = res;
 						BluMUI.create({
 							id:'topic',
 							userId:User.id,
+							userType,
 							kcbh:Course.kcbh,
 							hfMsg,
 							htid:pageInfo.htid,
@@ -135,6 +182,7 @@ let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
 							topicInfo,
 							pageInfo,
 							qx,
+							fjList,
 							getDetailReplyListFun, // 获取话题回复列表
 							publishReplyFun, // 发表回复
 							topicOperateFun, // 话题操作
@@ -142,33 +190,14 @@ let infoBar = document.getElementById("infoBar");//获取右侧信息通知栏
 							reportOperateFun, // 举报操作
 							commitReportFun, // 提交举报信息
 							creatReportBox, //创建举报页面
+							getTopicFj,//获取话题附件
+							deleteFile,
+							downloadFile
 						}, 'TopicDis', document.getElementById('topicDis'));
 					});
-				});
-			}else{
-				getDetailReplyListFun({htid,fjd,page,count}).then(res=>{
-					hfMsg = res;
-					BluMUI.create({
-						id:'topic',
-						userId:User.id,
-						userType,
-						kcbh:Course.kcbh,
-						hfMsg,
-						htid:pageInfo.htid,
-						hfid:pageInfo.hfid,
-						topicInfo,
-						pageInfo,
-						qx,
-						getDetailReplyListFun, // 获取话题回复列表
-						publishReplyFun, // 发表回复
-						topicOperateFun, // 话题操作
-						replyOperateFun, // 回复操作
-						reportOperateFun, // 举报操作
-						commitReportFun, // 提交举报信息
-						creatReportBox, //创建举报页面
-					}, 'TopicDis', document.getElementById('topicDis'));
-				});
-			}
+				}
+			})
+			
 		});
 
 		
@@ -226,6 +255,127 @@ function getTopic(){
 		});
 	})
 }
+// 获取附件
+function getTopicFj(){
+	return new Promise((resolve,reject)=>{
+		let data = null;
+		ajax({
+			url:courseCenter.host + 'queryTopicAttachment',
+			data:{
+				unifyCode:User.id,
+				courseNo:Course.kcbh,
+				htid:htid,
+				type:8
+			},
+			success(response){
+				let result = JSON.parse(response);
+				let {meta,data={}} = result;
+				// if(meta.result === 100){
+					resolve(data);
+				// }else{
+				// 	reject(data);
+				// }
+			}
+		})
+	})
+}
+
+// ajax返回数据基本处理
+
+var handleData = function (result) {
+	return JSON.parse(result);
+}
+
+
+// 初始化ajax对象
+
+ajaxPading.init({
+	type: 'post',
+	dataType: 'form',
+	handleData: handleData,
+	name: 'saveAjax',
+	async: true
+});
+
+// 单独上传文件的ajax
+
+ajaxPading.init({
+	type: 'post',
+	dataType: 'form',
+	name: 'file',
+	handleData: handleData,
+	async: true
+});
+
+// 删除文件的ajax
+ajaxPading.init({
+	type: 'post',
+	dataType: 'form',
+	handleData: handleData,
+	name: 'delete',
+	async: true
+});
+
+// delete File
+var deleteFile = function (listIndex,index,that,items) {
+	var data = {
+			unifyCode: {
+				value: User.id
+			},
+			courseNo: {
+				value: Course.kcbh
+			},
+			fileName: {
+				value: items[index].fileName
+			}
+		};
+	
+		
+	var url = deleteAttachment;
+	data.type = {
+		value: 8
+	};
+			
+	
+
+			ajaxPading.send({
+				data: data,
+				url: url,
+				onSuccess: function (result) {
+					if (result.meta.result == 100) {
+						
+						
+						items.splice(0, 3);
+						
+						that.setState({
+							items: items
+						});
+					} else if (result.meta.result == 303) {
+						confirm(result.meta.msg);
+						window.location.href = loginURL;
+					}
+					else {
+						Alert.open({
+							alertTip: result.meta.msg,
+							closeAlert: function () { }
+						});
+					}
+				},
+				onFail: function () {
+				}
+			}, 'delete');
+
+};
+
+// download File
+
+var downloadFile = function (listIndex,index,that,items) {
+	var fileName = items[index].fileName,
+		downloadName = items[index].downloadName,
+		downLoadIframes = window.frames['downLoad'];
+	downLoadIframes.location.href = downURL + '?name=' + encodeURIComponent(downloadName) + '&oName=' + encodeURIComponent(fileName) + '&unifyCode=' + User.id;
+}
+
 function getReplyPageNum({htid,fjd,hfid}){
 	return new Promise((resolve, reject) => {
 		ajax({

@@ -33,13 +33,15 @@ class SendTopic extends React.Component {
             htbt: '', // 话题标题
             sfyxhf: true, //  是否允许回复
             dqzt: 1, // 当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
-            checkBan: this.props.userBan? {[this.props.userBan]:true} : {}
+            checkBan: this.props.userBan? {[this.props.userBan]:true} : {},
+            fjList:[],//附件id列表
+            fjxxList:[]//附件完整信息
         };
     }
 
     render() {
-        const { sfyxhf,dqzt } = this.state;
-        let { banList, userType } = this.props;
+        const { sfyxhf,dqzt,fjxxList } = this.state;
+        let { banList, userType,saveAjax } = this.props;
         return (
             <div id="sendMsg">
                 <h3>发起新话题</h3>
@@ -101,7 +103,16 @@ class SendTopic extends React.Component {
                     </div>
                         
                 }
-
+                {
+                    (userType == "任课教师" || userType == "管理员" || userType == "督导" || userType == "课程负责人") &&
+                    <BluMUI_AssessmentScheme
+                            id={'AssessmentScheme'}
+		            	    fileFormName={'file'}
+		            	    items= {fjxxList}
+		            	    saveAjax= {saveAjax}
+                    />
+                }
+            
                 <div className='msg_bottom'>
                     <button onClick={this._sendMsg}>发   表</button>
                     {
@@ -172,7 +183,7 @@ class SendTopic extends React.Component {
     }
     
     _sendMsg = () => {
-        const { htbt, sfyxhf, dqzt, checkBan } = this.state;
+        const { htbt, sfyxhf, dqzt, checkBan,fjList } = this.state;
         const htnr = this.editor.getData();
         if(htnr.length>10000){
             Alert.open({
@@ -181,7 +192,7 @@ class SendTopic extends React.Component {
               });
             this.editor.setData(htnr.substr(0,9999));
             }else{
-                this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan });
+                this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan,fjList });
             }
         
         // this.setState({
@@ -234,7 +245,7 @@ class BluMUI_TopicDis extends React.Component {
 
 
         let { jsList,wkkJsList } = this.props.teacherList;
-        let { userType,userBan,qx,userId } = this.props;
+        let { userType,userBan,qx,userId,saveAjax } = this.props;
         let { total, totalPages, htList } = this.state.topicMsg; // 话题总的数量，总页数， 话题列表
         let options = { pages: totalPages, page, rows: total };
         let {hfnr} = this.state.sendReplyInfo;
@@ -428,13 +439,13 @@ class BluMUI_TopicDis extends React.Component {
                             <Fanye This={this} options={options} callback={this._searchTopic} />
                         }
                         {
-                            (userType == "管理员" || userType == "督导" || userType == "课程负责人") && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={allJxbList} userType={userType} userBan={userBan}/>
+                            (userType == "管理员" || userType == "督导" || userType == "课程负责人") && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={allJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>
                         }
                         {
-                            userType == "任课教师" && userId == teacherSelected && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan}/>
+                            userType == "任课教师" && userId == teacherSelected && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>
                         }
                         {
-                            userType == "学生" && userBan == banSelected && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan}/>)
+                            userType == "学生" && userBan == banSelected && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>)
                         }
                          
                         
@@ -459,7 +470,8 @@ class BluMUI_TopicDis extends React.Component {
             htbt: "", // 话题标题
             sfyxhf: true, //  是否允许回复
             dqzt: 1, // 当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
-            checkBan: this.sendTopic.props.userBan? {[this.sendTopic.props.userBan]:true} : {}
+            checkBan: this.sendTopic.props.userBan? {[this.sendTopic.props.userBan]:true} : {},
+            fjList:[]
         });
         document.querySelector('#htmc').value = '';
         this.sendTopic.editor.setData("");
@@ -546,7 +558,8 @@ class BluMUI_TopicDis extends React.Component {
                     page: page,
                     expendReplys: {},
                     allReplyConfig: {},
-                    allReplyList: {}
+                    allReplyList: {},
+                    
                 });
 
             }).then(this.props.getClassListFun(teacherSelected).then(classList=>{
@@ -581,7 +594,9 @@ class BluMUI_TopicDis extends React.Component {
                     page: page,
                     expendReplys: {},
                     allReplyConfig: {},
-                    allReplyList: {}
+                    allReplyList: {},
+                    fjList:[],
+                    fjxxList:[]
                 });
 
             }).then(this.props.getClassListFun(teacherSelected).then(classList=>{
@@ -690,8 +705,8 @@ class BluMUI_TopicDis extends React.Component {
     }
     // 发送话题
     _sendTopic = (data) => {
-        const { htbt, sfyxhf, htnr, dqzt, checkBan } = data;
-        console.log('发送话题', htbt, sfyxhf, htnr, dqzt, checkBan);
+        const { htbt, sfyxhf, htnr, dqzt, checkBan,fjList } = data;
+        console.log('发送话题', htbt, sfyxhf, htnr, dqzt, checkBan,fjList);
         let flag = false;
         for(const [jxb, statu] of Object.entries(checkBan)){
             if(statu){
@@ -718,10 +733,14 @@ class BluMUI_TopicDis extends React.Component {
             let flag = true;
             for (const [jxb, statu] of Object.entries(checkBan)) {
                 if (statu) {
-                    this.props.publishTopicFun({ jxbbh: jxb, htbt, htnr, sfyxhf, dqzt }).then(result => {
+                    this.props.publishTopicFun({ jxbbh: jxb, htbt, htnr, sfyxhf, dqzt,fjList }).then(result => {
                         if (result.result===100) {
                             this._searchTopic();
                             document.querySelector('#htmc').value = '';
+                            this.sendTopic.setState({
+                                fjList:[],
+                                fjxxList:[]
+                            })
                             Alert.open({
                               alertTip: `成功发送话题`,
                               closeAlert: function () {}
@@ -929,6 +948,7 @@ class BluMUI_TopicDis extends React.Component {
         }
 
     }
+
     //回复操作
     _replyOperate = (hfid, cz, htid) => {
         let callback = this.props.replyOperateFun;
@@ -1086,6 +1106,203 @@ class BluMUI_TopicReport extends React.Component {
             </div>
         )
     }
+}
+
+// 文件列表
+class BluMUI_List extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			index: this.props.index
+		}
+		this._onClick = this._onClick.bind(this);
+	}
+	_onClick(index, item) {
+		var that = this;
+		if (item.callback)
+			return (
+				function () {
+					that.setState({
+						index: index
+					})
+					item.callback( that.props.listIndex,index, that.props.items);//listIndex:列表序号，index行内序号
+				}
+			);
+	}
+	_createLi() {
+		var result = [],
+			i,
+			len,
+			items = this.props.items;
+		for (i = 0, len = items.length; i < len; i++) {
+			result.push(
+				<li key={i}
+					className={this.state.index == i ? 'selected index' + i : 'index' + i}
+					data-key={i}>
+					{
+						items[i].url
+						&&
+						<a title={items[i].value}
+							href={items[i].url}
+							target="_blank"
+							onClick={this._onClick(i, items[i])}
+						>{items[i].value}</a>
+						||
+						<a title={items[i].value}
+							onClick={this._onClick(i, items[i])}
+						>{items[i].value}</a>
+					}
+				</li>
+			);
+        }
+        
+        
+		return result;
+    }
+    componentDidMount(){
+        var iframe = window.parent.document.getElementById('myIframe');
+        var height;
+        try {
+            height = iframe.contentWindow.document.documentElement.offsetHeight;
+        } catch (e) {};
+        try {
+            height = iframe.contentDocument.documentElement.offsetHeight;
+        } catch (e) {};
+        iframe.height = height;
+    }
+	render() {
+		return (
+			<ul id={this.props.id} className={"BluMUI_List " + this.props.extClass}>
+				{this._createLi()}
+			</ul>
+		)
+	}
+}
+// 文件选择
+class BluMUI_FileUp extends React.Component {
+	constructor(props) {
+		super(props);
+		this._warn = this._warn.bind(this);
+	}
+	_warn(e) {
+		var value = e.target.value,
+			warn;
+		if (value) {
+			warn = value;
+		}
+		else {
+			warn = '没选择文件';
+		}
+		this.warnBox.innerHTML = warn;
+	}
+	render() {
+		return (
+			<div className="BluMUI_FileUp">
+				<div className="fileArea">
+					<div className="fileInput" >
+						<span>选择文件</span>
+						<input type="file"
+							id={this.props.fileId}
+							name={this.props.fileFormName}
+							onChange={this._warn}
+						/>
+					</div>
+					<span ref={(warnBox) => (this.warnBox = warnBox)} className="warn" id={this.props.warnId || "warn"} >未选择文件</span>
+				</div>
+			</div>
+		)
+	}
+}
+// 文件上传组件
+class BluMUI_AssessmentScheme extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			items: this.props.items,
+			isDown: true,
+			isUpload: true
+		};
+		// this._isDown = this._isDown.bind(this);
+		this._save = this._save.bind(this);
+	}
+	componentWillReceiveProps(nextProps) {
+		this.state = {
+			items: nextProps.items
+		};
+	}
+	// _isDown() {
+	// 	this.setState({
+	// 		isDown: !this.state.isDown
+	// 	})
+	// }
+	_save(e) {
+		// if (this.state.isUpload) {
+			var data = {
+				file: {
+					value: document.getElementById('file').files,
+					maxSize: 5,
+					errorInf: '未选择文件',
+					suffix: ['pdf','doc','docx','excel','xls','xlsx','ppt','pptx']
+				},
+				ableDownload: {
+					value: this.state.isDown ? 1 : 2
+				}
+			};
+			if (this.props.saveAjax)
+				this.props.saveAjax(data, this);
+		// }
+	}
+	_createList() {
+		var i,
+			j,
+			items = this.state.items,
+			result = [];
+		for (i = 0, j = items.length; i < j; i++) {
+			
+			result.push(
+				<BluMUI_List id=""
+					key={i}
+                    listIndex ={i}
+					items={this.state.items[i]}
+				>
+				</BluMUI_List>
+			)
+		}
+		return result;
+	}
+	render() {
+		return (
+			<div id={this.props.id}>
+				{/* <div>
+					<span className="title" >{this.props.title}</span>
+				</div> */}
+				
+					<div>
+						<div className="Item" id="khfa">
+							<span className="itemNameM">上传附件:</span>
+							<BluMUI_FileUp fileId="file"
+								warnId="warn_file"
+								fileFormName={this.props.fileFormName}
+							></BluMUI_FileUp>
+                            <button onClick={this._save} className="activeBtn">上传</button>
+                            <span className="uploadWarn">允许上传pdf、doc、xlsx、ppt格式的文件</span>
+						</div>
+						{/* <div className="Item" id="isDown">
+							<span className="isDownLoadFile">允许下载</span>
+							<BlueMUI_Radio callback={this._isDown}
+								selected={this.state.isDown}
+							></BlueMUI_Radio>
+						</div> */}
+						
+						
+					</div>
+				
+				<div className="fileList">
+					{this._createList()}
+				</div>
+			</div>
+		);
+	}
 }
 
 class Popup extends React.Component {

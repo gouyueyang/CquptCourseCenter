@@ -1,10 +1,10 @@
 var courseCenter = {
 	//http://172.22.114.135:6535/
-	// host:'http://localhost:8000'
+	host:'http://localhost:80/'
     // //172.22.114.135
     
 	// host: 'http://172.20.2.139/'
-	host:'http://cc.cqupt.edu.cn/'
+	// host:'http://cc.cqupt.edu.cn/'
 };
 //日期格式
 var DateFormat = {
