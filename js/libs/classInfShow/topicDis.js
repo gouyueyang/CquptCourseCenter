@@ -737,10 +737,7 @@ class BluMUI_TopicDis extends React.Component {
                         if (result.result===100) {
                             this._searchTopic();
                             document.querySelector('#htmc').value = '';
-                            this.sendTopic.setState({
-                                fjList:[],
-                                fjxxList:[]
-                            })
+                            
                             Alert.open({
                               alertTip: `成功发送话题`,
                               closeAlert: function () {}
@@ -771,7 +768,9 @@ class BluMUI_TopicDis extends React.Component {
                 htbt: "", // 话题标题
                 sfyxhf: true, //  是否允许回复
                 dqzt: 1, // 当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
-                checkBan: this.sendTopic.props.userBan? {[this.sendTopic.props.userBan]:true} : {}
+                checkBan: this.sendTopic.props.userBan? {[this.sendTopic.props.userBan]:true} : {},
+                fjList:[],
+                fjxxList:[]
             });
             this.sendTopic.editor.setData("");
         }

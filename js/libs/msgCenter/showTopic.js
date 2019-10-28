@@ -448,15 +448,45 @@ class BluMUI_List extends React.Component {
 	}
 	_onClick(index, item) {
 		var that = this;
-		if (item.callback)
-			return (
+		if (index ==1 && item.callback){
+            return (
 				function () {
-					that.setState({
+                    that.setState({
 						index: index
 					})
-					item.callback( that.props.listIndex,index, that,that.props.item);
+                    let callback = item.callback;
+                    let data1 = {
+                        listIndex:that.props.listIndex,
+                        index:index, 
+                        that:that,
+                        items:that.props.item
+                    };
+                    let searchCallback = null;
+                    let data2 = null;
+
+                    Creat_popup({type:"deleteFile",callback,data1,searchCallback,data2});
+                    
+					
+					// item.callback( that.props.listIndex,index, that,that.props.item);
 				}
 			);
+        }else if(index == 2 && item.callback){
+           
+            return (
+		    	function () {
+                    that.setState({
+		    			index: index
+		    		})
+                
+		    		item.callback({
+                        listIndex:that.props.listIndex,
+                        index, 
+                        that,
+                        items:that.props.item});
+		    	}
+		    );
+            
+        }
 	}
 	_createLi() {
 		var result = [],
@@ -486,7 +516,7 @@ class BluMUI_List extends React.Component {
                         }
                     </li>
                 );
-            }else if(userType!="游客"&&i==1){
+            }else if(userType!="游客"&&i==2){
                 result.push(
                     <li key={i}
                         className={this.state.index == i ? 'selected index' + i : 'index' + i}
@@ -506,7 +536,7 @@ class BluMUI_List extends React.Component {
                         }
                     </li>
                 );
-            }else if((userType == "管理员" ||userType == "督导"||userType == "任课教师" || userType == "课程负责人")&&i==2){
+            }else if((userType == "管理员" ||userType == "督导"||(userType == "任课教师" && userId == topicInfo.jssfrzh) || userType == "课程负责人")&&i==1){
                 result.push(
                     <li key={i}
                         className={this.state.index == i ? 'selected index' + i : 'index' + i}
@@ -530,7 +560,8 @@ class BluMUI_List extends React.Component {
 			
 		}
 		return result;
-	}
+    }
+    
 	render() {
 		return (
 			<ul id={this.props.id} className={"BluMUI_List " + this.props.extClass}>
@@ -885,12 +916,14 @@ class Popup extends React.Component {
       const {type}=this.props;
       const MAP={
         "deleteTopic": "删除话题",
-        "deleteReply":"删除回复"
+        "deleteReply":"删除回复",
+        "deleteFile" :"删除附件"
       };
   
       switch(type) {
         case 'deleteTopic':
         case 'deleteReply':
+        case 'deleteFile':
           return(
             <div id="popbody" ref='pb'>
               <div id="msg">
@@ -922,7 +955,6 @@ class Popup extends React.Component {
     componentDidMount() {
   
       let {type,data1} = this.props;
-      console.log(this.props);
   
       if(this.refs.pb) this.refs.pb.onclick=e=>e.stopPropagation();
   
@@ -970,6 +1002,24 @@ class Popup extends React.Component {
                       }
                   })
                   break;
+              case 'deleteFile':
+                    this.props.callback(data1).then(result => {
+                        if (result) {
+                            Alert.open({
+                          alertTip: "成功删除附件！",
+                          closeAlert: function () {}
+                        });
+                        }
+                    }).then(() => {
+                        cancel_popup();
+                    }).catch(e => {
+                        if (e === 101) {
+                            window.location.href = 'error1.html'
+                        } else if (e === 102) {
+                            window.location.href = 'error2.html'
+                        }
+                    })
+                    break;
               default:break;
           }
           
