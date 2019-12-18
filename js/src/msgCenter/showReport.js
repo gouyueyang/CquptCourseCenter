@@ -48,9 +48,9 @@ let userType = null;
 getJs().then(data=>{
 	userType = data.js || "游客";
 	if(userType == "游客"){
-		window.localtion.href = `https://ids.cqupt.edu.cn/authserver/login?service=${courseCenter.host}classList`
+		window.localtion.href = `https://ids.cqupt.edu.cn/authserver/login?service=${courseCenter.host}classList`;
 	};
-	searchReportInfoFun({sstype:'htmc',sstj:'',ssdx:'htjb',page:1,count:10}).then(retReportList=>{
+	searchReportInfoFun({sstype:'htmc',sstj:'',ssdx:'htjb',jbr:User.id,page:1,count:10}).then(retReportList=>{
 		reportMsg = retReportList;
 		BluMUI.create({
 			id:"reportDis",
@@ -73,26 +73,7 @@ getJs().then(data=>{
 }).catch(e => {
 	console.log(e);
 })
-searchReportInfoFun({sstype:'htmc',sstj:'',ssdx:'htjb',page:1,count:10}).then(retReportList=>{
-    reportMsg = retReportList;
-    BluMUI.create({
-        id:"reportDis",
-		userId:User.id,
-		userType,
-        reportMsg,
-        searchReportInfoFun,
-		reportOperateFun,
-		topicOperateFun,
-		replyOperateFun
-    },'ShowReport',document.getElementById("reportDis"));
-}).catch(e => {
-	console.log(e);
-    // if (e === 101) {
-    //     window.location.href = './../classInfShow/error1.html';
-    // } else {
-    //     window.location.href = './../classInfShow/error2.html';
-    // }
-});
+
 
 function searchReportInfoFun({sstype, sstj, ssdx, jbr="",bjbr="", page, count}) {
 	return new Promise((resolve, reject) => {

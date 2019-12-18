@@ -45,7 +45,7 @@ img {
 
 a {
 	text-decoration: none;
-	color:#007a51;
+	color: #007a51;
 }
 
 /*课程中心标志栏，设置校徽图片的格式，用float设置课程中心标志和课程名称*/
@@ -87,7 +87,6 @@ a {
 /*搜索框的样式*/
 .content_search {
 	float: right;
-	margin-right: 10px;
 	width: 290px;
 	font-size: 0;
 }
@@ -95,21 +94,23 @@ a {
 .content_search select {
 	float: left;
 	font-size: 13px;
-	width: 88px;
-	height: 25px;
+	width: 80px;
+	height: 30px;
 }
 
 .content_search .search {
 	float: left;
 	position: relative;
 	font-size: 13px;
-	width: 198px;
+	width: 208px;
 }
 
 .content_search .search input {
 	float: left;
 	padding: 0;
-	height: 23px;
+	height: 30px;
+	box-sizing: border-box;
+	width:148px;
 }
 
 .content_search .search span {
@@ -117,10 +118,10 @@ a {
 	top: 0;
 	right: 0;
 	width: 60px;
-	height: 25px;
+	height: 30px;
 	background: #007a51;
 	text-align: center;
-	line-height: 25px;
+	line-height: 30px;
 	margin: 0;
 	color: white;
 	cursor: pointer;
@@ -145,11 +146,11 @@ a {
 }
 
 
-#report .report_title .title_left span input[type='checkbox']{
+#report .report_title .title_left span input[type='checkbox'] {
 	display: none;
 }
 
-#report .report_title .title_left span input[type='checkbox'] + label{
+#report .report_title .title_left span input[type='checkbox']+label {
 	width: 13px;
 	height: 13px;
 	background: #E5E5E5;
@@ -160,7 +161,7 @@ a {
 	margin-right: 7px;
 }
 
-#report .report_title .title_left span input[type='checkbox']:checked + label{
+#report .report_title .title_left span input[type='checkbox']:checked+label {
 	background: url('../../imgs/courseAudit/checked.png');
 }
 
@@ -169,18 +170,21 @@ a {
 	font-weight: 700;
 }
 
-#report .report_list #errorWrap{
-	height:400px;
+#report .report_list #errorWrap {
+	height: 400px;
 }
-#report .report_list #errorPic{
-	width:150px;
-	margin:100px auto 10px auto;
+
+#report .report_list #errorPic {
+	width: 150px;
+	margin: 100px auto 10px auto;
 	display: block;
 }
-#report .report_list #errorMsg{
+
+#report .report_list #errorMsg {
 	display: block;
 	text-align: center;
 }
+
 #report .report_list .list_item {
 	padding: 10px 50px 10px 10px;
 	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
@@ -198,9 +202,15 @@ a {
 #report .report_list .list_item .item_content .content_left>span {
 	margin: 0;
 }
-#report .report_list .list_item .item_content .content_left>div.font_normal{
-	font-weight:normal;
+
+#report .report_list .list_item .item_content .content_left>div.font_normal {
+	font-weight: normal;
+	max-height: 60px;
+	overflow: hidden;
+	line-height: 20px;
+	margin: 5px 0;
 }
+
 #report .report_list .list_item .item_content .content_time {
 	float: right;
 	height: 100%;
@@ -224,6 +234,10 @@ a {
 	border-radius: 5px;
 }
 
+#report .report_list .list_item .item_msg .msg_left .left_type span.noBorder {
+	border: none;
+}
+
 #report .report_list .list_item .item_msg .msg_left .left_reason>div {
 	float: left;
 }
@@ -240,7 +254,8 @@ a {
 	float: right;
 }
 
-#report .report_list .list_item .item_msg .msg_func>div , .msg_func>div a {
+#report .report_list .list_item .item_msg .msg_func>div,
+.msg_func>div a {
 	margin: 10px 0;
 	color: #007a51;
 	cursor: pointer;
@@ -255,7 +270,7 @@ a {
 /*table*/
 #center_table {
 	width: 1160px;
-	text-align: center;
+	text-align: left;
 	border-collapse: collapse;
 }
 
@@ -267,21 +282,25 @@ a {
 #center_table tr {
 	padding: 0 45px;
 }
-#center_table tr td div ol,#center_table tr td div ul{
-	padding-left:20px;
+
+#center_table tr td div ol,
+#center_table tr td div ul {
+	padding-left: 20px;
 }
-#center_table tr td div ol li,#center_table tr td div ul li{
+
+#center_table tr td div ol li,
+#center_table tr td div ul li {
 	text-align: left;
 }
 
-#center_table tbody tr td figure.table>table{
+#center_table tbody tr td figure.table>table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	border:1px double #b3b3b3;
+	border: 1px double #b3b3b3;
 	word-break: break-word;
 }
 
-#center_table tbody tr td figure.table td{
+#center_table tbody tr td figure.table td {
 	min-width: 2em;
 	padding: .4em;
 	border: 1px solid #d9d9d9;
@@ -314,24 +333,28 @@ a {
 	height: 50px;
 	background: #FFF;
 }
+
 #center_table>tbody>tr>td {
 	height: 52px;
 	font-size: 14px;
 	border-bottom: 1px solid #EEE;
-	max-width:120px;
-	overflow:hidden;
+	max-width: 120px;
+	overflow: hidden;
 	white-space: nowrap;
-   	text-overflow: ellipsis;
+	text-overflow: ellipsis;
 }
-#center_table>tbody>tr>td>div,#center_table>tbody>tr>td>div>p{
-	height:50px;
-	overflow:hidden;
+
+#center_table>tbody>tr>td>div,
+#center_table>tbody>tr>td>div>p {
+	height: 50px;
+	overflow: hidden;
 	white-space: nowrap;
-   	text-overflow: ellipsis;
+	text-overflow: ellipsis;
 	width: 90%;
-	line-height:50px;
-	padding:0 5px;
+	line-height: 50px;
+	padding: 0 5px;
 }
+
 #center_table tbody td span {
 	color: #666;
 	cursor: default;
@@ -342,8 +365,9 @@ a {
 	color: #ff9b29;
 	cursor: pointer;
 }
-#center_table tbody td span.op_on a{
-	color:#ff9b29;
+
+#center_table tbody td span.op_on a {
+	color: #ff9b29;
 }
 
 #center_table tbody tr.list_line {
@@ -372,29 +396,31 @@ a {
 }
 
 /* 右侧浮动栏 */
-#infoBar{
-	display:none;
-	position:fixed;
+#infoBar {
+	display: none;
+	position: fixed;
 	right: 0;
-	top:50%;
+	top: 50%;
 	margin-top: -50px;
-	width:50px;
+	width: 50px;
 	height: 100px;
 	background-color: #fff;
-	border:1px solid #f7f7f7;
+	border: 1px solid #f7f7f7;
 }
-#infoBar ul li{
-	float:left;
-	width:50px;
+
+#infoBar ul li {
+	float: left;
+	width: 50px;
 	height: 50px;
 	box-sizing: border-box;
 	font-size: 16px;
-	border-bottom:1px solid #f7f7f7;
-	padding:5px;
-	box-shadow: 0 2px 8px rgba(38,66,56,.2);
+	border-bottom: 1px solid #f7f7f7;
+	padding: 5px;
+	box-shadow: 0 2px 8px rgba(38, 66, 56, .2);
 }
-#infoBar ul li a{
-	color:#007a51;
+
+#infoBar ul li a {
+	color: #007a51;
 }
 
 /*======================================*/
@@ -403,14 +429,15 @@ a {
 #popup {
 	width: 100%;
 	height: 100%;
-	background: rgba(151,151,151,0.5);
+	background: rgba(151, 151, 151, 0.5);
 	z-index: 2;
 	display: none;
 	position: fixed;
 	top: 0;
-  
-  }
-  #popbody {
+
+}
+
+#popbody {
 	width: 457px;
 	min-height: 250px;
 	max-height: 457px;
@@ -419,8 +446,9 @@ a {
 	text-align: center;
 	margin: 200px auto;
 	overflow: auto;
-  }
-  #popbody #msg {
+}
+
+#popbody #msg {
 	width: 80%;
 	height: 160px;
 	padding: 80px 0;
@@ -428,8 +456,9 @@ a {
 	box-sizing: border-box;
 	line-height: 25px;
 	font-size: 18px;
-  }
-  #popbody button {
+}
+
+#popbody button {
 	width: 91px;
 	height: 31px;
 	outline: none;
@@ -439,33 +468,38 @@ a {
 	line-height: 31px;
 	font-size: 14px;
 	bottom: 20px;
-  }
-  #popbody #popup_OK {
+}
+
+#popbody #popup_OK {
 	color: #FFF;
 	background: #007A51;
-  }
-  #popbody #popup_back {
+}
+
+#popbody #popup_back {
 	color: #007A51;
 	background: #FFF;
-  }
-  #popbody .warning {
+}
+
+#popbody .warning {
 	width: 80%;
 	margin: 0 auto 20px;
 	color: red;
-  }
-  #popbody #zjs {
+}
+
+#popbody #zjs {
 	width: 80%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	margin: 30px auto 0 auto;
-  }
-  #popbody #zjs .zj {
+}
+
+#popbody #zjs .zj {
 	display: inline-block;
 	width: 80px;
 	margin: 8px 15px;
 	text-align: center;
-	border:1px solid #007A51;
+	border: 1px solid #007A51;
 	/*text-align: left;*/
 	/*line-height: 30px;*/
-  }
+}

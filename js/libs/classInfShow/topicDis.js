@@ -7,6 +7,8 @@ import moment from 'moment';
 import Alert from "../../util/alert.js";
 
 
+
+
 class Search extends React.Component {
     render() {
         const { sstype, changeContent, changeType, search } = this.props;
@@ -46,10 +48,10 @@ class SendTopic extends React.Component {
             <div id="sendMsg">
                 <h3>发起新话题</h3>
                 <input type="text" id="htmc" placeholder='请输入话题名称（50字内）' maxLength="50" onChange={event => this._changeState('htbt', event)} className='topicName' />
-                <textarea name="content" id='editor' maxLength="10" placeholder="请输入话题内容（不超过1万字）">
+                <textarea name="content" id='editor' maxLength="10" placeholder="请输入话题内容（不超过2000字）">
                 </textarea>
                 {
-                    (userType == "任课教师" || userType =="课程负责人" || userType == "督导" || userType == "管理员") &&
+                    (userType == "任课教师" || userType =="课程负责人" || userType == "督导" || userType == "管理员"||userType == "助理") &&
                         <div>
                             <div>
                                 <span className="mustWrite">*</span><span className="tip_color">您要发布到哪些班集？请勾选：</span>
@@ -88,7 +90,7 @@ class SendTopic extends React.Component {
                     userType == '学生' &&
                     <div>
                         <div>
-                            <span className="mustWrite">*</span><span className="tip_color">您要发布到哪些班集？请勾选：</span>
+                            <span className="mustWrite">*</span><span className="tip_color">发布班级：</span>
                         </div>
                         <div>
                             <div className="public_classItem">
@@ -104,7 +106,7 @@ class SendTopic extends React.Component {
                         
                 }
                 {
-                    (userType == "任课教师" || userType == "管理员" || userType == "督导" || userType == "课程负责人") &&
+                    (userType == "任课教师" || userType == "管理员" || userType == "督导" || userType == "课程负责人"||userType == "助理") &&
                     <BluMUI_AssessmentScheme
                             id={'AssessmentScheme'}
 		            	    fileFormName={'file'}
@@ -116,7 +118,7 @@ class SendTopic extends React.Component {
                 <div className='msg_bottom'>
                     <button onClick={this._sendMsg}>发   表</button>
                     {
-                        (userType == "任课教师" || userType == "管理员" || userType == "督导" || userType == "课程负责人") &&
+                        (userType == "任课教师" || userType == "管理员" || userType == "督导" || userType == "课程负责人"||userType == "助理") &&
                         <div className="otherSet">
                             <input type = "checkbox" id="checkbox_gk" checked={dqzt!=1} onChange={event => this._changeDqzt(event)}></input>
                             <label htmlFor="checkbox_gk"></label>
@@ -185,9 +187,9 @@ class SendTopic extends React.Component {
     _sendMsg = () => {
         const { htbt, sfyxhf, dqzt, checkBan,fjList } = this.state;
         const htnr = this.editor.getData();
-        if(htnr.length>10000){
+        if(htnr.length>2000){
             Alert.open({
-                alertTip: "话题内容不得超过1万字！",
+                alertTip: "话题内容不得超过2000字！",
                 closeAlert: function () {}
               });
             this.editor.setData(htnr.substr(0,9999));
@@ -214,6 +216,8 @@ class BluMUI_TopicDis extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            qx:this.props.qx,
+            userType:this.props.userType,
             teacherSelected: this.props.teacherSelected, // 选择的老师
             banSelected: this.props.banSelected, // 选择的班级
             allJxbList: this.props.classList.allJxbList, // 教学班编号数组
@@ -238,14 +242,26 @@ class BluMUI_TopicDis extends React.Component {
             }  //发送回复的信息
         }
     }
+
+    
+    _setNickName=(e,jxbbh,jxbbm)=>{
+        let deleteJxbNickname = this.props.deleteJxbNickname;
+        let callback = this.props.setJxbNickname;
+        let data1 = {jxbbh,jxbbm};
+        let searchCallback = this._searchTopic;
+        let data2 = '';
+        Creat_popup({type:"setJxbNickname",callback,data1,searchCallback,data2,deleteJxbNickname});
+    }
+
+    
+
+
     
 
     render() {
-        let { teacherSelected, banSelected, allJxbList,teaJxbList, expendReplys, pxtype, sstype, page, allReplyList, allReplyConfig, isBanPublishTopic,htSelected } = this.state;
-
-
+        let { teacherSelected, banSelected, allJxbList,teaJxbList, expendReplys, pxtype, sstype, page, allReplyList, allReplyConfig, isBanPublishTopic,htSelected,qx,userType } = this.state;
         let { jsList,wkkJsList } = this.props.teacherList;
-        let { userType,userBan,qx,userId,saveAjax } = this.props;
+        let { userBan,userId,saveAjax } = this.props;
         let { total, totalPages, htList } = this.state.topicMsg; // 话题总的数量，总页数， 话题列表
         let options = { pages: totalPages, page, rows: total };
         let {hfnr} = this.state.sendReplyInfo;
@@ -285,8 +301,16 @@ class BluMUI_TopicDis extends React.Component {
                                         return (
                                             <div className={banSelected === item.JXB ? 'ban_item active' : 'ban_item'}
                                                 key={item.JXB}
-                                                onClick={() => this._changeBan(item.JXB)}>
-                                                {item.JXB}班
+                                                onClick={() => this._changeBan(item.JXB)}
+                                                onContextMenu={
+                                                    (userType == "管理员" || userType == "课程负责人" || userType == "督导"||userType == "助理" || userId == teacherSelected) ? (e)=>{
+                                                    e.preventDefault();
+                                                    this._setNickName(e,item.JXB,item.JXBBM);
+                                                    } : null
+                                                }
+                                                title="点击鼠标右键设置教学班别名"    
+                                                >
+                                                {item.JXBBM ? item.JXBBM : item.JXB+"班"}
 										</div>
                                         )
                                     }
@@ -311,7 +335,7 @@ class BluMUI_TopicDis extends React.Component {
                                 <span>热门排序</span>
 							</span>
                             {
-                                (userType == "管理员" || userType == "课程负责人" || userType == "督导") || userId == teacherSelected ?
+                                (userType == "管理员" || userType == "课程负责人" || userType == "督导"||userType == "助理") || userId == teacherSelected ?
                                 <span>
                                 <input id="checkbox_banPublicTopic" type="checkbox" checked={isBanPublishTopic ? true : false} onClick={this._stopSendMsg.bind(this)} />
                                 <label htmlFor="checkbox_banPublicTopic"></label>
@@ -319,9 +343,9 @@ class BluMUI_TopicDis extends React.Component {
                                 </span>:null
                                 
                             }
-                            
-                            {userType != '游客' && <a className='color' href='../msgCenter/showReply.html' target='_blank'>查看回复</a>}
-                            {userType != '游客' && <a className='color' href='../msgCenter/showReport.html' target='_blank'>查看举报</a>}
+                            {(userType == '管理员' || userId == teacherSelected) && <a className='color' href="javascript:void(0);" onClick={this._showAssistant.bind(this)}>设置学生助理</a>}
+                            {/* {userType != '游客' && <a className='color' href='../msgCenter/showReply.html' target='_blank'>查看回复</a>}
+                            {userType != '游客' && <a className='color' href='../msgCenter/showReport.html' target='_blank'>查看举报</a>} */}
                             
                             
                             <Search sstype={sstype}
@@ -346,13 +370,13 @@ class BluMUI_TopicDis extends React.Component {
                                                 <div className="bottom_inform">
                                                     
                                                     {userType != '游客' && (userId != item.jssfrzh ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item }) }}>举报</a> : '')}
-                                                    {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh)) ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: item.htid, cz: '删除' }) }}>删除</a> : ''}
-                                                    {qx.openTopic && item.dqzt ==1 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.jssfrzh) ?
+                                                    {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导"||userType == "助理" || userId == item.zzsfrzh || userId == item.jssfrzh)) ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: item.htid, cz: '删除' }) }}>删除</a> : ''}
+                                                    {qx.openTopic && item.dqzt ==1 && (userType == "管理员" || userType == "课程负责人" || userType == "督导"||userType == "助理" || userId == item.jssfrzh) ?
                                                         (item.dqzt == 1 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '公开' })}>公开话题</a>):null}
 
-                                                    {qx.openTopic && item.dqzt ==2 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.jssfrzh) ?
+                                                    {qx.openTopic && item.dqzt ==2 && (userType == "管理员" || userType == "课程负责人" || userType == "督导"||userType == "助理" || userId == item.jssfrzh) ?
                                                         (item.dqzt == 2 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '设置班内可见' })}>取消公开</a>):null}
-                                                    {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == item.zzsfrzh || userId == item.jssfrzh) ? (item.sfyxhf ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
+                                                    {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导"||userType == "助理" || userId == item.zzsfrzh || userId == item.jssfrzh) ? (item.sfyxhf ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: item.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
                                                     
                                                     {qx.addReply && (item.sfyxhf ? <a href="javascript:void(0);" onClick={() => { this.setState({ htSelected:item.htid,htSelectedZzsfrzh:item.zzsfrzh,expendReplys: { ...this.state.expendReplys, [item.htid]: true }, sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh,"hfdxxm":item.zzxm,"zhzhf": 1, "fjd": -1 } }, this._searchReply(item.htid)); }}>回复</a> : null)}
                                                 </div>
@@ -397,7 +421,7 @@ class BluMUI_TopicDis extends React.Component {
                                                                     <a href="javascript:void(0);">{moment(parseInt(repItem.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</a>
                                                                     {qx.addReply && <a className='color' href="javascript:void(0);" 
                                                                     onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "hfdxxm":repItem.zzxm,"zhzhf": 2, "fjd": repItem.hfid } }, console.log(this.state)) }}>回复</a>}
-                                                                    {(userType == "管理员" || userType == "课程负责人" || userType == "督导"||userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
+                                                                    {(userType == "管理员" || userType == "课程负责人" || userType == "督导" || userType == "助理" ||userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
                                                                     {qx.addReport && (userId != item.jssfrzh ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item, hfInfo: repItem }) }}>举报</a> : null)}
 						                	                    </div>
                                                                 <div className="one_content clearfix">
@@ -442,7 +466,7 @@ class BluMUI_TopicDis extends React.Component {
                             (userType == "管理员" || userType == "督导" || userType == "课程负责人") && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={allJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>
                         }
                         {
-                            userType == "任课教师" && userId == teacherSelected && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>
+                            ((userType == "任课教师" && userId == teacherSelected) || userType == "助理") && <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>
                         }
                         {
                             userType == "学生" && userBan == banSelected && (this.state.isBanPublishTopic ? <div><p>本班处于禁止发帖状态</p></div> : <SendTopic ref={(ref)=>this.sendTopic=ref} sendTopic={(data) => this._sendTopic(data)} banList={teaJxbList} userType={userType} userBan={userBan} saveAjax={saveAjax}/>)
@@ -460,12 +484,23 @@ class BluMUI_TopicDis extends React.Component {
     _changeTeacher = (SFRZH,falg) => {
         this.props.getClassListFun(SFRZH).then(data => {
             let { allJxbList } = data;
-            this.setState({
-                teacherSelected: SFRZH,
-                allJxbList,
-                banSelected:allJxbList[0].JXB
-            },this._searchTopic);
+            let qx = null;
+            let userType=this.state.userType;
+            this.props.isAssistant({jsSfrzh:SFRZH,xsSfrzh:this.props.userId}).then(data=>{
+                userType = data.js;
+                qx = this.props.setQx(userType);
+            }).then(()=>{
+                this.setState({
+                    teacherSelected: SFRZH,
+                    allJxbList,
+                    banSelected:allJxbList[0].JXB,
+                    qx,
+                    userType
+                },this._searchTopic);
+            })
+            
         });
+        this.sendTopic &&           //判断是否有发布模块
         this.sendTopic.setState({
             htbt: "", // 话题标题
             sfyxhf: true, //  是否允许回复
@@ -473,7 +508,10 @@ class BluMUI_TopicDis extends React.Component {
             checkBan: this.sendTopic.props.userBan? {[this.sendTopic.props.userBan]:true} : {},
             fjList:[]
         });
-        document.querySelector('#htmc').value = '';
+        if(document.querySelector('#htmc')){
+            document.querySelector('#htmc').value = '';
+        } 
+        this.sendTopic &&
         this.sendTopic.editor.setData("");
     };
     // 选择班级
@@ -530,10 +568,10 @@ class BluMUI_TopicDis extends React.Component {
     // 搜索话题
     _searchTopic = (page = 1) => {
         page = page || 1;
-        let {userType,userBan,userId} = this.props;
-        let { pxtype, sstype, sstj, count, banSelected,teacherSelected } = this.state;
+        let {userBan,userId} = this.props;
+        let { userType,pxtype, sstype, sstj, count, banSelected,teacherSelected } = this.state;
         let ssfw;//搜索范围：公开、班内
-        if (userType== '课程负责人' || userType=="管理员"||userType == "督导"){
+        if (userType== '课程负责人' || userType=="管理员"||userType == "督导"||userType == "助理"){
             ssfw = '班内';
         }else if(userType == '任课教师'){
             if(userId == teacherSelected){
@@ -987,6 +1025,11 @@ class BluMUI_TopicDis extends React.Component {
     _showReportBox({ htInfo, hfInfo } = {}) {
         this.props.creatReportBox({htInfo,hfInfo});
     }
+
+    _showAssistant=()=>{
+        let {teacherSelected} = this.state;
+        this.props.createAssistantBox(teacherSelected);
+    }
 }
 
 
@@ -1103,6 +1146,170 @@ class BluMUI_TopicReport extends React.Component {
                     </div>
                 </div>
             </div>
+        )
+    }
+}
+
+class BluMUI_TopicAssistant extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            zlList : this.props.assistantList,
+            stuList : [] ,    //待选列表
+            searchXm:'',   
+            searchXh:''
+        }
+        this._getList = this._getList.bind(this);
+        this._add = this._add.bind(this);
+        this._delete = this._delete.bind(this);
+        this._searchStu = this._searchStu.bind(this);
+    }
+
+    
+
+    _searchStu(){
+        let xm = this.state.searchXm;
+        let xh = this.state.searchXh;
+        this.props.searchStu({xm,xh}).then(res=>{
+            this.setState({
+                stuList:res
+            })
+        })
+    }
+
+    _getList(){
+        let {jsSfrzh} = this.props;
+        this.props.getAssistant(jsSfrzh).then(res=>{
+            this.setState({
+                zlList:res
+            })
+        })
+    }
+
+    _add(item){
+        let {jsSfrzh} = this.props;
+        let {sfrzh,xm,xh,xymc} = item;
+        this.props.addAssistant({jsSfrzh,sfrzh,xm,xh,xymc}).then(result => {
+            Alert.open({
+              alertTip: "添加助理成功！",
+              closeAlert: ()=>{}
+            });
+        },result=>{
+
+        }).then(this._getList).catch(e => {
+            if (e === 101) {
+                window.location.href = 'error1.html';
+            } else {
+                window.location.href = 'error2.html';
+            }
+        });
+    }
+
+    _delete(id){
+        this.props.deleteAssistant(id).then(result => {
+            Alert.open({
+              alertTip: "删除成功！",
+              closeAlert:()=>{}
+            });
+        }).then(this._getList).catch(e => {
+            if (e === 101) {
+                window.location.href = 'error1.html';
+            } else {
+                window.location.href = 'error2.html';
+            }
+        });
+    }
+
+    _closeAssistant = ()=>{
+        
+        // window.document.getElementById("xmInput").value="";
+        // window.document.getElementById("xhInput").value="";
+        window.document.getElementById("assistantBox").style.display = "none";
+        let assistantWrap = window.document.getElementById("assistantWrap");
+        ReactDOM.unmountComponentAtNode(assistantWrap);
+    }
+
+    render(){
+        let {zlList,stuList} = this.state;
+        return(
+            <div id='topic_zl'>
+				<h1>设置学生助理</h1>
+				<p className="topic_zl_tips"><span>*</span>提示：助理辅助教师管理当前课程下所有班级的话题区域，助理不超过3人</p>
+				<div id="addZl">
+					<span>新增助理：</span>
+					<span>
+						<input type="text" ref={ref=>this.xmInput = ref} id="xmInput" placeholder="请输入姓名" onInput={(eve)=>{this.setState({searchXm:eve.target.value},this._searchStu)}}></input>
+					</span>
+					<span>
+                        <input type="text" ref={ref=>this.xhInput = ref} id="xhInput" placeholder="请输入学号" onInput={(eve)=>{this.setState({searchXh:eve.target.value},this._searchStu)}}></input>
+					</span>
+                    {
+                        stuList.length >0 &&
+                        <div className="zl_table">
+					    	<table>
+					    		<tr>
+					    			<th>学号</th>
+					    			<th>身份认证号</th>
+					    			<th>学院</th>
+					    			<th>姓名</th>
+					    			<th>操作</th>
+					    		</tr>
+                                {
+                                    stuList.map((item,index)=>{
+                                        return(
+                                            <tr key={index}>
+                                                <td>{item.xh}</td>
+							                	<td>{item.sfrzh}</td>
+							                	<td>{item.xymc}</td>
+							                	<td>{item.xm}</td>
+							                	<td className="operateColor" onClick={()=>{this._add(item)}}>添加</td>
+					    		            </tr>
+                                        )
+                                    })
+                                }
+                                
+					    	</table>
+					    </div>
+                    }
+					
+				</div>
+                {
+                    zlList.length > 0 &&
+                    <div id="zlList">
+					    <span>助理列表：</span>
+					    <div className="zl_table">
+						    <table>
+							    <tr>
+							    	<th>学号</th>
+							    	<th>身份认证号</th>
+							    	<th>学院</th>
+							    	<th>姓名</th>
+							    	<th>操作</th>
+							    </tr>
+                                {
+                                    zlList.map((item,index)=>{
+                                        return(
+                                            <tr key={index}>
+							                	<td>{item.xh}</td>
+							                	<td>{item.sfrzh}</td>
+							                	<td>{item.xymc}</td>
+							                	<td>{item.xm}</td>
+							                	<td className="operateColor" onClick={()=>{this._delete(item.id)}}>删除</td>
+							                </tr>
+                                        )  
+                                    })
+                                }
+                                
+						    </table>
+					    </div>
+					
+				    </div>
+                }
+				
+                <div className='close_wrap'>
+                    <button className='close' onClick={this._closeAssistant}>关闭</button>
+                </div>
+			</div>
         )
     }
 }
@@ -1307,10 +1514,15 @@ class BluMUI_AssessmentScheme extends React.Component {
 class Popup extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+        nickname:'',
+        data1:this.props.data1,
+        data2:this.props.data2
+    }
   }
 
   render() {
-    const {type}=this.props;
+    const {type,data1}=this.props;
     const MAP={
       "deleteTopic": "删除话题",
       "deleteReply":"删除回复"
@@ -1332,7 +1544,25 @@ class Popup extends React.Component {
           </div>
         );
         break;
-      
+      case 'setJxbNickname' :
+            return(
+                <div id="popbody" ref='pb'>
+                  <div id="msg">
+                    <p>请设置班级别名</p>
+                    <p><input type="text" placeholder={this.props.data1.jxbbh} maxLength="20" onChange={(e)=>{this.setState({nickname:e.target.value})}}></input></p>
+                  </div>
+                  <div className="warning">别名会替换班级编号显示。</div>
+                  <div id="popup_option">
+                    <button id="popup_OK" ref={btn=>this.OK=btn}>确定</button>
+                    <button id="popup_back" ref={btn=>this.back=btn}>取消</button>
+                    {
+                        this.props.data1.jxbbm != "" &&
+                        <button id="popup_reset" ref={btn=>this.reset=btn}>重置</button>
+                    }
+                    
+                  </div>
+                </div>
+              );
       case 'show':
         return(
           <div id="popbody" ref="pb">
@@ -1362,7 +1592,7 @@ class Popup extends React.Component {
 
   componentDidMount() {
 
-    let {type,data1} = this.props;
+    let {type,data1,data2} = this.props;
 
     if(this.refs.pb) this.refs.pb.onclick=e=>e.stopPropagation();
 
@@ -1420,22 +1650,79 @@ class Popup extends React.Component {
                     }
                 })
                 break;
+                case 'setJxbNickname':
+                    data1.jxbbm = this.state.nickname;
+                    if(this.state.nickname == ""){
+                        this.props.deleteJxbNickname(data1.jxbbh).then(result => {
+                            if (result) {
+                                let that = this;
+                                Alert.open({
+                                  alertTip: "输入为空，重置教学班编号！",
+                                  closeAlert: function () {
+                                    cancel_popup();
+                                    that.props.searchCallback(data2);
+                                  }
+                                });
+                            }
+                            
+                        })
+                    }else{
+                        this.props.callback(data1).then(result => {
+                            if (result) {
+                                Alert.open({
+                                  alertTip: "成功设置别名！",
+                                  closeAlert: function () {}
+                                });
+                                
+                            }
+                            
+                        }).then(() => {
+                            cancel_popup();
+                            this.props.searchCallback(data2);
+                        }).catch(e => {
+                            if (e === 101) {
+                                window.location.href = 'error1.html'
+                            } else if (e === 102) {
+                                window.location.href = 'error2.html'
+                            }
+                        });
+                    }
+                        
+                     break;
             default:break;
         }
         
      
     });
+    
+    this.reset&&(this.reset.onclick=()=>{
+        let jxbbh = this.props.data1.jxbbh;
+        this.props.deleteJxbNickname(jxbbh).then(result => {
+            if (result) {
+                let that = this;
+                Alert.open({
+                  alertTip: "成功重置教学班编号！",
+                  closeAlert: function () {
+                    cancel_popup();
+                    that.props.searchCallback(data2);
+                  }
+                });
+            }
+            
+        })
+    })
   }
 }
 
-function Creat_popup({type,callback,data1,searchCallback,data2}) {
+function Creat_popup({type,callback,data1,searchCallback,data2,deleteJxbNickname}) {
   const popup=window.parent.document.getElementById('popup');
   const popup_datas={
     type,
     callback,
     data1,
     searchCallback,
-    data2
+    data2,
+    deleteJxbNickname
   };
   ReactDOM.render(
     <Popup {...popup_datas}/>,
@@ -1455,7 +1742,8 @@ function cancel_popup() {
 
 var BluMUI_M = {
     TopicDis: BluMUI_TopicDis,
-    TopicReport: BluMUI_TopicReport
+    TopicReport: BluMUI_TopicReport,
+    TopicAssistant: BluMUI_TopicAssistant
 };
 
 var BluMUI = {

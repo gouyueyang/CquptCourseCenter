@@ -2,19 +2,23 @@
 
 body {
 	margin: 0px;
-	overflow-x:hidden;
+	overflow-x: hidden;
 }
+
 a {
-	color:#000;
+	color: #000;
 }
+
 /* 提示文字颜色 */
-span.tip_color{
-	color:#999;
+span.tip_color {
+	color: #999;
 }
-#topicDis{
-	width:1180px;
-	margin:0 auto;
+
+#topicDis {
+	width: 1180px;
+	margin: 0 auto;
 }
+
 /*搜索框的样式*/
 #topicInfo a {
 	text-decoration: none;
@@ -90,12 +94,14 @@ span.tip_color{
 	line-height: 53px;
 	cursor: pointer;
 	color: #333;
-	list-style:none;
+	list-style: none;
 }
-#topicInfo .info_teachers ul li.wkkJs{
-	background:#e5e5e5;
-	cursor:default;
+
+#topicInfo .info_teachers ul li.wkkJs {
+	background: #e5e5e5;
+	cursor: default;
 }
+
 #topicInfo .info_teachers ul li.active {
 	background: #007a51;
 	color: white;
@@ -141,11 +147,13 @@ span.tip_color{
 }
 
 /*复选框样式*/
-input[type="checkbox"],input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
 	display: none;
 }
 
-input[type="checkbox"]+label,input[type="radio"]+label {
+input[type="checkbox"]+label,
+input[type="radio"]+label {
 	width: 13px;
 	height: 13px;
 	background: #E5E5E5;
@@ -156,7 +164,8 @@ input[type="checkbox"]+label,input[type="radio"]+label {
 	margin-right: 7px;
 }
 
-input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
+input[type="checkbox"]:checked+label,
+input[type="radio"]:checked+label {
 	background: url('../../imgs/courseAudit/checked.png');
 }
 
@@ -173,7 +182,7 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 #topicInfo .info_content .content_topic h3 {
 	font-size: 18px;
 	margin: 5px 0 5px 0;
-	overflow:hidden;
+	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -188,10 +197,26 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	box-shadow: 3px 3px 3px rgba(242, 242, 242, 1);
 	/* margin-top: 20px; */
 }
-#topicInfo .info_content .content_topic .topic_item .htnr_box{
+
+#topicInfo .info_content .content_topic .topic_item .htnr_box {
 	max-height: 200px;
 	overflow: hidden;
 }
+/* 解决引用不显示样式的问题 */
+#topicInfo .info_content .content_topic .topic_item .htnr_box blockquote {
+	overflow: hidden;
+	padding-right: 1.5em;
+	padding-left: 1.5em;
+	margin-left: 0;
+	font-style: italic;
+	border-left: 5px solid #ccc;
+	color:#666;
+}
+
+#topicInfo .info_content .content_topic .topic_item .htnr_box a{
+	background: var(--ck-color-link-selected-background);
+}
+
 
 #topicInfo .info_content .content_topic .topic_item .item_bottom {
 	margin-top: 10px;
@@ -220,11 +245,11 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	padding: 15px 20px;
 }
 
-#topicInfo .info_content .content_topic .topic_item .item_info div.searchMore{
+#topicInfo .info_content .content_topic .topic_item .item_info div.searchMore {
 	display: inline-block;
-	color:#eb7350;
+	color: #eb7350;
 	cursor: pointer;
-	margin:10px 0;
+	margin: 10px 0;
 }
 
 #topicInfo .info_content .content_topic .topic_item .item_info .info_one {
@@ -241,13 +266,13 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	width: 50%;
 }
 
-#topicInfo .info_content .content_topic .topic_item .item_info .info_one span.tip{
+#topicInfo .info_content .content_topic .topic_item .item_info .info_one span.tip {
 	margin-left: 10px;
 	border: 1px solid #007a51;
 	border-radius: 3px;
 	background-color: #007a51;
 	color: #fff;
-	font-size:12px;
+	font-size: 12px;
 }
 
 
@@ -258,7 +283,10 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 #topicInfo .info_content .content_topic .topic_item .item_info .info_one .one_content>div {
 	display: inline;
 }
-.one_content>div p,.one_content>div ul,.one_content>div ol{
+
+.one_content>div p,
+.one_content>div ul,
+.one_content>div ol {
 	display: inline;
 }
 
@@ -291,7 +319,7 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	font-size: 13px;
 	resize: none;
 	box-sizing: border-box;
-	border:1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 #topicInfo .info_content .content_topic .topic_item .item_info .info_commit button {
@@ -304,7 +332,7 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	color: white;
 	margin-right: 5px;
 	border-radius: 5px;
-	border:1px solid #096;
+	border: 1px solid #096;
 }
 
 #sendMsg {
@@ -328,24 +356,24 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	border: 1px solid #c4c4c4;
 }
 
-#sendMsg .mustWrite{
-	color:red;
+#sendMsg .mustWrite {
+	color: red;
 }
 
-#sendMsg .public_classItem{
+#sendMsg .public_classItem {
 	display: inline-block;
 	margin-right: 80px;
-	width:220px;
+	width: 220px;
 }
 
 #sendMsg .msg_bottom>button {
 	width: 140px;
 	height: 40px;
-	border:1px solid #007a51;
+	border: 1px solid #007a51;
 	cursor: pointer;
 	font-size: 20px;
 	font-weight: bolder;
-	color:#fff;
+	color: #fff;
 	word-spacing: 20px;
 	background: #007a51;
 	text-align: center;
@@ -354,7 +382,7 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 	border-radius: 7px;
 }
 
-#sendMsg .msg_bottom .otherSet{
+#sendMsg .msg_bottom .otherSet {
 	display: inline-block;
 	margin-left: 50px;
 }
@@ -620,7 +648,7 @@ input[type="checkbox"]:checked+label,input[type="radio"]:checked+label {
 }
 
 .clearfix {
-	clear:both;
+	clear: both;
 	*zoom: 1;
 }
 
@@ -632,37 +660,138 @@ a.color {
 	color: #007a51;
 }
 
-/* 举报信息 */
-#reportBox {
+/* 举报信息、助理弹框 */
+#reportBox,
+#assistantBox {
 	display: none;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(211, 211, 211, 0.5);
-	z-index:1;
+	z-index: 1;
 }
 
-#reportWrap {
+#reportWrap,
+#assistantWrap {
 	width: 800px;
-	margin: 0px auto;
+	margin: 100px auto;
 }
+
+#topic_zl {
+	background-color: #fff;
+	padding: 10px;
+	font-size: 13px;
+}
+
+#topic_zl>h1 {
+	font-size: 20px;
+	font-weight: 400;
+	color: #007a51;
+	padding: 5px;
+}
+
+p.topic_zl_tips>span {
+	color: red;
+}
+
+#assistantBox div#addZl,
+#assistantBox div#zlList {
+	margin: 10px;
+	font-size: 16px;
+}
+
+input#xmInput,
+input#xhInput {
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #007A51;
+	border-radius: 5px;
+	margin: 0 10px;
+	padding: 0 10px;
+	box-sizing: border-box;
+}
+
+#assistantBox select#college_select {
+	height: 30px;
+	width: 150px;
+	outline: none;
+	vertical-align: middle;
+	border: 1px solid #009361;
+	border-radius: 5px;
+	line-height: 30px;
+	padding-left: 3px;
+	margin: -2px 10px 0px 10px;
+	box-sizing: border-box;
+}
+
+
+#assistantBox div.zl_table table {
+	margin: 20px auto;
+	width: 100%;
+	font-size: 14px;
+	background: #FFF;
+	table-layout: fixed;
+	text-align: center;
+	border-collapse: collapse;
+	border: 1px solid #eee;
+}
+
+#assistantBox div.zl_table table th {
+	height: 30px;
+	background: #007a51;
+	border: 1px solid #eee;
+	color: #fff;
+}
+
+#assistantBox div.zl_table table td {
+	height: 30px;
+	border: 1px solid #eee;
+}
+
+#assistantBox div.zl_table table td.operateColor {
+	color: #007a51;
+	cursor: pointer;
+}
+
+#topic_zl div.close_wrap {
+	text-align: center;
+}
+
+#topic_zl div.close_wrap button.close {
+	width: 140px;
+	height: 40px;
+	line-height: 40px;
+	margin: 0 100px;
+	text-align: center;
+	font-size: 18px;
+	color: #007a51;
+	background-color: #fff;
+	border: 1px solid #666;
+	border-radius: 5px;
+}
+
+
+
 
 .fanye {
 	padding: 10px 0;
 }
 
 /* 补充表格边框 */
-.topic_item table{
+.topic_item table {
 	border-collapse: collapse;
 	border-spacing: 0;
-	border:1px double #b3b3b3;
+	border: 1px double #b3b3b3;
 	word-break: break-word;
 }
-.topic_item table th,.topic_item table td{
-	min-width:2em;
-	padding:.4em;
-	border:1px solid #d9d9d9;
+
+.topic_item table th,
+.topic_item table td {
+	min-width: 2em;
+	padding: .4em;
+	border: 1px solid #d9d9d9;
 }
 
 
@@ -672,14 +801,15 @@ a.color {
 #popup {
 	width: 100%;
 	height: 100%;
-	background: rgba(151,151,151,0.5);
+	background: rgba(151, 151, 151, 0.5);
 	z-index: 2;
 	display: none;
 	position: fixed;
 	top: 0;
-  
-  }
-  #popbody {
+
+}
+
+#popbody {
 	width: 457px;
 	min-height: 250px;
 	max-height: 457px;
@@ -688,8 +818,9 @@ a.color {
 	text-align: center;
 	margin: 200px auto;
 	overflow: auto;
-  }
-  #popbody #msg {
+}
+
+#popbody #msg {
 	width: 80%;
 	height: 160px;
 	padding: 80px 0;
@@ -697,8 +828,9 @@ a.color {
 	box-sizing: border-box;
 	line-height: 25px;
 	font-size: 18px;
-  }
-  #popbody button {
+}
+
+#popbody button {
 	width: 91px;
 	height: 31px;
 	outline: none;
@@ -708,127 +840,146 @@ a.color {
 	line-height: 31px;
 	font-size: 14px;
 	bottom: 20px;
-  }
-  #popbody #popup_OK {
+}
+
+#popbody #popup_OK {
 	color: #FFF;
 	background: #007A51;
-  }
-  #popbody #popup_back {
+}
+
+#popbody #popup_back {
 	color: #007A51;
 	background: #FFF;
-  }
-  #popbody .warning {
+}
+
+#popbody .warning {
 	width: 80%;
 	margin: 0 auto 20px;
 	color: red;
-  }
-  #popbody #zjs {
+}
+
+#popbody #zjs {
 	width: 80%;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	margin: 30px auto 0 auto;
-  }
-  #popbody #zjs .zj {
+}
+
+#popbody #zjs .zj {
 	display: inline-block;
 	width: 80px;
 	margin: 8px 15px;
 	text-align: center;
-	border:1px solid #007A51;
+	border: 1px solid #007A51;
 	/*text-align: left;*/
 	/*line-height: 30px;*/
-  }
+}
 
 
-  /* 隐藏举报、删除按钮 */
-  a.hidden{
-	  display: none;
-  }
+/* 隐藏举报、删除按钮 */
+a.hidden {
+	display: none;
+}
 
-  div.topic_item:hover .item_bottom a.hidden{
-	  display: inline;
-  }
-  div.info_one:hover a.hidden{
-	  display: inline;
-  }
+div.topic_item:hover .item_bottom a.hidden {
+	display: inline;
+}
+
+div.info_one:hover a.hidden {
+	display: inline;
+}
 
 /* AssessmentScheme */
-.warn{
+.warn {
 	display: inline-block;
 	margin-left: 22px;
-	color:#999999;
+	color: #999999;
 	font-size: 12px;
 }
-#AssessmentScheme button{
+
+#AssessmentScheme button {
 	width: 62px;
 	height: 22px;
 	color: #ffffff;
 	border-radius: 3px;
-	border:none;
+	border: none;
 }
-.activeBtn{
+
+.activeBtn {
 	background-color: #39a4ff;
 }
-.noActiveBtn{
+
+.noActiveBtn {
 	background-color: #999;
 }
 
-.fileList{
+.fileList {
 	width: 328px;
 }
 
-.BluMUI_List .index0{
+.BluMUI_List .index0 {
 	padding-left: 28px;
 	background: url("../../imgs/classManageCheck/AssessSchemeLogo.png") no-repeat 0 7px;
 }
-.BluMUI_List a{
+
+.BluMUI_List a {
 	cursor: pointer;
 	font-size: 14px;
 	height: 21px;
 	line-height: 21px;
 	display: block;
 }
+
 .BluMUI_List .index1 a,
-.BluMUI_List .index2 a
-{
-	color:#099d6b;
+.BluMUI_List .index2 a {
+	color: #099d6b;
 }
+
 .BluMUI_List .index1,
-.BluMUI_List .index2{
+.BluMUI_List .index2 {
 	float: right;
 }
-.BluMUI_List .index2{
+
+.BluMUI_List .index2 {
 	margin-right: 15px;
 }
-.BluMUI_List .index0{
-	width:222px;
+
+.BluMUI_List .index0 {
+	width: 222px;
 	overflow: hidden;
 }
-.BluMUI_List .index0 a{
+
+.BluMUI_List .index0 a {
 	color: #39a4ff;
 	margin-left: 0;
 	display: block;
 
 }
-.BluMUI_List{
+
+.BluMUI_List {
 	width: 328px;
 	overflow: hidden;
 }
-.BluMUI_List li{
+
+.BluMUI_List li {
 	float: left;
 	list-style: none;
 }
-.fileInput input{
+
+.fileInput input {
 	border: none;
 	position: absolute;
-	font-size:124px;
-	opacity:0;
-	filter:alpha(opacity=0);
+	font-size: 124px;
+	opacity: 0;
+	filter: alpha(opacity=0);
 }
-.BluMUI_FileUp{
+
+.BluMUI_FileUp {
 	float: left;
 }
-.BluMUI_FileUp .fileInput span{
+
+.BluMUI_FileUp .fileInput span {
 	position: absolute;
 	width: 100%;
 	display: block;
@@ -839,57 +990,65 @@ a.color {
 	font-size: 12px;
 	font-size: 12px;
 }
-.BluMUI_FileUp  .fileInput{
+
+.BluMUI_FileUp .fileInput {
 	position: relative;
-	width:80px;
-	height:20px;
+	width: 80px;
+	height: 20px;
 	border: 1px solid #000;
-	color:#000;
+	color: #000;
 	background-color: #eeeeee;
 	overflow: hidden;
 	display: inline-block;
 	float: left;
 }
-.BluMUI_FileUp .fileArea{
+
+.BluMUI_FileUp .fileArea {
 	margin-left: 55px;
 	float: left;
 	margin-top: 1px;
 }
-.activeBtn{
+
+.activeBtn {
 	background-color: #39a4ff;
 }
-#AssessmentScheme .itemNameM{
+
+#AssessmentScheme .itemNameM {
 	display: inline-block;
 	float: left;
 	font-size: 16px;
-	color:#333333;
+	color: #333333;
 	/* background: url("../../imgs/classManageCheck/itemNameLogo.png") no-repeat 0 3px; */
 }
 
-#AssessmentScheme #khfa{
+#AssessmentScheme #khfa {
 	margin-top: 10px;
 	height: 28px;
 }
-#AssessmentScheme .uploadWarn{
+
+#AssessmentScheme .uploadWarn {
 	color: #999;
 	font-size: 12px;
 	margin-left: 20px;
 }
-#AssessmentScheme .fileArea{
+
+#AssessmentScheme .fileArea {
 	margin-left: 14px;
 }
-#AssessmentScheme .BluMUI_FileUp button{
+
+#AssessmentScheme .BluMUI_FileUp button {
 	margin-left: 20px;
 }
 
-#AssessmentScheme button{
+#AssessmentScheme button {
 	margin-left: 20px;
 }
-#AssessmentScheme #isDown{
+
+#AssessmentScheme #isDown {
 	margin-top: 30px;
 	height: 28px;
 }
 
-#downloadIframe{
+#downloadIframe {
 	display: none;
 }

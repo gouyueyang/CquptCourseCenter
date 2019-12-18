@@ -88,12 +88,12 @@ class BluMUI_TopicDis extends React.Component {
 								</div>
 								<div className="bottom_inform">
                                     {userType != '游客' && (userId != topicInfo.jssfrzh ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: topicInfo }) }}>举报</a> : '')}
-                                    {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == topicInfo.zzsfrzh || userId == topicInfo.jssfrzh)) ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: topicInfo.htid, cz: '删除' }) }}>删除</a> : ''}
-                                    {qx.openTopic && htzt ==1 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == topicInfo.jssfrzh) ?
+                                    {(qx.deleteTopic && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userType == "助理" || userId == topicInfo.zzsfrzh || userId == topicInfo.jssfrzh)) ? <a className="hidden" href="javascript:void(0);" onClick={() => { this._topicOperate({ htid: topicInfo.htid, cz: '删除' }) }}>删除</a> : ''}
+                                    {qx.openTopic && htzt ==1 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userType == "助理" || userId == topicInfo.jssfrzh) ?
                                         (htzt == 1 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: topicInfo.htid, cz: '公开' })}>公开话题</a>):null}
-                                    {qx.openTopic && htzt ==2 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == topicInfo.jssfrzh) ?
+                                    {qx.openTopic && htzt ==2 && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userType == "助理" || userId == topicInfo.jssfrzh) ?
                                         (htzt == 2 && <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: topicInfo.htid, cz: '设置班内可见' })}>取消公开</a>):null}
-                                    {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userId == topicInfo.zzsfrzh || userId == topicInfo.jssfrzh) ? (isBanReply==1 ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: topicInfo.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: topicInfo.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
+                                    {qx.setBanReply && (userType == "管理员" || userType == "课程负责人" || userType == "督导" || userType == "助理" || userId == topicInfo.zzsfrzh || userId == topicInfo.jssfrzh) ? (isBanReply==1 ? <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: topicInfo.htid, cz: '禁止回复' })}>禁止回复</a> : <a href="javascript:void(0);" onClick={this._topicOperate.bind(this, { htid: topicInfo.htid, cz: '解除禁止回复' })}>解除禁止回复</a>) : null}
                                     
                                     {qx.addReply && (topicInfo.sfyxhf ? <a href="javascript:void(0);" onClick={() => { window.location.hash = "#sendMsg"; window.location = window.location; }}>回复</a> : null)}
 								</div>
@@ -536,7 +536,7 @@ class BluMUI_List extends React.Component {
                         }
                     </li>
                 );
-            }else if((userType == "管理员" ||userType == "督导"||(userType == "任课教师" && userId == topicInfo.jssfrzh) || userType == "课程负责人")&&i==1){
+            }else if((userType == "管理员" ||userType == "督导"||(userType == "任课教师" && userId == topicInfo.jssfrzh) || userType == "助理" || userType == "课程负责人")&&i==1){
                 result.push(
                     <li key={i}
                         className={this.state.index == i ? 'selected index' + i : 'index' + i}
@@ -715,7 +715,7 @@ class BluMUI_ReplyItem extends React.Component {
                                 {qx.addReply && <a className='color' href="javascript:void(0);" onClick={() => {this.props.changeZhfSelect(replyInfo.hfid); this.setState({ showReplyBox:true,sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": replyInfo.zzsfrzh, "zhzhf": 2, "fjd": replyInfo.hfid ,"hfdxxm":replyInfo.zzxm} }) }}>回复</a>}
                             </span>
                             <span>
-                                {(userType == "管理员" || userType == "督导" || userType == "课程负责人" || userId == topicInfo.zzsfrzh || userId == replyInfo.zzsfrzh || userId == topicInfo.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this.props.replyOperate(replyInfo.hfid, "删除主回复", replyInfo.htid) }}>删除</a> : null}
+                                {(userType == "管理员" || userType == "督导" || userType == "课程负责人" || userType == "助理" || userId == topicInfo.zzsfrzh || userId == replyInfo.zzsfrzh || userId == topicInfo.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this.props.replyOperate(replyInfo.hfid, "删除主回复", replyInfo.htid) }}>删除</a> : null}
                             </span>
                             <span>
                                 {qx.addReport && (userId != topicInfo.jssfrzh ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: topicInfo, hfInfo: replyInfo }) }}>举报</a> : null)}
@@ -749,7 +749,7 @@ class BluMUI_ReplyItem extends React.Component {
                                                     this.setState({ showReplyBox:true,sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": item.zzsfrzh, "zhzhf": 2, "fjd": item.hfid ,"hfdxxm":item.zzxm} });
                                                     document.getElementById(`reply_${replyInfo.hfid}`).value = `回复 ${item.zzxm}: `;  
                                                 }}>回复</a>}
-                                                {qx.deleteReply && (userType == "管理员" || userType == "督导" || userType == "课程负责人" || userId == topicInfo.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this.props.replyOperate(item.hfid, "删除子回复", topicInfo.htid,replyInfo.hfid) }}>删除</a> : null}
+                                                {qx.deleteReply && (userType == "管理员" || userType == "督导" || userType == "课程负责人" || userType == "助理" || userId == topicInfo.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this.props.replyOperate(item.hfid, "删除子回复", topicInfo.htid,replyInfo.hfid) }}>删除</a> : null}
                                                 {qx.addReport &&  <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: topicInfo, hfInfo: item }) }}>举报</a>}
 						                	</div>
                                             <div className="one_content clearfix">

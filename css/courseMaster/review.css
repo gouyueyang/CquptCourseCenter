@@ -390,8 +390,8 @@ button{
 #body #showAreaNav .BluMUI_NavList li{
 	cursor: default;
 	width: 181px;
-	height: 56px;
-	line-height: 56px;
+	height: 40px;
+	line-height: 40px;
 	text-align: center;
 	float: left;
 	background: #007a51;
@@ -409,8 +409,7 @@ button{
 #body #myiframe{
 	width:940px;
 	border:none;
-	background: #fff;
-	min-height: 806px;
+	min-height: 500px;
 }
 #body .ResourceNum{
 	background: #fff;

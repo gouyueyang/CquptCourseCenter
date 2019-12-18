@@ -20,8 +20,8 @@ var doc = document,
 	curClassId = '',
 	curReviewID = '',
 	downURL = host + 'fileDownLoad',
-	//  getMenu = host + 'getMenu',
-	getMenu = host + 'getMenuByCourseNo',
+	 getMenu = host + 'getMenu',
+	// getMenu = host + 'getMenuByCourseNo',
 	expReview = host + 'expReview',
 	courseResCount = host + 'courseResCount',
 	reviewCourseInfo = host + 'reviewCourseInfo',
@@ -249,14 +249,14 @@ function renderReviewInf(courseNo, state) {
 function renderMenu(type) {
 	ajaxPading.send({
 		url: getMenu,
-		// data: {
-		// 	unifyCode: userId,
-		// 	module: type == 1 ? 12 : 13
-		// },
 		data: {
-			usrId: userId,
-			courseNo: curClassId
+			unifyCode: userId,
+			module: type == 1 ? 12 : 13
 		},
+		// data: {
+		// 	usrId: userId,
+		// 	courseNo: curClassId
+		// },
 		onSuccess: function (result) {
 			var meta = result.meta;
 			if (meta.result == 100) {

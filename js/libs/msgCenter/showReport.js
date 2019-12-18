@@ -78,8 +78,8 @@ class BluMUI_ShowReport extends React.Component {
                                     <div className="item_msg clearfix">
                                         <div className="msg_left">
                                             <div className="left_type">
-                                                <span>举报类型:</span><span>{item.jblx}</span>&nbsp;&nbsp;
-                                                <span>举报人:</span><span>{item.jbrxm}</span>
+                                                <span>举报类型:</span><span className="noBorder">{item.jblx}</span>&nbsp;&nbsp;
+                                                <span>举报人:</span><span className="noBorder">{item.jbrxm}</span>
                                             </div>
                                             <div className="left_reason">
                                                 <div>举报理由:</div>
@@ -97,7 +97,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     <div><a href={`./showTopic.html?htid=${item.htid}&hfid=${item.hfid}`} target="_blank">查看</a></div>
                                                 }
                                                 
-                                                {userType != "学生" &&
+                                                {(item.sf!="学生" && item.sf != "其他教师") &&
                                                 (ssdx == 'htjb' ?
                                                     <div>
                                                         <div onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除" } }) }}>删除</div>
@@ -113,7 +113,7 @@ class BluMUI_ShowReport extends React.Component {
                                             </div> :
                                             <div className="msg_func">
                                                 <div><a href={`./showTopic.html?htid=${item.htid}`} target="_blank">查看</a></div>
-                                                {userType != "学生" &&
+                                                {(item.sf!="学生" && item.sf != "其他教师") &&
                                                 (ssdx == 'htczjl' ?
                                                     <div onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '恢复班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见" } }) }}>恢复班内可见</div> :
                                                     <div onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '恢复', dx: 'hf', info: { hfid: item.hfid, cz: "恢复" } }) }}>恢复</div>
@@ -150,9 +150,7 @@ class BluMUI_ShowReport extends React.Component {
                                     <th>处理结果</th>
                                     <th>处理人</th>
                                     <th>处理时间</th>
-                                    {userType !="学生" &&
                                     <th>操作</th>
-                                    }
                                     <th width="20px"></th>
                                 </tr>
                             </thead>
@@ -185,7 +183,7 @@ class BluMUI_ShowReport extends React.Component {
                                                 
                                                 <td>{moment(parseInt(item.clsj)).format('YYYY-MM-DD')}</td>
                                                 {
-                                                    userType != "学生" && item.cljg == 1 &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && item.cljg == 1 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>恢复班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '公开', dx: 'ht', info: { htid: item.htid, cz: "公开", kcbh: item.kcbh } }) }}>公开</span>
@@ -193,7 +191,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     </td>
                                                 }
                                                 {
-                                                    userType != "学生" && item.cljg == 2 &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && item.cljg == 2 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>设置班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
@@ -202,7 +200,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     </td>
                                                 }
                                                 {
-                                                    userType != "学生" && item.cljg == 3 &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && item.cljg == 3 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>设置班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
@@ -211,7 +209,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     </td>
                                                 }
                                                 {
-                                                    userType != "学生" && item.cljg == 4 &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && item.cljg == 4 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '公开', dx: 'ht', info: { htid: item.htid, cz: "公开", kcbh: item.kcbh } }) }}>公开</span>
@@ -219,7 +217,7 @@ class BluMUI_ShowReport extends React.Component {
                                                     </td>
                                                 }
                                                 {
-                                                    userType != "学生" && item.cljg == 5 &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && item.cljg == 5 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '班内可见', dx: 'ht', info: { htid: item.htid, cz: "设置班内可见", kcbh: item.kcbh } }) }}>设置班内可见</span>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'ht', info: { htid: item.htid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
@@ -257,9 +255,7 @@ class BluMUI_ShowReport extends React.Component {
                                     <th>处理结果</th>
                                     <th>处理人</th>
                                     <th>处理时间</th>
-                                    {userType !="学生" &&
                                     <th>操作</th>
-                                    }
                                     <th width="20px"></th>
                                 </tr>
                             </thead>
@@ -289,14 +285,14 @@ class BluMUI_ShowReport extends React.Component {
                                                 <td>{item.clrxm}</td>
                                                 <td>{moment(parseInt(item.clsj)).format('YYYY-MM-DD')}</td>
                                                 {
-                                                    userType != "学生" && item.cljg == 1 &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && item.cljg == 1 &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '恢复', dx: 'hf', info: { hfid: item.hfid, cz: "恢复", kcbh: item.kcbh } }) }}>恢复</span>
                                                         <span className="op_on"><a href={`./showTopic.html?htid=${item.htid}&hfid=${item.hfid}`} target="_blank">查看</a></span>
                                                     </td>
                                                 }
                                                 {
-                                                    userType != "学生" && (item.cljg == 2 || item.cljg == 3) &&
+                                                    (item.sf!="学生" && item.sf != "其他教师") && (item.cljg == 2 || item.cljg == 3) &&
                                                     <td>
                                                         <span className="op_on" onClick={() => { this._reportOperate({ jbid: item.jbid, cz: '删除', dx: 'hf', info: { hfid: item.hfid, cz: "删除", kcbh: item.kcbh } }) }}>删除</span>
                                                         <span className="op_on"><a href={`./showTopic.html?htid=${item.htid}&hfid=${item.hfid}`} target="_blank">查看</a></span>
@@ -341,11 +337,6 @@ class BluMUI_ShowReport extends React.Component {
         console.log('event', event, 'value', event.target.value, 'checked', event.target.checked);
         this.setState({
             [name]: event.target.value,
-            reportMsg:{
-                total:0,
-                totalPages:0,
-                jbList:[]
-            },
             onloadFlag:false
         }, this._searchReportInfo);
     };
@@ -356,15 +347,18 @@ class BluMUI_ShowReport extends React.Component {
         let bjbr = '';
         let { count, sstype, sstj, ssdx } = this.state;
         let {userId,userType} = this.props;
-        if(userType == "学生"){
-            jbr = userId;
-        }
-        this.props.searchReportInfoFun({ sstype, sstj, ssdx, jbr,bjbr, page, count }).then(retReportList => {
-            this.setState({
+        let that = this;
+        
+        jbr = userId;
+        
+        
+        that.props.searchReportInfoFun({ sstype, sstj, ssdx, jbr,bjbr, page, count }).then(retReportList => {
+            console.log(retReportList);
+            that.setState({
                 page: page,
                 reportMsg: retReportList,
                 onloadFlag:true
-            })
+            },console.log(that.state.reportMsg))
         })
     }
 

@@ -437,6 +437,18 @@ a{
 	line-height: 25px;
 	font-size: 18px;
   }
+
+  #popbody #msg p{
+	  margin:10px 0;
+  }
+  #popbody #msg p input[type="text"]{
+	border: 1px solid#ccc;
+	height: 30px;
+	width: 200px;
+	padding: 0 10px;
+	text-align: center;
+  }
+
   #popbody button {
 	width: 91px;
 	height: 31px;
@@ -452,10 +464,11 @@ a{
 	color: #FFF;
 	background: #007A51;
   }
-  #popbody #popup_back {
+  #popbody #popup_back, #popbody #popup_reset{
 	color: #007A51;
 	background: #FFF;
   }
+
   #popbody .warning {
 	width: 80%;
 	margin: 0 auto 20px;

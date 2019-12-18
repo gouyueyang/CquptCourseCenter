@@ -83,6 +83,7 @@ var BluMUI = require('../../libs/courseManage/classManageEditor'),
 	deleteAttachment = host + 'deleteAttachment',
 	uploadJiaoAn = host + 'uploadJiaoAn',
 	picPath = host + 'upload/PIC/',// 图片路径
+	mrPicPath = host + 'upload/PIC/default.png',//默认图片路径
 	updataPicURL = host + 'updatePic',
 	searchJXBByCourseNo = host + 'searchJXBByCourseNo',
 	uploadBookURL = host + 'uploadBook',
@@ -1350,7 +1351,7 @@ var initEditorInf = function (inf, notes) {
 			var data = result.data || [],
 				meta = result.meta;
 			selects['课程简介'].componentInf.html = data[0].kcjshtml;
-			selects['课程简介'].componentInf.tpurl = picPath + data[0].tpurl;
+			selects['课程简介'].componentInf.tpurl = data[0].tpurl?picPath + data[0].tpurl : mrPicPath;
 			selects['课程简介'].componentInf.fileName = data[0].tpurl;
 			BluMUI.create(selects['课程简介'].componentInf, selects['课程简介'].type, ViewArea, selects['课程简介'].callback);
 		}

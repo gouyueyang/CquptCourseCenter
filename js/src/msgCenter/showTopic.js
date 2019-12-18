@@ -83,52 +83,13 @@ getTopic().then(topicInfo => {
 	//根据角色划分权限
 	getJs().then(data => {
 		userType = data.js || "游客";
-		if (userType == "游客") {
-			qx = {
-				publicTopic: false,  //发布话题
-				addReply: false,		//回复
-				addReport: false,		//举报
-				deleteTopic: false,  //删除话题
-				deleteReply: false,  //删除回复
-				banPublicTopic: false,//禁止发布话题
-				setBanReply: false,  //设置禁止回复
-				openTopic: false,    //公开话题
-			};
-		} else if (userType == "学生") {
-			qx = {
-				publicTopic: true,  //发布话题
-				addReply: true,		//回复
-				addReport: true,		//举报
-				deleteTopic: true,  //删除话题
-				deleteReply: true,  //删除回复
-				banPublicTopic: false,//禁止发布话题
-				setBanReply: true,  //设置禁止回复
-				openTopic: false,    //公开话题
-			};
-		} else if (userType == "管理员" || userType == "督导" || userType == "任课教师" || userType == "课程负责人") {
-			qx = {
-				publicTopic: true,  //发布话题
-				addReply: true,		//回复
-				addReport: true,		//举报
-				deleteTopic: true,  //删除话题
-				deleteReply: true,  //删除回复
-				banPublicTopic: true,//禁止发布话题
-				setBanReply: true,  //设置禁止回复
-				openTopic: true,    //公开话题
-			};
-		} else if (userType == "其他教师") {
-			qx = {
-				publicTopic: false,  //发布话题
-				addReply: true,		//回复
-				addReport: true,		//举报
-				deleteTopic: false,  //删除话题
-				deleteReply: true,  //删除回复
-				banPublicTopic: false,//禁止发布话题
-				setBanReply: false,  //设置禁止回复
-				openTopic: false,    //公开话题
-			};
-		};
-		getTopicFj().then(res => {
+		isAssistant({jsSfrzh:topicInfo.jssfrzh,xsSfrzh:User.id}).then(data=>{
+			
+			if(data.js=="助理"){
+				userType = "助理";
+			}
+			qx = setQx(userType);
+			getTopicFj().then(res => {
 			if (res.list) {
 				fjList = res;
 			} else {
@@ -197,6 +158,7 @@ getTopic().then(topicInfo => {
 					}, 'TopicDis', document.getElementById('topicDis'));
 				});
 			}
+			})
 		})
 
 	});
@@ -233,6 +195,82 @@ function getJs() {
 			}
 		});
 	})
+}
+
+//确认学生当前是否为助理
+function isAssistant({jsSfrzh,xsSfrzh}){ //课程编号，教师身份认证号，学生身份认证号
+	return new Promise((resolve,reject) => {
+		let data = null;
+		ajax({
+			url: courseCenter.host + 'isAssistant',
+			data: {
+				unifyCode: User.id,
+				kcbh:Course.kcbh,
+				jsSfrzh,
+				xsSfrzh
+			},
+			success(response) {
+				let result = JSON.parse(response);
+				let { meta, data } = result;
+				if (meta.result === 100) {
+					resolve(data);
+				} else {
+					reject(meta.result);
+				}
+			}
+		});
+	})
+}
+
+//设置权限
+function setQx(userType){
+	let qx = null;
+	if(userType=="游客"){
+		qx = {
+			publicTopic:false,  //发布话题
+			addReply:false,		//回复
+			addReport:false,		//举报
+			deleteTopic:false,  //删除话题
+			deleteReply:false,  //删除回复
+			banPublicTopic:false,//禁止发布话题
+			setBanReply:false,  //设置禁止回复
+			openTopic:false,    //公开话题
+		};
+	}else if(userType == "学生"){
+		qx = {
+			publicTopic:true,  //发布话题
+			addReply:true,		//回复
+			addReport:true,		//举报
+			deleteTopic:true,  //删除话题
+			deleteReply:true,  //删除回复
+			banPublicTopic:false,//禁止发布话题
+			setBanReply:true,  //设置禁止回复
+			openTopic:false,    //公开话题
+		};
+	}else if(userType == "管理员" ||userType == "督导"||userType == "任课教师" || userType == "课程负责人"||userType=="助理"){
+		qx = {
+			publicTopic:true,  //发布话题
+			addReply:true,		//回复
+			addReport:true,		//举报
+			deleteTopic:true,  //删除话题
+			deleteReply:true,  //删除回复
+			banPublicTopic:true,//禁止发布话题
+			setBanReply:true,  //设置禁止回复
+			openTopic:true,    //公开话题
+		};
+	}else if(userType == "其他教师"){
+		qx = {
+			publicTopic:false,  //发布话题
+			addReply:true,		//回复
+			addReport:true,		//举报
+			deleteTopic:false,  //删除话题
+			deleteReply:true,  //删除回复
+			banPublicTopic:false,//禁止发布话题
+			setBanReply:false,  //设置禁止回复
+			openTopic:false,    //公开话题
+		};
+	};
+	return qx;
 }
 
 function getTopic() {
@@ -329,9 +367,13 @@ var deleteFile = function ({ listIndex, index, that, items }) {
 			},
 			fileName: {
 				value: items[index].fileName
+			},
+			htid:{
+				value: htid
 			}
 		};
 
+		console.log(data);
 
 		var url = deleteAttachment;
 		data.type = {

@@ -12,6 +12,9 @@ var BluMUI = require('../../libs/classList/classList'),
 	curSelected=null,
 	iframe = document.getElementsByTagName('iframe')[0],
 	host = courseCenter.host,
+	// classListURL = "https://ids.cqupt.edu.cn/authserver/login?service=http://172.20.2.139/classList",
+	// classListURL = "https://ids.cqupt.edu.cn/authserver/login?service=http://cc.cqupt.edu.cn/CquptCourseCenter/pages/classList.jsp",
+	classListURL = `https://ids.cqupt.edu.cn/authserver/login?service=${host}classList`,
 	// topURL = 'http://jwzx.cqupt.edu.cn/jwzxtmp/pyfa/kctpImg/',
 	topURL = 'http://jwzx.cqupt.edu.cn/pyfa/kctpImg/',
 	picPath = host + 'upload/PIC/',
@@ -435,7 +438,7 @@ var changeMoulde=function (value) {
 			window.location.href = './courseMaster/login.html';
 			break;
 		case '登录':
-			window.location.href = host;
+			window.location.href = classListURL;  //直接跳转到ids登陆页面
 			break;
 		case '默认课程':// userList
 			window.location.reload();

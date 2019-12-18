@@ -1,11 +1,18 @@
-﻿<%@page import="java.util.Map"%>
+﻿<!-- <%@page import="edu.yale.its.tp.cas.client.CASAttrPrincipal"%> -->
+
+<!-- <%@page import="org.jasig.cas.client.authentication.AttributePrincipal"%> -->
+<%@page import="java.security.Principal"%>
+<%@page import="java.lang.reflect.Field"%>
+
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.Map"%>
 <!--引入统一身份认证相关-->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.net.*" %>
 
 <%
-System.out.println("获取的userID============================="+session.getAttribute("uid"));
-System.out.println("获取的userName============================="+session.getAttribute("userName"));
+//out.print("获取的userID============================="+session.getAttribute("uid"));
+//out.print("获取的userName============================="+session.getAttribute("userName"));
 if(session.getAttribute("uid") != null) {
 
 	String uid = session.getAttribute("uid").toString();//
@@ -15,8 +22,8 @@ if(session.getAttribute("uid") != null) {
 	Cookie userName = new Cookie("userName", URLEncoder.encode(userName1, "utf-8"));
 	//System.out.println(URLEncoder.encode(userName1,"utf-8"));
 	// 设置cookie过期时间为24小时。
-	unifyCode.setMaxAge(60 * 60 * 1);
-	userName.setMaxAge(60 * 60 * 1);
+	unifyCode.setMaxAge(60*60 * 1);
+	userName.setMaxAge(60 *60* 1);
 	
 	// 在响应头部添加cookie
 	response.addCookie(unifyCode);
@@ -29,8 +36,8 @@ if(session.getAttribute("uid") != null) {
 	Cookie userName = new Cookie("userName", URLEncoder.encode("匿名用户", "utf-8"));
 	//System.out.println(URLEncoder.encode(userName1,"utf-8"));
 	// 设置cookie过期时间为24小时。
-	unifyCode.setMaxAge(60 * 60 * 1);
-	userName.setMaxAge(60 * 60 * 1);
+	unifyCode.setMaxAge(60*60 * 1);
+	userName.setMaxAge(60*60 * 1);
 	// 在响应头部添加cookie
 	response.addCookie(unifyCode);
 	response.addCookie(userName);
@@ -38,7 +45,6 @@ if(session.getAttribute("uid") != null) {
 	session.setAttribute("uid", "1");//
 	session.setAttribute("userName", "匿名用户");
 	session.setAttribute("addr", request.getRemoteAddr());
-
 }
 
 	//统计该页面的访问量

@@ -68,52 +68,7 @@ if (hash.modelName === 'reply') {
 	//根据角色划分权限
 	getJs().then(data=>{
 		userType = data.js || "游客";
-		if(userType=="游客"){
-			qx = {
-				publicTopic:false,  //发布话题
-				addReply:false,		//回复
-				addReport:false,		//举报
-				deleteTopic:false,  //删除话题
-				deleteReply:false,  //删除回复
-				banPublicTopic:false,//禁止发布话题
-				setBanReply:false,  //设置禁止回复
-				openTopic:false,    //公开话题
-			};
-		}else if(userType == "学生"){
-			qx = {
-				publicTopic:true,  //发布话题
-				addReply:true,		//回复
-				addReport:true,		//举报
-				deleteTopic:true,  //删除话题
-				deleteReply:true,  //删除回复
-				banPublicTopic:false,//禁止发布话题
-				setBanReply:true,  //设置禁止回复
-				openTopic:false,    //公开话题
-			};
-		}else if(userType == "管理员" ||userType == "督导"||userType == "任课教师" || userType == "课程负责人"){
-			qx = {
-				publicTopic:true,  //发布话题
-				addReply:true,		//回复
-				addReport:true,		//举报
-				deleteTopic:true,  //删除话题
-				deleteReply:true,  //删除回复
-				banPublicTopic:true,//禁止发布话题
-				setBanReply:true,  //设置禁止回复
-				openTopic:true,    //公开话题
-			};
-			ssfw='班内';
-		}else if(userType == "其他教师"){
-			qx = {
-				publicTopic:false,  //发布话题
-				addReply:true,		//回复
-				addReport:true,		//举报
-				deleteTopic:false,  //删除话题
-				deleteReply:true,  //删除回复
-				banPublicTopic:false,//禁止发布话题
-				setBanReply:false,  //设置禁止回复
-				openTopic:false,    //公开话题
-			};
-		};
+		
 		// alert(userType);
 
 		getTeacherList().then(retTeacherList => {
@@ -132,54 +87,71 @@ if (hash.modelName === 'reply') {
 						jsSfrzh = teacherList.jsList.filter(item=>item.sfrzh == User.id).length ==0?teacherList.jsList[0].sfrzh : User.id;break;
 					default :break;
 				}
-				
-				// jsSfrzh = classList.jxb ?  : (classList.allJxbList.filter(item=>item.SFRZH == User.id)!=[]?User.id:teacherList.jsList[0].sfrzh);
-				getClassListFun(jsSfrzh).then(retClassList => {
-					classList = retClassList;
-					getTopicListFun({ jxbh: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : classList.allJxbList[0].JXB, pxtype: 'sjjx',  sstype: 'htmc',ssfw:ssfw, sstj: '', page: 1, count: 5 }).then(retTopicList => {
-						topicList = retTopicList;
-						BluMUI.create({
-							id: 'topicDis',
-							userId: User.id,
-							userType,   //用户身份类型
-							qx,    //用户权限
-							userBan: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : '',//学生用户所在班级
-							teacherList,
-							classList,
-							topicList,
-							teacherSelected: classList.jxb && classList.jxb[0] ? classList.jxb[0].SFRZH : jsSfrzh,
-							banSelected: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : classList.allJxbList[0].JXB,//选择班级
-							getClassListFun, // 获取教学班列表
-							getTopicListFun, //获取教学班话题列表
-							getTopicFun, //根据话题id获取话题（回复页面点击回复或管理查看时进行的查询）
-							getReplyListFun, // 获取话题回复列表
-							banPublishTopicFun, //禁止发表话题
-							publishTopicFun, // 发表话题
-							publishReplyFun, // 发表回复
-							// searchReplyFun, // 查看回复
-							searchReportInfoFun, // 查询举报信息
-							topicOperateFun, // 话题操作
-							replyOperateFun, // 回复操作
-							reportOperateFun, // 举报操作
-							commitReportFun, // 提交举报信息
-							creatReportBox, //创建举报页面
-							handleSaveAjax,
-							deleteFile,
-							saveAjax
-						}, 'TopicDis', document.getElementById('topicDis'));
-					}).then(()=>{
-						var iframe = window.parent.document.getElementById('myIframe');
-						var height;
-		
-						try {
-							height = iframe.contentWindow.document.documentElement.offsetHeight;
-						} catch (e) {};
-						try {
-							height = iframe.contentDocument.documentElement.offsetHeight;
-						} catch (e) {};
-						iframe.height = height;
+				if(userType == "管理员" ||userType == "督导"||userType == "任课教师" || userType == "课程负责人"){
+					ssfw = "班内";
+				}
+				isAssistant({jsSfrzh,xsSfrzh:User.id}).then(data=>{
+					
+					if(data.js=="助理"){
+						userType = data.js;
+						ssfw = "班内";
+					}
+					qx = setQx(userType);
+					getClassListFun(jsSfrzh).then(retClassList => {
+						classList = retClassList;
+						getTopicListFun({ jxbh: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : classList.allJxbList[0].JXB, pxtype: 'sjjx',  sstype: 'htmc',ssfw:ssfw, sstj: '', page: 1, count: 5 }).then(retTopicList => {
+							topicList = retTopicList;
+							BluMUI.create({
+								id: 'topicDis',
+								userId: User.id,
+								userType,   //用户身份类型
+								qx,    //用户权限
+								userBan: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : '',//学生用户所在班级
+								teacherList,
+								classList,
+								topicList,
+								teacherSelected: classList.jxb && classList.jxb[0] ? classList.jxb[0].SFRZH : jsSfrzh,
+								banSelected: classList.jxb && classList.jxb[0] ? classList.jxb[0].JXB : classList.allJxbList[0].JXB,//选择班级
+								getJs,
+								isAssistant,
+								setQx,
+								getClassListFun, // 获取教学班列表
+								getTopicListFun, //获取教学班话题列表
+								getTopicFun, //根据话题id获取话题（回复页面点击回复或管理查看时进行的查询）
+								getReplyListFun, // 获取话题回复列表
+								banPublishTopicFun, //禁止发表话题
+								publishTopicFun, // 发表话题
+								publishReplyFun, // 发表回复
+								// searchReplyFun, // 查看回复
+								searchReportInfoFun, // 查询举报信息
+								topicOperateFun, // 话题操作
+								replyOperateFun, // 回复操作
+								reportOperateFun, // 举报操作
+								commitReportFun, // 提交举报信息
+								creatReportBox, //创建举报页面
+								createAssistantBox,//创建助理列表
+								handleSaveAjax,
+								deleteFile,
+								saveAjax,
+								setJxbNickname,
+								deleteJxbNickname
+							}, 'TopicDis', document.getElementById('topicDis'));
+						}).then(()=>{
+							var iframe = window.parent.document.getElementById('myIframe');
+							var height;
+			
+							try {
+								height = iframe.contentWindow.document.documentElement.offsetHeight;
+							} catch (e) {};
+							try {
+								height = iframe.contentDocument.documentElement.offsetHeight;
+							} catch (e) {};
+							iframe.height = height;
+						})
 					})
 				})
+				// jsSfrzh = classList.jxb ?  : (classList.allJxbList.filter(item=>item.SFRZH == User.id)!=[]?User.id:teacherList.jsList[0].sfrzh);
+				
 				
 			})
 		}).catch(e => {
@@ -215,6 +187,105 @@ function getJs(){
 			}
 		});
 	})
+}
+//根据姓名、学号搜索学生
+function searchStu({xm,xh}){
+	return new Promise((resolve,reject)=>{
+		let data = null;
+		ajax({
+			url:courseCenter.host + 'getAssistantOption',
+			data:{
+				unifyCode:User.id,
+				xm,
+				xh
+			},
+			success(response){
+				let result = JSON.parse(response);
+				let {meta,data} = result;
+				if(meta.result === 100){
+					resolve(data.assistantOptionList);
+				}else{
+					reject(meta.result)
+				}
+			}
+		})
+	})
+}
+
+//确认学生当前是否为助理
+function isAssistant({jsSfrzh,xsSfrzh}){ //课程编号，教师身份认证号，学生身份认证号
+	return new Promise((resolve,reject) => {
+		let data = null;
+		ajax({
+			url: courseCenter.host + 'isAssistant',
+			data: {
+				unifyCode: User.id,
+				kcbh:Course.kcbh,
+				jsSfrzh,
+				xsSfrzh
+			},
+			success(response) {
+				let result = JSON.parse(response);
+				let { meta, data } = result;
+				if (meta.result === 100) {
+					resolve(data);
+				} else {
+					reject(meta.result);
+				}
+			}
+		});
+	})
+}
+
+//设置权限
+function setQx(userType){
+	let qx = null;
+	if(userType=="游客"){
+		qx = {
+			publicTopic:false,  //发布话题
+			addReply:false,		//回复
+			addReport:false,		//举报
+			deleteTopic:false,  //删除话题
+			deleteReply:false,  //删除回复
+			banPublicTopic:false,//禁止发布话题
+			setBanReply:false,  //设置禁止回复
+			openTopic:false,    //公开话题
+		};
+	}else if(userType == "学生"){
+		qx = {
+			publicTopic:true,  //发布话题
+			addReply:true,		//回复
+			addReport:true,		//举报
+			deleteTopic:true,  //删除话题
+			deleteReply:true,  //删除回复
+			banPublicTopic:false,//禁止发布话题
+			setBanReply:true,  //设置禁止回复
+			openTopic:false,    //公开话题
+		};
+	}else if(userType == "管理员" ||userType == "督导"||userType == "任课教师" || userType == "课程负责人"||userType=="助理"){
+		qx = {
+			publicTopic:true,  //发布话题
+			addReply:true,		//回复
+			addReport:true,		//举报
+			deleteTopic:true,  //删除话题
+			deleteReply:true,  //删除回复
+			banPublicTopic:true,//禁止发布话题
+			setBanReply:true,  //设置禁止回复
+			openTopic:true,    //公开话题
+		};
+	}else if(userType == "其他教师"){
+		qx = {
+			publicTopic:false,  //发布话题
+			addReply:true,		//回复
+			addReport:true,		//举报
+			deleteTopic:false,  //删除话题
+			deleteReply:true,  //删除回复
+			banPublicTopic:false,//禁止发布话题
+			setBanReply:false,  //设置禁止回复
+			openTopic:false,    //公开话题
+		};
+	};
+	return qx;
 }
 
 function getTeacherList() {
@@ -543,6 +614,7 @@ function creatReportBox({ htInfo, hfInfo }) {
 	
 }
 
+
 function commitReportFun({ htid, hfid, jblx, jbly }) {
 	return new Promise((resolve, reject) => {
 		ajax({
@@ -578,6 +650,141 @@ function getReportTypeFun() {
 				let result = JSON.parse(response);
 				if (result.meta.result == 100) {
 					resolve(result.data.xlxxList);
+				} else {
+					reject(result.meta.result);
+				}
+			}
+		})
+	})
+}
+
+
+function createAssistantBox(teacherSelected){
+	window.document.getElementById("assistantBox").style.display = "block";
+	
+	
+	getAssistant(teacherSelected).then(result=>{
+		let assistantList = result;
+		BluMUI.create({
+			id:"assistantBox",
+			assistantList,
+			searchStu,
+			deleteAssistant,
+			addAssistant,
+			jsSfrzh:teacherSelected,
+			getAssistant
+		}, "TopicAssistant", window.document.getElementById("assistantWrap"));
+	}).catch(e => {
+		console.log(e);
+		// if (e === 101) {
+		// 	window.location.href = 'error1.html';
+		// } else {
+		// 	window.location.href = 'error2.html';
+		// }
+	});
+}
+
+function getAssistant(teaId){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url:courseCenter.host + 'getAssistant',
+			data: {
+				unifyCode:User.id,
+				teaId,
+				kcbh:Course.kcbh
+			},
+			success(response){
+				let result = JSON.parse(response);
+				if (result.meta.result == 100) {
+					resolve(result.data.assistantList);
+				} else {
+					reject(result.meta.result);
+				}
+			}
+		})
+	})
+}
+
+function addAssistant({jsSfrzh,sfrzh,xh,xm,xymc}){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url:courseCenter.host + 'addAssistant',
+			data: {
+				unifyCode:User.id,
+				kcbh: Course.kcbh,
+				jsSfrzh,
+				sfrzh,    //助理身份认证号
+				xh,
+				xm,
+				xymc
+			},
+			success(response){
+				let result = JSON.parse(response);
+				if(result.meta.result == 100){
+					resolve(true);
+				}else{
+					reject(result.meta.msg);
+				}
+			}
+		})
+	})
+}
+
+function deleteAssistant(id){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url: courseCenter.host + 'deleteAssistant',
+			data: {
+				unifyCode :User.id,
+				assistantId: id
+			},
+			success(response) {
+				let result = JSON.parse(response);
+				if (result.meta.result == 100) {
+					resolve(true);
+				} else {
+					reject(result.meta.result);
+				}
+			}
+		})
+	})
+}
+
+function setJxbNickname({jxbbh,jxbbm}){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url: courseCenter.host + 'setJxbNickname',
+			data: {
+				unifyCode :User.id,
+				kcbh: Course.kcbh,
+				jxbbh,
+				nickname:jxbbm
+			},
+			success(response) {
+				let result = JSON.parse(response);
+				if (result.meta.result == 100) {
+					resolve(true);
+				} else {
+					reject(result.meta.result);
+				}
+			}
+		})
+	})
+}
+
+function deleteJxbNickname(jxbbh){
+	return new Promise((resolve,reject)=>{
+		ajax({
+			url: courseCenter.host + 'deleteJxbNickname',
+			data: {
+				unifyCode :User.id,
+				kcbh: Course.kcbh,
+				jxbbh
+			},
+			success(response) {
+				let result = JSON.parse(response);
+				if (result.meta.result == 100) {
+					resolve(true);
 				} else {
 					reject(result.meta.result);
 				}
