@@ -299,7 +299,7 @@ class BlueMUI_CreatePopup extends React.Component {
       this.shuld_insert = false;
     }
     ajax({
-      url: courseCenter.host + 'getCollege',
+      url: courseCenter.host + 'getJxtdglCollege',
       data: {
         unifyCode: getCookie("userId")
       },
@@ -307,7 +307,7 @@ class BlueMUI_CreatePopup extends React.Component {
         let datas = JSON.parse(gets);
         if (datas.meta.result == 100) {
           let CL = '<option value="">请选择</option>';
-          datas.data.map(e => CL += `<option value=${e.kkxymc}>${e.kkxymc}</option>`);
+          datas.data.map(e => CL += `<option value=${e.xymc}>${e.xymc}</option>`);
           this.xueyuan.innerHTML = CL;
         }
       }

@@ -9,6 +9,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 // import WordCount from '@ckeditor/ckeditor5-word-count/src/wordcount';
 // import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/simpleuploadadapter';
+
+import wangeditor from 'wangeditor';
 import Fanye from '../turnPage';
 import moment from 'moment';
 import Alert from "../../util/alert.js";
@@ -121,8 +123,10 @@ class BluMUI_TopicDis extends React.Component {
                     }
 					<div id="sendMsg">
 						<h4>发表回复</h4>
-						<textarea name="content" id="editor" placeholder="请登录后回复，并且回复不得超过500字！">
-						</textarea>
+						{/* <textarea name="content" id="editor" placeholder="请登录后回复，并且回复不得超过500字！">
+						</textarea> */}
+                        <div id="editor">
+                        </div>
 						<div className="msg_bottom">
 							<button onClick={this._sendReply}>发   表</button>
 						</div>
@@ -133,20 +137,86 @@ class BluMUI_TopicDis extends React.Component {
     }
     
     componentDidMount() {
-        ClassicEditor
-            .create(document.querySelector('#editor'),{
-                language : 'zh-cn',
-                toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
-                // plugins: [ WordCount, Paragraph, Bold, Italic ],
-                // toolbar: [ 'bold', 'italic' ]
-            })
-            .then(newEditor => {
-                this.editor = newEditor;
+        let editor = new wangeditor("#editor");
+
+        editor.customConfig.zIndex = 10;
+        
+        editor.customConfig.onchange = (html)=>{
+            console.log(html);
+            console.log(html.length);
+            
+            if(html.length>2000){
+                Alert.open({
+                    alertTip: "输入内容过长！",
+                    closeAlert: function () {}
+                });
+                editor.cmd.do('undo');
+            }
+        }
+	    //开启debug模式
+	    editor.customConfig.debug = true;
+	    // 关闭粘贴内容中的样式
+	    editor.customConfig.pasteFilterStyle = false
+	    // 忽略粘贴内容中的图片
+	    editor.customConfig.pasteIgnoreImg = true
+	    // 使用 base64 保存图片
+	    //editor.customConfig.uploadImgShowBase64 = true
+        
+
+
+	    // 上传图片到服务器
+	    editor.customConfig.uploadFileName = 'myFile'; //设置文件上传的参数名称
+	    editor.customConfig.uploadImgServer = courseCenter.host + 'uploadFile'; //设置上传文件的服务器路径
+	    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+	    editor.customConfig.uploadImgMaxLength = 1;//限制一次上传一张
+	    //自定义上传图片事件
+	    editor.customConfig.uploadImgHooks = {
+	    	before : function(xhr, editor, files) {
+            
+	    	},
+	    	success : function(xhr, editor, result) {// 图片上传并返回结果，图片插入成功之后触发
+	    		// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+	    		var url = courseCenter.host+"upload/PIC/"+result.data[0];
+	    		alert(url);
+	    		editor.txt.append(url);
+	    	},
+	    	fail : function(xhr, editor, result) {
+	    		console.log("上传失败,原因是"+result);
+	    	},
+	    	error : function(xhr, editor) {
+	    		console.log("上传出错");
+	    	},
+	    	timeout : function(xhr, editor) {
+	    		console.log("上传超时");
+	    	},
+	    	// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        	// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+        	customInsert: function (insertImg, result, editor) {
+        	    // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        	    // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+        	    // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        	    var url = courseCenter.host+"upload/PIC/"+result.data[0];
+        	    insertImg(url);
+        	    // result 必须是一个 JSON 格式字符串！！！否则报错
+        	}
+	    };
+    
+        editor.create();
+        this.editor = editor;
+        // ClassicEditor
+        //     .create(document.querySelector('#editor'),{
+        //         language : 'zh-cn',
+        //         toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
+        //         // plugins: [ WordCount, Paragraph, Bold, Italic ],
+        //         // toolbar: [ 'bold', 'italic' ]
+        //     })
+        //     .then(newEditor => {
+        //         this.editor = newEditor;
                
-            })
-            .catch(err => {
-                console.error(err.stack);
-            });
+        //     })
+        //     .catch(err => {
+        //         console.error(err.stack);
+        //     });
         let topHfid = this.props.pageInfo.hfid;
         
         // document.querySelector(`#${topHfid}`) && 
@@ -231,19 +301,21 @@ class BluMUI_TopicDis extends React.Component {
     //发送回复 
     _sendReply = () => {
         let { htid, hfdxsfrzh, zhzhf, fjd } = this.state.sendReplyInfo;
-        let hfnr = this.editor.getData();
+        // let hfnr = this.editor.getData();
+        let hfnr = this.editor.txt.html();
         let {page} = this.state;
         if(hfnr==''){
             Alert.open({
               alertTip: "请输入回复内容！",
               closeAlert: function () {}
             });
-        }else if(hfnr.length>500){
+        }else if(hfnr.length>2000){
             Alert.open({
-                alertTip: "回复内容不得超过500字！",
+                alertTip: "回复内容过长！",
                 closeAlert: function () {}
               });
-              this.editor.setData(hfnr.substr(0,499));
+            //   this.editor.setData(hfnr.substr(0,499));
+            this.editor.txt.html(hfnr.substr(0,1999));
         }else{
             this.props.publishReplyFun({ htid, hfnr, hfdxsfrzh, zhzhf, fjd }).then(result => {
                 if (result) {
@@ -252,7 +324,8 @@ class BluMUI_TopicDis extends React.Component {
                       closeAlert: function () {}
                     });
     
-                    this.editor.setData("");
+                    // this.editor.setData("");
+                    this.editor.txt.clear();
                 }
             }).then(() => {
                 this._searchReply(page);

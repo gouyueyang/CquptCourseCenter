@@ -42,8 +42,8 @@ $(function(){
         var isUcBrowser = userAgent.indexOf("UBrowser") > -1; // 判断UC浏览器
         var IeNoSupportFlag = true;
         var browserTypeFlag="";
-        var flag = true;
-        var support_flag = false;
+        var flag = false;
+        var support_flag = true;
 		var OsObject = window.navigator.userAgent;
 		
 
@@ -57,19 +57,19 @@ $(function(){
 
         if (isFF) {
             browserTypeFlag= "Firefox";
-            flag =false;
+            flag =true;
         }
         if (isOpera) {
             browserTypeFlag= "Opera";
-            flag=false;
+            flag=true;
         }
         if (isSafari) {
             browserTypeFlag= "Safari";
-            flag =false;
+            flag =true;
         }
         if (isChrome) {
             browserTypeFlag= "Chrome";
-            flag = false;
+            flag = true;
         }
         if (isEdge) {
             browserTypeFlag= "Edge";
@@ -93,17 +93,26 @@ $(function(){
             // if (OsObject.toLowerCase().indexOf("trident") > -1 && OsObject.indexOf("rv") > -1) {
             //     flag = false;
             // }
-            flag = true;
+            flag = false;
         }
         
         if(!flag){
             support_flag = filterNavigatorNoSupport(OsObject);
         }
         
-        
+        if(flag && support_flag){
+            //浏览器支持，跳转到平台的url.
+            // goIndex();
+            window.location.href="http://172.20.2.139/";
+            // window.location.href="http://cc.cqupt.edu.cn/";
+           
+        }else{
+            // window.location.href=courseCenter.host+'CquptCourseCenter/compatibility/browerTips.html';
+            return;
+        }
 
         // var osFg  = getOs();
-        // //更新页面信息
+        //更新页面信息
         // setPageNewData(osFg,browserTypeFlag);
 
         // if(!IeNoSupportFlag){
@@ -143,9 +152,9 @@ $(function(){
     function filterNavigatorNoSupport(OsObject) {
         //遨游 Maxthon  猎豹 LBBROWSER  百度 BIDUBrowser  淘宝 TaoBrowser UC  UBrowser
         if ( OsObject.indexOf("UBrowser") > 0 || OsObject.indexOf("Maxthon") > 0 ||  OsObject.indexOf("LBBROWSER") > 0 || OsObject.indexOf("BIDUBrowser") > 0 || OsObject.indexOf("TaoBrowser") > 0) {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**

@@ -24,6 +24,17 @@ span.tip_color {
 	text-decoration: none;
 }
 
+#editor a {
+	text-decoration: none;
+	color: #44bbff;
+}
+
+#editor a:hover,
+#editor a:focus {
+	text-decoration: underline;
+	color: #53a0e4;
+}
+
 
 
 .content_search {
@@ -202,7 +213,71 @@ input[type="radio"]:checked+label {
 	max-height: 200px;
 	overflow: hidden;
 }
-/* 解决引用不显示样式的问题 */
+
+/* 话题内容内置样式 */
+/* table 样式 */
+#topicInfo .info_content .content_topic .topic_item .htnr_box table {
+	border-top: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+}
+
+#topicInfo .info_content .content_topic .topic_item .htnr_box table td,
+#topicInfo .info_content .content_topic .topic_item .htnr_box table th {
+	border-bottom: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	padding: 3px 5px;
+}
+
+#topicInfo .info_content .content_topic .topic_item .htnr_box table th {
+	border-bottom: 2px solid #ccc;
+	text-align: center;
+}
+
+/* blockquote 样式 */
+#topicInfo .info_content .content_topic .topic_item .htnr_box blockquote {
+	display: block;
+	border-left: 8px solid #d0e5f2;
+	padding: 5px 10px;
+	margin: 10px 0;
+	line-height: 1.4;
+	font-size: 100%;
+	background-color: #f1f1f1;
+}
+
+/* code 样式 */
+#topicInfo .info_content .content_topic .topic_item .htnr_box code {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	background-color: #f1f1f1;
+	border-radius: 3px;
+	padding: 3px 5px;
+	margin: 0 3px;
+}
+
+#topicInfo .info_content .content_topic .topic_item .htnr_box pre code {
+	display: block;
+}
+
+/* ul ol 样式 */
+#topicInfo .info_content .content_topic .topic_item .htnr_box ul,
+ol {
+	margin: 10px 0 10px 20px;
+}
+
+/* a 样式 */
+#topicInfo .info_content .content_topic .topic_item .htnr_box a {
+	text-decoration: none;
+	color: #44bbff;
+}
+
+#topicInfo .info_content .content_topic .topic_item .htnr_box a:hover,
+#topicInfo .info_content .content_topic .topic_item .htnr_box a:focus {
+	text-decoration: underline;
+	color: #53a0e4;
+}
+
+/* 解决引用不显示样式的问题(ckeditor)
 #topicInfo .info_content .content_topic .topic_item .htnr_box blockquote {
 	overflow: hidden;
 	padding-right: 1.5em;
@@ -211,11 +286,25 @@ input[type="radio"]:checked+label {
 	font-style: italic;
 	border-left: 5px solid #ccc;
 	color:#666;
+} */
+
+/* #topicInfo .info_content .content_topic .topic_item .htnr_box a{
+	background: var(--ck-color-link-selected-background);
+} */
+/* 补充表格边框 */
+/* .topic_item table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	border: 1px double #b3b3b3;
+	word-break: break-word;
 }
 
-#topicInfo .info_content .content_topic .topic_item .htnr_box a{
-	background: var(--ck-color-link-selected-background);
-}
+.topic_item table th,
+.topic_item table td {
+	min-width: 2em;
+	padding: .4em;
+	border: 1px solid #d9d9d9;
+} */
 
 
 #topicInfo .info_content .content_topic .topic_item .item_bottom {
@@ -779,20 +868,7 @@ input#xhInput {
 	padding: 10px 0;
 }
 
-/* 补充表格边框 */
-.topic_item table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	border: 1px double #b3b3b3;
-	word-break: break-word;
-}
 
-.topic_item table th,
-.topic_item table td {
-	min-width: 2em;
-	padding: .4em;
-	border: 1px solid #d9d9d9;
-}
 
 
 /*======================================*/

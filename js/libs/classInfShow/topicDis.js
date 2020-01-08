@@ -5,6 +5,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Fanye from '../turnPage';
 import moment from 'moment';
 import Alert from "../../util/alert.js";
+import wangeditor from 'wangeditor';
 
 
 
@@ -48,8 +49,10 @@ class SendTopic extends React.Component {
             <div id="sendMsg">
                 <h3>发起新话题</h3>
                 <input type="text" id="htmc" placeholder='请输入话题名称（50字内）' maxLength="50" onChange={event => this._changeState('htbt', event)} className='topicName' />
-                <textarea name="content" id='editor' maxLength="10" placeholder="请输入话题内容（不超过2000字）">
-                </textarea>
+                <div id="editor">
+                    
+                </div>
+                
                 {
                     (userType == "任课教师" || userType =="课程负责人" || userType == "督导" || userType == "管理员"||userType == "助理") &&
                         <div>
@@ -140,40 +143,125 @@ class SendTopic extends React.Component {
         )
     }
     componentDidMount() {
-        ClassicEditor
-            .create(document.querySelector('#editor'),{
-                language : 'zh-cn',
-                toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
-                // toolbar: ['heading', '|', 'bold', 'italic','TextColor','BGColor','Styles','Format','Font','FontSize','Subscript','Superscript','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','|', 'Undo','Redo'],
-                maxlength:10
-            })
-            .then(newEditor => {
-                this.editor = newEditor;
-                let maxlength = 100;
-                newEditor.on('key',function(event){
-                    console.log(event.target.value);
-                    var oldhtml = this.editor.document.getBody().getHtml();
-                    var description = oldhtml.replace(/<.*?>/ig,"");
-                    var etop = $("#cke_1_top");
-                    var _slen = maxlength-description.length;
-                    var canwrite = $("<label id='canwrite'>还可以输入200字</label>");
-                    if(etop.find("#canwrite").length<1){
-                        canwrite.css({border:'1px #f1f1f1 solid','line-height':'28px',color:'#999'});
-                        etop.prepend(canwrite);
+        let editor = new wangeditor("#editor");
+
+        editor.customConfig.zIndex = 10;
+        editor.customConfig.emotions = [
+            {
+                // tab 的标题
+                title: '默认',
+                // type -> 'emoji' / 'image'
+                type: 'image',
+                // content -> 数组
+                content: [
+                    {
+                        alt: '[坏笑]',
+                        src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/50/pcmoren_huaixiao_org.png'
+                    },
+                    {
+                        alt: '[舔屏]',
+                        src: 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal/40/pcmoren_tian_org.png'
                     }
-                    var _label = etop.find("#canwrite");
-                    if(description.length>maxlength){
-                        //alert("最多可以输入"+maxlength+"个文字，您已达到最大字数限制");
-                        this.editor.setData(oldhtml);
-                        _label.html("还可以输入0字");
-                    }else{
-                        _label.html("还可以输入"+_slen+"字");
-                    }
+                ]
+            }
+        ];
+        editor.customConfig.onchange = (html)=>{
+            console.log(html);
+            console.log(html.length);
+            
+            if(html.length>20000){
+                Alert.open({
+                    alertTip: "输入内容过长！",
+                    closeAlert: function () {}
                 });
-            })
-            .catch(err => {
-                console.error(err.stack);
-            });
+                editor.cmd.do('undo');
+                console.log(editor.txt.html());
+            }
+        }
+	    //开启debug模式
+	    editor.customConfig.debug = true;
+	    // 关闭粘贴内容中的样式
+	    editor.customConfig.pasteFilterStyle = false
+	    // 忽略粘贴内容中的图片
+	    editor.customConfig.pasteIgnoreImg = true
+	    // 使用 base64 保存图片
+	    //editor.customConfig.uploadImgShowBase64 = true
+        
+
+
+	    // 上传图片到服务器
+	    editor.customConfig.uploadFileName = 'myFile'; //设置文件上传的参数名称
+	    editor.customConfig.uploadImgServer = courseCenter.host + 'uploadFile'; //设置上传文件的服务器路径
+	    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024; // 将图片大小限制为 3M
+	    editor.customConfig.uploadImgMaxLength = 1;//限制一次上传一张
+	    //自定义上传图片事件
+	    editor.customConfig.uploadImgHooks = {
+	    	before : function(xhr, editor, files) {
+            
+	    	},
+	    	success : function(xhr, editor, result) {// 图片上传并返回结果，图片插入成功之后触发
+	    		// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+	    		var url = courseCenter.host+"upload/PIC/"+result.data[0];
+	    		alert(url);
+	    		editor.txt.append(url);
+	    	},
+	    	fail : function(xhr, editor, result) {
+	    		console.log("上传失败,原因是"+result);
+	    	},
+	    	error : function(xhr, editor) {
+	    		console.log("上传出错");
+	    	},
+	    	timeout : function(xhr, editor) {
+	    		console.log("上传超时");
+	    	},
+	    	// 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+        	// （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+        	customInsert: function (insertImg, result, editor) {
+        	    // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        	    // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+        	    // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        	    var url = courseCenter.host+"upload/PIC/"+result.data[0];
+        	    insertImg(url);
+        	    // result 必须是一个 JSON 格式字符串！！！否则报错
+        	}
+	    };
+    
+        editor.create();
+        this.editor = editor;
+        // ClassicEditor
+        //     .create(document.querySelector('#editor'),{
+        //         language : 'zh-cn',
+        //         toolbar: ['heading', '|', 'bold', 'italic','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','|', 'Undo','Redo'],
+        //         // toolbar: ['heading', '|', 'bold', 'italic','TextColor','BGColor','Styles','Format','Font','FontSize','Subscript','Superscript','|',  'link', 'bulletedList', 'numberedList', 'blockQuote','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','|', 'Undo','Redo'],
+        //         maxlength:10
+        //     })
+        //     .then(newEditor => {
+        //         this.editor = newEditor;
+        //         let maxlength = 100;
+        //         newEditor.on('key',function(event){
+        //             console.log(event.target.value);
+        //             var oldhtml = this.editor.document.getBody().getHtml();
+        //             var description = oldhtml.replace(/<.*?>/ig,"");
+        //             var etop = $("#cke_1_top");
+        //             var _slen = maxlength-description.length;
+        //             var canwrite = $("<label id='canwrite'>还可以输入200字</label>");
+        //             if(etop.find("#canwrite").length<1){
+        //                 canwrite.css({border:'1px #f1f1f1 solid','line-height':'28px',color:'#999'});
+        //                 etop.prepend(canwrite);
+        //             }
+        //             var _label = etop.find("#canwrite");
+        //             if(description.length>maxlength){
+        //                 //alert("最多可以输入"+maxlength+"个文字，您已达到最大字数限制");
+        //                 this.editor.setData(oldhtml);
+        //                 _label.html("还可以输入0字");
+        //             }else{
+        //                 _label.html("还可以输入"+_slen+"字");
+        //             }
+        //         });
+        //     })
+        //     .catch(err => {
+        //         console.error(err.stack);
+        //     });
     }
     _changeState = (name, event) => {
         let val = event.target.type === 'checkbox' ? !event.target.checked : event.target.value;
@@ -186,17 +274,13 @@ class SendTopic extends React.Component {
     
     _sendMsg = () => {
         const { htbt, sfyxhf, dqzt, checkBan,fjList } = this.state;
-        const htnr = this.editor.getData();
-        if(htnr.length>2000){
-            Alert.open({
-                alertTip: "话题内容不得超过2000字！",
-                closeAlert: function () {}
-              });
-            this.editor.setData(htnr.substr(0,9999));
-            }else{
-                this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan,fjList });
-            }
-        
+        // const htnr = this.editor.getData();
+        const htnr = this.editor.txt.html();
+        console.log(htnr);
+        console.log(htnr.length);
+       
+        this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan,fjList });
+    
         // this.setState({
         //     htbt: document.querySelector('#htmc').value, // 话题标题
         //     sfyxhf: true, //  是否允许回复
@@ -512,7 +596,8 @@ class BluMUI_TopicDis extends React.Component {
             document.querySelector('#htmc').value = '';
         } 
         this.sendTopic &&
-        this.sendTopic.editor.setData("");
+        // this.sendTopic.editor.setData("");
+        this.sendTopic.editor.txt.html("");
     };
     // 选择班级
     _changeBan = (JXB) => {
@@ -810,7 +895,8 @@ class BluMUI_TopicDis extends React.Component {
                 fjList:[],
                 fjxxList:[]
             });
-            this.sendTopic.editor.setData("");
+            // this.sendTopic.editor.setData("");
+            this.sendTopic.editor.txt.html("");
         }
     }
 
