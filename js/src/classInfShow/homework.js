@@ -5,7 +5,7 @@ require('es6-promise');
 
 import Alert from "../../util/alert.js";
 
-var BluMUI = require('../../libs/classInfShow/topicDis');
+var BluMUI = require('../../libs/classInfShow/homework');
 var ajaxPading = require('../../libs/ajaxExpand.mini.min');
 var ajax = require('../../libs/post_ajax');
 var hash = parseHash(window.location.href),
@@ -347,7 +347,7 @@ function getTopicListFun({ jxbh, pxtype, sstype, ssfw, sstj, page, count }) {
 				sstj,//String搜索条件（string）,
 				page,//int页码,
 				count,//int每页显示数目
-				type:'话题' //类型：作业，话题
+				type:'作业'
 			},
 			success(response) {
 				let result = JSON.parse(response);
@@ -441,7 +441,7 @@ function publishTopicFun({ jxbbh, htbt, htnr, sfyxhf, dqzt,fjList }) {
 				sfyxhf,//是否允许回复
 				dqzt,   //当前状态，（老师发表话题时，可勾选是否公开，1：默认班内开放；2：公开）
 				fjList:fjList.join(","),//附件列表
-				type:'话题'  //类型：作业，话题
+				type:'作业'//类型：作业、话题
 			},
 			success(response) {
 				let result = JSON.parse(response);

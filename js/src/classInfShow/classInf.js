@@ -33,7 +33,8 @@ var BluMUI = require('../../libs/classInfShow/classInf.js'),
 		'课程简介': urlPrefix+'courseJianjie.html?classId=' + classId+'&place=2',
 		'授课计划': urlPrefix+'classTeachPlan.html?classId=' + classId,
 		'实习计划': urlPrefix+'classTeachPlan.html?classId=' + classId,
-		'话题讨论': urlPrefix + 'topicDis.html?classId=' + classId
+		'话题讨论': urlPrefix + 'topicDis.html?classId=' + classId,
+		'作业布置': urlPrefix + 'homework.html?classId=' + classId
 	};
 
 

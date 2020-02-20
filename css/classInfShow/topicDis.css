@@ -433,6 +433,10 @@ ol {
 	background-color: #fff;
 }
 
+#sendMsg div#editor{
+	max-width: 1140px;
+}
+
 #sendMsg .msg_bottom {
 	margin-top: 30px;
 }

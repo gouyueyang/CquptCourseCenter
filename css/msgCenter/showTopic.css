@@ -143,14 +143,13 @@ a {
 
 #topicInfo #topic_Info .topic_htnr {
 	padding: 20px;
+	min-height: 230px;
 }
 
 
 
 #topicInfo #topic_Info .topic_bottom {
-	position: absolute;
-	bottom: 10px;
-	width: 100%;
+	padding-bottom:10px;
 }
 
 #topicInfo #topic_Info .bottom_authCon {
@@ -441,7 +440,9 @@ a {
 	margin-bottom: 300px;
 	background-color: #fff;
 }
-
+#sendMsg div#editor{
+	max-width: 1140px;
+}
 #sendMsg .msg_bottom {
 	margin-top: 30px;
 }
@@ -748,10 +749,10 @@ div.info_one:hover a.hidden {
 }
 
 /* AssessmentScheme */
-.fjList {
+/* .fjList {
 	position: absolute;
 	bottom: 20px;
-}
+} */
 
 .warn {
 	display: inline-block;
