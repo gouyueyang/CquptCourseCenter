@@ -14,7 +14,7 @@ var hash = parseHash(window.location.href),
 	deleteAttachment = host + 'deleteAttachment',
 	loginURL = 'https://ids.cqupt.edu.cn/authserver/login?service=' + host + 'classList',
 	doc = document;
-var fjList = [];
+
 
 var insertAttachment = host + 'insertTopicAttachment';
 //查询数据的变量
@@ -844,6 +844,7 @@ var handleSaveAjax = function (flag, result,  postData, that) {
 			var fileName = data[0].fileName,
 				originName = data[0].originName;
 			var	fjid = data[0].id;
+			var fjList = BluMUI.result.topicDis.sendTopic.state.fjList;
 			fjList = [...fjList,fjid];
 			
 			items.push([

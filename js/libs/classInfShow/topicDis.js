@@ -108,7 +108,7 @@ class SendTopic extends React.Component {
                     </div>
                         
                 }
-                {/* {
+                {
                     (userType == "任课教师" || userType == "管理员" || userType == "督导" || userType == "课程负责人"||userType == "助理") &&
                     <BluMUI_AssessmentScheme
                             id={'AssessmentScheme'}
@@ -116,7 +116,7 @@ class SendTopic extends React.Component {
 		            	    items= {fjxxList}
 		            	    saveAjax= {saveAjax}
                     />
-                } */}
+                }
             
                 <div className='msg_bottom'>
                     <button onClick={this._sendMsg}>发   表</button>
@@ -166,8 +166,7 @@ class SendTopic extends React.Component {
             }
         ];
         editor.customConfig.onchange = (html)=>{
-            console.log(html);
-            console.log(html.length);
+            
             
             if(html.length>20000){
                 Alert.open({
@@ -175,7 +174,7 @@ class SendTopic extends React.Component {
                     closeAlert: function () {}
                 });
                 editor.cmd.do('undo');
-                console.log(editor.txt.html());
+                
             }
         }
 	    //开启debug模式
@@ -202,7 +201,7 @@ class SendTopic extends React.Component {
 	    	success : function(xhr, editor, result) {// 图片上传并返回结果，图片插入成功之后触发
 	    		// xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
 	    		var url = courseCenter.host+"upload/PIC/"+result.data[0];
-	    		alert(url);
+	    		// alert(url);
 	    		editor.txt.append(url);
 	    	},
 	    	fail : function(xhr, editor, result) {
@@ -276,8 +275,7 @@ class SendTopic extends React.Component {
         const { htbt, sfyxhf, dqzt, checkBan,fjList } = this.state;
         // const htnr = this.editor.getData();
         const htnr = this.editor.txt.html();
-        console.log(htnr);
-        console.log(htnr.length);
+       
        
         this.props.sendTopic({ htbt, sfyxhf, htnr, dqzt, checkBan,fjList });
     
@@ -504,7 +502,7 @@ class BluMUI_TopicDis extends React.Component {
                                                             
                                                                     <a href="javascript:void(0);">{moment(parseInt(repItem.hfsj)).format('YYYY-MM-DD HH:mm:ss')}</a>
                                                                     {qx.addReply && <a className='color' href="javascript:void(0);" 
-                                                                    onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "hfdxxm":repItem.zzxm,"zhzhf": 2, "fjd": repItem.hfid } }, console.log(this.state)) }}>回复</a>}
+                                                                    onClick={() => { repItem.zzxm ? document.getElementById(`reply_${item.htid}`).value = ` 回复 ${repItem.zzxm}: ` : document.getElementById(`reply_${item.htid}`).value = `回复: `; this.setState({ sendReplyInfo: { ...this.state.sendReplyInfo, "hfdxsfrzh": repItem.zzsfrzh, "hfdxxm":repItem.zzxm,"zhzhf": 2, "fjd": repItem.hfid } }) }}>回复</a>}
                                                                     {(userType == "管理员" || userType == "课程负责人" || userType == "督导" || userType == "助理" ||userId == repItem.zzsfrzh || userId == item.zzsfrzh || userId == item.jssfrzh) ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._replyOperate(repItem.hfid, "删除", item.htid) }}>删除</a> : null}
                                                                     {qx.addReport && (userId != item.jssfrzh ? <a className='color hidden' href="javascript:void(0);" onClick={() => { this._showReportBox({ htInfo: item, hfInfo: repItem }) }}>举报</a> : null)}
 						                	                    </div>
@@ -829,7 +827,7 @@ class BluMUI_TopicDis extends React.Component {
     // 发送话题
     _sendTopic = (data) => {
         const { htbt, sfyxhf, htnr, dqzt, checkBan,fjList } = data;
-        console.log('发送话题', htbt, sfyxhf, htnr, dqzt, checkBan,fjList);
+        // console.log('发送话题', htbt, sfyxhf, htnr, dqzt, checkBan,fjList);
         let flag = false;
         for(const [jxb, statu] of Object.entries(checkBan)){
             if(statu){
@@ -956,11 +954,11 @@ class BluMUI_TopicDis extends React.Component {
         switch (cz) {
             case "删除":
                 Creat_popup({type:"deleteTopic",callback,data1,searchCallback,data2});
-                console.log("删除话题", htid, cz);
+                // console.log("删除话题", htid, cz);
                 
                 break;
             case "禁止回复":
-                console.log("禁止回复", htid, cz);
+                // console.log("禁止回复", htid, cz);
                 this.props.topicOperateFun({ htid, cz }).then(result => {
                     if (result) {
                         Alert.open({
@@ -983,7 +981,7 @@ class BluMUI_TopicDis extends React.Component {
                 });
                 break;
             case "解除禁止回复":
-                console.log("解除禁止回复", htid, cz);
+                // console.log("解除禁止回复", htid, cz);
                 this.props.topicOperateFun({ htid, cz }).then(result => {
                     if (result) {
                         Alert.open({
@@ -1006,7 +1004,7 @@ class BluMUI_TopicDis extends React.Component {
                 });
                 break;
             case "公开":
-            console.log("公开", htid, cz);
+            // console.log("公开", htid, cz);
                 this.props.topicOperateFun({ htid, cz }).then(result => {
                     if (result) {
                         Alert.open({
@@ -1027,7 +1025,7 @@ class BluMUI_TopicDis extends React.Component {
                 });
                 break;
             case "设置班内可见":
-                console.log("设置班内可见", htid, cz);
+                // console.log("设置班内可见", htid, cz);
                 this.props.topicOperateFun({ htid, cz }).then(result => {
                     if (result) {
                         Alert.open({
@@ -1048,13 +1046,13 @@ class BluMUI_TopicDis extends React.Component {
                 });
                 break;
             case "点赞":
-                console.log("点赞", htid, cz);
+                // console.log("点赞", htid, cz);
                 this.props.topicOperateFun({ htid, cz }).then(result => {
                     if (result) {
                         let htList = this.state.topicMsg.htList;
-                        console.log(htList);
+                        
                         htList.find(obj = obj.htid == htid)[dzs] += 1;
-                        console.log(htList);
+                       
                         this.setState({
                             topicMsg: { htList: htList }
                         })
@@ -1082,11 +1080,11 @@ class BluMUI_TopicDis extends React.Component {
         switch (cz) {
             case "删除":
                 Creat_popup({type:"deleteReply",callback,data1,searchCallback,data2});
-                console.log("删除回复:" + hfid);
+               
                 
                 break;
             case "点赞":
-                console.log("点赞:" + hfid);
+               
                 this.props.replyOperateFun({ hfid, cz }).then(result => {
                     if (result) {
                         Alert.open({
@@ -1133,7 +1131,7 @@ class BluMUI_TopicReport extends React.Component {
     }
 
     _changeState = (name, event) => {
-        console.log('event', event, 'value', event.target.value, 'checked', event.target.checked);
+        // console.log('event', event, 'value', event.target.value, 'checked', event.target.checked);
         this.setState({
             [name]: event.target.value
         });

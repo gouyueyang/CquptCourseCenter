@@ -14,7 +14,7 @@ var hash = parseHash(window.location.href),
 	deleteAttachment = host + 'deleteAttachment',
 	loginURL = 'https://ids.cqupt.edu.cn/authserver/login?service=' + host + 'classList',
 	doc = document;
-var fjList = [];
+
 
 var insertAttachment = host + 'insertTopicAttachment';
 //查询数据的变量
@@ -447,6 +447,7 @@ function publishTopicFun({ jxbbh, htbt, htnr, sfyxhf, dqzt,fjList }) {
 				let result = JSON.parse(response);
 				if (result.meta.result === 100) {
 					resolve(result.meta);
+					
 				} else {
 					reject(result.meta);
 				}
@@ -831,6 +832,7 @@ ajaxPading.init({
 	async: true
 });
 
+
 var handleSaveAjax = function (flag, result,  postData, that) {
 	var data = result.data,
 		meta = result.meta;
@@ -844,6 +846,7 @@ var handleSaveAjax = function (flag, result,  postData, that) {
 			var fileName = data[0].fileName,
 				originName = data[0].originName;
 			var	fjid = data[0].id;
+			var fjList = BluMUI.result.topicDis.sendTopic.state.fjList;
 			fjList = [...fjList,fjid];
 			
 			items.push([
