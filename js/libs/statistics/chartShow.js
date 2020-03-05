@@ -955,9 +955,10 @@ class PopupBody extends React.Component {
   }
 
   changeOutput() {
+  
     this.setState({
-      output: `unifyCode=${getCookie("userId")}&kssj=${this.state.kssj}&jssj=${this.state.jssj}&tjlb=${this.state.tjlb}&pxtype=${this.state.pxtype}&sstype=${this.state.sstype}&xm=${this.state.xm}&xymc=${this.state.xymc}`
-    });
+      output: `unifyCode=${getCookie("userId")}&tjlb=${this.state.tjlb}&pxtype=${this.state.pxtype}&sstype=${this.state.sstype}&xm=${this.state.xm}&xymc=${this.state.xymc}&kssj=${this.state.kssj}&jssj=${this.state.jssj}`
+    },console.log(this.state));
   }
 
   handleChange1(newDate) {

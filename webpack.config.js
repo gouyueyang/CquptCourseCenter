@@ -26,8 +26,8 @@ module.exports = {
     // courseJianjie:'./js/src/classInfShow/courseJianjie.js',
     // classTeachPlan:'./js/src/classInfShow/classTeachPlan.js',
     // classReviewModule:'./js/src/classInfShow/classReviewModule.js',    //审核
-    topicDis: './js/src/classInfShow/topicDis.js', // 话题讨论
-    homework:'./js/src/classInfShow/homework.js',
+    // topicDis: './js/src/classInfShow/topicDis.js', // 话题讨论
+    // homework:'./js/src/classInfShow/homework.js',
 
     //消息中心
     // showReply:'./js/src/msgCenter/showReply.js',    //查看回复
@@ -68,7 +68,7 @@ module.exports = {
     // tongJi_kczttj:'./js/src/tongJi/tongJi_kczttj.js',
     // tongJi_wpjgcx:'./js/src/tongJi/tongJi_wpjgcx.js',
     // tongJi_wpztcx:'./js/src/tongJi/tongJi_wpztcx.js',
-    // tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
+    tongJi_chart:'./js/src/tongJi/tongJi_chart.js',
     // tongJi_kcclwhfx:'./js/src/tongJi/tongJi_kcclwhfx.js',
     // tongJi_jskctj:'./js/src/tongJi/tongJi_jskctj.js',  ld
 
@@ -86,10 +86,10 @@ module.exports = {
     // path:path.resolve(__dirname,'js/pages/teachingTeam'),
     // path:'./js/pages/masterLogin',
     // path:'./js/pages/mySet',
-    path:path.resolve(__dirname, 'js/pages/classInfShow'),      //课程信息展示
+    // path:path.resolve(__dirname, 'js/pages/classInfShow'),      //课程信息展示
     // path:path.resolve(__dirname,'js/pages/msgCenter'),     
 		// path: path.resolve(__dirname,'js/pages/wangping/'),
-    // path:'./js/pages/statistics/',      //统计 ld
+    path:path.resolve(__dirname,'js/pages/statistics/'),      //统计 ld
     // path:path.resolve(__dirname,'js/pages/courseManage'),        //课程管理
     // path:path.resolve(__dirname,'js/pages/test'),
 
