@@ -3,8 +3,10 @@ var courseCenter = {
 	// host:'http://localhost:80/'
     // //172.22.114.135
     
-	host: 'http://172.20.2.139/'
+	host: 'http://172.20.2.139/',
 	// host:'http://cc.cqupt.edu.cn/'
+
+	idsUrl:'https://ids.cqupt.edu.cn/authserver/login',
 };
 //日期格式
 var DateFormat = {

@@ -141,7 +141,31 @@ class BlueMUI_Create_a extends React.Component {
     let flag = check.call(this);
     if(flag) return flag;
     this.props.data.map(e=>{
-      if(!e.wlxxzylj) {
+      if(!e.wlxxzylj && e.zylb==1) {
+        back.push(<div className="shipin" key={e.id}>
+          <a target="view_window" href={'courseVideo.html?fileName='+e.xywjm}>
+            <img src="../../imgs/classListInfShow/courseShow/shipin.png" style={{width:'152px',height:'131px'}}/>
+          </a>
+          <br/>
+          <span title={e.ywjm.split('.')[0]} >{e.ywjm.split('.')[0]}</span>
+        </div>);
+      } else {
+        this.down.push(e);
+      }
+    });
+    if(back.length==1) {
+      back.push(<div key='space' style={{height:'100px',width:'1px'}}></div>);
+    }
+    return back;
+  }
+//创建实验视频
+  create_labshipin() {
+    let back=[];
+    back.push(Create_tab('实验视频'));
+    let flag = check.call(this);
+    if(flag) return flag;
+    this.props.data.map(e=>{
+      if(!e.wlxxzylj && e.zylb==12) {
         back.push(<div className="shipin" key={e.id}>
           <a target="view_window" href={'courseVideo.html?fileName='+e.xywjm}>
             <img src="../../imgs/classListInfShow/courseShow/shipin.png" style={{width:'152px',height:'131px'}}/>
@@ -177,6 +201,7 @@ class BlueMUI_Create_a extends React.Component {
   render() {
     return(<div id='right'>
       {this.create_shipin()}
+      {this.create_labshipin()}
       {this.create_other_shipin()}
     </div>);
   }

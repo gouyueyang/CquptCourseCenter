@@ -452,6 +452,7 @@ class BluMUI_StudySource extends React.Component {
 			onlineSource: this.props.onlineSource,
 			onlineURL: this.props.onlineURL,
 			videos: this.props.videos,
+			labVideos:this.props.labVideos,
 			jyFile: this.props.jyFile,
 			jyAttachment: this.props.jyAttachment,
 			hkFile: this.props.hkFile,
@@ -518,6 +519,9 @@ class BluMUI_StudySource extends React.Component {
 			case '微视频':
 				item = this.state.videos;
 				break;
+			case '实验视频':
+				item = this.state.labVideos;
+				break;
 			case '教材':
 				item = this.state.jcBooks;
 				break;
@@ -577,6 +581,9 @@ class BluMUI_StudySource extends React.Component {
 		}
 		if (ajaxName == '微视频') {
 			items = this.state.videos;
+		}
+		if (ajaxName == '实验视频') {
+			items = this.state.labVideos;
 		}
 		for (i = 0, j = items.length; i < j; i++) {
 			if (!this.props.isPass) {
@@ -677,7 +684,25 @@ class BluMUI_StudySource extends React.Component {
 					data.file.maxSize = 500;
 					data.file.suffix = ['mp4'];
 				}
+				if (ID == '实验视频') {
+					let speaker3 = document.getElementById('speaker3').value;
+					if (speaker3) {
+						data.speaker = {
+							value: speaker3,
+							errorInf: '未填写主讲人',
+							pattern: /\S{1,}/,
+							type: 'speaker3'
+						}
+					} else {
+						Alert.open({
+							alertTip: '上传实验视频必须先填写主讲人！'
+						})
+						return;
+					}
 
+					data.file.maxSize = 500;
+					data.file.suffix = ['mp4'];
+				}
 				if (that.state.isUpload && ID != '讲义附件') {
 					that.props.saveAjax(data, ID, that);
 				} else if (that.state.isUpload1) {
@@ -747,6 +772,35 @@ class BluMUI_StudySource extends React.Component {
 						<div className="VideoList">
 							{this._createList('微视频')}
 						</div>
+						<hr></hr>
+						{this.props.isPass &&
+							<div className="Item inputWarp">
+								<span className="itemNameM">主讲人</span>
+								<input type="text" id="speaker3" />
+								<span className="warn" id="warn_speaker3"></span>
+							</div>
+						}
+						<div className="Item" id="content6">
+							<span className="itemNameM">实验视频</span>
+							{this.props.isPass &&
+								<BluMUI_FileUp fileId='labFile'
+									warnId='warn_labFile'
+									fileFormName={this.props.fileFormName}
+								></BluMUI_FileUp>
+							}
+						</div>
+						{this.props.isPass &&
+							<button className={this.state.isUpload ? 'save activeBtn' : 'save noActiveBtn'} onClick={this._save('实验视频', 'file', 'labFile')}>上传</button>
+						}
+						{this.props.isPass &&
+							<div className="Item">
+								<span className="uploadWarn">只允许上传mp4格式的视频(最大500M)</span>
+							</div>
+						}
+						<div className="VideoList">
+							{this._createList('实验视频')}
+						</div>
+						<hr></hr>
 						<div className="Item" id="content5">
 							<span className="itemName">录播视频</span>
 						</div>

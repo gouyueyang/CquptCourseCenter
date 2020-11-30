@@ -47,6 +47,7 @@ var BluMUI = require('../../libs/courseManage/classManageEditor'),
 	},
 	sourceTypeIndex = {
 		'微视频': 1,
+		'实验视频':12,
 		'讲义': 21,
 		'讲义附件': 22,
 		'作业': 3,
@@ -63,6 +64,7 @@ var BluMUI = require('../../libs/courseManage/classManageEditor'),
 	courseType,
 	stuSourceId = {
 		'微视频': 1,
+		'实验视频':12,
 		'讲义': 21,
 		'讲义附件': 22,
 		'作业': 3,
@@ -166,6 +168,13 @@ ajaxPading.init({
 	name: 'stuSource',
 	async: true
 });
+ajaxPading.init({
+	type: 'post',
+	dataType: 'json',
+	handleData: handleData,
+	name: 'stuSource2',
+	async: true
+});
 
 // 获取课程名称
 ajaxPading.send({
@@ -232,6 +241,7 @@ function getModuleInf() {
 
 
 var handleSaveAjax = function (flag, result, ajaxName, postData, that) {
+	// console.log(flag, result, ajaxName, postData, that);
 	var data = result.data,
 		meta = result.meta;
 	if (flag == 1) {
@@ -367,6 +377,22 @@ var handleSaveAjax = function (flag, result, ajaxName, postData, that) {
 					});
 
 					break;
+				case '实验视频':
+					doc.getElementById('file').value = '';
+					doc.getElementById('warn_labFile').innerHTML = '上传视频成功！';
+					var labVideos = that.state.labVideos;
+
+					labVideos.push([
+						{ value: data[0].originName },
+						{ value: '删除', fileName: data[0].fileName, callback: deleteFile },
+						{ value: '下载', downloadName: data[0].originName, fileName: data[0].fileName, callback: downloadFile }
+					]);
+					that.setState({
+						labVideos: labVideos,
+						isUpload: true
+					});
+
+					break;
 				case '其他微视频':
 					doc.getElementById('speaker2').value = '';
 					doc.getElementById('name').value = '';
@@ -493,6 +519,7 @@ var handleSaveAjax = function (flag, result, ajaxName, postData, that) {
 
 // ajax Save
 var saveAjax = function (data, ajaxName, that) {
+	// console.log(data, ajaxName, that);
 	var fail = null,
 		success = null,
 		check = null,
@@ -560,6 +587,7 @@ var saveAjax = function (data, ajaxName, that) {
 				var errorInf = checkInfs[0].errorInf || '',
 					type = checkInfs[0].type,
 					isCheck = checkInfs[0].isCheck;
+					
 				if (!isCheck)
 					document.getElementById('warn_' + type).innerHTML = errorInf;
 				else
@@ -567,6 +595,7 @@ var saveAjax = function (data, ajaxName, that) {
 			};
 			break;
 		case '微视频':
+		case '实验视频':
 		case '网络参考资源':
 		case '习（试）题库':
 		case '作业':
@@ -766,6 +795,7 @@ var deleteFile = function (ajaxName, index, that, type, items) {
 		case '讲义':
 		case '讲义附件':
 		case '微视频':
+		case '实验视频':
 			url = deleteLearnRes;
 			data.ID = {
 				value: sourceTypeIndex[ajaxName]
@@ -859,6 +889,10 @@ var deleteFile = function (ajaxName, index, that, type, items) {
 							that.setState({
 								videos: items
 							});
+						if (ajaxName == '实验视频')
+							that.setState({
+								labVideos: items
+							});
 						if (ajaxName == '教材') {
 							that.setState({
 								jcBooks: items
@@ -910,7 +944,7 @@ var handleChangeModuleData = function (result, moduleName, that) {
 		i,
 		len,
 		items;
-	console.log(meta.result);
+	// console.log(meta.result);
 	if (meta.result == 100) {
 		switch (moduleName) {
 			case '课程简介':
@@ -955,53 +989,101 @@ var handleChangeModuleData = function (result, moduleName, that) {
 				}
 				that.drops[0].items = items;
 				that.drops[0].initalSelected = "微视频";
-				ajaxPading.send({
-					data: {
-						kcbh: courseNo,
-						zylb: 1,
-						unifyCode: unifyCode,
-						place: 1
-					},
-					url: getStudyResourceMsg,
-					onSuccess: function (result) {
-						var meta = result.meta;
-						if (meta.result == 100) {
-							var data = result.data || [],
-								videos = [],
-								otherVideo = [],
-								i,
-								len;
-							for (i = 0, len = data.length; i < len; i++) {
-								if (data[i].wlxxzylj == "") {
-									videos.push([
-										{ value: data[i].ywjm },
-										{ value: '删除', fileName: data[i].xywjm, callback: deleteFile },
-										{ value: '下载', downloadName: data[i].ywjm, fileName: data[i].xywjm, callback: downloadFile }
-									]);
-								} else {
-									otherVideo.push(
-										[
-											{
-												value: data[i].ljmc,
-												url: data[i].wlxxzylj
-											},
-											{
-												value: '删除',
-												callback: deleteFile,
-												linkURL: data[i].wlxxzylj,
-												linkName: data[i].ljmc
-											},
-										]
-									);
+				let a = function(){
+					return new Promise(function(resolve){
+						ajaxPading.send({
+							data: {
+								kcbh: courseNo,
+								zylb: 1,
+								unifyCode: unifyCode,
+								place: 1
+							},
+							url: getStudyResourceMsg,
+							onSuccess: function (result) {
+								var meta = result.meta;
+								if (meta.result == 100) {
+									var data = result.data || [],
+										videos = [],
+										otherVideo = [],
+										i,
+										len;
+									for (i = 0, len = data.length; i < len; i++) {
+										if (data[i].wlxxzylj == "") {
+											
+												videos.push([
+													{ value: data[i].ywjm },
+													{ value: '删除', fileName: data[i].xywjm, callback: deleteFile },
+													{ value: '下载', downloadName: data[i].ywjm, fileName: data[i].xywjm, callback: downloadFile }
+												]);
+											
+											
+										} else {
+											otherVideo.push(
+												[
+													{
+														value: data[i].ljmc,
+														url: data[i].wlxxzylj
+													},
+													{
+														value: '删除',
+														callback: deleteFile,
+														linkURL: data[i].wlxxzylj,
+														linkName: data[i].ljmc
+													},
+												]
+											);
+										}
+									}
+									BluMUI.result.stuSource.setState({
+										videos: videos,
+										otherVideo:otherVideo
+									});
 								}
 							}
-							BluMUI.result.stuSource.setState({
-								videos: videos,
-								otherVideo: otherVideo
-							});
-						}
-					}
-				}, 'stuSource');
+						}, 'stuSource');
+					})
+				}
+				let b = function(){
+					return new Promise(function(resolve){
+						ajaxPading.send({
+							data: {
+								kcbh: courseNo,
+								zylb: 12,
+								unifyCode: unifyCode,
+								place: 1
+							},
+							url: getStudyResourceMsg,
+							onSuccess: function (result) {
+								var meta = result.meta;
+								if (meta.result == 100) {
+									var data = result.data || [],
+										
+										
+										labVideos = [],
+										i,
+										len;
+									for (i = 0, len = data.length; i < len; i++) {
+										
+											if(data[i].zylb == 12){
+												labVideos.push([
+													{ value: data[i].ywjm },
+													{ value: '删除', fileName: data[i].xywjm, callback: deleteFile },
+													{ value: '下载', downloadName: data[i].ywjm, fileName: data[i].xywjm, callback: downloadFile }
+												]);
+											}
+											
+										
+									}
+									BluMUI.result.stuSource.setState({
+										
+										labVideos: labVideos
+									});
+								}
+							}
+						}, 'stuSource2');
+					})
+				}
+				Promise.all([a(),b()]);
 				break;
 		}
 	} else {
@@ -1033,7 +1115,6 @@ var changeMoudule = function (ajaxName, index, that, type, items) {
 				place: 1
 			};
 			success = function (result) {
-				console.log(result);
 				handleChangeModuleData(result, mouduleName, selects[mouduleName].componentInf);
 				BluMUI.create(
 					selects[mouduleName].componentInf,
@@ -1118,6 +1199,7 @@ var selectSourceType = function (value) {
 				if (meta.result == 100) {
 					var data = result.data || [],
 						localResourse = [],
+						
 						thirdOfferResource = [],
 						i,
 						len;
@@ -1125,13 +1207,13 @@ var selectSourceType = function (value) {
 
 						if (data[i].wlxxzylj == "") {
 
-							if (value == '微视频') {
+							if (data[i].zylb == 1) {
 								localResourse.push([
 									{ value: data[i].ywjm },
 									{ value: '删除', callback: deleteFile, fileName: data[i].xywjm },
 									{ value: '下载', downloadName: data[i].ywjm, fileName: data[i].xywjm, callback: downloadFile }
 								])
-							} else {
+							} else if (data[i].zylb == 5){
 								localResourse.push(
 									[
 										{ value: data[i].ywjm },
@@ -1179,6 +1261,43 @@ var selectSourceType = function (value) {
 					});
 				}
 			}
+			//获取实验视频
+			ajaxPading.send({
+				data: {
+					kcbh: courseNo,
+					zylb: 12,
+					unifyCode: unifyCode,
+					place: 1
+				},
+				url: getStudyResourceMsg,
+				onSuccess: function (result) {
+					var meta = result.meta;
+					if (meta.result == 100) {
+						var data = result.data || [],
+							
+							
+							labVideos = [],
+							i,
+							len;
+						for (i = 0, len = data.length; i < len; i++) {
+							
+								if(data[i].zylb == 12){
+									labVideos.push([
+										{ value: data[i].ywjm },
+										{ value: '删除', fileName: data[i].xywjm, callback: deleteFile },
+										{ value: '下载', downloadName: data[i].ywjm, fileName: data[i].xywjm, callback: downloadFile }
+									]);
+								}
+								
+							
+						}
+						BluMUI.result.stuSource.setState({
+							
+							labVideos: labVideos
+						});
+					}
+				}
+			}, 'stuSource2');
 			break;
 		case '讲义':
 			data.zylb = 2;
@@ -1445,6 +1564,7 @@ var selects = {
 				}
 			],
 			videos: [],
+			labVideos:[],
 			onlineSource: [],
 			onlineURL: [],
 			jcBooks: [],

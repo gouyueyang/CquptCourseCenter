@@ -687,11 +687,11 @@ a{
 }
 
 /* 微视频 */
-#body #stuSource #content3 {
+#body #stuSource #content3,#body #stuSource #content6 {
 	margin-top: 52px;
 	height: 29px;
 }
-#body #stuSource #content3  .fileArea{
+#body #stuSource #content3  .fileArea,#body #stuSource #content6  .fileArea{
 	margin-left: 71px;
 }
 
@@ -729,7 +729,7 @@ a{
 	height: 29px;
 	border: 1px solid #a0a0a0;
 }
-#body #stuSource .inputWarp #speaker1{
+#body #stuSource .inputWarp #speaker1,#body #stuSource .inputWarp #speaker3{
 	width:164px;
 }
 #body #stuSource .inputWarp button{
